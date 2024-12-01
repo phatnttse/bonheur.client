@@ -19,6 +19,22 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'signin-google',
+        loadComponent() {
+          return import(
+            './components/signin-google/signin-google.component'
+          ).then((m) => m.SigninGoogleComponent);
+        },
+      },
+      {
+        path: 'signup',
+        loadComponent() {
+          return import('./components/signup/signup.component').then(
+            (m) => m.SignupComponent
+          );
+        },
+      },
     ],
   },
 ];

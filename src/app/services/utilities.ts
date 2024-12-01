@@ -9,6 +9,7 @@ export class Utilities {
       );
     });
   }
+
   public static splitInTwo(
     text: string,
     separator: string,
@@ -29,5 +30,40 @@ export class Utilities {
     const part2 = text.substring(separatorIndex + 1).trim();
 
     return { firstPart: part1, secondPart: part2 };
+  }
+
+  public static JsonTryParse(value: string) {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  }
+
+  public static baseUrl() {
+    let base = '';
+
+    if (window.location.origin) {
+      base = window.location.origin;
+    } else {
+      base =
+        window.location.protocol +
+        '//' +
+        window.location.hostname +
+        (window.location.port ? ':' + window.location.port : '');
+    }
+
+    return base.replace(/\/$/, '');
+  }
+
+  public static getQueryParamsFromString(paramString: string) {
+    const params: Record<string, string | undefined> = {};
+
+    for (const param of paramString.split('&')) {
+      const keyValue = Utilities.splitInTwo(param, '=');
+      params[keyValue.firstPart] = keyValue.secondPart;
+    }
+
+    return params;
   }
 }
