@@ -22,46 +22,50 @@
   <!-- --------------------------------------------------------------- -->
   <!-- profile Dropdown -->
   <!-- --------------------------------------------------------------- -->
+  @if (accountInfo) {
   <button
     class="m-l-10"
-    mat-icon-button
-    [matMenuTriggerFor]="profilemenu"
-    aria-label="Notifications"
+    mat-button
+    [matMenuTriggerFor]="accountMenu"
+    aria-label="Account"
   >
-    <img
-      src="/assets/images/profile/user-1.jpg"
-      class="rounded-circle object-cover"
-      width="35"
-    />
+    <div class="d-flex align-items-center">
+      <img
+        [src]="accountInfo.pictureUrl"
+        class="rounded-circle object-cover"
+        width="35"
+      />
+      <span class="m-l-8">{{ accountInfo.fullName }}</span>
+      <i-tabler name="chevron-down" class="icon-18 d-flex m-t-2"></i-tabler>
+    </div>
   </button>
-  <mat-menu #profilemenu="matMenu" xPosition="before" class="cardWithShadow">
+  }@else {
+  <button mat-raised-button routerLink="/signin">Sign In</button>
+  }
+  <mat-menu #accountMenu="matMenu" xPosition="before" class="cardWithShadow">
+    @if (accountInfo) {
     <button mat-menu-item>
       <mat-icon class="d-flex align-items-center"
         ><i-tabler name="user" class="icon-18 d-flex"></i-tabler></mat-icon
-      >My Profile
-    </button>
-    <button mat-menu-item>
-      <mat-icon class="d-flex align-items-center"
-        ><i-tabler name="mail" class="icon-18 d-flex"></i-tabler></mat-icon
       >My Account
     </button>
-    <button mat-menu-item>
+    }@else {
+    <button type="button" mat-menu-item [routerLink]="['/signin']">
       <mat-icon class="d-flex align-items-center"
-        ><i-tabler
-          name="list-check"
-          class="icon-18 d-flex"
-        ></i-tabler></mat-icon
-      >My Task
+        ><i-tabler name="login-2" class="icon-18 d-flex"></i-tabler></mat-icon
+      >Login
     </button>
-
+    } @if (accountInfo) {
     <div class="p-x-12 m-t-12">
       <a
-        [routerLink]="['/authentication/login']"
+        href="javascript:;"
         mat-stroked-button
         color="primary"
         class="w-100"
+        (click)="btnLogout()"
         >Logout</a
       >
     </div>
+    }
   </mat-menu>
 </mat-toolbar>

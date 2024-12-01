@@ -2,7 +2,6 @@ import { MaterialModule } from './../../material.module';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -10,6 +9,12 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Account } from '../../models/account.model';
+import { NotificationService } from '../../services/notification.service';
+import { AccountService } from '../../services/account.service';
+import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-signin',
@@ -28,12 +33,42 @@ export class SigninComponent {
   formSignin: FormGroup;
   passwordVisible: boolean = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private accountService: AccountService,
+    private statusService: StatusService
+  ) {
     this.formSignin = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required],
     });
   }
 
-  submit() {}
+  btnLogin() {
+    if (this.formSignin.invalid) {
+      this.formSignin.markAllAsTouched();
+      return;
+    }
+    this.statusService.statusLoadingSpinnerSource.next(true);
+    const email = this.formSignin.get('email')?.value;
+    const password = this.formSignin.get('password')?.value;
+
+    this.authService.loginWithPassword(email, password).subscribe({
+      next: (response: Account) => {
+        this.accountService.accountDataSource.next(response);
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.router.navigate(['/']);
+        this.notificationService.openSnackBarWelcome(
+          'Welcome  ' + response.fullName
+        );
+      },
+      error: (error: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.showToastrHandleError(error);
+      },
+    });
+  }
 }

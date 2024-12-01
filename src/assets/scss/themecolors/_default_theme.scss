@@ -179,3 +179,13 @@ $darkbluetheme: mat.m2-define-dark-theme(
     border-color: mat.m2-get-color-from-palette($theme-warn, 500) !important;
   }
 }
+
+:root {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: #46caeb,
+      supporting-text-color: white,
+      button-color: white,
+    )
+  );
+}

@@ -28,6 +28,10 @@ import { MaterialModule } from './material.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLanguageLoader } from './services/app-translation.service';
+import { provideToastr } from 'ngx-toastr';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -43,6 +47,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
+    provideToastr(),
+    provideOAuthClient(),
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: TitleStrategy, useClass: AppTitleService },
     { provide: UrlSerializer, useClass: LowerCaseUrlSerializer },
@@ -51,7 +57,10 @@ export const appConfig: ApplicationConfig = {
       ReactiveFormsModule,
       MaterialModule,
       TablerIconsModule.pick(TablerIcons),
-      NgScrollbarModule
+      NgScrollbarModule,
+      TranslateModule.forRoot({
+        loader: { provide: TranslateLoader, useClass: TranslateLanguageLoader },
+      })
     ),
   ],
 };
