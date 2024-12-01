@@ -5,6 +5,9 @@ import { SignInResponse } from '../models/signin-response.model';
 import { LocalStoreManager } from './localstorage-manager.service';
 import { ConfigurationService } from './configuration.service';
 import { DBkeys } from './db-keys';
+import { Gender } from '../models/enums.model';
+import { SignUpResponse } from '../models/account.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +67,18 @@ export class OidcHelperService {
     return this.http.post<SignInResponse>(this.tokenEndpoint, params, {
       headers: header,
     });
+  }
+
+  signUpAccount(
+    fullName: string,
+    email: string,
+    gender: Gender,
+    password: string
+  ): Observable<SignUpResponse> {
+    return this.http.post<SignUpResponse>(
+      `${environment.apiUrl}/api/v1/auth/signup`,
+      { fullName, email, gender, password }
+    );
   }
 
   get accessToken(): string | null {

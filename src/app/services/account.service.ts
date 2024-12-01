@@ -10,19 +10,6 @@ import { environment } from '../environments/environment.dev';
 })
 export class AccountService {
   private http = inject(HttpClient);
-
   public accountDataSource = new BehaviorSubject<Account | null>(null);
   accountData$ = this.accountDataSource.asObservable();
-
-  signUpAccount(
-    fullName: string,
-    email: string,
-    gender: Gender,
-    password: string
-  ): Observable<SignUpResponse> {
-    return this.http.post<SignUpResponse>(
-      `${environment.apiUrl}/api/v1/auth/signup`,
-      { fullName, email, gender, password }
-    );
-  }
 }

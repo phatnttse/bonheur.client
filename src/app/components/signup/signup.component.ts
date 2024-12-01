@@ -14,6 +14,7 @@ import { StatusService } from '../../services/status.service';
 import { AccountService } from '../../services/account.service';
 import { SignUpResponse } from '../../models/account.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -31,7 +32,7 @@ export class SignupComponent {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private statusService: StatusService,
-    private accountService: AccountService
+    private authService: AuthService
   ) {
     this.formSignup = this.formBuilder.group({
       fullName: [
@@ -60,7 +61,7 @@ export class SignupComponent {
     const gender = this.formSignup.get('gender')?.value;
     const password = this.formSignup.get('password')?.value;
 
-    this.accountService
+    this.authService
       .signUpAccount(fullName, email, gender, password)
       .subscribe({
         next: (response: SignUpResponse) => {

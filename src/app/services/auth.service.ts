@@ -189,6 +189,20 @@ export class AuthService {
     this.localStorage.setData(user, DBkeys.CURRENT_USER);
   }
 
+  signUpAccount(
+    fullName: string,
+    email: string,
+    gender: Gender,
+    password: string
+  ) {
+    return this.oidcHelperService.signUpAccount(
+      fullName,
+      email,
+      gender,
+      password
+    );
+  }
+
   logout(): void {
     this.localStorage.deleteData(DBkeys.ACCESS_TOKEN);
     this.localStorage.deleteData(DBkeys.REFRESH_TOKEN);
