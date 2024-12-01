@@ -1,3 +1,4 @@
+import { BaseResponse } from './base.model';
 import { Gender } from './enums.model';
 
 export class Account {
@@ -34,3 +35,5 @@ export class Account {
     this.isLockedOut = false;
   }
 }
+
+export interface SignUpResponse extends BaseResponse<null> {}

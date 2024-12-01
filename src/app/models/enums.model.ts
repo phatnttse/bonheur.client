@@ -3,3 +3,7 @@ export enum Gender {
   FEMALE = 'FEMALE',
   OTHER = 'OTHER',
 }
+
+export enum StatusCode {
+  OK = 'OK',
+}

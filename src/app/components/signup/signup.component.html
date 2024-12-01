@@ -1,1 +1,225 @@
-<p>signup works!</p>
+<div class="blank-layout-container justify-content-center">
+  <div class="auth-wrapper">
+    <div class="position-relative shaper-wrapper">
+      <div class="w-100 position-relative rounded bg-white auth-card">
+        <div class="auth-body">
+          <a [routerLink]="['/dashboards/dashboard1']" class="m-y-30 d-flex">
+            <img
+              src="./assets/images/logos/dark-logo.svg"
+              class="align-middle m-2"
+              alt="logo"
+            />
+          </a>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div
+                class="align-items-center justify-content-center d-none d-lg-flex"
+              >
+                <img
+                  src="assets/images/backgrounds/signin2-bg.webp"
+                  alt="login"
+                  style="max-width: 500px"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div
+                class="d-flex align-items-start align-items-lg-center justify-content-center"
+              >
+                <div class="row justify-content-center w-100">
+                  <div class="col-lg-11">
+                    <h4 class="f-w-700 f-s-30 m-0 m-t-20 lh-base">
+                      Welcome to <span class="text-primary">Bonheur</span>
+                    </h4>
+                    <span class="d-block f-w-500 d-block m-t-24"
+                      >Already have an account?
+                      <a
+                        [routerLink]="['/signin']"
+                        class="text-decoration-none text-primary f-w-500 f-s-14"
+                      >
+                        Sign In</a
+                      >
+                    </span>
+
+                    <form
+                      class="m-t-30"
+                      [formGroup]="formSignup"
+                      (ngSubmit)="btnSignup()"
+                    >
+                      <mat-label
+                        class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                        >Name</mat-label
+                      >
+                      <mat-form-field
+                        appearance="outline"
+                        class="w-100"
+                        color="primary"
+                      >
+                        <input
+                          matInput
+                          type="text"
+                          formControlName="fullName"
+                          required
+                          [class.is-invalid]="
+                            formSignup.get('fullName')?.invalid &&
+                            formSignup.get('fullName')?.touched
+                          "
+                        />
+                        @if(formSignup.get('fullName')?.hasError('required')) {
+                        <mat-error style="font-size: 12px">
+                          Name is required
+                        </mat-error>
+                        } @if
+                        (formSignup.get('fullName')?.hasError('minlength')) {
+                        <mat-error style="font-size: 12px">
+                          Name must be at least 2 characters
+                        </mat-error>
+                        } @if
+                        (formSignup.get('fullName')?.hasError('maxlength')) {
+                        <mat-error style="font-size: 12px">
+                          Name must be at most 50 characters
+                        </mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-label
+                        class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                        >Email</mat-label
+                      >
+                      <mat-form-field
+                        appearance="outline"
+                        class="w-100"
+                        color="primary"
+                      >
+                        <input
+                          matInput
+                          formControlName="email"
+                          type="email"
+                          required
+                          [class.is-invalid]="
+                            formSignup.get('email')?.invalid &&
+                            formSignup.get('email')?.touched
+                          "
+                        />
+                        @if(formSignup.get('email')?.hasError('required')) {
+                        <mat-error style="font-size: 12px">
+                          Email is required
+                        </mat-error>
+                        } @if (formSignup.get('email')?.hasError('email')) {
+                        <mat-error style="font-size: 12px">
+                          Email is invalid. Ex: bonheur&#64;gmail.com
+                        </mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-label
+                        class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                        >Gender</mat-label
+                      >
+                      <div class="m-b-12">
+                        <mat-chip-listbox
+                          aria-label="Fish selection"
+                          formControlName="gender"
+                        >
+                          <mat-chip-option class="f-s-14" value="MALE">
+                            Male
+                          </mat-chip-option>
+                          <mat-chip-option class="f-s-14" value="FEMALE"
+                            >Female</mat-chip-option
+                          >
+                          <mat-chip-option value="OTHER" class="f-s-14" selected
+                            >Other</mat-chip-option
+                          >
+                        </mat-chip-listbox>
+                      </div>
+
+                      <!-- password -->
+                      <mat-label
+                        class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                        >Password</mat-label
+                      >
+                      <mat-form-field
+                        appearance="outline"
+                        class="w-100"
+                        color="primary"
+                      >
+                        <input
+                          matInput
+                          type="password"
+                          formControlName="password"
+                          [type]="passwordVisible ? 'text' : 'password'"
+                          [class.is-invalid]="
+                            formSignup.get('password')?.invalid &&
+                            formSignup.get('password')?.touched
+                          "
+                        />
+                        <button
+                          mat-icon-button
+                          type="button"
+                          matSuffix
+                          (click)="passwordVisible = !passwordVisible"
+                          [attr.aria-label]="'Hide password'"
+                          [attr.aria-pressed]="passwordVisible"
+                        >
+                          <mat-icon color="primary" class="fs-18">
+                            {{
+                              passwordVisible ? "visibility" : "visibility_off"
+                            }}
+                          </mat-icon>
+                        </button>
+                        @if (formSignup.get('password')?.hasError('required')) {
+                        <mat-error style="font-size: 12px">
+                          Password is required
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                      <div class="d-block d-lg-flex align-items-center m-b-20">
+                        <a
+                          [routerLink]="['/']"
+                          class="text-primary f-w-600 text-decoration-none m-l-auto d-block f-s-14"
+                          >Forgot Password ?</a
+                        >
+                      </div>
+                      <button
+                        mat-flat-button
+                        color="primary"
+                        class="w-100"
+                        [disabled]="!formSignup.valid"
+                      >
+                        Sign Up
+                      </button>
+                      <!-- input -->
+                    </form>
+                    <div class="or-border m-t-30">or sign in with</div>
+
+                    <div class="row m-t-40">
+                      <div class="col-12 col-sm-12">
+                        <button
+                          mat-stroked-button
+                          class="w-100 m-b-4 p-y-20"
+                          type="button"
+                          [routerLink]="['/signin-google']"
+                        >
+                          <div class="d-flex align-items-center">
+                            <img
+                              src="/assets/images/svgs/google-icon.svg"
+                              alt="google"
+                              width="20"
+                              class="m-r-8"
+                            />
+                            Sign in with Google
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
