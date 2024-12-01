@@ -12,6 +12,7 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from '../../material.module';
 import { NavService } from '../../services/nav.service';
+import { fadeInOut } from '../../services/animations';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -34,6 +35,7 @@ const BELOWMONITOR = 'screen and (max-width: 1023px)';
   templateUrl: './full.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None,
+  animations: [fadeInOut],
 })
 export class FullComponent implements OnInit {
   navItems = navItems;
