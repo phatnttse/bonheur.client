@@ -11,6 +11,7 @@ import { OidcHelperService } from './oidc.service';
 import { LocalStoreManager } from './localstorage-manager.service';
 import { JwtHelper } from './jwt.service';
 import { Account } from '../models/account.model';
+import { Gender } from '../models/enums.model';
 
 @Injectable({
   providedIn: 'root',
