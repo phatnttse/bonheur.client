@@ -203,6 +203,18 @@ export class AuthService {
     );
   }
 
+  confirmEmail(token: string, email: string) {
+    return this.oidcHelperService.confirmEmail(token, email);
+  }
+
+  forgotPassword(email: string) {
+    return this.oidcHelperService.forgotPassword(email);
+  }
+
+  resetPassword(token: string, email: string, password: string) {
+    return this.oidcHelperService.resetPassword(token, email, password);
+  }
+
   logout(): void {
     this.localStorage.deleteData(DBkeys.ACCESS_TOKEN);
     this.localStorage.deleteData(DBkeys.REFRESH_TOKEN);

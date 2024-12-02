@@ -119,16 +119,18 @@
                       >
                       <div class="m-b-12">
                         <mat-chip-listbox
-                          aria-label="Fish selection"
+                          aria-label="Gender selection"
                           formControlName="gender"
                         >
-                          <mat-chip-option class="f-s-14" value="MALE">
+                          <mat-chip-option class="f-s-14" [value]="gender.MALE">
                             Male
                           </mat-chip-option>
-                          <mat-chip-option class="f-s-14" value="FEMALE"
+                          <mat-chip-option
+                            class="f-s-14"
+                            [value]="gender.FEMALE"
                             >Female</mat-chip-option
                           >
-                          <mat-chip-option value="OTHER" class="f-s-14" selected
+                          <mat-chip-option class="f-s-14" [value]="gender.OTHER"
                             >Other</mat-chip-option
                           >
                         </mat-chip-listbox>

@@ -11,7 +11,6 @@ import {
 import { Gender, StatusCode } from '../../models/enums.model';
 import { NotificationService } from '../../services/notification.service';
 import { StatusService } from '../../services/status.service';
-import { AccountService } from '../../services/account.service';
 import { SignUpResponse } from '../../models/account.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
@@ -26,7 +25,7 @@ import { AuthService } from '../../services/auth.service';
 export class SignupComponent {
   formSignup: FormGroup;
   passwordVisible: boolean = false;
-  genders = Object.values(Gender);
+  gender = Gender;
 
   constructor(
     private formBuilder: FormBuilder,
