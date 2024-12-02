@@ -7,7 +7,7 @@ import {
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { UserAccount } from '../models/account.model';
+import { Account } from '../models/account.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class EndpointBase {
     return { headers };
   }
 
-  public refreshLogin(): Observable<UserAccount | null> {
+  public refreshLogin(): Observable<Account | null> {
     return this.authService.refreshLogin().pipe(
       catchError((error: HttpErrorResponse) => {
         return this.handleError(error, () => this.refreshLogin());

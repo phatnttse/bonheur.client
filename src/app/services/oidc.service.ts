@@ -8,6 +8,7 @@ import { DBkeys } from './db-keys';
 import { Gender } from '../models/enums.model';
 import { SignUpResponse } from '../models/account.model';
 import { Observable } from 'rxjs';
+import { BaseResponse } from '../models/base.model';
 
 @Injectable({
   providedIn: 'root',
@@ -78,6 +79,38 @@ export class OidcHelperService {
     return this.http.post<SignUpResponse>(
       `${environment.apiUrl}/api/v1/auth/signup`,
       { fullName, email, gender, password }
+    );
+  }
+
+  confirmEmail(token: string, email: string): Observable<BaseResponse<null>> {
+    return this.http.post<BaseResponse<null>>(
+      `${environment.apiUrl}/api/v1/auth/confirm-email`,
+      {
+        token: token,
+        email: email,
+      }
+    );
+  }
+
+  forgotPassword(email: string): Observable<BaseResponse<null>> {
+    return this.http.post<BaseResponse<null>>(
+      `${environment.apiUrl}/api/v1/auth/forgot-password`,
+      email
+    );
+  }
+
+  resetPassword(
+    token: string,
+    email: string,
+    password: string
+  ): Observable<BaseResponse<null>> {
+    return this.http.post<BaseResponse<null>>(
+      `${environment.apiUrl}/api/v1/auth/reset-password`,
+      {
+        token,
+        email,
+        password,
+      }
     );
   }
 

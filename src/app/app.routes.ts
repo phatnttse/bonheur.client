@@ -35,6 +35,23 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'confirm-email',
+        loadComponent() {
+          return import(
+            './components/confirm-email/confirm-email.component'
+          ).then((m) => m.ConfirmEmailComponent);
+        },
+      },
+      {
+        path: 'pages/404',
+        loadComponent() {
+          return import('./pages/page-not-found/page-not-found.component').then(
+            (m) => m.PageNotFoundComponent
+          );
+        },
+      },
+      { path: '**', redirectTo: 'pages/404' },
     ],
   },
 ];

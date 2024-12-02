@@ -15,7 +15,7 @@ export class AppComponent {
 
   isLoading: boolean = false; // Indicates whether the application is loading data
 
-  constructor(private statusService: StatusService) {
+  constructor(public statusService: StatusService) {
     this.statusService.statusLoadingSpinner$.subscribe((isLoading: boolean) => {
       this.isLoading = isLoading;
     });
