@@ -7,6 +7,7 @@ import {
 import {
   PreloadAllModules,
   provideRouter,
+  RouterModule,
   TitleStrategy,
   UrlSerializer,
   withComponentInputBinding,
@@ -32,6 +33,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLanguageLoader } from './services/app-translation.service';
 import { provideToastr } from 'ngx-toastr';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { adminRoutes } from './components/admin/admin.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,6 +47,7 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
       withPreloading(PreloadAllModules)
     ),
+    importProvidersFrom(RouterModule.forChild(adminRoutes)),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideToastr(),

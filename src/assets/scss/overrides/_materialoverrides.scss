@@ -26,3 +26,8 @@
 @import "./borderColor";
 @import "./table";
 @import "./list";
+
+.mat-mdc-form-field-infix {
+  --mat-form-field-container-height: 44px !important;
+  --mat-form-field-container-vertical-padding: 8px !important;
+}

@@ -24,6 +24,7 @@ html .mat-drawer-container {
 }
 
 .pageWrapper {
+  transition: width 0.2s ease-out;
   padding-top: $layout-padding;
   min-height: calc(100vh - 70px);
 

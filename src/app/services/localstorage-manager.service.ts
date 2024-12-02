@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-
 import { Utilities } from './utilities';
 
 @Injectable({

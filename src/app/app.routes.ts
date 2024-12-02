@@ -1,15 +1,14 @@
 import { Routes } from '@angular/router';
-import { BlankComponent } from './layouts/blank/blank.component';
-import { FullComponent } from './layouts/full/full.component';
+import { adminRoutes } from './components/admin/admin.routes';
 
 export const routes: Routes = [
   {
     path: '',
-    component: FullComponent,
-  },
-  {
-    path: '',
-    component: BlankComponent,
+    loadComponent() {
+      return import('./layouts/blank/blank.component').then(
+        (m) => m.BlankComponent
+      );
+    },
     children: [
       {
         path: 'signin',
@@ -51,6 +50,7 @@ export const routes: Routes = [
           );
         },
       },
+      ...adminRoutes,
       { path: '**', redirectTo: 'pages/404' },
     ],
   },
