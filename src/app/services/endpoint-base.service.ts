@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -13,10 +13,10 @@ import { Account } from '../models/account.model';
   providedIn: 'root',
 })
 export class EndpointBase {
+  private authService = inject(AuthService);
+
   private taskPauser: Subject<boolean> | null = null;
   private isRefreshingLogin = false;
-
-  constructor(protected http: HttpClient, private authService: AuthService) {}
 
   protected get requestHeaders(): {
     headers: HttpHeaders | { [header: string]: string | string[] };
@@ -38,7 +38,7 @@ export class EndpointBase {
   }
 
   protected handleError<T>(
-    error: any,
+    error: HttpErrorResponse,
     continuation: () => Observable<T>
   ): Observable<T> {
     console.error('handleError', error);
@@ -56,7 +56,7 @@ export class EndpointBase {
 
           return continuation();
         }),
-        catchError((refreshLoginError) => {
+        catchError((refreshLoginError: HttpErrorResponse) => {
           this.isRefreshingLogin = false;
           this.resumeTasks(false);
           if (refreshLoginError.status === 401) {

@@ -11,7 +11,7 @@ import { OidcHelperService } from './oidc.service';
 import { LocalStoreManager } from './localstorage-manager.service';
 import { JwtHelper } from './jwt.service';
 import { Account } from '../models/account.model';
-import { Gender } from '../models/enums.model';
+import { Gender, Role } from '../models/enums.model';
 
 @Injectable({
   providedIn: 'root',
@@ -279,5 +279,18 @@ export class AuthService {
 
   get isLoggedIn(): boolean {
     return this.currentUser != null;
+  }
+
+  get isAdmin(): boolean {
+    return (
+      this.isLoggedIn && this.currentUser?.roles.includes(Role.ADMIN) === true
+    );
+  }
+
+  get isSupplier(): boolean {
+    return (
+      this.isLoggedIn &&
+      this.currentUser?.roles.includes(Role.SUPPLIER) === true
+    );
   }
 }

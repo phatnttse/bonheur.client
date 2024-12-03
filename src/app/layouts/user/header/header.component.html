@@ -1,0 +1,166 @@
+<header class="shadow-md bg-white sticky top-0 z-50">
+  <!-- Top Announcement Bar -->
+  <div class="bg-gray-700 text-white text-sm">
+    <div class="container mx-auto px-6">
+      <div class="md:hidden">
+        <!-- Show only the announcement text on small screens -->
+        <div class="h-10 flex items-center justify-center">
+          <div
+            class="transition-all duration-500"
+            [@slideInOut]="currentAnnouncementIndex"
+          >
+            {{ announcements[currentAnnouncementIndex] }}
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center justify-between h-10">
+        <!-- Show social media links and language selector only on larger screens -->
+        <div class="flex items-center space-x-3">
+          <a href="#" class="hover:text-primary transition-colors">
+            <i-tabler class="icon-20" name="brand-facebook"></i-tabler>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i-tabler class="icon-20" name="brand-twitter"></i-tabler>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i-tabler class="icon-20" name="brand-youtube"></i-tabler>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i-tabler class="icon-20" name="brand-instagram"></i-tabler>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i-tabler class="icon-20" name="brand-github"></i-tabler>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i-tabler class="icon-20" name="brand-linkedin"></i-tabler>
+          </a>
+        </div>
+
+        <!-- Show announcement text on larger screens -->
+        <div class="relative overflow-hidden w-[400px] whitespace-nowrap">
+          <div
+            class="transition-all duration-500"
+            [@slideInOut]="currentAnnouncementIndex"
+          >
+            {{ announcements[currentAnnouncementIndex] }}
+          </div>
+        </div>
+
+        <!-- Show language and currency selectors on larger screens -->
+        <div class="flex items-center space-x-4">
+          <select
+            class="bg-transparent text-sm border-none focus:outline-none cursor-pointer"
+          >
+            <option value="en" class="text-gray-800">English</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mx-auto px-4 flex justify-between items-center py-4">
+    <!-- Logo -->
+    <div class="text-2xl font-semibold text-primary">
+      <span class="font-bold">Bonheur.</span>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex space-x-8 text-gray-500 font-medium text-base">
+      <a href="#" class="hover:text-pink-500 transition">Home</a>
+      <a href="#" class="hover:text-pink-500 transition">Suppliers</a>
+      <a href="#" class="hover:text-pink-500 transition">Venues</a>
+      <a href="#" class="hover:text-pink-500 transition">Planning Tools</a>
+      <a href="#" class="hover:text-pink-500 transition">About us</a>
+      <a href="#" class="hover:text-pink-500 transition">Contact</a>
+    </nav>
+
+    <!-- Action Buttons -->
+    <div class="hidden md:flex space-x-4">
+      <button
+        type="button"
+        routerLink="/signup-supplier"
+        class="bg-pink-400 text-white px-4 py-2 rounded-md"
+      >
+        Become a Supplier
+      </button>
+      <button
+        type="button"
+        routerLink="/authentication/signin"
+        class="border-2 border-pink-20 text-pink-500 px-4 py-2 rounded-md"
+      >
+        Sign In
+      </button>
+      <button
+        type="button"
+        routerLink="/authentication/signup"
+        class="border-2 border-pink-200 text-pink-500 px-4 py-2 rounded-md"
+      >
+        Sign Up
+      </button>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      class="md:hidden flex items-center text-gray-500 focus:outline-none"
+      (click)="toggleMenu()"
+    >
+      <span class="material-icons">menu</span>
+    </button>
+  </div>
+
+  <!-- Mobile Slide-in Menu -->
+  <div
+    class="fixed inset-0 bg-gray-800 bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out"
+    [ngClass]="{
+      'opacity-100': isMenuOpen,
+      'opacity-0 pointer-events-none': !isMenuOpen
+    }"
+    (click)="closeMenu($event)"
+  >
+    <div
+      class="fixed top-0 left-0 w-2/3 h-full bg-white shadow-lg transform transition-all duration-300 ease-in-out menu-container"
+      [ngClass]="{
+        'translate-x-0': isMenuOpen,
+        '-translate-x-full': !isMenuOpen
+      }"
+    >
+      <button
+        class="absolute top-4 right-4 text-gray-500 focus:outline-none"
+        (click)="toggleMenu()"
+      >
+        <span class="material-icons">close</span>
+      </button>
+      <nav class="flex flex-col space-y-4 p-6 my-10 ml-4">
+        <a href="#" class="hover:text-pink-500 transition">Home</a>
+        <a href="#" class="hover:text-pink-500 transition">Suppliers</a>
+        <a href="#" class="hover:text-pink-500 transition">Venues</a>
+        <a href="#" class="hover:text-pink-500 transition">Planning Tools</a>
+        <a href="#" class="hover:text-pink-500 transition">About us</a>
+        <a href="#" class="hover:text-pink-500 transition">Contact</a>
+      </nav>
+      <div class="flex flex-col space-y-2 p-6">
+        <button
+          type="button"
+          routerLink="/signup-supplier"
+          class="bg-pink-400 text-white px-4 py-2 rounded-md"
+        >
+          Become a Supplier
+        </button>
+        <button
+          type="button"
+          routerLink="/authentication/signin"
+          class="border-2 border-pink-20 text-pink-500 px-4 py-2 rounded-md"
+        >
+          Sign In
+        </button>
+        <button
+          type="button"
+          routerLink="/authentication/signup"
+          class="border-2 border-pink-200 text-pink-500 px-4 py-2 rounded-md"
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

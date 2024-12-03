@@ -40,7 +40,7 @@
     </div>
   </button>
   }@else {
-  <button mat-raised-button routerLink="/signin">Sign In</button>
+  <button mat-raised-button routerLink="/authentication/signin">Sign In</button>
   }
   <mat-menu #accountMenu="matMenu" xPosition="before" class="cardWithShadow">
     @if (accountInfo) {
@@ -50,10 +50,14 @@
       >My Account
     </button>
     }@else {
-    <button type="button" mat-menu-item [routerLink]="['/signin']">
+    <button
+      type="button"
+      mat-menu-item
+      [routerLink]="['/authentication/signin']"
+    >
       <mat-icon class="d-flex align-items-center"
         ><i-tabler name="login-2" class="icon-18 d-flex"></i-tabler></mat-icon
-      >Login
+      >Sign In
     </button>
     } @if (accountInfo) {
     <div class="p-x-12 m-t-12">

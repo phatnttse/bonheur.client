@@ -60,7 +60,13 @@ export class SigninComponent {
       next: (response: Account) => {
         this.accountService.accountDataSource.next(response);
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.router.navigate(['/']);
+        if (this.authService.isAdmin) {
+          this.router.navigate(['/admin']);
+        } else if (this.authService.isSupplier) {
+          this.router.navigate(['/supplier']);
+        } else {
+          this.router.navigate(['/']);
+        }
         this.notificationService.openSnackBarWelcome(
           'Welcome  ' + response.fullName
         );
