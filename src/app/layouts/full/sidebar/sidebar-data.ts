@@ -14,10 +14,10 @@ export const navItems: NavItem[] = [
     navCap: 'Ui Components',
   },
   {
-    displayName: 'Badge',
-    iconName: 'rosette',
-    bgcolor: 'accent',
-    route: '/ui-components/badge',
+    displayName: 'Role Management',
+    iconName: 'shield-checkered',
+    bgcolor: 'success',
+    route: '/admin/roles/management',
   },
   {
     displayName: 'Chips',

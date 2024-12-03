@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment.dev';
 import { Component } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../../services/auth.service';
@@ -54,6 +54,7 @@ export class SigninGoogleComponent {
             },
             error: (error: HttpErrorResponse) => {
               this.statusService.statusLoadingSpinnerSource.next(false);
+              this.router.navigate(['/signin']);
               this.notificationService.showToastrHandleError(error);
             },
           });

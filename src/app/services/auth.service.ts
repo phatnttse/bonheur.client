@@ -11,6 +11,7 @@ import { OidcHelperService } from './oidc.service';
 import { LocalStoreManager } from './localstorage-manager.service';
 import { JwtHelper } from './jwt.service';
 import { Account } from '../models/account.model';
+import { Gender } from '../models/enums.model';
 
 @Injectable({
   providedIn: 'root',
@@ -186,6 +187,32 @@ export class AuthService {
     this.localStorage.setData(expiresIn, DBkeys.TOKEN_EXPIRES_IN);
     this.localStorage.setData(permissions, DBkeys.USER_PERMISSIONS);
     this.localStorage.setData(user, DBkeys.CURRENT_USER);
+  }
+
+  signUpAccount(
+    fullName: string,
+    email: string,
+    gender: Gender,
+    password: string
+  ) {
+    return this.oidcHelperService.signUpAccount(
+      fullName,
+      email,
+      gender,
+      password
+    );
+  }
+
+  confirmEmail(token: string, email: string) {
+    return this.oidcHelperService.confirmEmail(token, email);
+  }
+
+  forgotPassword(email: string) {
+    return this.oidcHelperService.forgotPassword(email);
+  }
+
+  resetPassword(token: string, email: string, password: string) {
+    return this.oidcHelperService.resetPassword(token, email, password);
   }
 
   logout(): void {

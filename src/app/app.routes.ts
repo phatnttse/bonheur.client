@@ -1,15 +1,14 @@
 import { Routes } from '@angular/router';
-import { BlankComponent } from './layouts/blank/blank.component';
-import { FullComponent } from './layouts/full/full.component';
+import { adminRoutes } from './components/admin/admin.routes';
 
 export const routes: Routes = [
   {
     path: '',
-    component: FullComponent,
-  },
-  {
-    path: '',
-    component: BlankComponent,
+    loadComponent() {
+      return import('./layouts/blank/blank.component').then(
+        (m) => m.BlankComponent
+      );
+    },
     children: [
       {
         path: 'signin',
@@ -35,6 +34,24 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'confirm-email',
+        loadComponent() {
+          return import(
+            './components/confirm-email/confirm-email.component'
+          ).then((m) => m.ConfirmEmailComponent);
+        },
+      },
+      {
+        path: 'pages/404',
+        loadComponent() {
+          return import('./pages/page-not-found/page-not-found.component').then(
+            (m) => m.PageNotFoundComponent
+          );
+        },
+      },
+      ...adminRoutes,
+      { path: '**', redirectTo: 'pages/404' },
     ],
   },
 ];
