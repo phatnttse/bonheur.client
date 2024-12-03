@@ -11,6 +11,14 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: '',
+        loadComponent() {
+          return import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          );
+        },
+      },
+      {
         path: 'signin',
         loadComponent() {
           return import('./components/signin/signin.component').then(
