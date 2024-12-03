@@ -35,7 +35,6 @@ const BELOWMONITOR = 'screen and (max-width: 1023px)';
   templateUrl: './full.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None,
-  animations: [fadeInOut],
 })
 export class FullComponent implements OnInit {
   navItems = navItems;

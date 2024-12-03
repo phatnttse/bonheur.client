@@ -34,6 +34,7 @@ import { TranslateLanguageLoader } from './services/app-translation.service';
 import { provideToastr } from 'ngx-toastr';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { adminRoutes } from './components/admin/admin.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -64,6 +65,6 @@ export const appConfig: ApplicationConfig = {
       TranslateModule.forRoot({
         loader: { provide: TranslateLoader, useClass: TranslateLanguageLoader },
       })
-    ),
+    ), provideAnimationsAsync(), provideAnimationsAsync(),
   ],
 };

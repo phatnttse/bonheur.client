@@ -3,7 +3,7 @@
     <div class="position-relative shaper-wrapper">
       <div class="w-100 position-relative rounded bg-white auth-card">
         <div class="auth-body">
-          <a [routerLink]="['/dashboards/dashboard1']" class="m-y-30 d-flex">
+          <a [routerLink]="['/']" class="m-y-30 d-flex">
             <img
               src="./assets/images/logos/dark-logo.svg"
               class="align-middle m-2"
@@ -35,7 +35,7 @@
                     <span class="d-block f-w-500 d-block m-t-24"
                       >New to Bonheur?
                       <a
-                        [routerLink]="['/signup']"
+                        [routerLink]="['/authentication/signup']"
                         class="text-decoration-none text-primary f-w-500 f-s-14"
                       >
                         Create an account</a
@@ -142,7 +142,7 @@
                           mat-stroked-button
                           class="w-100 m-b-4 p-y-20"
                           type="button"
-                          [routerLink]="['/signin-google']"
+                          [routerLink]="['/authentication/signin-google']"
                         >
                           <div class="d-flex align-items-center">
                             <img
