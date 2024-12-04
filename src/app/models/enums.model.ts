@@ -37,3 +37,9 @@ export enum StatusCode {
   ServiceUnavailable = 'ServiceUnavailable',
   GatewayTimeout = 'GatewayTimeout',
 }
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  SUPPLIER = 'SUPPLIER',
+}
