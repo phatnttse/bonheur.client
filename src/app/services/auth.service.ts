@@ -12,6 +12,7 @@ import { LocalStoreManager } from './localstorage-manager.service';
 import { JwtHelper } from './jwt.service';
 import { Account } from '../models/account.model';
 import { Gender, Role } from '../models/enums.model';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +22,12 @@ export class AuthService {
   private oidcHelperService = inject(OidcHelperService);
   private configurations = inject(ConfigurationService);
   private localStorage = inject(LocalStoreManager);
+  private notificationService = inject(NotificationService);
+
   public get homeUrl() {
     return this.configurations.homeUrl;
   }
-  public readonly loginUrl = '/signin';
+  public readonly loginUrl = '/authentication/signin';
   public loginRedirectUrl: string | null = null;
   public logoutRedirectUrl: string | null = null;
 
@@ -84,6 +87,7 @@ export class AuthService {
   redirectForLogin() {
     this.loginRedirectUrl = this.router.url;
     this.router.navigate([this.loginUrl]);
+    this.notificationService.showToastrInfo('Please login to access this page');
   }
 
   reLogin() {

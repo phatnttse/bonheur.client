@@ -60,12 +60,14 @@
   </div>
   <div class="container mx-auto px-4 flex justify-between items-center py-4">
     <!-- Logo -->
-    <div class="text-2xl font-semibold text-primary">
+    <div
+      class="text-2xl font-bold text-primary hover:text-primary-dark transition-colors absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0"
+    >
       <span class="font-bold">Bonheur.</span>
     </div>
 
     <!-- Desktop Navigation -->
-    <nav class="hidden md:flex space-x-8 text-gray-500 font-medium text-base">
+    <nav class="hidden lg:flex space-x-8 text-gray-500 font-medium text-base">
       <a href="#" class="hover:text-pink-500 transition">Home</a>
       <a href="#" class="hover:text-pink-500 transition">Suppliers</a>
       <a href="#" class="hover:text-pink-500 transition">Venues</a>
@@ -75,33 +77,28 @@
     </nav>
 
     <!-- Action Buttons -->
-    <div class="hidden md:flex space-x-4">
+    <div class="hidden lg:flex space-x-4 items-center">
       <button
         type="button"
         routerLink="/signup-supplier"
-        class="bg-pink-400 text-white px-4 py-2 rounded-md"
+        class="bg-[#ffbad0] text-white px-4 py-2 rounded-md text-base mr-4"
       >
         Become a Supplier
       </button>
-      <button
-        type="button"
-        routerLink="/authentication/signin"
-        class="border-2 border-pink-20 text-pink-500 px-4 py-2 rounded-md"
-      >
-        Sign In
-      </button>
-      <button
-        type="button"
-        routerLink="/authentication/signup"
-        class="border-2 border-pink-200 text-pink-500 px-4 py-2 rounded-md"
-      >
-        Sign Up
-      </button>
+      <div class="text-primary text-base flex items-center space-x-2 font-bold">
+        <button type="button" routerLink="/authentication/signin">
+          Sign In
+        </button>
+        <span class="font-medium text-pink-300">/</span>
+        <button type="button" routerLink="/authentication/signup">
+          Sign Up
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Menu Button -->
     <button
-      class="md:hidden flex items-center text-gray-500 focus:outline-none"
+      class="lg:hidden flex items-center text-gray-500 focus:outline-none"
       (click)="toggleMenu()"
     >
       <span class="material-icons">menu</span>
