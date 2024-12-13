@@ -26,14 +26,6 @@ module.exports = {
         background: {
           light: "#f2f6fa",
           DEFAULT: "#F1F3F5",
-        },
-        customPurple: {
-          light: "#E5C9D7",
-          bold: "#AE7DAC",
-          DEFAULT: "#C48CB3",
-        },
-        edit: {
-          DEFAULT: "#ED9E59",
         }
       },
     },

@@ -18,8 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestPricingService } from '../../../services/request-pricing.service';
 import { ListRequestPricingResponse, RequestPricing, RequestPricingResponse } from '../../../models/request-pricing.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PagedData } from '../../../models/page-data.model';
 import { CommonModule } from '@angular/common';
+import { PaginationResponse } from '../../../models/base.model';
 
 @Component({
   selector: 'app-request-pricing-management',
@@ -77,7 +77,7 @@ export class RequestPricingManagementComponent {
   getAllRequestPricing(pageNumber: number, pageSize: number){
     this.requestPricingService.getAllRequestPricingByAdmin(pageNumber, pageSize).subscribe({
       next: (response: ListRequestPricingResponse) => {
-        const data = response.data as PagedData<RequestPricing>; // Ép kiểu rõ ràng
+        const data = response.data as PaginationResponse<RequestPricing>;
         this.listRequestPricing = data.items;
         
         this.dataSource = new MatTableDataSource(this.listRequestPricing);

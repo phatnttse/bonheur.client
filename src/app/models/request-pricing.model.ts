@@ -1,5 +1,5 @@
-import { BaseResponse } from "./base.model";
-import { PagedData } from "./page-data.model";
+import { BaseResponse, PaginationResponse } from "./base.model";
+import { RequestPricingStatus } from "./enums.model";
 import { SupplierRequestPricing } from "./supplier.model";
 
 export interface RequestPricing {
@@ -15,11 +15,6 @@ export interface RequestPricing {
     expirationDate?: Date;
     rejectReason?: string;
   }
-  export enum RequestPricingStatus {
-    Pending = 'Pending',
-    Approved = 'Approved',
-    Rejected = 'Rejected',
-  }
 
-export interface ListRequestPricingResponse extends BaseResponse<PagedData<RequestPricing>>{}
+export interface ListRequestPricingResponse extends BaseResponse<PaginationResponse<RequestPricing>>{}
 export interface RequestPricingResponse extends BaseResponse<RequestPricing>{}

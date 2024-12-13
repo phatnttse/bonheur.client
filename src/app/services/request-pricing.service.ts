@@ -5,7 +5,6 @@ import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http"
 import { BehaviorSubject, catchError, Observable } from "rxjs";
 import { ListRequestPricingResponse, RequestPricing, RequestPricingResponse } from "../models/request-pricing.model";
 import { environment } from "../environments/environment.dev";
-import { PagedData } from "../models/page-data.model";
 
 
 @Injectable({
