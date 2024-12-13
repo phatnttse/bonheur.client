@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}"],
+  content: [
+    "./src/**/*.{html,ts}",
+    "./index.html",
+    "./node_modules/@angular/material/**/*.{js,ts}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -9,7 +13,7 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: "#ffbad0",
-          dark: "#0056b3",
+          dark: "#83a6ce ",
         },
         secondary: {
           DEFAULT: "#f8c076",

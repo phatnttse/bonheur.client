@@ -10,9 +10,15 @@
       </div>
       <div class="flex justify-start mx-4 my-2">
         <button 
-          class="flex items-center bg-customPurple hover:bg-customPurple-light text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+        mat-flat-button
+        color="primary"
+          class="flex items-center text-white text-sm font-medium p-24 shadow-md transition-colors duration-200"
           (click)="btnChangeStatusPage(2)">
-          Thêm danh mục mới
+          <mat-icon class="icon-20 mt-1 d-flex align-items-center">
+            <i-tabler name="plus" 
+            ></i-tabler>
+          </mat-icon>
+          Add New Category
         </button>
       </div>
     </div>
@@ -76,32 +82,46 @@
   </mat-card-content>
 </mat-card>
 } @else if (statusPage == 1) {
-  <mat-card>
-    <div class="flex justify-start mx-4 my-2">
-        <button 
-          class="flex items-center bg-customPurple hover:bg-customPurple-light text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
-          (click)="btnChangeStatusPage(0)">
-          <mat-icon class="mr-2">reply</mat-icon>
-          Quay lại
-        </button>
-      </div>
+  <mat-card class="p-5">
+    
       
   <div class="card">
     <div class="card-body">
-      <div class="d-flex align-items-center mx-5 my-3">
-        <h3 class="text-customPurple font-bold text-4xl m-0">Chi tiết danh mục</h3>
-      </div>
+        <div class="flex align-items-center col-lg-12">
+          <div class="flex justify-start col-lg-8 pr-[15px]">
+            <p class=" font-bold  text-2xl ">Category Detail</p>
+          </div>
+          <div class="flex justify-end mx-4 my-5 col-lg-4">
+            <button 
+            mat-raised-button
+            color="warn"
+            class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+            (click)="btnChangeStatusPage(0)">
+            <mat-icon class="mr-2">reply</mat-icon>
+              Back
+            </button>
+            <button 
+            mat-raised-button
+            class="flex items-center text-white p-24 text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+            color="primary" 
+            type="submit"
+            (click)="btnUpdateCategory(selectedCategory?.id)"
+            >
+            <mat-icon class="mr-2">task_alt</mat-icon>
+            Update
+          </button>
+          </div>
+        </div>
       <form [formGroup]="categoryForm">
 
       <mat-label
-        class="mat-subtitle-3 text-customPurple f-s-14 f-w-600 m-b-12 d-block ml-6"
-        >
-        Tên danh mục
-    </mat-label>
+        class="mat-subtitle-3 text-1xl f-s-14 f-w-600 m-b-12 d-block ml-2">
+        Category name
+      </mat-label>
 
       <mat-form-field
         appearance="outline"
-        class="w-90 ms-5"
+        class="w-100"
         color="primary"
       >
         <input
@@ -117,17 +137,17 @@
           <mat-error >
             @if(categoryForm.get('name')?.errors?.['required']){
               <span>
-                Tên danh mục là bắt buộc.
+                Category name is required.
               </span>
             }
             @else if (categoryForm.get('name')?.errors?.['minlength']) {
               <span >
-                Tên danh mục phải có ít nhất 6 ký tự.
+                Category name must be at least 6 characters.
               </span>
             }
             @else if (categoryForm.get('name')?.errors?.['maxlength']){
               <span>
-                Tên danh mục không vượt quá 100 ký tự
+                Category name cannot exceed 100 characters.
               </span>
             }
           </mat-error>
@@ -135,12 +155,12 @@
       </mat-form-field>
 
       <mat-label
-        class="mat-subtitle-3 text-customPurple f-s-14 f-w-600 m-b-12 m-l-24 d-block"
-        >Mô tả danh mục</mat-label
+        class="mat-subtitle-3 text-1xl f-s-14 f-w-600 m-b-12 ml-2 d-block"
+        >Description</mat-label
       >
       <mat-form-field
         appearance="outline"
-        class="w-90 ms-5"
+        class="w-100"
         color="primary"
       >
         <input
@@ -156,68 +176,67 @@
           <mat-error >
             @if(categoryForm.get('description')?.errors?.['required']){
               <span>
-                Mô tả danh mục là bắt buộc.
+                Category description is required.
               </span>
             }
             @else if (categoryForm.get('description')?.errors?.['minlength']) {
               <span >
-                Mô tả danh mục phải có ít nhất 15 ký tự.
+                Category description must be at least 15 characters.
               </span>
             }
             @else if (categoryForm.get('description')?.errors?.['maxlength']){
               <span>
-                Mô tả danh mục không vượt quá 200 ký tự
+                Category description must not exceed 200 characters.
               </span>
             }
           </mat-error>
         }
       </mat-form-field>
-
-
-
-      <div class="flex justify-end mx-2 my-4">
-        <button 
-          class="flex items-center bg-customPurple hover:bg-customPurple-light text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
-          color="warn" 
-          type="submit"
-          (click)="btnCreateNewCategory()"
-          >
-          <mat-icon class="mr-2">task_alt</mat-icon>
-          Cập nhật
-        </button>
-      </div>
       
       </form>
     </div>
   </div>
 </mat-card>
 } @else if (statusPage == 2) {
-  <mat-card>
-    <div class="flex justify-start mx-4 my-2">
-        <button 
-          class="flex items-center bg-customPurple hover:bg-customPurple-light text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
-          (click)="btnChangeStatusPage(0)">
-          <mat-icon class="mr-2">reply</mat-icon>
-          Quay lại
-        </button>
-      </div>
-      
+  <mat-card class="p-5">    
   <div class="card">
     <div class="card-body">
-      <div class="d-flex align-items-center mx-5 my-3">
-        <h3 class="text-customPurple font-bold text-4xl m-0">Chi tiết danh mục</h3>
+      <div class="flex align-items-center col-lg-12">
+        <div class="flex justify-start col-lg-8">
+          <p class=" font-bold  text-2xl ">Category Detail</p>
+        </div>
+        <div class="flex justify-end mx-4 my-5 col-lg-4">
+          <button 
+          mat-raised-button
+          color="warn"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          (click)="btnChangeStatusPage(0)">
+          <mat-icon class="mr-2">reply</mat-icon>
+            Quay lại
+          </button>
+          <button 
+          mat-raised-button
+          class="flex items-center text-white p-24 text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+          color="primary" 
+          type="submit"
+          (click)="btnCreateNewCategory()"
+          >
+          <mat-icon class="mr-2">task_alt</mat-icon>
+          Thêm mới
+        </button>
+        </div>
       </div>
       <form [formGroup]="categoryForm">
 
       <mat-label
-        class="mat-subtitle-3 text-customPurple f-s-14 f-w-600 m-b-12 d-block ml-6"
+        class="mat-subtitle-3 text-1xl f-s-14 f-w-600 m-b-12 d-block ml-6"
         >
         Tên danh mục
     </mat-label>
 
       <mat-form-field
         appearance="outline"
-        class="w-90 ms-5"
+        class="w-100"
         color="primary"
       >
         <input
@@ -233,17 +252,17 @@
           <mat-error >
             @if(categoryForm.get('name')?.errors?.['required']){
               <span>
-                Tên danh mục là bắt buộc.
+                Category name is required.
               </span>
             }
             @else if (categoryForm.get('name')?.errors?.['minlength']) {
               <span >
-                Tên danh mục phải có ít nhất 6 ký tự.
+                Category name must be at least 6 characters.
               </span>
             }
             @else if (categoryForm.get('name')?.errors?.['maxlength']){
               <span>
-                Tên danh mục không vượt quá 100 ký tự
+                Category name cannot exceed 100 characters.
               </span>
             }
           </mat-error>
@@ -251,12 +270,12 @@
       </mat-form-field>
 
       <mat-label
-        class="mat-subtitle-3 text-customPurple f-s-14 f-w-600 m-b-12 m-l-24 d-block"
-        >Mô tả danh mục</mat-label
+        class="mat-subtitle-3 text-1xl f-s-14 f-w-600 m-b-12 m-l-24 d-block"
+        >Description</mat-label
       >
       <mat-form-field
         appearance="outline"
-        class="w-90 ms-5"
+        class="w-100"
         color="primary"
       >
         <input
@@ -272,37 +291,22 @@
           <mat-error >
             @if(categoryForm.get('description')?.errors?.['required']){
               <span>
-                Mô tả danh mục là bắt buộc.
+                Category description is required.
               </span>
             }
             @else if (categoryForm.get('description')?.errors?.['minlength']) {
               <span >
-                Mô tả danh mục phải có ít nhất 15 ký tự.
+                Category description must be at least 15 characters.
               </span>
             }
             @else if (categoryForm.get('description')?.errors?.['maxlength']){
               <span>
-                Mô tả danh mục không vượt quá 200 ký tự
+                Category description must not exceed 200 characters.
               </span>
             }
           </mat-error>
         }
       </mat-form-field>
-
-
-
-      <div class="flex justify-end mx-2 my-4">
-        <button 
-          class="flex items-center bg-customPurple hover:bg-customPurple-light text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
-          color="warn" 
-          type="submit"
-          (click)="btnCreateNewCategory()"
-          >
-          <mat-icon class="mr-2">task_alt</mat-icon>
-          Thêm mới
-        </button>
-      </div>
-      
       </form>
     </div>
   </div>

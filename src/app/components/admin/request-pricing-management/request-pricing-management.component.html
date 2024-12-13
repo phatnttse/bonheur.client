@@ -1,188 +1,163 @@
 @if (statusPage == 0) {
-    <mat-card>
-      <mat-card-content>
-        <div class="row justify-content-between">
-          <div class="col-lg-4 m-t-10">
-            <mat-form-field appearance="outline" class="w-100">
-              <input matInput type="text" placeholder="Type to search..." #input />
-              <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-          </div>
-        </div>
-    
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="w-100">
-      <mat-card-content>
-        <div class="col-12 d-flex align-items-center justify-content-center mb-5"></div>
-        <div class="table-responsive mt-20">
-          <table mat-table [dataSource]="dataSource" matSort class="w-100 text-nowrap" bgColor="white">
-            <ng-container matColumnDef="name">
-              <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="name">
-                Name
-              </th>
-              <td mat-cell *matCellDef="let requestPricing">
-                <span class="f-s-14">{{ requestPricing.name }}</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-              <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="email">
-                Email
-              </th>
-              <td mat-cell *matCellDef="let requestPricing">
-                <span class="f-s-14">{{ requestPricing.email }}</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="phone">
-                <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="phone">
-                  Phone
-                </th>
-                <td mat-cell *matCellDef="let requestPricing">
-                  <span class="f-s-14">{{ requestPricing.phoneNumber}}</span>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="expiration">
-                <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="expiration">
-                  Expiration Date
-                </th>
-                <td mat-cell *matCellDef="let requestPricing">
-                  <span class="f-s-14">{{ requestPricing.expirationDate | date: 'dd/MM/yyyy'}}</span>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="status">
-                <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="status">
-                  Status
-                </th>
-                <td mat-cell *matCellDef="let requestPricing">
-                  <span class="f-s-14">{{ requestPricing.status }}</span>
-                </td>
-              </ng-container>
-    
-            <ng-container matColumnDef="action">
-              <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
-                Actions
-              </th>
-              <td mat-cell *matCellDef="let requestPricing">
-                <button mat-icon-button type="button" class="m-t-4" (click)="btnGetRequestPricingById(1, requestPricing.id)">
-                  <mat-icon color="primary">
-                    <i-tabler name="eye" class="icon-20 d-flex align-items-center" 
-                      ></i-tabler>
-                  </mat-icon>
-                </button>
-              </td>
-            </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-        </div>
-      </mat-card-content>
-    </mat-card>
-} @else if (statusPage == 1) {
-    <div class="container">
-        <mat-card class="w-100">
-            <mat-card-content>
-                <div class="flex justify-start mx-4 my-2">
-                    <button 
-                    mat-raised-button
-                      color="warn"
-                      class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
-                      (click)="btnBackToMainPage()">
-                      <mat-icon class="mr-2">reply</mat-icon>
-                      Quay lại
-                    </button>
-                  </div>
-                      <div class="card shadow-sm p-4" style="border-radius: 15px;">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mx-4 my-3">
-                                <h4 class="font-bold m-0">Chi tiết báo giá</h4>
-                            </div>
-                
-                          <table class="table table-bordered">
-                            <tr>
-                              <td><strong class="mx-5 my-3">Họ và tên: </strong></td>
-                              <td class="fw-bold text-dark col-6 mx-4 my-3">{{selectedRequestPricing?.name}}</td>
-                            </tr>
-                            <tr>
-                              <td><strong class="mx-5 my-3">Địa chỉ Email: </strong></td>
-                              <td class="fw-bold text-dark col-6 ">{{selectedRequestPricing?.email}}</td>
-                            </tr>
-                            <tr>
-                              <td><strong class="mx-5 my-3">Ngày khởi tạo: </strong></td>
-                              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.expirationDate | date: 'dd/MM/yyyy'}}</td>
-                            </tr>
-                          </table>
-                
-                          <h6 class="text-secondary mt-3">Danh mục sản phẩm</h6>
-                          <ul class="text-dark" style="list-style-type: disc; padding-left: 20px;">
-                            <li></li>
-                          </ul>
-                
-                          <h6 class="text-secondary mt-3">Mô tả sản phẩm</h6>
-                          <p class="text-dark"></p>
-                
-                          <div class="d-flex justify-content-end mt-5">
-                            <button mat-raised-button class="fs-20 px-4 mx-2" color="primary" style="flex: 1;"
-                              >
-                              Đồng ý
-                              <mat-icon>task_alt</mat-icon>
-                            </button>
-                            <button mat-raised-button class="fs-20 px-4 mx-2" color="warn" style="flex: 1;"
-                              >
-                              Từ chối
-                              <mat-icon>cancel</mat-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-            </mat-card-content>
-        </mat-card>
-        <mat-card class="w-100">
-            <mat-card-content>
-                       
-            <div class="card shadow-sm">
-                <div class="card-body">
-                  <h3 class="primary-color mb-5">Thông tin người đăng</h3>
-                  <div class="d-flex flex-column align-items-center my-4">
-                    <img alt="User Avatar"
-                      class="rounded-circle mb-3" style="width: 170px; height: 170px; object-fit: cover; border: 1px solid;" />
-                    <h4 class="font-weight-bold text-dark"></h4>
-                  </div>
-        
-                  <ul class="list-group mt-4">
-                    <li class="list-group-item">
-                      <strong>Email: </strong>
-                      <span class="text-dark fw-bold"></span>
-                    </li>
-                   
-                    <li class="list-group-item">
-                      <strong>Số điện thoại: </strong>
-                      <span class="text-dark fw-bold"></span>
-                    </li>
-  
-                    <li class="list-group-item">
-                      <strong>Số điện thoại: </strong>
-                      <span class="text-dark fw-bold">Chưa cập nhật</span>
-                    </li>
-  
-                    <li class="list-group-item">
-                      <strong>Giới tính: </strong>
-                      <span class="text-dark fw-bold"></span>
-                    </li>
-                    <li class="list-group-item">
-                      <strong>Số dư ví: </strong>
-                      <span class="text-success fw-bold"></span>
-                    </li>
-                    <li class="list-group-item">
-                      <strong>Ngày tham gia: </strong>
-                      <span class="text-success fw-bold"></span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </mat-card-content>
-        </mat-card>
+<mat-card>
+  <mat-card-content>
+    <div class="row justify-content-between">
+      <div class="col-lg-4 m-t-10">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput type="text" placeholder="Type to search..." #input />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
     </div>
+
+  </mat-card-content>
+</mat-card>
+<mat-card class="w-100">
+  <mat-card-content>
+    <div class="col-12 d-flex align-items-center justify-content-center mb-5"></div>
+    <div class="table-responsive mt-20">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100 text-nowrap" bgColor="white">
+        <ng-container matColumnDef="name">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="name">
+            Name
+          </th>
+          <td mat-cell *matCellDef="let requestPricing">
+            <span class="f-s-14">{{ requestPricing.name }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="email">
+            Email
+          </th>
+          <td mat-cell *matCellDef="let requestPricing">
+            <span class="f-s-14">{{ requestPricing.email }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="phone">
+            Phone
+          </th>
+          <td mat-cell *matCellDef="let requestPricing">
+            <span class="f-s-14">{{ requestPricing.phoneNumber}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiration">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="expiration">
+            Expiration Date
+          </th>
+          <td mat-cell *matCellDef="let requestPricing">
+            <span class="f-s-14">{{ requestPricing.expirationDate | date: 'dd/MM/yyyy'}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef mat-sort-header="status">
+            Status
+          </th>
+          <td mat-cell *matCellDef="let requestPricing">
+            <span class="f-s-14">{{ requestPricing.status }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let requestPricing">
+            <button mat-icon-button type="button" class="m-t-4"
+              (click)="btnGetRequestPricingById(1, requestPricing.id)">
+              <mat-icon color="primary">
+                <i-tabler name="eye" class="icon-20 d-flex align-items-center"></i-tabler>
+              </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
+} @else if (statusPage == 1) {
+<div class="container">
+  <mat-card class="w-100">
+    <mat-card-content>
+      <div class="flex justify-start mx-4 my-2">
+        <button mat-raised-button color="warn"
+          class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+          (click)="btnBackToMainPage()">
+          <mat-icon class="mr-2">reply</mat-icon>
+          Quay lại
+        </button>
+      </div>
+      <mat-card class="p-4">
+        <mat-card-content>
+          <div class="d-flex align-items-center mx-4 my-3">
+            <h4 class="font-bold m-0 text-2xl">Request Pricing Detail</h4>
+          </div>
+
+          <table class="table-auto w-full border-separate border-spacing-y-4 border-spacing-x-4">
+            <tr class="mx-5 my-5">
+              <td><strong class="text-1xl">Name: </strong></td>
+              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.name}}</td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Email: </strong></td>
+              <td class="fw-bold text-dark col-6 ">{{selectedRequestPricing?.email}}</td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Phone Number: </strong></td>
+              <td class="fw-bold text-dark col-6 ">{{selectedRequestPricing?.phoneNumber}}</td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Message: </strong></td>
+              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.message}}</td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Expiration Date: </strong></td>
+              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.expirationDate | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="w-100">
+    <mat-card-content>
+      <mat-card  class="p-4">
+        <mat-card-content>
+          <div class="d-flex align-items-center mx-4 my-3">
+            <h4 class="font-bold m-0 text-2xl">Supplier Infomation</h4>
+          </div>
+
+          <table class="table-auto w-full border-separate border-spacing-y-4 border-spacing-x-4">
+            <tr class="mx-5 my-5">
+              <td><strong class="text-1xl">Supplier Name: </strong></td>
+              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.supplier?.supplierName}}</td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Supplier Email: </strong></td>
+              <td class="fw-bold text-dark col-6 ">{{selectedRequestPricing?.email}}</td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Phone Number: </strong></td>
+              <td class="fw-bold text-dark col-6 ">{{selectedRequestPricing?.phoneNumber}}</td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Message: </strong></td>
+              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.message}}</td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Expiration Date: </strong></td>
+              <td class="fw-bold text-dark col-6">{{selectedRequestPricing?.expirationDate | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
 }

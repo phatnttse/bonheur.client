@@ -1,5 +1,6 @@
 import { BaseResponse } from "./base.model";
 import { PagedData } from "./page-data.model";
+import { SupplierRequestPricing } from "./supplier.model";
 
 export interface RequestPricing {
     id: number;
@@ -10,7 +11,7 @@ export interface RequestPricing {
     message?: string;
     status?: RequestPricingStatus;
     supplierId: number;
-    // supplier?: Supplier;
+    supplier?: SupplierRequestPricing;
     expirationDate?: Date;
     rejectReason?: string;
   }
