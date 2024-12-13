@@ -26,7 +26,7 @@ module.exports = {
         background: {
           light: "#f2f6fa",
           DEFAULT: "#F1F3F5",
-        },
+        }
       },
     },
   },

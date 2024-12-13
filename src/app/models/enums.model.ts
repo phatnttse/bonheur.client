@@ -43,3 +43,9 @@ export enum Role {
   USER = 'USER',
   SUPPLIER = 'SUPPLIER',
 }
+
+export enum RequestPricingStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
