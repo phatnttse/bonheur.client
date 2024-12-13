@@ -14,7 +14,7 @@ const oAuthConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
   logoutUrl: 'https://accounts.google.com/logout',
   strictDiscoveryDocumentValidation: false,
-  redirectUri: window.location.origin + '/signin-google',
+  redirectUri: window.location.origin + '/authentication/signin-google',
   clientId: environment.googleClientId,
   scope: 'openid profile email',
 };
@@ -54,7 +54,7 @@ export class SigninGoogleComponent {
             },
             error: (error: HttpErrorResponse) => {
               this.statusService.statusLoadingSpinnerSource.next(false);
-              this.router.navigate(['/signin']);
+              this.router.navigate(['/authentication/signin']);
               this.notificationService.showToastrHandleError(error);
             },
           });
