@@ -13,8 +13,8 @@ import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Account } from '../../models/account.model';
 import { NotificationService } from '../../services/notification.service';
-import { AccountService } from '../../services/account.service';
 import { StatusService } from '../../services/status.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-signin',
@@ -38,7 +38,7 @@ export class SigninComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private accountService: AccountService,
+    private dataService: DataService,
     private statusService: StatusService
   ) {
     this.formSignin = this.formBuilder.group({
@@ -58,7 +58,7 @@ export class SigninComponent {
 
     this.authService.loginWithPassword(email, password).subscribe({
       next: (response: Account) => {
-        this.accountService.accountDataSource.next(response);
+        this.dataService.accountDataSource.next(response);
         this.statusService.statusLoadingSpinnerSource.next(false);
         if (this.authService.isAdmin) {
           this.router.navigate(['/admin']);

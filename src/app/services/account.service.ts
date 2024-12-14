@@ -11,8 +11,6 @@ import { RoleResponse } from '../models/role.model';
 })
 export class AccountService extends EndpointBase {
   private http = inject(HttpClient);
-  public accountDataSource = new BehaviorSubject<Account | null>(null);
-  accountData$ = this.accountDataSource.asObservable();
 
   getRoles(): Observable<RoleResponse> {
     return this.http

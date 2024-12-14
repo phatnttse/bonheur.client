@@ -6,9 +6,9 @@ import { Account } from '../../models/account.model';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
-import { AccountService } from '../../services/account.service';
 import { MaterialModule } from '../../material.module';
 import { StatusService } from '../../services/status.service';
+import { DataService } from '../../services/data.service';
 
 const oAuthConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
@@ -32,7 +32,7 @@ export class SigninGoogleComponent {
     private authService: AuthService,
     private router: Router,
     private notificationService: NotificationService,
-    private accountService: AccountService,
+    private dataService: DataService,
     private statusService: StatusService
   ) {
     this.oauthService.configure(oAuthConfig);
@@ -45,7 +45,7 @@ export class SigninGoogleComponent {
           const idToken = this.oauthService.getIdToken();
           this.authService.loginWithGoogle(idToken).subscribe({
             next: (response: Account) => {
-              this.accountService.accountDataSource.next(response);
+              this.dataService.accountDataSource.next(response);
               this.statusService.statusLoadingSpinnerSource.next(false);
               this.router.navigate(['/']);
               this.notificationService.openSnackBarWelcome(

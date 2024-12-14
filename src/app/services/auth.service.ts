@@ -227,8 +227,6 @@ export class AuthService {
     this.localStorage.deleteData(DBkeys.CURRENT_USER);
 
     this.configurations.clearLocalChanges();
-
-    this.reevaluateLoginStatus();
   }
 
   private reevaluateLoginStatus(currentUser?: Account | null) {
