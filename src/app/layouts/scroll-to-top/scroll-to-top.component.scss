@@ -1,0 +1,18 @@
+@import "../../../assets/scss/variables";
+.scroll-to-top {
+  position: fixed;
+  background-color: $primary;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: $primary;
+  }
+}

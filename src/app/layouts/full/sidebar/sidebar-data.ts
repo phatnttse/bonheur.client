@@ -20,16 +20,16 @@ export const navItems: NavItem[] = [
     route: '/admin/roles/management',
   },
   {
-    displayName: 'Chips',
+    displayName: 'Category Management',
     iconName: 'poker-chip',
     bgcolor: 'warning',
-    route: '/ui-components/chips',
+    route: '/admin/categories/management',
   },
   {
-    displayName: 'Lists',
+    displayName: 'Quote Management',
     iconName: 'list',
     bgcolor: 'success',
-    route: '/ui-components/lists',
+    route: '/admin/request-pricing/management',
   },
   {
     displayName: 'Menu',

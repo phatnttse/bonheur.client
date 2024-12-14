@@ -29,7 +29,7 @@
               >
                 <div class="row justify-content-center w-100">
                   <div class="col-lg-11">
-                    <h4 class="f-w-700 f-s-30 m-0 m-t-20 lh-base">
+                    <h4 class="f-w-700 text-2xl md:text-3xl m-0 m-t-20 lh-base">
                       Welcome to <span class="text-primary">Bonheur</span>
                     </h4>
                     <span class="d-block f-w-500 d-block m-t-24"
@@ -108,7 +108,7 @@
                         </mat-error>
                         } @if (formSignup.get('email')?.hasError('email')) {
                         <mat-error style="font-size: 12px">
-                          Email is invalid. Ex: bonheur&#64;gmail.com
+                          Email is invalid Ex:bonheur&#64;gmail.com
                         </mat-error>
                         }
                       </mat-form-field>
@@ -197,6 +197,7 @@
                         <button
                           mat-stroked-button
                           class="w-100 m-b-4 p-y-20"
+                          style="border-radius: 18px !important"
                           type="button"
                           [routerLink]="['/authentication/signin-google']"
                         >

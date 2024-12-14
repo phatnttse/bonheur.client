@@ -10,11 +10,11 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from '../../../material.module';
-import { AccountService } from '../../../services/account.service';
 import { Account } from '../../../models/account.model';
 import { AuthService } from '../../../services/auth.service';
 import { LocalStoreManager } from '../../../services/localstorage-manager.service';
 import { DBkeys } from '../../../services/db-keys';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -40,14 +40,14 @@ export class HeaderComponent {
   accountInfo: Account | null = null; // Information about the currently logged in user
 
   constructor(
-    private accountService: AccountService,
+    private dataService: DataService,
     private authService: AuthService,
     private localStorage: LocalStoreManager,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.accountService.accountData$.subscribe((account: Account | null) => {
+    this.dataService.accountData$.subscribe((account: Account | null) => {
       if (account) {
         this.accountInfo = account;
       } else {

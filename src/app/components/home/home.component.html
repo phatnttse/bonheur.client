@@ -1,39 +1,503 @@
-<div class="min-h-screen">
-  <section
-    class="relative h-[540px] bg-gradient-to-r from-primary to-primary-dark overflow-hidden"
+<section
+  class="section-hero lg:py-[30px] md:py-[30px] py-[30px] relative overflow-hidden mb-[50px]"
+>
+  <div
+    class="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]"
   >
-    <div class="container mx-auto px-4 h-full flex items-center">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="flex flex-wrap w-full">
+      <div class="w-full">
         <div
-          class="text-white z-10 md:mx-20 md:mb-20 sm:mb-10"
-          data-aos="fade-right"
-          data-aos-duration="1400"
+          class="hero-slider swiper-container swiper-fade swiper-initialized swiper-horizontal swiper-autoheight swiper-watch-progress swiper-backface-hidden"
         >
-          <h1 class="text-5xl md:text-5xl font-bold mb-10 leading-tight">
-            Your Dream Wedding Awaits
-          </h1>
-          <p class="text-md md:text-xl mb-8 opacity-90">
-            Personalized planning for your special day.
-          </p>
-          <button
-            class="bg-white text-primary hover:bg-gray-100 font-semibold text-lg px-8 py-6 flex align-center gap-10"
-          >
-            Start Planning
-            <i-tabler style="margin-top: 2px" name="arrow-right"></i-tabler>
-          </button>
+          <div class="flex flex-wrap w-full mb-[-24px]">
+            <div
+              class="min-[992px]:w-[50%] w-full px-[12px] min-[992px]:order-1 order-2 lg:mt-[64px] md:mt-[24px] mt-[16px]"
+              data-aos="fade-right"
+              data-aos-duration="1500"
+            >
+              <div class="flex-none space-y-5 max-w-xl">
+                <a
+                  href="javascript:void(0)"
+                  class="inline-flex flex-wrap gap-x-4 items-center rounded-full p-1 pr-6 border text-sm font-medium duration-150 hover:bg-white"
+                >
+                  <span
+                    class="inline-block rounded-full px-3 py-1 bg-primary text-white text-center"
+                  >
+                    Latest News
+                  </span>
+                  <p
+                    class="flex items-center whitespace-nowrap max-[667px]:ml-[4px] max-[667px]:mt-1"
+                  >
+                    Discover our new wedding packages
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-5 h-5 ml-2"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </p>
+                </a>
+
+                <h1 class="text-4xl text-gray-800 font-extrabold sm:text-5xl">
+                  Plan Your Dream Wedding Effortlessly
+                </h1>
+                <p>
+                  Let us make your special day unforgettable with tailored
+                  services, elegant designs, and seamless planning.
+                </p>
+                <div class="flex items-center gap-x-3 sm:text-sm">
+                  <a
+                    href="javascript:void(0)"
+                    class="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
+                  >
+                    Get Started
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-5 h-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="javascript:void(0)"
+                    class="flex items-center justify-center gap-x-1 py-2 px-4 text-gray-700 hover:text-gray-900 font-medium duration-150 md:inline-flex"
+                  >
+                    Contact Us
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-5 h-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="min-[992px]:w-[50%] w-full px-[12px] min-[992px]:order-2 order-1 mb-[24px]"
+              data-aos="fade-down"
+              data-aos-duration="1500"
+            >
+              <div
+                class="hero-image pr-[50px] relative max-[991px]:px-[50px] max-[575px]:px-[30px] flex justify-center max-[420px]:p-[0]"
+              >
+                <img
+                  src="assets/images/backgrounds/hero.png"
+                  alt="hero"
+                  class="w-full pb-[50px] opacity-[1] max-[1199px]:pr-[30px] max-[991px]:pr-[0] max-[575px]:pb-[30px] max-[420px]:pb-[15px]"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="hidden md:block relative mb-6"
-          data-aos="fade-down"
-          data-aos-duration="1400"
+      </div>
+    </div>
+  </div>
+</section>
+<section
+  class="section-categories overflow-hidden pt-[100px] max-[1199px]:pt-[35px] pb-[100px] max-[1199px]:pb-[70px] bg-white"
+>
+  <div class="container mx-auto lg:px-0 md:px-8 px-2">
+    <div
+      class="section-title mb-[20px] pb-[20px] z-[5] relative flex flex-col items-start text-start max-[991px]:pb-[0] px-10"
+    >
+      <div
+        class="section-detail max-[991px]:mb-[12px]"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+      >
+        <h2
+          class="bb-title font-quicksand mb-[0] p-[0] text-[25px] font-bold text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]"
         >
+          <span class="text-primary">Enjoy planning your wedding</span>
+        </h2>
+        <p
+          class="font-Poppins max-w-[400px] mt-[10px] text-[14px] text-[#686e7d] leading-[18px] font-light tracking-[0.03rem] max-[991px]:mx-[auto]"
+        >
+          Start planning your wedding with us, it's free!
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-10">
+      <div
+        class="bg-white rounded-lg shadow-md flex"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+      >
+        <div class="flex flex-wrap w-full">
+          <div
+            class="px-6 py-6 max-[667px]:py-4 min-[992px]:w-[50%] w-full min-[992px]:order-1 order-2"
+          >
+            <h5 class="text-lg font-semibold text-gray-800 mb-4">
+              Wedding venues
+            </h5>
+            <p class="text-gray-600 mb-4">
+              Photos, reviews, and so much more... get in touch from here!
+            </p>
+            <a
+              routerLink="/"
+              class="text-primary font-bold inline-block text-base"
+              >Explore venues</a
+            >
+          </div>
+          <div
+            class="min-[992px]:w-[50%] w-full min-[992px]:order-2 order-1 overflow-hidden"
+          >
+            <img
+              src="https://via.placeholder.com/350x150"
+              alt="Wedding venues"
+              class="object-cover w-full h-full rounded"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow-md flex"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+      >
+        <div class="flex flex-wrap w-full">
+          <div
+            class="px-6 py-6 max-[667px]:py-4 min-[992px]:w-[50%] w-full min-[992px]:order-1 order-2"
+          >
+            <h5 class="text-lg font-semibold text-gray-800 mb-4">Suppliers</h5>
+            <p class="text-gray-600 mb-4">
+              Find the best wedding suppliers near you in every category.
+            </p>
+            <a
+              routerLink="/"
+              class="text-primary font-bold inline-block text-base"
+              >Start your search</a
+            >
+          </div>
+          <div
+            class="min-[992px]:w-[50%] w-full min-[992px]:order-2 order-1 overflow-hidden"
+          >
+            <img
+              src="https://via.placeholder.com/350x150"
+              alt="Wedding venues"
+              class="object-cover w-full h-full rounded"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 px-10"
+    >
+      <div
+        class="bg-white rounded-lg shadow-md grid grid-cols-3 items-center relative p-3 gap-3"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+      >
+        <div class="col-span-2 px-2 py-2">
+          <h5 class="text-base font-semibold text-gray-800 mb-2">
+            Your free wedding website
+          </h5>
+          <p class="text-gray-600 text-sm mb-2">
+            Share your wedding details - and your love story - with a
+            customizable website.
+          </p>
+          <a
+            routerLink="/"
+            class="text-primary font-medium inline-block text-sm"
+          >
+            Personalize your free website
+          </a>
+        </div>
+        <div class="col-span-1 flex justify-end">
           <img
-            src="https://via.placeholder.com/600x400/cccccc/ffffff"
-            alt="Wedding Service"
-            class="rounded-2xl shadow-2xl"
+            src="https://via.placeholder.com/48x48"
+            alt="Wedding venues"
+            class="object-cover w-12 h-12 rounded"
+          />
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-lg shadow-md grid grid-cols-3 items-center relative p-3 gap-3"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+      >
+        <div class="col-span-2 px-2 py-2">
+          <h5 class="text-base font-semibold text-gray-800 mb-2">
+            Invites and stationery
+          </h5>
+          <p class="text-gray-600 text-sm mb-2">
+            Get free samples of save the dates and invites before you decide.
+          </p>
+          <a
+            routerLink="/"
+            class="text-primary font-medium inline-block text-sm"
+          >
+            Request free samples
+          </a>
+        </div>
+        <div class="col-span-1 flex justify-end">
+          <img
+            src="https://via.placeholder.com/48x48"
+            alt="Wedding venues"
+            class="object-cover w-12 h-12 rounded"
+          />
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-lg shadow-md grid grid-cols-3 items-center relative p-3 gap-3"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+      >
+        <div class="col-span-2 px-2 py-2">
+          <h5 class="text-base font-semibold text-gray-800 mb-2">
+            Planning tools
+          </h5>
+          <p class="text-gray-600 text-sm mb-2">
+            Custom planning tools to manage your checklist, budget, guests and
+            vendors.
+          </p>
+          <a
+            routerLink="/"
+            class="text-primary font-medium inline-block text-sm"
+          >
+            Discover our free tools
+          </a>
+        </div>
+        <div class="col-span-1 flex justify-end">
+          <img
+            src="https://via.placeholder.com/48x48"
+            alt="Wedding venues"
+            class="object-cover w-12 h-12 rounded"
           />
         </div>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>
+
+<!-- <section
+  class="section-vendors overflow-hidden pt-[50px] max-[1199px]:pt-[35px] pb-[100px] max-[1199px]:pb-[70px] bg-white"
+>
+  <div
+    class="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]"
+  >
+    <div class="flex flex-wrap w-full mb-[-24px]">
+      <div class="w-full px-[12px]">
+        <div
+          class="section-title mb-[20px] pb-[20px] z-[5] relative flex flex-col items-center text-center max-[991px]:pb-[0] aos-init aos-animate"
+        >
+          <div
+            class="section-detail max-[991px]:mb-[12px]"
+            data-aos="zoom-in"
+            data-aos-duration="1500"
+            data-aos-delay="200"
+          >
+            <h2
+              class="bb-title font-quicksand mb-[0] p-[0] text-[25px] font-bold text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]"
+            >
+              <span class="text-primary">Enjoy planning your wedding </span>
+            </h2>
+            <p
+              class="font-Poppins max-w-[400px] mt-[10px] text-[14px] text-[#686e7d] leading-[18px] font-light tracking-[0.03rem] max-[991px]:mx-[auto]"
+            >
+              Start planning your wedding with us, it's free!
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="min-[992px]:w-[41.66%] w-full px-[12px] mb-[24px] aos-init aos-animate"
+      >
+        <div class="bb-vendors-img sticky top-[0]">
+          <div class="tab-content">
+            <div
+              class="tab-vendors-pane"
+              id="vendors_tab_one"
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              data-aos-delay="200"
+            >
+              <a
+                href="javascript:void(0)"
+                class="bb-vendor-init transition-all duration-[0.3s] ease-in-out absolute right-[20px] top-[20px] h-[35px] w-[35px] bg-[#00000080] hover:bg-[#000000cc] flex justify-center items-center rounded-[10px]"
+              >
+                <i class="ri-arrow-right-up-line text-[20px] text-[#fff]"></i>
+              </a>
+              <img
+                src="https://media.istockphoto.com/id/950724094/photo/bridal-background-with-planner-checklist.webp?a=1&b=1&s=612x612&w=0&k=20&c=e4ZGvZpVugZ1kPNJg8bHZWUjd8_fS2hBX6qRqKbqHQ8=
+                "
+                alt="vendors-img-1"
+                class="w-full rounded-[30px] border-[1px] border-solid border-[#eee]"
+              />
+              <div
+                class="vendors-local-shape absolute bottom-[0] right-[0] h-[120px] w-[120px] bg-[#fff] pt-[20px] pl-[20px] rounded-tl-[30px]"
+              >
+                <div class="inner-shape relative"></div>
+                <img
+                  src="https://media.istockphoto.com/id/950724094/photo/bridal-background-with-planner-checklist.webp?a=1&b=1&s=612x612&w=0&k=20&c=e4ZGvZpVugZ1kPNJg8bHZWUjd8_fS2hBX6qRqKbqHQ8=
+                  "
+                  alt="vendor"
+                  class="w-[100px] h-[100px] rounded-[30px] border-[1px] border-solid border-[#eee]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="min-[992px]:w-[58.33%] w-full px-[12px] mb-[24px]">
+        <ul
+          class="bb-vendors-tab-nav flex flex-wrap mb-[-24px]"
+          id="vendorstab"
+        >
+          <li
+            class="nav-item w-full mb-[24px] active aos-init aos-animate"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="200"
+          >
+            <a
+              class="nav-link p-[30px] bg-white border-[1px] border-solid border-[#ccc] rounded-[30px] block"
+              href="#vendors_tab_one"
+            >
+              <div class="bb-vendors-box">
+                <div
+                  class="inner-heading mb-[5px] flex justify-between max-[420px]:flex-col"
+                >
+                  <h5
+                    class="font-quicksand text-[18px] font-bold tracking-[0.03rem] leading-[1.2] text-[#3d4750]"
+                  >
+                    Wedding venues
+                  </h5>
+                  <span
+                    class="font-Poppins text-[14px] text-[#686e7d] leading-[28px] font-normal tracking-[0.03rem]"
+                    >Explore venues</span
+                  >
+                </div>
+                <p
+                  class="font-Poppins text-[14px] leading-[20px] text-[#686e7d] font-light tracking-[0.03rem]"
+                >
+                  Photos, reviews, and so much more... get in touch from here!
+                </p>
+              </div>
+            </a>
+          </li>
+          <li
+            class="nav-item w-full mb-[24px] aos-init aos-animate"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="400"
+          >
+            <a
+              class="nav-link p-[30px] bg-white border-[1px] border-solid border-[#ccc] rounded-[30px] block"
+              href="#vendors_tab_two"
+            >
+              <div class="bb-vendors-box">
+                <div
+                  class="inner-heading mb-[5px] flex justify-between max-[420px]:flex-col"
+                >
+                  <h5
+                    class="font-quicksand text-[18px] font-bold tracking-[0.03rem] leading-[1.2] text-[#3d4750]"
+                  >
+                    Eelna Fashion Pvt. Ltd.
+                  </h5>
+                  <span
+                    class="font-Poppins text-[14px] text-[#686e7d] leading-[28px] font-normal tracking-[0.03rem]"
+                    >Sales - 428</span
+                  >
+                </div>
+                <p
+                  class="font-Poppins text-[14px] leading-[20px] text-[#686e7d] font-light tracking-[0.03rem]"
+                >
+                  Fruits (8) | Vegetables (15) | Snacks (04)
+                </p>
+              </div>
+            </a>
+          </li>
+          <li
+            class="nav-item w-full mb-[24px] aos-init aos-animate"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="600"
+          >
+            <a
+              class="nav-link p-[30px] bg-white border-[1px] border-solid border-[#ccc] rounded-[30px] block"
+              href="#vendors_tab_three"
+            >
+              <div class="bb-vendors-box">
+                <div
+                  class="inner-heading mb-[5px] flex justify-between max-[420px]:flex-col"
+                >
+                  <h5
+                    class="font-quicksand text-[18px] font-bold tracking-[0.03rem] leading-[1.2] text-[#3d4750]"
+                  >
+                    Mario Fashion Pvt. Ltd.
+                  </h5>
+                  <span
+                    class="font-Poppins text-[14px] text-[#686e7d] leading-[28px] font-normal tracking-[0.03rem]"
+                    >Sales - 1024</span
+                  >
+                </div>
+                <p
+                  class="font-Poppins text-[14px] leading-[20px] text-[#686e7d] font-light tracking-[0.03rem]"
+                >
+                  Fruits (16) | Vegetables (42) | Snacks (18)
+                </p>
+              </div>
+            </a>
+          </li>
+          <li
+            class="nav-item w-full mb-[24px] aos-init aos-animate"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="800"
+          >
+            <a
+              class="nav-link p-[30px] bg-white border-[1px] border-solid border-[#ccc] rounded-[30px] block"
+              href="#vendors_tab_four"
+            >
+              <div class="bb-vendors-box">
+                <div
+                  class="inner-heading mb-[5px] flex justify-between max-[420px]:flex-col"
+                >
+                  <h5
+                    class="font-quicksand text-[18px] font-bold tracking-[0.03rem] leading-[1.2] text-[#3d4750]"
+                  >
+                    Maria Fashion Pvt. Ltd.
+                  </h5>
+                  <span
+                    class="font-Poppins text-[14px] text-[#686e7d] leading-[28px] font-normal tracking-[0.03rem]"
+                    >Sales - 210</span
+                  >
+                </div>
+                <p
+                  class="font-Poppins text-[14px] leading-[20px] text-[#686e7d] font-light tracking-[0.03rem]"
+                >
+                  Fruits (2) | Vegetables (10) | Snacks (03)
+                </p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section> -->
