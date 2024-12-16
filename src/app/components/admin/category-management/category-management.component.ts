@@ -76,6 +76,16 @@ export class CategoryManagementComponent {
     return !!control && control.invalid && control.touched;
   }
 
+  success(){
+    this.notificationService.success("HIHI", 'hahaha');
+  }
+
+  info(){
+    this.notificationService.info("HIHI", 'hahaha');
+  }
+  warning(){
+    this.notificationService.warning("HIHI", 'hahaha');
+  }
   //Lấy toàn bộ danh sách
   getCategories(){
     this.categoryService.getAllSupplierCategories().subscribe({
@@ -91,7 +101,7 @@ export class CategoryManagementComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.showToastrHandleError(error);
+        this.notificationService.error('ERROR', '123456');
       },
     }
     );

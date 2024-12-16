@@ -93,7 +93,7 @@ export class RequestPricingManagementComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.showToastrHandleError(error);
+        // this.notificationService.showToastrHandleError(error);
       },
     });
   }
@@ -109,7 +109,7 @@ export class RequestPricingManagementComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.showToastrHandleError(error);
+        // this.notificationService.showToastrHandleError(error);
       },
     }
     );
