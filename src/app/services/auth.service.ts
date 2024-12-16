@@ -87,7 +87,7 @@ export class AuthService {
   redirectForLogin() {
     this.loginRedirectUrl = this.router.url;
     this.router.navigate([this.loginUrl]);
-    this.notificationService.showToastrInfo('Please login to access this page');
+    // this.notificationService.showToastrInfo('Please login to access this page');
   }
 
   reLogin() {

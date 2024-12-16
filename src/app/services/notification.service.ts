@@ -2,6 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
+import { Toast } from '../models/toast.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,35 +11,38 @@ import { ToastrService } from 'ngx-toastr';
 export class NotificationService {
   private snackBar = inject(MatSnackBar);
   private toastr = inject(ToastrService);
-
-  showToastrSuccess(message: string, title?: string) {
-    this.toastr.success(message, title ?? '', {
-      progressBar: true,
-    });
+  private toastrs: Toast[] =[];
+  private toastSubject = new BehaviorSubject<Toast[]>([]);
+  toasts$ = this.toastSubject.asObservable();
+  show(title: string, message: string, type: 'success' | 'error' | 'info' | 'warning'){
+    const id= Date.now();
+    const toastr: Toast ={ id, title, message, type};
+    this.toastrs.push(toastr);
+    this.toastSubject.next(this.toastrs);
+    setTimeout(() => this.remove(id), 3000);
+    return id;
   }
 
-  showToastrHandleError(error: HttpErrorResponse) {
-    this.toastr.error(
-      error.error.detail ??
-        'The system is experiencing an error, please try again later',
-      'Error',
-      {
-        progressBar: true,
-      }
-    );
+  remove(id: number){
+    this.toastrs = this.toastrs.filter(t => t.id !== id);
+    this.toastSubject.next(this.toastrs);
   }
 
-  showToastrInfo(message: string, title?: string) {
-    this.toastr.info(message, title ?? '', {
-      progressBar: true,
-    });
+  success(title: string, message: string): number{
+    return this.show(title, message, 'success');
   }
 
-  showToastrWarning(message: string, title?: string) {
-    this.toastr.warning(message, title ?? '', {
-      progressBar: true,
-    });
-  }
+  error(title: string, message: string): number{
+    return this.show(title, message, 'error' );
+  };
+
+  info(title: string, message: string): number{
+    return this.show(title, message, 'info' );
+  };
+  
+  warning(title: string, message: string): number{
+    return this.show(title, message, 'warning' );
+  };
 
   openSnackBarWelcome(message: string) {
     this.snackBar.open(message, 'Close', {
