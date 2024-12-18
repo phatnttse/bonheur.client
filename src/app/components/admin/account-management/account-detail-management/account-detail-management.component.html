@@ -1,0 +1,73 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <div class="grid grid-cols-2 gap-4 place-content-between h-48 ...">
+      <mat-card>
+        <mat-card-content class="p-y-24">
+          <mat-card-title>Change Profile</mat-card-title>
+          <mat-card-subtitle>Change your profile picture from here
+          </mat-card-subtitle>
+          <div class="my-4 flex justify-center">
+            <img src="/assets/images/profile/user-1.jpg" width="120" class="rounded-circle">
+          </div>
+          <div class="grid grid-cols-2 gap-4 place-content-between mt-4">
+            <button mat-raised-button color="warn"
+              class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200">
+              <mat-icon class="mr-2">key</mat-icon>
+              Cancel
+            </button>
+            <button mat-raised-button color="primary"
+              class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 mx-2 shadow-md transition-colors duration-200">
+              <mat-icon class="mr-2">key</mat-icon>
+              Unblock
+            </button>
+          </div>
+          <span class="f-s-14 m-t-24 d-block">Allowed JPG, GIF or PNG. Max size of 800K</span>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <mat-card-title>Change Password</mat-card-title>
+          <mat-card-subtitle>To change your password please confirm here</mat-card-subtitle>
+          <h4 class="font-bold">Current Password</h4>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="***********">
+          </mat-form-field>
+          <h4 class="font-bold">New Password</h4>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="***********">
+          </mat-form-field>
+          <h4 class="font-bold">Confirm Password</h4>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="***********">
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="mt-52">
+        <mat-card>
+            <mat-card-content class="p-y-24">
+                <div class="mt-2">              <mat-card-title>Personal Details </mat-card-title>
+                </div>
+              <mat-card-subtitle>To change your personal detail , edit and save from here
+              </mat-card-subtitle>
+              <div class="grid grid-cols-2 gap-4 place-content-between mt-3.5">
+                <h3 class="font-bold">Full name</h3>
+                <h3 class="font-bold">Store  name</h3>
+                <p>Mathew Anderson</p>
+                <p>Maxima Studio</p>
+                <h3 class="font-bold">Location</h3>
+                <h3 class="font-bold">Currency</h3>
+                <p>India</p>
+                <p>India (IRN)</p>
+                <h3 class="font-bold">Email</h3>
+                <h3 class="font-bold">Phone</h3>
+                <p>phucpu03gmail.com</p>
+                <p>0366658711</p>
+              </div>
+              <h3 class="font-bold mt-2">Address</h3>
+              <p>Tan Dinh Village - Phu Yen Province</p>
+            </mat-card-content>
+          </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

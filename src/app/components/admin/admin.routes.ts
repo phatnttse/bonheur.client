@@ -33,6 +33,22 @@ export const adminRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'accounts/management',
+        loadComponent() {
+          return import('./account-management/account-management.component').then(
+            (m) => m.AccountManagementComponent
+          );
+        },
+      },
+      {
+        path: 'account/:id',
+        loadComponent() {
+          return import('./account-management/account-detail-management/account-detail-management.component').then(
+            (m) => m.AccountDetailManagementComponent
+          );
+        },
+      },
     ],
   },
 ];
