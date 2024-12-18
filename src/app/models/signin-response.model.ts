@@ -18,10 +18,12 @@ export interface IdToken {
   sub: string;
   role: string | string[];
   permission: PermissionValues | PermissionValues[];
-  name: string;
+  partnerName: string;
   email: string;
   fullname: string;
+  phoneNumber: string;
   emailConfirmed: boolean;
   pictureUrl: string;
   gender: Gender;
+  lockOutEnd: Date;
 }

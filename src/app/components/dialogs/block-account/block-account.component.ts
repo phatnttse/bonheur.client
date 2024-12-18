@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-block-account',
@@ -52,11 +53,11 @@ export class BlockAccountComponent {
 
       this.accountService.blockAccount(this.accountId, lockoutEnd, isEnable).subscribe({
         next: (response) => {
-          this.notificationService.success('Thành công','Tài khoản đã bị khóa thành công');
+          this.notificationService.success('Success', response.message);
           this.dialogRef.close();  
         },
-        error: (error) => {
-          this.notificationService.error('Error','Lỗi khi khóa tài khoản');
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.handleApiError(error);
         }
       });
     }

@@ -4,70 +4,138 @@
       <mat-card>
         <mat-card-content class="p-y-24">
           <mat-card-title>Change Profile</mat-card-title>
-          <mat-card-subtitle>Change your profile picture from here
+          <mat-card-subtitle class="pb-4"
+            >Change your profile picture from here
           </mat-card-subtitle>
           <div class="my-4 flex justify-center">
-            <img src="/assets/images/profile/user-1.jpg" width="120" class="rounded-circle">
+            @if (account?.pictureUrl !== null && account?.pictureUrl !==
+            "https://avatar333.jpg") {
+            <img
+              src="{{ account?.pictureUrl }}"
+              width="120"
+              height="120"
+              class="rounded-circle"
+              style="height: 120px; width: 120px"
+            />
+            } @else{
+            <img
+              src="assets/images/profile/no-user.jpg"
+              width="120"
+              height="120"
+              class="rounded-circle"
+              style="height: 120px; width: 120px"
+            />
+            }
+          </div>
+          <div class="my-4 flex justify-center">
+            <h4 class="font-bold text-2xl">{{ account?.fullName }}</h4>
           </div>
           <div class="grid grid-cols-2 gap-4 place-content-between mt-4">
-            <button mat-raised-button color="warn"
-              class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200">
+            @if(accountId != null){
+            <button
+              mat-raised-button
+              color="warn"
+              class="flex items-center text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+              [disabled]="account?.isLockedOut"
+              (click)="openBlockAccountDialog(accountId)"
+            >
               <mat-icon class="mr-2">key</mat-icon>
-              Cancel
+              Block
             </button>
-            <button mat-raised-button color="primary"
-              class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 mx-2 shadow-md transition-colors duration-200">
+            <button
+              mat-raised-button
+              color="primary"
+              class="flex items-center text-white text-sm font-medium rounded-lg px-4 py-3 mx-2 shadow-md transition-colors duration-200"
+              [disabled]="!account?.isLockedOut"
+              (click)="openUnblockAccountDialog(accountId)"
+            >
               <mat-icon class="mr-2">key</mat-icon>
               Unblock
             </button>
+            }
           </div>
-          <span class="f-s-14 m-t-24 d-block">Allowed JPG, GIF or PNG. Max size of 800K</span>
+          @if (account?.isLockedOut == true) {
+          <h3 class="font-bold mt-3">Status:<span>Unlocked</span></h3>
+          } @else{
+          <h3 class="font-bold mt-3">Status: <span>Unlocked</span></h3>
+          }
         </mat-card-content>
       </mat-card>
       <mat-card>
         <mat-card-content>
           <mat-card-title>Change Password</mat-card-title>
-          <mat-card-subtitle>To change your password please confirm here</mat-card-subtitle>
-          <h4 class="font-bold">Current Password</h4>
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="***********">
-          </mat-form-field>
-          <h4 class="font-bold">New Password</h4>
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="***********">
-          </mat-form-field>
-          <h4 class="font-bold">Confirm Password</h4>
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="***********">
-          </mat-form-field>
+          <mat-card-subtitle class="pb-4"
+            >To change your password please confirm here</mat-card-subtitle
+          >
+          <div class="mt-2">
+            <h4 class="font-bold">Current Password</h4>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="***********" />
+            </mat-form-field>
+            <h4 class="font-bold">New Password</h4>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="***********" />
+            </mat-form-field>
+            <h4 class="font-bold">Confirm Password</h4>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="***********" />
+            </mat-form-field>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="mt-52">
-        <mat-card>
-            <mat-card-content class="p-y-24">
-                <div class="mt-2">              <mat-card-title>Personal Details </mat-card-title>
-                </div>
-              <mat-card-subtitle>To change your personal detail , edit and save from here
-              </mat-card-subtitle>
-              <div class="grid grid-cols-2 gap-4 place-content-between mt-3.5">
-                <h3 class="font-bold">Full name</h3>
-                <h3 class="font-bold">Store  name</h3>
-                <p>Mathew Anderson</p>
-                <p>Maxima Studio</p>
-                <h3 class="font-bold">Location</h3>
-                <h3 class="font-bold">Currency</h3>
-                <p>India</p>
-                <p>India (IRN)</p>
-                <h3 class="font-bold">Email</h3>
-                <h3 class="font-bold">Phone</h3>
-                <p>phucpu03gmail.com</p>
-                <p>0366658711</p>
-              </div>
-              <h3 class="font-bold mt-2">Address</h3>
-              <p>Tan Dinh Village - Phu Yen Province</p>
-            </mat-card-content>
-          </mat-card>
+      <mat-card>
+        <mat-card-content class="p-y-24">
+          <div class="mt-2">
+            <mat-card-title>Personal Details </mat-card-title>
+          </div>
+          <mat-card-subtitle
+            >To change your personal detail , edit and save from here
+          </mat-card-subtitle>
+          <div class="grid grid-cols-2 gap-4 place-content-between mt-3.5">
+            <h3 class="font-bold">Full name</h3>
+            <h3 class="font-bold">Partner name</h3>
+            @if(account?.fullName){
+            <p>{{ account?.fullName }}</p>
+            } @else {
+            <p>No infomation</p>
+            } @if(account?.partnerName){
+            <p>{{ account?.partnerName }}</p>
+            } @else {
+            <p>No infomation</p>
+            }
+            <h3 class="font-bold">Gender</h3>
+            <h3 class="font-bold">Role</h3>
+            @if(account?.gender){
+            <p>{{ account?.gender }}</p>
+            } @else {
+            <p>No infomation</p>
+            } @if(account?.roles){
+            <p>{{ account?.roles }}</p>
+            } @else {
+            <p>No infomation</p>
+            }
+            <h3 class="font-bold">Email</h3>
+            <h3 class="font-bold">Phone</h3>
+            @if(account?.email){
+            <p>{{ account?.email }}</p>
+            } @else {
+            <p>No infomation</p>
+            } @if(account?.phoneNumber){
+            <p>{{ account?.phoneNumber }}</p>
+            } @else {
+            <p>No infomation</p>
+            }
+          </div>
+          <h3 class="font-bold mt-2">Blocked deadline:</h3>
+          @if(account?.lockOutEnd){
+          <p>{{ account?.lockOutEnd }}</p>
+          } @else {
+          <p>No infomation</p>
+          }
+        </mat-card-content>
+      </mat-card>
     </div>
   </mat-card-content>
 </mat-card>

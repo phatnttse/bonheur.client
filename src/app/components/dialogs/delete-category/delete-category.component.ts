@@ -5,6 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { NotificationService } from '../../../services/notification.service';
+import { BaseResponse } from '../../../models/base.model';
+import { SupplierCategoryResponse } from '../../../models/category.model';
 
 @Component({
   selector: 'app-delete-category',
@@ -19,7 +22,7 @@ export class DeleteCategoryComponent {
     private categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) public data: number,
     private dialogRef: MatDialogRef<DeleteCategoryComponent>,
-    private toatrs : ToastrService
+    private notificationService: NotificationService
   ) {
     this.categoryId = data;
   }
@@ -27,9 +30,9 @@ export class DeleteCategoryComponent {
   btnDeleteFlower() {
     if (this.categoryId > 0) {
       this.categoryService.deleteCategory(this.categoryId).subscribe({
-        next: (response: any) => {
+        next: (response: SupplierCategoryResponse) => {
           this.dialogRef.close(true);
-          this.toatrs.success('Xóa danh mục thành công', 'Xóa thành công');
+          this.notificationService.success('Success', response.message);
         },
         error: (error: HttpErrorResponse) => {
           this.dialogRef.close(false);
