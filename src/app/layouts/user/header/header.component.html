@@ -161,7 +161,11 @@
                       {{ account.fullName }}
                     </div>
                   </button>
-                  <mat-menu #accountMenu="matMenu" class="p-6">
+                  <mat-menu
+                    #accountMenu="matMenu"
+                    class="p-6"
+                    xPosition="before"
+                  >
                     @if (account) {
                     <button mat-menu-item>
                       <div class="flex items-center">
