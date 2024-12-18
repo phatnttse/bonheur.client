@@ -44,5 +44,5 @@ export class Account {
 
 export interface SignUpResponse extends BaseResponse<null> {}
 export interface ListAccountResponse extends BaseResponse<PaginationResponse<Account>>{}
-export interface BlockResponse extends BaseResponse<null>{}
+export interface BlockAccountResponse extends BaseResponse<null>{}
 export interface AccountResponse extends BaseResponse<Account>{}

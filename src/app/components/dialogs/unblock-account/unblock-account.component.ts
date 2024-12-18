@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
 import { MaterialModule } from '../../../material.module';
+import { BlockAccountResponse } from '../../../models/account.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-unblock-account',
@@ -34,12 +36,12 @@ export class UnblockAccountComponent {
       const isEnable = false;  
 
       this.accountService.blockAccount(this.accountId, lockoutEnd, isEnable).subscribe({
-        next: (response) => {
-          this.notificationService.success('Thành công','Tài khoản đã mở khóa thành công khóa thành công');
+        next: (response: BlockAccountResponse) => {
+          this.notificationService.success('Success', response.message);
           this.dialogRef.close();  
         },
-        error: (error) => {
-          this.notificationService.error('Error','Lỗi khi mở khóa tài khoản');
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.handleApiError(error);
         }
       });
     }

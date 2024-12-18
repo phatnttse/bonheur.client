@@ -8,7 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MaterialModule } from '../../../material.module';
 import { MatSort } from '@angular/material/sort';
-import { Account, AccountResponse, BlockResponse, ListAccountResponse } from '../../../models/account.model';
+import { Account, AccountResponse, ListAccountResponse } from '../../../models/account.model';
 import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
 import { StatusService } from '../../../services/status.service';
@@ -91,7 +91,7 @@ export class AccountManagementComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        // this.notificationService.showToastrHandleError(error);
+        this.notificationService.handleApiError(error);
       },
     });
   }
@@ -101,36 +101,16 @@ export class AccountManagementComponent {
   }
 
 
-  btnUnblockAccount(id: string){
-    this.accountService.blockAccount(id, new Date(), true).subscribe({
-      next: (response: BlockResponse) => {
-        this.getAccounts(this.pageNumber, this.pageSize);
-        this.notificationService.success
-      },
-      error: (error: HttpErrorResponse) => {
-        this.statusService.statusLoadingSpinnerSource.next(false);
-        // this.notificationService.showToastrHandleError(error);
-      },
-    });
-  }
-
   openBlockAccountDialog(id: string): void {
-    const dialogRef = this.dialog.open(BlockAccountComponent, {
+    this.dialog.open(BlockAccountComponent, {
       data: { accountId: id }  
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog was closed');
     });
   }
 
   openUnblockAccountDialog(id: string): void {
-    const dialogRef = this.dialog.open(UnblockAccountComponent, {
+    this.dialog.open(UnblockAccountComponent, {
       data: { accountId: id }  
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog was closed');
-    });
   }
 }

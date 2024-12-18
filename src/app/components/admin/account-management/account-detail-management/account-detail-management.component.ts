@@ -18,65 +18,59 @@ import { MatDialog } from '@angular/material/dialog';
   standalone: true,
   imports: [MaterialModule, TablerIconsModule, CommonModule],
   templateUrl: './account-detail-management.component.html',
-  styleUrl: './account-detail-management.component.scss'
+  styleUrl: './account-detail-management.component.scss',
 })
 export class AccountDetailManagementComponent {
-    account: Account | null = null;
-    accountId: string | null = null;
+  account: Account | null = null;
+  accountId: string | null = null;
 
-    constructor(
-      private notificationService: NotificationService,
-      private accountService: AccountService,
-      private statusService: StatusService,
-      private route: ActivatedRoute,
-      private af: FormBuilder,
-      private dialog: MatDialog
-    ){
-      this.route.paramMap.subscribe((params) => {
-        this.accountId = params.get('id');
-      })
-    }
+  constructor(
+    private notificationService: NotificationService,
+    private accountService: AccountService,
+    private statusService: StatusService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
+    this.route.paramMap.subscribe((params) => {
+      this.accountId = params.get('id');
+    });
+  }
 
-    ngOnInit(){
-      setTimeout(() => {
-        this.statusService.statusLoadingSpinnerSource.next(true);
-      });
-      if(this.accountId){
-        this.getAccount(this.accountId);
-      }
-    }
+  ngOnInit() {
+    setTimeout(() => {
+      this.statusService.statusLoadingSpinnerSource.next(true);
+    });
 
-    getAccount(id: string){
-      this.accountService.getAccount(id).subscribe({
-        next: (response: AccountResponse) => {
-          const data = response.data as Account;
-          this.account = data;
-          this.statusService.statusLoadingSpinnerSource.next(false);
-        }, 
-        error: (error: HttpErrorResponse) => {
-          this.statusService.statusLoadingSpinnerSource.next(false);
-          // this.notificationService.showToastrHandleError(error);
-        },
-      })
+    if (this.accountId) {
+      this.getAccount(this.accountId);
     }
+  }
 
-    openBlockAccountDialog(id: string): void {
-      const dialogRef = this.dialog.open(BlockAccountComponent, {
-        data: { accountId: id }  
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('Dialog was closed');
-      });
-    }
-  
-    openUnblockAccountDialog(id: string): void {
-      const dialogRef = this.dialog.open(UnblockAccountComponent, {
-        data: { accountId: id }  
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('Dialog was closed');
-      });
-    }
+  getAccount(id: string) {
+    this.accountService.getAccount(id).subscribe({
+      next: (response: AccountResponse) => {
+        const data = response.data as Account;
+        this.account = data;
+        this.statusService.statusLoadingSpinnerSource.next(false);
+      },
+
+      error: (error: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+
+        this.notificationService.handleApiError(error);
+      },
+    });
+  }
+
+  openBlockAccountDialog(id: string): void {
+    this.dialog.open(BlockAccountComponent, {
+      data: { accountId: id },
+    });
+  }
+
+  openUnblockAccountDialog(id: string): void {
+    this.dialog.open(UnblockAccountComponent, {
+      data: { accountId: id },
+    });
+  }
 }

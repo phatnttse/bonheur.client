@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
-import { Account, AccountResponse, BlockResponse, ListAccountResponse } from '../models/account.model';
+import { Account, AccountResponse, BlockAccountResponse, ListAccountResponse } from '../models/account.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environments/environment.dev';
 import { EndpointBase } from './endpoint-base.service';
@@ -53,9 +53,9 @@ export class AccountService extends EndpointBase {
     );
   }
 
-  blockAccount(id: string, lockoutEnd: Date, isEnable: boolean): Observable<BlockResponse>{
+  blockAccount(id: string, lockoutEnd: Date, isEnable: boolean): Observable<BlockAccountResponse>{
     return this.http
-    .patch<BlockResponse>(
+    .patch<BlockAccountResponse>(
       `${environment.apiUrl}/api/v1/account/users/${id}/status`,
       {lockoutEnd, isEnable},
       this.requestHeaders
