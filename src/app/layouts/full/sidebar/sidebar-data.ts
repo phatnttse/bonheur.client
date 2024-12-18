@@ -32,10 +32,10 @@ export const navItems: NavItem[] = [
     route: '/admin/request-pricing/management',
   },
   {
-    displayName: 'Menu',
-    iconName: 'layout-navbar-expand',
-    bgcolor: 'error',
-    route: '/ui-components/menu',
+    displayName: 'Account Management',
+    iconName: 'users',
+    bgcolor: 'primary',
+    route: '/admin/accounts/management',
   },
   {
     displayName: 'Tooltips',

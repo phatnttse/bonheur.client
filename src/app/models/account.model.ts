@@ -1,4 +1,4 @@
-import { BaseResponse } from './base.model';
+import { BaseResponse, PaginationResponse } from './base.model';
 import { Gender } from './enums.model';
 
 export class Account {
@@ -37,3 +37,6 @@ export class Account {
 }
 
 export interface SignUpResponse extends BaseResponse<null> {}
+export interface ListAccountResponse extends BaseResponse<PaginationResponse<Account>>{}
+export interface BlockResponse extends BaseResponse<null>{}
+export interface AccountResponse extends BaseResponse<Account>{}
