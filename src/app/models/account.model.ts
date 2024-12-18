@@ -3,36 +3,42 @@ import { Gender } from './enums.model';
 
 export class Account {
   id: string;
-  userName: string;
   fullName: string;
+  partnerName: string;
   email: string;
   emailConfirmed: boolean;
+  phoneNumber: string;
   gender: Gender;
   pictureUrl: string;
   roles: string[];
   isEnabled: boolean;
   isLockedOut: boolean;
+  lockOutEnd: Date;
 
   constructor(
     id: string,
-    userName: string,
     fullName: string,
+    partnerName: string,
     email: string,
     emailConfirmed: boolean,
+    phoneNumber: string,
     gender: Gender,
     pictureUrl: string,
-    roles: string[]
+    roles: string[],
+    lockOutEnd: Date
   ) {
     this.id = id;
-    this.userName = userName;
     this.fullName = fullName;
+    this.partnerName = partnerName;
     this.email = email;
     this.emailConfirmed = emailConfirmed;
+    this.phoneNumber= phoneNumber;
     this.gender = gender;
     this.pictureUrl = pictureUrl;
     this.roles = roles;
     this.isEnabled = true;
     this.isLockedOut = false;
+    this.lockOutEnd = lockOutEnd;
   }
 }
 

@@ -153,15 +153,17 @@ export class AuthService {
 
     const user = new Account(
       decodedIdToken.sub,
-      decodedIdToken.name,
       decodedIdToken.fullname,
+      decodedIdToken.partnerName,
       decodedIdToken.email,
       decodedIdToken.emailConfirmed,
+      decodedIdToken.phoneNumber,
       decodedIdToken.gender,
       decodedIdToken.pictureUrl,
       Array.isArray(decodedIdToken.role)
         ? decodedIdToken.role
-        : [decodedIdToken.role]
+        : [decodedIdToken.role],
+        decodedIdToken.lockOutEnd
     );
 
     user.isEnabled = true;
