@@ -42,14 +42,6 @@ export const routes: Routes = [
           ).then((m) => m.ConfirmEmailComponent);
         },
       },
-      {
-        path: 'pages/404',
-        loadComponent() {
-          return import('./pages/page-not-found/page-not-found.component').then(
-            (m) => m.PageNotFoundComponent
-          );
-        },
-      },
     ],
   },
   {
@@ -69,6 +61,14 @@ export const routes: Routes = [
         },
       },
     ],
+  },
+  {
+    path: 'pages/404',
+    loadComponent() {
+      return import('./pages/page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent
+      );
+    },
   },
   ...adminRoutes,
   { path: '**', redirectTo: 'pages/404' },

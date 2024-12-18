@@ -11,45 +11,61 @@ import { BehaviorSubject } from 'rxjs';
 export class NotificationService {
   private snackBar = inject(MatSnackBar);
   private toastr = inject(ToastrService);
-  private toastrs: Toast[] =[];
+  private toastrs: Toast[] = [];
   private toastSubject = new BehaviorSubject<Toast[]>([]);
   toasts$ = this.toastSubject.asObservable();
-  show(title: string, message: string, type: 'success' | 'error' | 'info' | 'warning'){
-    const id= Date.now();
-    const toastr: Toast ={ id, title, message, type};
+  show(
+    title: string,
+    message: string,
+    type: 'success' | 'error' | 'info' | 'warning'
+  ) {
+    const id = Date.now();
+    const toastr: Toast = { id, title, message, type };
     this.toastrs.push(toastr);
     this.toastSubject.next(this.toastrs);
     setTimeout(() => this.remove(id), 3000);
     return id;
   }
 
-  remove(id: number){
-    this.toastrs = this.toastrs.filter(t => t.id !== id);
+  remove(id: number) {
+    this.toastrs = this.toastrs.filter((t) => t.id !== id);
     this.toastSubject.next(this.toastrs);
   }
 
-  success(title: string, message: string): number{
+  success(title: string, message: string): number {
     return this.show(title, message, 'success');
   }
 
-  error(title: string, message: string): number{
-    return this.show(title, message, 'error' );
-  };
+  error(title: string, message: string): number {
+    return this.show(title, message, 'error');
+  }
 
-  info(title: string, message: string): number{
-    return this.show(title, message, 'info' );
-  };
-  
-  warning(title: string, message: string): number{
-    return this.show(title, message, 'warning' );
-  };
+  info(title: string, message: string): number {
+    return this.show(title, message, 'info');
+  }
 
-  openSnackBarWelcome(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    });
+  warning(title: string, message: string): number {
+    return this.show(title, message, 'warning');
+  }
+
+  handleApiError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      this.show('An error occurred', error.error.message, 'error');
+    } else if (error.status === 401) {
+      this.show(
+        'Unauthorized',
+        'You are not authorized to access this resource',
+        'error'
+      );
+    } else if (error.status === 403) {
+      this.show(
+        'Forbidden',
+        'You are forbidden to access this resource',
+        'error'
+      );
+    } else {
+      this.show('An error occurred', error.message, 'error');
+    }
   }
 
   openSnackBarBottom(message: string, action: string, duration?: number) {

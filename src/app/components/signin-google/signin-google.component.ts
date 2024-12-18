@@ -48,14 +48,12 @@ export class SigninGoogleComponent {
               this.dataService.accountDataSource.next(response);
               this.statusService.statusLoadingSpinnerSource.next(false);
               this.router.navigate(['/']);
-              this.notificationService.openSnackBarWelcome(
-                'Welcome  ' + response.fullName
-              );
+              this.notificationService.success('Welcome', response.fullName);
             },
             error: (error: HttpErrorResponse) => {
               this.statusService.statusLoadingSpinnerSource.next(false);
               this.router.navigate(['/authentication/signin']);
-              // this.notificationService.showToastrHandleError(error);
+              this.notificationService.handleApiError(error);
             },
           });
         }
