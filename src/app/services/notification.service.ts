@@ -64,7 +64,11 @@ export class NotificationService {
         'error'
       );
     } else {
-      this.show('An error occurred', error.message, 'error');
+      this.show(
+        'An error occurred',
+        'We are trying to fix it. Please come back later !',
+        'error'
+      );
     }
   }
 
