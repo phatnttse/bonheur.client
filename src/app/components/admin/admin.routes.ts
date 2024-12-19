@@ -20,33 +20,49 @@ export const adminRoutes: Routes = [
       {
         path: 'categories/management',
         loadComponent() {
-          return import('./category-management/category-management.component').then(
-            (m) => m.CategoryManagementComponent
-          );
+          return import(
+            './category-management/category-management.component'
+          ).then((m) => m.CategoryManagementComponent);
+        },
+      },
+      {
+        path: 'categories/management/:id',
+        loadComponent() {
+          return import(
+            './category-management/category-details-management/category-details-management.component'
+          ).then((m) => m.CategoryDetailsManagementComponent);
+        },
+      },
+      {
+        path: 'categories/create',
+        loadComponent() {
+          return import(
+            './category-management/category-create-management/category-create-management.component'
+          ).then((m) => m.CategoryCreateManagementComponent);
         },
       },
       {
         path: 'request-pricing/management',
         loadComponent() {
-          return import('./request-pricing-management/request-pricing-management.component').then(
-            (m) => m.RequestPricingManagementComponent
-          );
+          return import(
+            './request-pricing-management/request-pricing-management.component'
+          ).then((m) => m.RequestPricingManagementComponent);
         },
       },
       {
         path: 'accounts/management',
         loadComponent() {
-          return import('./account-management/account-management.component').then(
-            (m) => m.AccountManagementComponent
-          );
+          return import(
+            './account-management/account-management.component'
+          ).then((m) => m.AccountManagementComponent);
         },
       },
       {
         path: 'account/:id',
         loadComponent() {
-          return import('./account-management/account-detail-management/account-detail-management.component').then(
-            (m) => m.AccountDetailManagementComponent
-          );
+          return import(
+            './account-management/account-detail-management/account-detail-management.component'
+          ).then((m) => m.AccountDetailManagementComponent);
         },
       },
     ],
