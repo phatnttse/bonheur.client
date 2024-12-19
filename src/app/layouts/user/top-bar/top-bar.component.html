@@ -1,0 +1,57 @@
+<!-- Top Announcement Bar -->
+<div class="bg-gray-700 text-white text-sm">
+  <div class="container mx-auto px-6">
+    <div class="md:hidden">
+      <div class="h-10 flex items-center justify-center">
+        <div
+          class="transition-all duration-500"
+          [@slideInOut]="currentAnnouncementIndex"
+        >
+          {{ announcements[currentAnnouncementIndex] }}
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center justify-between h-10">
+      <div class="flex items-center space-x-3">
+        <a href="#" class="hover:text-primary transition-colors">
+          <i-tabler class="icon-20" name="brand-facebook"></i-tabler>
+        </a>
+        <a href="#" class="hover:text-primary transition-colors">
+          <i-tabler class="icon-20" name="brand-twitter"></i-tabler>
+        </a>
+        <a href="#" class="hover:text-primary transition-colors">
+          <i-tabler class="icon-20" name="brand-youtube"></i-tabler>
+        </a>
+        <a href="#" class="hover:text-primary transition-colors">
+          <i-tabler class="icon-20" name="brand-instagram"></i-tabler>
+        </a>
+        <a href="#" class="hover:text-primary transition-colors">
+          <i-tabler class="icon-20" name="brand-github"></i-tabler>
+        </a>
+        <a href="#" class="hover:text-primary transition-colors">
+          <i-tabler class="icon-20" name="brand-linkedin"></i-tabler>
+        </a>
+      </div>
+
+      <!-- Show announcement text on larger screens -->
+      <div class="relative overflow-hidden w-[400px] whitespace-nowrap">
+        <div
+          class="transition-all duration-500"
+          [@slideInOut]="currentAnnouncementIndex"
+        >
+          {{ announcements[currentAnnouncementIndex] }}
+        </div>
+      </div>
+
+      <!-- Show language and currency selectors on larger screens -->
+      <div class="flex items-center space-x-4">
+        <select
+          class="bg-transparent text-sm border-none focus:outline-none cursor-pointer"
+        >
+          <option value="en" class="text-gray-800">English</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
