@@ -87,7 +87,7 @@ export class AuthService {
   redirectForLogin() {
     this.loginRedirectUrl = this.router.url;
     this.router.navigate([this.loginUrl]);
-    this.notificationService.showToastrInfo('Please login to access this page');
+    // this.notificationService.showToastrInfo('Please login to access this page');
   }
 
   reLogin() {
@@ -153,15 +153,17 @@ export class AuthService {
 
     const user = new Account(
       decodedIdToken.sub,
-      decodedIdToken.name,
       decodedIdToken.fullname,
+      decodedIdToken.partnerName,
       decodedIdToken.email,
       decodedIdToken.emailConfirmed,
+      decodedIdToken.phoneNumber,
       decodedIdToken.gender,
       decodedIdToken.pictureUrl,
       Array.isArray(decodedIdToken.role)
         ? decodedIdToken.role
-        : [decodedIdToken.role]
+        : [decodedIdToken.role],
+        decodedIdToken.lockOutEnd
     );
 
     user.isEnabled = true;

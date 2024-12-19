@@ -1,0 +1,11 @@
+.example-card {
+  min-height: 350px; /* Chỉnh chiều cao tối thiểu theo nhu cầu */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.carousel {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 1rem !important;
+}

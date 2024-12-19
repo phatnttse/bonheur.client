@@ -67,13 +67,11 @@ export class SigninComponent {
         } else {
           this.router.navigate(['/']);
         }
-        this.notificationService.openSnackBarWelcome(
-          'Welcome  ' + response.fullName
-        );
+        this.notificationService.success('Welcome', response.fullName);
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.showToastrHandleError(error);
+        this.notificationService.handleApiError(error);
       },
     });
   }

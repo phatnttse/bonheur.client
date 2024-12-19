@@ -1,0 +1,30 @@
+<mat-card appearance="outlined">
+  <h3 class="f-s-16 f-w-600 mt-3 mx-3">Block account</h3>
+  <mat-card-content>
+    <p class="place-content-center">Choose day that become the deadline of block?</p>
+    <div mat-dialog-content class="place-content-center">
+      <mat-form-field appearance="outline">
+        <mat-label>Unblock Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="grid grid-cols-2 gap-4 place-content-between mt-5">
+      <button mat-raised-button color="warn"
+        class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+        (click)="btnCloseDialog()"
+        >
+        <mat-icon class="mr-2">key</mat-icon>
+        Cancel
+      </button>
+      <button mat-raised-button color="primary"
+        class="flex items-center  text-white text-sm font-medium rounded-lg px-4 py-3 mx-2 shadow-md transition-colors duration-200"
+        (click)="btnBlockAccount()"
+        >
+        <mat-icon class="mr-2">key</mat-icon>
+        Block
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

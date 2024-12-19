@@ -60,7 +60,8 @@ export class RoleManagementComponent implements OnInit, AfterViewInit {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.showToastrHandleError(error);
+        this.notificationService.handleApiError(error);
+        console.log(error);
       },
     });
   }

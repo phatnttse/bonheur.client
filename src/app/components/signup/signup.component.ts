@@ -75,7 +75,7 @@ export class SignupComponent {
         },
         error: (error: HttpErrorResponse) => {
           this.statusService.statusLoadingSpinnerSource.next(false);
-          this.notificationService.showToastrHandleError(error);
+          this.notificationService.handleApiError(error);
         },
       });
   }

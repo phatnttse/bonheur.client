@@ -10,48 +10,29 @@ import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { DataService } from '../../../services/data.service';
+import { SidebarMobileComponent } from '../sidebar-mobile/sidebar-mobile.component';
+import { TopBarComponent } from '../top-bar/top-bar.component';
+import { MainMenuComponent } from '../main-menu/main-menu.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     CommonModule,
-    NgScrollbarModule,
     TablerIconsModule,
     RouterModule,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
+    SidebarMobileComponent,
+    TopBarComponent,
+    MainMenuComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  animations: [
-    trigger('slideInOut', [
-      transition(':increment', [
-        style({ opacity: 0, transform: 'translateY(20px)' }),
-        animate(
-          '500ms ease-out',
-          style({ opacity: 1, transform: 'translateY(0)' })
-        ),
-      ]),
-      transition(':decrement', [
-        style({ opacity: 0, transform: 'translateY(-20px)' }),
-        animate(
-          '500ms ease-out',
-          style({ opacity: 1, transform: 'translateY(0)' })
-        ),
-      ]),
-    ]),
-  ],
 })
 export class HeaderComponent implements OnInit {
   isMenuOpen = false;
-  announcements: string[] = [
-    'Free consultation for your dream wedding planning!',
-    'Sign up now and get 20% off your first booking!',
-    'Exclusive bridal dress collection with special discounts!',
-  ];
-  currentAnnouncementIndex: number = 0;
   account: Account | null = null;
 
   constructor(
@@ -64,18 +45,7 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  closeMenu(event: MouseEvent) {
-    if (!(event.target as HTMLElement).closest('.menu-container')) {
-      this.isMenuOpen = false;
-    }
-  }
-
-  ngOnInit() {
-    setInterval(() => {
-      this.currentAnnouncementIndex =
-        (this.currentAnnouncementIndex + 1) % this.announcements.length;
-    }, 3000);
-
+  ngOnInit(): void {
     this.dataService.accountData$.subscribe((account: Account | null) => {
       if (account) {
         this.account = account;

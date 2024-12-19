@@ -1,10 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ListSupplierCategoryResponse, SupplierCategory, SupplierCategoryResponse } from '../../../models/category.model';
@@ -14,25 +8,19 @@ import { StatusService } from '../../../services/status.service';
 import { StatusCode } from '../../../models/enums.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { MaterialModule } from '../../../material.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../../material.module';
 
 @Component({
   selector: 'app-category-management',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatMenuModule,
-    MatTableModule,
+    CommonModule,
     MaterialModule,
     TablerIconsModule,
   ],
@@ -76,6 +64,16 @@ export class CategoryManagementComponent {
     return !!control && control.invalid && control.touched;
   }
 
+  success(){
+    this.notificationService.success("HIHI", 'hahaha');
+  }
+
+  info(){
+    this.notificationService.info("HIHI", 'hahaha');
+  }
+  warning(){
+    this.notificationService.warning("HIHI", 'hahaha');
+  }
   //Lấy toàn bộ danh sách
   getCategories(){
     this.categoryService.getAllSupplierCategories().subscribe({
@@ -91,7 +89,7 @@ export class CategoryManagementComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.showToastrHandleError(error);
+        this.notificationService.error('ERROR', '123456');
       },
     }
     );
