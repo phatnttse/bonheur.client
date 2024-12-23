@@ -1,10 +1,21 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
-import { Account, AccountResponse, BlockAccountResponse, ListAccountResponse } from '../models/account.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  Account,
+  AccountResponse,
+  BlockAccountResponse,
+  ListAccountResponse,
+} from '../models/account.model';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { environment } from '../environments/environment.dev';
 import { EndpointBase } from './endpoint-base.service';
-import { RoleResponse } from '../models/role.model';
+import { ListRoleResponse, RoleResponse } from '../models/role.model';
+import { BaseResponse } from '../models/base.model';
+import { Permission } from '../models/permission.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +25,9 @@ export class AccountService extends EndpointBase {
   accountData$ = this.accountDataSource.asObservable();
   private http = inject(HttpClient);
 
-  getRoles(): Observable<RoleResponse> {
+  getRoles(): Observable<ListRoleResponse> {
     return this.http
-      .get<RoleResponse>(
+      .get<ListRoleResponse>(
         `${environment.apiUrl}/api/v1/account/roles`,
         this.requestHeaders
       )
@@ -27,43 +38,88 @@ export class AccountService extends EndpointBase {
       );
   }
 
-  getAccounts(pageNumber: number, pageSize: number): Observable<ListAccountResponse>{
+  getRole(id: string): Observable<RoleResponse> {
     return this.http
-    .get<ListAccountResponse>(
-      `${environment.apiUrl}/api/v1/account/users/${pageNumber}/${pageSize}`,
-      this.requestHeaders
-    )
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        return this.handleError(error, () => this.getAccounts(pageNumber, pageSize));
-      })
-    );
+      .get<RoleResponse>(
+        `${environment.apiUrl}/api/v1/account/roles/${id}`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getRole(id));
+        })
+      );
   }
 
-  getAccount(id: string) :Observable<AccountResponse>{
+  getAllPermissions(): Observable<BaseResponse<Permission[]>> {
     return this.http
-    .get<AccountResponse>(
-      `${environment.apiUrl}/api/v1/account/users/${id}`,
-      this.requestHeaders
-    )
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        return this.handleError(error, () => this.getAccount(id));
-      })
-    );
+      .get<BaseResponse<Permission[]>>(
+        `${environment.apiUrl}/api/v1/account/permissions`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getAllPermissions());
+        })
+      );
   }
 
-  blockAccount(id: string, lockoutEnd: Date, isEnable: boolean): Observable<BlockAccountResponse>{
+  getAccounts(
+    search: string,
+    role: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<ListAccountResponse> {
+    const params = new HttpParams()
+      .set('search', search)
+      .set('role', role)
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize);
+
     return this.http
-    .patch<BlockAccountResponse>(
-      `${environment.apiUrl}/api/v1/account/users/${id}/status`,
-      {lockoutEnd, isEnable},
-      this.requestHeaders
-    )
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        return this.handleError(error, () => this.blockAccount(id, lockoutEnd, isEnable));
+      .get<ListAccountResponse>(`${environment.apiUrl}/api/v1/account/users`, {
+        params: params,
+        headers: this.requestHeaders.headers,
       })
-    );
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.getAccounts(search, role, pageNumber, pageSize)
+          );
+        })
+      );
+  }
+
+  getAccount(id: string): Observable<AccountResponse> {
+    return this.http
+      .get<AccountResponse>(
+        `${environment.apiUrl}/api/v1/account/users/${id}`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getAccount(id));
+        })
+      );
+  }
+
+  blockAccount(
+    id: string,
+    lockoutEnd: Date,
+    isEnable: boolean
+  ): Observable<BlockAccountResponse> {
+    return this.http
+      .patch<BlockAccountResponse>(
+        `${environment.apiUrl}/api/v1/account/users/${id}/status`,
+        { lockoutEnd, isEnable },
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.blockAccount(id, lockoutEnd, isEnable)
+          );
+        })
+      );
   }
 }

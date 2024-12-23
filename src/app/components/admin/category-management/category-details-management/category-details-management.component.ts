@@ -41,7 +41,6 @@ export class CategoryDetailsManagementComponent {
     new MatTableDataSource<SupplierCategory>();
   categoryForm: FormGroup;
   categoryId: number | null = null;
-  isSmallScreen: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -80,7 +79,6 @@ export class CategoryDetailsManagementComponent {
     if (this.categoryId) {
       this.loadCategoryDetails(this.categoryId);
     }
-    this.checkScreenWidth();
   }
 
   // Phương thức để lấy dữ liệu đưa lên form
@@ -141,14 +139,5 @@ export class CategoryDetailsManagementComponent {
         },
       });
     }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-    this.checkScreenWidth();
-  }
-
-  checkScreenWidth(): void {
-    this.isSmallScreen = window.innerWidth < 640;
   }
 }

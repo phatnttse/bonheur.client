@@ -18,6 +18,14 @@ export const adminRoutes: Routes = [
         },
       },
       {
+        path: 'roles/management/:id',
+        loadComponent() {
+          return import(
+            './role-management/role-details-management/role-details-management.component'
+          ).then((m) => m.RoleDetailsManagementComponent);
+        },
+      },
+      {
         path: 'categories/management',
         loadComponent() {
           return import(
@@ -34,13 +42,14 @@ export const adminRoutes: Routes = [
         },
       },
       {
-        path: 'categories/create',
+        path: 'categories/management/create',
         loadComponent() {
           return import(
             './category-management/category-create-management/category-create-management.component'
           ).then((m) => m.CategoryCreateManagementComponent);
         },
       },
+
       {
         path: 'request-pricing/management',
         loadComponent() {
@@ -58,7 +67,7 @@ export const adminRoutes: Routes = [
         },
       },
       {
-        path: 'account/:id',
+        path: 'accounts/:id',
         loadComponent() {
           return import(
             './account-management/account-detail-management/account-detail-management.component'

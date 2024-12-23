@@ -16,7 +16,11 @@ import { StatusService } from '../../../services/status.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestPricingService } from '../../../services/request-pricing.service';
-import { ListRequestPricingResponse, RequestPricing, RequestPricingResponse } from '../../../models/request-pricing.model';
+import {
+  ListRequestPricingResponse,
+  RequestPricing,
+  RequestPricingResponse,
+} from '../../../models/request-pricing.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PaginationResponse } from '../../../models/base.model';
@@ -35,20 +39,27 @@ import { PaginationResponse } from '../../../models/base.model';
     MatTableModule,
     MaterialModule,
     TablerIconsModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './request-pricing-management.component.html',
-  styleUrl: './request-pricing-management.component.scss'
+  styleUrl: './request-pricing-management.component.scss',
 })
 export class RequestPricingManagementComponent {
   @ViewChild(MatSort) sort!: MatSort;
   dataSource: MatTableDataSource<RequestPricing> =
-  new MatTableDataSource<RequestPricing>();
-  displayedColumns: string[] = ['name', 'email','phone','expiration','status', 'action'];
+    new MatTableDataSource<RequestPricing>();
+  displayedColumns: string[] = [
+    'name',
+    'email',
+    'phone',
+    'expiration',
+    'status',
+    'action',
+  ];
   statusPage: number = 0;
   listRequestPricing: RequestPricing[] = [];
   pageNumber: number = 1; // Trang hiện tại
-  pageSize: number = 8; // Số item mỗi trang
+  pageSize: number = 10; // Số item mỗi trang
   totalItemCount: number = 0; // Tổng số item
   pageCount: number = 0; // Tổng số trang
   isFirstPage: boolean = false; // Có phải trang đầu tiên không
@@ -64,45 +75,45 @@ export class RequestPricingManagementComponent {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private dialog: MatDialog
-  ){
-  }
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(true);
     });
     this.getAllRequestPricing(this.pageNumber, this.pageSize);
   }
 
-  getAllRequestPricing(pageNumber: number, pageSize: number){
-    this.requestPricingService.getAllRequestPricingByAdmin(pageNumber, pageSize).subscribe({
-      next: (response: ListRequestPricingResponse) => {
-        const data = response.data as PaginationResponse<RequestPricing>;
-        this.listRequestPricing = data.items;
-        
-        this.dataSource = new MatTableDataSource(this.listRequestPricing);
-        this.dataSource.sort = this.sort;
-        this.pageNumber = data.pageNumber;
-        this.pageSize = data.pageSize;
-        this.totalItemCount = data.totalItemCount;
-        this.isFirstPage = data.isFirstPage; 
-        this.isLastPage = data.isLastPage; 
-        this.hasNextPage = data.hasNextPage; 
-        this.hasPreviousPage = data.hasPreviousPage; 
-        this.statusService.statusLoadingSpinnerSource.next(false);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.handleApiError(error);
-      },
-    });
+  getAllRequestPricing(pageNumber: number, pageSize: number) {
+    this.requestPricingService
+      .getAllRequestPricingByAdmin(pageNumber, pageSize)
+      .subscribe({
+        next: (response: ListRequestPricingResponse) => {
+          this.listRequestPricing = response.data.items;
+
+          this.dataSource = new MatTableDataSource(this.listRequestPricing);
+          this.dataSource.sort = this.sort;
+          this.pageNumber = response.data.pageNumber;
+          this.pageSize = response.data.pageSize;
+          this.totalItemCount = response.data.totalItemCount;
+          this.isFirstPage = response.data.isFirstPage;
+          this.isLastPage = response.data.isLastPage;
+          this.hasNextPage = response.data.hasNextPage;
+          this.hasPreviousPage = response.data.hasPreviousPage;
+          this.statusService.statusLoadingSpinnerSource.next(false);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
+        },
+      });
   }
 
-  btnGetRequestPricingById(statusPage: number, id: number){
+  btnGetRequestPricingById(statusPage: number, id: number) {
     this.statusPage = statusPage;
     this.requestPricingService.getRequestPricingById(id).subscribe({
       next: (response: RequestPricingResponse) => {
-        const data = response.data as RequestPricing; 
+        const data = response.data as RequestPricing;
         this.selectedRequestPricing = data;
         console.log(this.selectedRequestPricing);
         this.statusService.statusLoadingSpinnerSource.next(false);
@@ -111,13 +122,10 @@ export class RequestPricingManagementComponent {
         this.statusService.statusLoadingSpinnerSource.next(false);
         this.notificationService.handleApiError(error);
       },
-    }
-    );
+    });
   }
 
-
-  btnBackToMainPage(){
-    this.statusPage = 0
+  btnBackToMainPage() {
+    this.statusPage = 0;
   }
-
 }

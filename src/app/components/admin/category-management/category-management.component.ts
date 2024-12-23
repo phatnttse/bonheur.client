@@ -23,7 +23,7 @@ import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-ca
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-category-management',
@@ -33,6 +33,7 @@ import { Router } from '@angular/router';
     CommonModule,
     MaterialModule,
     TablerIconsModule,
+    RouterModule,
   ],
   templateUrl: './category-management.component.html',
   styleUrl: './category-management.component.scss',
@@ -104,7 +105,7 @@ export class CategoryManagementComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.error('ERROR', '123456');
+        this.notificationService.handleApiError(error);
       },
     });
   }
@@ -121,38 +122,6 @@ export class CategoryManagementComponent {
     }
   }
 
-  //Thêm danh mục mới
-  btnCreateNewCategory() {
-    if (this.categoryForm.invalid) {
-      this.categoryForm.markAllAsTouched();
-      return;
-    }
-    const name = this.categoryForm.get('name')?.value;
-    const description = this.categoryForm.get('description')?.value;
-    // Gọi dịch vụ để cập nhật danh mục
-    this.categoryService.addNewCategory(name, description).subscribe({
-      next: (response: SupplierCategoryResponse) => {
-        this.categoryForm.reset();
-        this.toastr.success('Thêm mới danh mục thành công', 'Success', {
-          progressBar: true,
-        });
-        console.log(response.data);
-        const newCategory = response.data as SupplierCategory;
-        this.supplierCategories.push(newCategory);
-        this.dataSource = new MatTableDataSource(this.supplierCategories);
-        this.dataSource.sort = this.sort;
-        this.categoryService.supplierCategoryDataSource.next(
-          this.supplierCategories
-        );
-        this.statusPage = 0;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastr.error('Thêm mới danh mục thất bại', 'Error');
-        console.error('Error creating product: ', error);
-      },
-    });
-  }
-
   btnDeleteCategory(id: number) {
     this.categoryService.deleteCategory(id).subscribe({
       next: (response: SupplierCategoryResponse) => {
@@ -164,11 +133,10 @@ export class CategoryManagementComponent {
         this.categoryService.supplierCategoryDataSource.next(
           this.supplierCategories
         );
-        this.toastr.success(`Xóa danh mục thành công!`);
+        this.notificationService.success('Success', response.message);
       },
       error: (err: HttpErrorResponse) => {
-        this.toastr.error(`${err.error.error}`, 'ERROR');
-        console.log(err);
+        this.notificationService.handleApiError(err);
       },
     });
   }

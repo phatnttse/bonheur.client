@@ -8,7 +8,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MaterialModule } from '../../../material.module';
 import { MatSort } from '@angular/material/sort';
-import { Account, AccountResponse, ListAccountResponse } from '../../../models/account.model';
+import {
+  Account,
+  AccountResponse,
+  ListAccountResponse,
+} from '../../../models/account.model';
 import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
 import { StatusService } from '../../../services/status.service';
@@ -20,30 +24,39 @@ import { BlockAccountComponent } from '../../dialogs/block-account/block-account
 import { UnblockAccountComponent } from '../../dialogs/unblock-account/unblock-account.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-account-management',
   standalone: true,
-  imports: [MaterialModule,
-    TablerIconsModule,
-    CommonModule
-  ],
+  imports: [MaterialModule, TablerIconsModule, CommonModule, FormsModule],
   templateUrl: './account-management.component.html',
-  styleUrl: './account-management.component.scss'
+  styleUrl: './account-management.component.scss',
 })
 export class AccountManagementComponent {
   @ViewChild(MatSort) sort!: MatSort;
-  accounts : Account[] = [];
-  dataSource: MatTableDataSource<Account> =
-  new MatTableDataSource<Account>();
-  displayedColumns: string[] = ['avatar','fullName','email', 'phone', 'gender', 'role', 'action'];
-  pageNumber: number = 1; 
-  pageSize: number = 8; 
-  totalItemCount: number = 0; 
-  pageCount: number = 0; 
-  isFirstPage: boolean = false; 
-  isLastPage: boolean = false; 
-  hasNextPage: boolean = false; 
+  accounts: Account[] = [];
+  dataSource: MatTableDataSource<Account> = new MatTableDataSource<Account>();
+  displayedColumns: string[] = [
+    'avatar',
+    'fullName',
+    'email',
+    'phone',
+    'gender',
+    'role',
+    'action',
+  ];
+  search: string = '';
+  searchSubject = new Subject<string>();
+  role: string = '';
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalItemCount: number = 0;
+  pageCount: number = 0;
+  isFirstPage: boolean = false;
+  isLastPage: boolean = false;
+  hasNextPage: boolean = false;
   hasPreviousPage: boolean = false;
 
   constructor(
@@ -52,65 +65,81 @@ export class AccountManagementComponent {
     private statusService: StatusService,
     private dialog: MatDialog,
     private route: Router
-  ){
+  ) {
     // this.categoryForm = this.fb.group({
-    //   name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]], 
+    //   name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
     //   description: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(200)]],
     // });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(true);
     });
+    // Lắng nghe thay đổi search và gọi API sau debounceTime
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((search) => {
+        this.getAccounts(search, this.role, this.pageNumber, this.pageSize);
+      });
     this.accountService.accountData$.subscribe((accounts) => {
       if (accounts) {
         this.accounts = accounts;
         this.dataSource = new MatTableDataSource(this.accounts);
       }
     });
-    this.getAccounts(this.pageNumber, this.pageSize);
+    this.getAccounts(this.search, this.role, this.pageNumber, this.pageSize);
+    console.log(this.search);
   }
 
-  getAccounts(pageNumber: number, pageSize: number){
-    this.accountService.getAccounts(pageNumber, pageSize).subscribe({
-      next: (response: ListAccountResponse) => {
-        const data = response.data as PaginationResponse<Account>;
-        this.accounts = data.items;
-        
-        this.dataSource = new MatTableDataSource(this.accounts);
-        this.dataSource.sort = this.sort;
-        this.pageNumber = data.pageNumber;
-        this.pageSize = data.pageSize;
-        this.totalItemCount = data.totalItemCount;
-        this.isFirstPage = data.isFirstPage; 
-        this.isLastPage = data.isLastPage; 
-        this.hasNextPage = data.hasNextPage; 
-        this.hasPreviousPage = data.hasPreviousPage; 
-        this.statusService.statusLoadingSpinnerSource.next(false);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.handleApiError(error);
-      },
-    });
+  getAccounts(
+    search: string,
+    role: string,
+    pageNumber: number,
+    pageSize: number
+  ) {
+    this.accountService
+      .getAccounts(search, role, pageNumber, pageSize)
+      .subscribe({
+        next: (response: ListAccountResponse) => {
+          this.accounts = response.data.items;
+          this.dataSource = new MatTableDataSource(this.accounts);
+          this.dataSource.sort = this.sort;
+          this.pageNumber = response.data.pageNumber;
+          this.pageSize = response.data.pageSize;
+          this.totalItemCount = response.data.totalItemCount;
+          this.isFirstPage = response.data.isFirstPage;
+          this.isLastPage = response.data.isLastPage;
+          this.hasNextPage = response.data.hasNextPage;
+          this.hasPreviousPage = response.data.hasPreviousPage;
+          this.statusService.statusLoadingSpinnerSource.next(false);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
+        },
+      });
   }
 
-  btnGetAccount(id: string){
-    this.route.navigate(['/admin/account/', id]);
+  onInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.search = input.value;
+    this.searchSubject.next(this.search);
   }
 
+  btnGetAccount(id: string) {
+    this.route.navigate(['/admin/accounts/management', id]);
+  }
 
   openBlockAccountDialog(id: string): void {
     this.dialog.open(BlockAccountComponent, {
-      data: { accountId: id }  
+      data: { accountId: id },
     });
   }
 
   openUnblockAccountDialog(id: string): void {
     this.dialog.open(UnblockAccountComponent, {
-      data: { accountId: id }  
+      data: { accountId: id },
     });
-
   }
 }

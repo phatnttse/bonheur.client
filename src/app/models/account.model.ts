@@ -32,7 +32,7 @@ export class Account {
     this.partnerName = partnerName;
     this.email = email;
     this.emailConfirmed = emailConfirmed;
-    this.phoneNumber= phoneNumber;
+    this.phoneNumber = phoneNumber;
     this.gender = gender;
     this.pictureUrl = pictureUrl;
     this.roles = roles;
@@ -43,6 +43,6 @@ export class Account {
 }
 
 export interface SignUpResponse extends BaseResponse<null> {}
-export interface ListAccountResponse extends BaseResponse<PaginationResponse<Account>>{}
-export interface BlockAccountResponse extends BaseResponse<null>{}
-export interface AccountResponse extends BaseResponse<Account>{}
+export interface ListAccountResponse extends PaginationResponse<Account> {}
+export interface BlockAccountResponse extends BaseResponse<null> {}
+export interface AccountResponse extends BaseResponse<Account> {}
