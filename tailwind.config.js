@@ -3,7 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
     "./index.html",
-    "./node_modules/@angular/material/**/*.{js,ts}",
+    "./node_modules/@angular/material/**/*.{js,ts,html,css,scss}",
   ],
   theme: {
     extend: {
@@ -26,7 +26,7 @@ module.exports = {
         background: {
           light: "#f2f6fa",
           DEFAULT: "#F1F3F5",
-        }
+        },
       },
     },
   },

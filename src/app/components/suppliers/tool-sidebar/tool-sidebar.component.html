@@ -1,0 +1,213 @@
+<div
+  class="bb-tools-sidebar w-[300px] h-screen fixed left-[0] top-[0] bg-[#fff] transition-all duration-[0.3s] ease z-[16] -translate-x-[300px] hidden max-[992px]:block"
+>
+  <a
+    href="javascript:void(0)"
+    (click)="toggleFilterMenu()"
+    class="bb-tools-sidebar-toggle in-out absolute top-[45%] left-[302px] w-[46px] h-[46px] bg-primary transition-all duration-[0.3s] ease-in flex items-center justify-center text-[25px] z-[-1] rounded-[5px]"
+  >
+    <mat-icon class="text-white">filter_alt</mat-icon>
+  </a>
+</div>
+
+<div
+  class="hidden w-full h-screen fixed top-[0] left-[0] bg-[#00000080] z-[17]"
+  [style.display]="isFilterOpen ? 'block' : 'none'"
+  (click)="toggleFilterMenu()"
+></div>
+<div
+  class="sb-menu w-2/3 h-full pt-[15px] px-[8px] text-[14px] z-[17] fixed top-[0] right-[0] block transition-all duration-[0.5s] ease delay-[0s] translate-x-[100%] bg-[#fff] overflow-auto opacity-[0]"
+  [ngClass]="isFilterOpen ? 'open' : ''"
+>
+  <div
+    class="bb-sidebar-block p-[10px] border-b-[1px] border-solid border-[#eee]"
+  >
+    <div class="bb-sidebar-title mb-[20px]">
+      <h3
+        class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
+      >
+        Category
+      </h3>
+    </div>
+    <div class="bb-sidebar-contact">
+      <ul>
+        <li class="relative block mb-[14px]">
+          <div class="bb-sidebar-block-item relative">
+            <mat-list role="list">
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Photographers</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Makeup Artists</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Stylists</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Florists</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Decorators</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Planners</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Entertainers</mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>Transport</mat-checkbox></mat-list-item
+              >
+            </mat-list>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    class="bb-sidebar-block p-[20px] border-b-[1px] border-solid border-[#eee]"
+  >
+    <div class="bb-sidebar-title mt-2">
+      <h3
+        class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
+      >
+        Price Range
+      </h3>
+      <div class="mt-6 flex items-center justify-center">
+        <span class="text-base text-[#222222] font-light">
+          {{ formatLabel(minPrice) }}
+        </span>
+        <span class="px-4">-</span>
+        <span class="text-base text-[#222222] font-light">
+          {{ formatLabel(maxPrice) }}
+        </span>
+      </div>
+    </div>
+    <div class="bb-sidebar-contact">
+      <ul>
+        <li class="relative block mb-[14px]">
+          <div class="bb-sidebar-block-item relative">
+            <li class="relative block mb-[14px]">
+              <div class="bb-sidebar-block-item relative w-full">
+                <mat-slider
+                  min="0"
+                  max="100000000"
+                  step="1000000"
+                  showTickMarks
+                  discrete
+                  [displayWith]="formatLabel"
+                  style="width: 100%"
+                >
+                  <input
+                    [(ngModel)]="minPrice"
+                    [value]="minPrice"
+                    matSliderStartThumb
+                  />
+                  <input
+                    [(ngModel)]="maxPrice"
+                    [value]="maxPrice"
+                    matSliderEndThumb
+                  />
+                </mat-slider>
+              </div>
+            </li>
+            <div class="mt-2 flex items-center justify-center">
+              <button mat-raised-button type="button" color="primary">
+                Apply
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="bb-sidebar-block p-[10px]">
+    <div class="bb-sidebar-title mb-[20px]">
+      <h3
+        class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
+      >
+        Rating
+      </h3>
+    </div>
+    <div class="bb-sidebar-contact">
+      <ul>
+        <li class="relative block mb-[14px]">
+          <div class="bb-sidebar-block-item relative">
+            <mat-list role="list">
+              <mat-list-item role="listitem"
+                ><mat-checkbox>
+                  <div class="flex items-center">
+                    <span class="mr-2">5 stars</span>
+                    @for (item of [1, 2, 3, 4, 5]; track $index) {
+                    <mat-icon
+                      fontSet="material-icons-outlined"
+                      class="text-base text-[#fea99a]"
+                      >star</mat-icon
+                    >
+                    }
+                  </div>
+                </mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox>
+                  <div class="flex items-center">
+                    <span class="mr-2">4 stars & up</span>
+                    @for (item of [1, 2, 3, 4]; track $index) {
+                    <mat-icon
+                      fontSet="material-icons-outlined"
+                      class="text-base text-[#fea99a]"
+                      >star</mat-icon
+                    >
+                    }
+                  </div>
+                </mat-checkbox></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox
+                  ><div class="flex items-center">
+                    <span class="mr-2">3 stars & up</span>
+                    @for (item of [1, 2, 3]; track $index) {
+                    <mat-icon
+                      fontSet="material-icons-outlined"
+                      class="text-base text-[#fea99a]"
+                      >star</mat-icon
+                    >
+                    }
+                  </div></mat-checkbox
+                ></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox
+                  ><div class="flex items-center">
+                    <span class="mr-2">2 stars & up</span>
+                    @for (item of [1, 2]; track $index) {
+                    <mat-icon
+                      fontSet="material-icons-outlined"
+                      class="text-base text-[#fea99a]"
+                      >star</mat-icon
+                    >
+                    }
+                  </div></mat-checkbox
+                ></mat-list-item
+              >
+              <mat-list-item role="listitem"
+                ><mat-checkbox
+                  ><div class="flex items-center">
+                    <span class="mr-2">1 stars & up</span>
+                    @for (item of [1]; track $index) {
+                    <mat-icon
+                      fontSet="material-icons-outlined"
+                      class="text-base text-[#fea99a]"
+                      >star</mat-icon
+                    >
+                    }
+                  </div></mat-checkbox
+                ></mat-list-item
+              >
+            </mat-list>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

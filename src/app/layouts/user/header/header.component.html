@@ -1,4 +1,4 @@
-<header class="bg-white sticky top-0 z-50">
+<header class="bg-white sticky top-0 z-10">
   <!-- Top Bar -->
   <app-top-bar></app-top-bar>
   <!-- Top Bar -->
@@ -87,29 +87,43 @@
                 <div
                   class="bb-header-buttons h-full flex justify-end items-center"
                 >
+                  <div class="mt-1">
+                    <button mat-icon-button>
+                      <mat-icon
+                        fontSet="material-icons-outlined"
+                        style="font-size: 24px"
+                        class="text-red-500"
+                        >favorite</mat-icon
+                      >
+                    </button>
+                  </div>
+                  <div class="mr-3 mt-1">
+                    <button mat-icon-button>
+                      <mat-icon
+                        fontSet="material-icons-outlined"
+                        style="font-size: 24px"
+                        >mark_email_unread</mat-icon
+                      >
+                    </button>
+                  </div>
                   @if (account) {
-                  <button
-                    mat-stroked-button
-                    class="w-full p-y-20 p-x-16"
-                    type="button"
-                    style="border-radius: 2rem !important"
+
+                  <div
+                    class="d-flex align-items-center cursor-pointer"
                     [matMenuTriggerFor]="accountMenu"
                     aria-label="Account"
                   >
-                    <div class="d-flex align-items-center">
-                      <img
-                        [src]="account.pictureUrl"
-                        alt="avatar"
-                        width="26"
-                        class="mr-3 rounded-full"
-                      />
-                      {{ account.fullName }}
-                    </div>
-                  </button>
+                    <img
+                      [src]="account.pictureUrl"
+                      alt="avatar"
+                      width="32"
+                      class="rounded-full"
+                    />
+                  </div>
                   <mat-menu
                     #accountMenu="matMenu"
                     class="p-6"
-                    xPosition="before"
+                    xPosition="after"
                   >
                     @if (account) {
                     <button mat-menu-item>
@@ -203,4 +217,8 @@
     (toggleMenuEvent)="toggleMenu()"
   ></app-sidebar-mobile>
   <!-- Mobile Sidebar -->
+
+  <!-- Filter Menu -->
+  <app-tool-sidebar></app-tool-sidebar>
+  <!-- Filter Menu -->
 </header>

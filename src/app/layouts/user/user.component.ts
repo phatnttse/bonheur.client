@@ -6,6 +6,7 @@ import { HeaderComponent } from './header/header.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-user',
@@ -15,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     HeaderComponent,
     MatSidenavModule,
     MatProgressSpinnerModule,
+    FooterComponent,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',

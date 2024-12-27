@@ -43,7 +43,7 @@ export class FeaturedSuppliersComponent {
 
   slides = [
     {
-      img: 'https://via.placeholder.com/300x200?text=Vendor+1',
+      img: 'https://cdn0.hitched.co.uk/vendor/6613/3_2/640/jpg/69-kazooieloki-elsham_4_186613-171649437768041.webp',
       title: 'DoubleTree by Hilton',
       location: 'Nottingham, Nottinghamshire',
       rating: '5.0',
@@ -54,7 +54,7 @@ export class FeaturedSuppliersComponent {
       discount: '-3%',
     },
     {
-      img: 'https://via.placeholder.com/300x200?text=Vendor+2',
+      img: 'https://cdn0.hitched.co.uk/vendor/7933/3_2/640/jpg/the-granary-20170629102543740.webp',
       title: 'The Ritz London',
       location: 'London, England',
       rating: '4.9',
@@ -65,7 +65,7 @@ export class FeaturedSuppliersComponent {
       discount: '-5%',
     },
     {
-      img: 'https://via.placeholder.com/300x200?text=Vendor+3',
+      img: 'https://cdn0.hitched.co.uk/vendor/6089/3_2/640/jpg/the-three-sw-20171006123550431.webp',
       title: 'Hilton Manchester',
       location: 'Manchester, Greater Manchester',
       rating: '4.8',
@@ -76,7 +76,7 @@ export class FeaturedSuppliersComponent {
       discount: '-4%',
     },
     {
-      img: 'https://via.placeholder.com/300x200?text=Vendor+4',
+      img: 'https://cdn0.hitched.co.uk/vendor/9661/3_2/640/jpg/rs-131_4_199661-171137521855127.webp',
       title: 'Radisson Blu Edwardian',
       location: 'Birmingham, West Midlands',
       rating: '4.7',
@@ -87,7 +87,7 @@ export class FeaturedSuppliersComponent {
       discount: '-6%',
     },
     {
-      img: 'https://via.placeholder.com/300x200?text=Vendor+5',
+      img: 'https://cdn0.hitched.co.uk/vendor/8759/3_2/640/jpg/healing-mano-20180712030430539.webp',
       title: 'The Balmoral Edinburgh',
       location: 'Edinburgh, Scotland',
       rating: '4.9',
@@ -98,7 +98,7 @@ export class FeaturedSuppliersComponent {
       discount: '-8%',
     },
     {
-      img: 'https://via.placeholder.com/300x200?text=Vendor+6',
+      img: 'https://cdn0.hitched.co.uk/vendor/2449/3_2/640/jpg/rebeccamatthew-102-portfolio-photographic_4_192449-171603973481749.webp',
       title: 'The Grove Hertfordshire',
       location: 'Hertfordshire, England',
       rating: '4.6',
