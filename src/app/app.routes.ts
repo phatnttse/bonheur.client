@@ -60,6 +60,14 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'suppliers',
+        loadComponent() {
+          return import('./components/suppliers/suppliers.component').then(
+            (m) => m.SuppliersComponent
+          );
+        },
+      },
     ],
   },
   {
