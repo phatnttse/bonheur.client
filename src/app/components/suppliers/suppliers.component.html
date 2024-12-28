@@ -1,0 +1,410 @@
+<section class="section-shop pb-[50px] max-[1199px]:pb-[35px] bg-white py-20">
+  <div
+    class="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]"
+  >
+    <div class="flex flex-wrap w-full mb-[-24px]">
+      <div
+        class="min-[992px]:w-[25%] w-full px-[12px] mb-[24px] block max-[992px]:hidden"
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        data-aos-delay="200"
+      >
+        <div
+          class="bb-shop-wrap bg-white border-[1px] border-solid border-[#eee] rounded-[20px] sticky top-[0]"
+        >
+          <div
+            class="bb-sidebar-block p-[20px] border-b-[1px] border-solid border-[#eee]"
+          >
+            <div class="bb-sidebar-title mb-[20px]">
+              <h3
+                class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
+              >
+                Category
+              </h3>
+            </div>
+            <div class="bb-sidebar-contact">
+              <ul>
+                <li class="relative block mb-[14px]">
+                  <div class="bb-sidebar-block-item relative">
+                    <mat-list role="list">
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox
+                          >Photographers</mat-checkbox
+                        ></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox
+                          >Makeup Artists</mat-checkbox
+                        ></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>Stylists</mat-checkbox></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>Florists</mat-checkbox></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>Decorators</mat-checkbox></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>Planners</mat-checkbox></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox
+                          >Entertainers</mat-checkbox
+                        ></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>Transport</mat-checkbox></mat-list-item
+                      >
+                    </mat-list>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="bb-sidebar-block p-[20px] border-b-[1px] border-solid border-[#eee]"
+          >
+            <div class="bb-sidebar-title mt-2">
+              <h3
+                class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
+              >
+                Price Range
+              </h3>
+              <div class="mt-6 flex items-center justify-center">
+                <span class="text-base text-[#222222] font-light">
+                  {{ formatLabel(minPrice) }}
+                </span>
+                <span class="px-4">-</span>
+                <span class="text-base text-[#222222] font-light">
+                  {{ formatLabel(maxPrice) }}
+                </span>
+              </div>
+            </div>
+            <div class="bb-sidebar-contact">
+              <ul>
+                <li class="relative block mb-[14px]">
+                  <div class="bb-sidebar-block-item relative">
+                    <li class="relative block mb-[14px]">
+                      <div class="bb-sidebar-block-item relative w-full">
+                        <mat-slider
+                          min="0"
+                          max="100000000"
+                          step="1000000"
+                          showTickMarks
+                          discrete
+                          [displayWith]="formatLabel"
+                          style="width: 100%"
+                        >
+                          <input
+                            [(ngModel)]="minPrice"
+                            [value]="minPrice"
+                            matSliderStartThumb
+                          />
+                          <input
+                            [(ngModel)]="maxPrice"
+                            [value]="maxPrice"
+                            matSliderEndThumb
+                          />
+                        </mat-slider>
+                      </div>
+                    </li>
+                    <div class="mt-2 flex items-center justify-center">
+                      <button mat-raised-button type="button" color="primary">
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="bb-sidebar-block p-[20px]">
+            <div class="bb-sidebar-title mb-[20px]">
+              <h3
+                class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
+              >
+                Rating
+              </h3>
+            </div>
+            <div class="bb-sidebar-contact">
+              <ul>
+                <li class="relative block mb-[14px]">
+                  <div class="bb-sidebar-block-item relative">
+                    <mat-list role="list">
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>
+                          <div class="flex items-center">
+                            <span class="mr-2">5 stars</span>
+                            @for (item of [1, 2, 3, 4, 5]; track $index) {
+                            <mat-icon
+                              fontSet="material-icons-outlined"
+                              class="text-base text-[#fea99a]"
+                              >star</mat-icon
+                            >
+                            }
+                          </div>
+                        </mat-checkbox></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox>
+                          <div class="flex items-center">
+                            <span class="mr-2">4 stars & up</span>
+                            @for (item of [1, 2, 3, 4]; track $index) {
+                            <mat-icon
+                              fontSet="material-icons-outlined"
+                              class="text-base text-[#fea99a]"
+                              >star</mat-icon
+                            >
+                            }
+                          </div>
+                        </mat-checkbox></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox
+                          ><div class="flex items-center">
+                            <span class="mr-2">3 stars & up</span>
+                            @for (item of [1, 2, 3]; track $index) {
+                            <mat-icon
+                              fontSet="material-icons-outlined"
+                              class="text-base text-[#fea99a]"
+                              >star</mat-icon
+                            >
+                            }
+                          </div></mat-checkbox
+                        ></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox
+                          ><div class="flex items-center">
+                            <span class="mr-2">2 stars & up</span>
+                            @for (item of [1, 2]; track $index) {
+                            <mat-icon
+                              fontSet="material-icons-outlined"
+                              class="text-base text-[#fea99a]"
+                              >star</mat-icon
+                            >
+                            }
+                          </div></mat-checkbox
+                        ></mat-list-item
+                      >
+                      <mat-list-item role="listitem"
+                        ><mat-checkbox
+                          ><div class="flex items-center">
+                            <span class="mr-2">1 stars & up</span>
+                            @for (item of [1]; track $index) {
+                            <mat-icon
+                              fontSet="material-icons-outlined"
+                              class="text-base text-[#fea99a]"
+                              >star</mat-icon
+                            >
+                            }
+                          </div></mat-checkbox
+                        ></mat-list-item
+                      >
+                    </mat-list>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="min-[992px]:w-[75%] w-full px-[12px] mb-[24px]"
+        data-aos="fade-left"
+        data-aos-duration="1000"
+        data-aos-delay="200"
+      >
+        <div class="bb-shop-pro-inner list-view-100">
+          <div class="flex flex-wrap mx-[-12px] mb-[-24px]">
+            <div class="w-full px-[12px]">
+              <div class="bb-pro-list-top flex bg-white justify-between mb-8">
+                <div class="flex flex-wrap w-full">
+                  <div
+                    class="w-[50%] px-[12px] max-[420px]:w-full flex items-center"
+                  >
+                    <span class="text-base text-gray-500 mt-[6px]"
+                      >10 RESULTS</span
+                    >
+                  </div>
+                  <div class="w-[50%] px-[12px] max-[420px]:w-full">
+                    <div
+                      class="bb-select-inner h-full py-[10px] flex items-center justify-end max-[420px]:justify-center"
+                    >
+                      <div
+                        class="bb-bl-btn py-[10px] flex max-[420px]:justify-center"
+                      >
+                        <button
+                          type="button"
+                          class="grid-btn btn-list-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent active mr-2"
+                          title="grid"
+                        >
+                          <i-tabler name="list"></i-tabler>
+                        </button>
+                        <button
+                          type="button"
+                          class="grid-btn btn-grid-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-[5px]"
+                          title="grid"
+                        >
+                          <i-tabler name="layout-grid"></i-tabler>
+                        </button>
+                      </div>
+                      <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon matIconSuffix>sort</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>A to Z</button>
+                        <button mat-menu-item>Z to A</button>
+                        <button mat-menu-item>Price: Low to High</button>
+                        <button mat-menu-item>Price: High to Low</button>
+                      </mat-menu>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center mb-[24px] hidden">
+                <mat-chip-set aria-label="Filter selection" color="primary">
+                  <mat-chip class="bg-primary">
+                    <span class="text-white">5 stars</span>
+                    <mat-icon matChipRemove class="text-white">cancel</mat-icon>
+                  </mat-chip>
+                  <mat-chip class="bg-primary">
+                    <span class="text-white">Photographers</span>
+                    <mat-icon matChipRemove class="text-white">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-set>
+                <button
+                  mat-button
+                  color="primary"
+                  class="ml-4 px-4 py-1 rounded-md transition-all"
+                >
+                  Clear All
+                </button>
+              </div>
+            </div>
+            @for (supplier of supplierList; track $index) {
+            <div
+              class="width-100 min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full px-[12px] mb-[24px] pro-bb-content aos-init aos-animate border-b-[1px] border-solid border-[#eee]"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+              data-aos-delay="200"
+            >
+              <div class="bb-pro-box rounded-[20px]">
+                <div
+                  class="bb-pro-img overflow-hidden relative z-[4] max-[667px]:mb-[20px]"
+                >
+                  <a href="javascript:void(0)">
+                    <div
+                      class="inner-img relative block overflow-hidden pointer-events-none rounded-[1rem]"
+                    >
+                      <img
+                        class="main-img transition-all duration-[0.3s] ease-in-out w-full"
+                        [src]="supplier?.supplierImages?.[0]?.imageUrl"
+                        [alt]="supplier?.supplierName"
+                      />
+                      <img
+                        class="hover-img transition-all duration-[0.3s] ease-in-out absolute z-[2] top-[0] left-[0] opacity-[0] w-full"
+                        [src]="supplier?.supplierImages?.[0]?.imageUrl"
+                        [alt]="supplier?.supplierName"
+                      />
+                    </div>
+                  </a>
+                </div>
+                <div class="bb-pro-contact pl-6 pt-2 pb-6 max-[667px]:pl-2">
+                  <h4 class="bb-pro-title mb-[8px] text-[16px] leading-[18px]">
+                    <a
+                      href="product-left-sidebar.html"
+                      class="transition-all duration-[0.3s] text-[#222222] ease-in-out font-semibold w-full block whitespace-nowrap overflow-hidden text-ellipsis text-lg leading-[18px] tracking-[0.03rem]"
+                      >{{ supplier.supplierName }}</a
+                    >
+                  </h4>
+                  <div class="flex items-center py-1">
+                    <mat-icon
+                      fontSet="material-icons-outlined"
+                      class="text-base text-[#fea99a]"
+                      >star</mat-icon
+                    >
+                    <span class="text-sm text-gray-600 mr-1">5.0</span>
+                    <span class="text-xs text-gray-500 mr-1">(19)</span>
+                    <span class="text-gray-500 mr-1">.</span>
+                    <span class="text-gray-500">{{
+                      supplier.ward +
+                        ", " +
+                        supplier.district +
+                        ", " +
+                        supplier.province
+                    }}</span>
+                  </div>
+                  <p
+                    class="hidden text-[14px] text-[#222222] font-light leading-[28px] tracking-[0.03rem]"
+                  >
+                    {{ supplier.supplierDescription }}
+                  </p>
+                  <div class="bb-price flex items-center mt-4">
+                    <mat-icon><i-tabler name="coins"></i-tabler></mat-icon>
+                    <span class="px-[3px] text-sm font-light"
+                      >From {{ supplier.price | number : "1.0" }}đ</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="w-full px-[12px] py-10">
+              <div
+                class="bb-pro-pagination mb-[24px] flex justify-between max-[575px]:flex-col max-[575px]:items-center"
+              >
+                <ul class="flex">
+                  <li class="leading-[28px] mr-[6px] active">
+                    <a
+                      href="javascript:void(0)"
+                      class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                      >1</a
+                    >
+                  </li>
+                  <li class="leading-[28px] mr-[6px]">
+                    <a
+                      href="javascript:void(0)"
+                      class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] bg-white tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                      >2</a
+                    >
+                  </li>
+                  <li class="leading-[28px] mr-[6px]">
+                    <a
+                      href="javascript:void(0)"
+                      class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] bg-white tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                      >3</a
+                    >
+                  </li>
+                  <li class="leading-[28px] mr-[6px]">
+                    <a
+                      href="javascript:void(0)"
+                      class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] bg-white tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                      >4</a
+                    >
+                  </li>
+                  <li class="leading-[28px]">
+                    <a
+                      href="javascript:void(0)"
+                      class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+                      >Next
+
+                      <i-tabler
+                        name="arrow-narrow-right"
+                        class="transition-all duration-[0.3s] ease-in-out ml-[10px] text-[20px] w-[8px] text-[#fff]"
+                      ></i-tabler>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

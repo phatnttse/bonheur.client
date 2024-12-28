@@ -5,14 +5,15 @@
     .bb-main-menu {
       ul.navbar-nav {
         li {
-          &:hover {
+          &.active-link {
             a.nav-link {
               color: $primary;
-              &:after {
-                border-color: $primary;
-              }
+              border-bottom: 2px solid $primary;
             }
-            span {
+          }
+          a.nav-link {
+            text-decoration: none;
+            &:hover {
               color: $primary;
             }
           }

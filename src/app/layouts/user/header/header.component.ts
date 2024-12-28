@@ -13,6 +13,8 @@ import { DataService } from '../../../services/data.service';
 import { SidebarMobileComponent } from '../sidebar-mobile/sidebar-mobile.component';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
+import { ToolSidebarComponent } from '../../../components/suppliers/tool-sidebar/tool-sidebar.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +29,8 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
     SidebarMobileComponent,
     TopBarComponent,
     MainMenuComponent,
+    ToolSidebarComponent,
+    MatBadgeModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

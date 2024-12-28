@@ -49,3 +49,17 @@ export enum RequestPricingStatus {
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
 }
+
+export enum SupplierStatus {
+  PENDING = 'PENDING',
+  IN_REVIEW = 'IN_REVIEW',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
+
+export enum OnBoardStatus {
+  SUPPLIER_INFO = 'SUPPLIER_INFO',
+  SUPPLIER_LOCATION = 'SUPPLIER_LOCATION',
+  SUPPLIER_IMAGES = 'SUPPLIER_IMAGES',
+  COMPLETED = 'COMPLETED',
+}

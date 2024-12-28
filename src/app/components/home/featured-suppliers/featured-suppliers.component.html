@@ -27,7 +27,9 @@
     >
       @for (item of slides; track $index) {
       <div ngxSlickItem class="slide">
-        <div class="flex flex-col items-center justify-center gap-4 px-4">
+        <div
+          class="flex flex-col items-center justify-center gap-4 px-4 max-[1024px]:px-1 max-[667px]:px-3"
+        >
           <mat-card
             class="relative h-[400px] w-full flex flex-col justify-between bg-white shadow-lg rounded-md"
             appearance="outlined"
@@ -43,7 +45,7 @@
             <img
               mat-card-image
               [src]="item.img"
-              class="h-[201px] w-full object-cover rounded-t-md"
+              class="max-h-[201px] w-full object-cover rounded-t-md"
             />
 
             <mat-card-content

@@ -21,6 +21,11 @@ import {
   RequestPricing,
   RequestPricingResponse,
 } from '../../../models/request-pricing.model';
+import {
+  ListRequestPricingResponse,
+  RequestPricing,
+  RequestPricingResponse,
+} from '../../../models/request-pricing.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PaginationResponse } from '../../../models/base.model';
@@ -40,13 +45,24 @@ import { PaginationResponse } from '../../../models/base.model';
     MaterialModule,
     TablerIconsModule,
     CommonModule,
+    CommonModule,
   ],
   templateUrl: './request-pricing-management.component.html',
+  styleUrl: './request-pricing-management.component.scss',
   styleUrl: './request-pricing-management.component.scss',
 })
 export class RequestPricingManagementComponent {
   @ViewChild(MatSort) sort!: MatSort;
   dataSource: MatTableDataSource<RequestPricing> =
+    new MatTableDataSource<RequestPricing>();
+  displayedColumns: string[] = [
+    'name',
+    'email',
+    'phone',
+    'expiration',
+    'status',
+    'action',
+  ];
     new MatTableDataSource<RequestPricing>();
   displayedColumns: string[] = [
     'name',
@@ -76,12 +92,14 @@ export class RequestPricingManagementComponent {
     private toastr: ToastrService,
     private dialog: MatDialog
   ) {}
+  ) {}
 
+  ngOnInit() {
   ngOnInit() {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(true);
     });
-    this.getAllRequestPricing(this.pageNumber, this.pageSize);
+    // this.getAllRequestPricing(this.pageNumber, this.pageSize);
   }
 
   getAllRequestPricing(pageNumber: number, pageSize: number) {
@@ -108,11 +126,38 @@ export class RequestPricingManagementComponent {
         },
       });
   }
+  // getAllRequestPricing(pageNumber: number, pageSize: number) {
+  //   this.requestPricingService
+  //     .getAllRequestPricingByAdmin(pageNumber, pageSize)
+  //     .subscribe({
+  //       next: (response: ListRequestPricingResponse) => {
+  //         const data = response.data as PaginationResponse<RequestPricing>;
+  //         this.listRequestPricing = data.items;
 
+  //         this.dataSource = new MatTableDataSource(this.listRequestPricing);
+  //         this.dataSource.sort = this.sort;
+  //         this.pageNumber = data.pageNumber;
+  //         this.pageSize = data.pageSize;
+  //         this.totalItemCount = data.totalItemCount;
+  //         this.isFirstPage = data.isFirstPage;
+  //         this.isLastPage = data.isLastPage;
+  //         this.hasNextPage = data.hasNextPage;
+  //         this.hasPreviousPage = data.hasPreviousPage;
+  //         this.statusService.statusLoadingSpinnerSource.next(false);
+  //       },
+  //       error: (error: HttpErrorResponse) => {
+  //         this.statusService.statusLoadingSpinnerSource.next(false);
+  //         this.notificationService.handleApiError(error);
+  //       },
+  //     });
+  // }
+
+  btnGetRequestPricingById(statusPage: number, id: number) {
   btnGetRequestPricingById(statusPage: number, id: number) {
     this.statusPage = statusPage;
     this.requestPricingService.getRequestPricingById(id).subscribe({
       next: (response: RequestPricingResponse) => {
+        const data = response.data as RequestPricing;
         const data = response.data as RequestPricing;
         this.selectedRequestPricing = data;
         console.log(this.selectedRequestPricing);
@@ -123,8 +168,11 @@ export class RequestPricingManagementComponent {
         this.notificationService.handleApiError(error);
       },
     });
+    });
   }
 
+  btnBackToMainPage() {
+    this.statusPage = 0;
   btnBackToMainPage() {
     this.statusPage = 0;
   }

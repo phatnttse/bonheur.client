@@ -3,6 +3,24 @@ import { StatusCode } from './enums.model';
 export interface PaginationResponse<T> {
   success: boolean;
   message: string;
+  data: T;
+  statusCode: StatusCode;
+}
+
+/**
+ * Pagination request model
+ */
+export interface PaginationRequest {
+  pageNumber: number;
+  pageSize: number;
+}
+
+/**
+ * Pagination response model
+ */
+export interface PaginationResponse<T> {
+  success: boolean;
+  message: string;
   statusCode: StatusCode;
   data: {
     items: T[];
@@ -15,10 +33,4 @@ export interface PaginationResponse<T> {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
   };
-}
-export interface BaseResponse<T> {
-  success: boolean;
-  message: string;
-  data: T;
-  statusCode: StatusCode;
 }

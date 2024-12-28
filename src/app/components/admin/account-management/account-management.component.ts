@@ -30,7 +30,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 @Component({
   selector: 'app-account-management',
   standalone: true,
-  imports: [MaterialModule, TablerIconsModule, CommonModule, FormsModule],
+  imports: [MaterialModule, TablerIconsModule, CommonModule],
   templateUrl: './account-management.component.html',
   styleUrl: './account-management.component.scss',
 })
@@ -47,11 +47,8 @@ export class AccountManagementComponent {
     'role',
     'action',
   ];
-  search: string = '';
-  searchSubject = new Subject<string>();
-  role: string = '';
   pageNumber: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 8;
   totalItemCount: number = 0;
   pageCount: number = 0;
   isFirstPage: boolean = false;
@@ -88,47 +85,35 @@ export class AccountManagementComponent {
         this.dataSource = new MatTableDataSource(this.accounts);
       }
     });
-    this.getAccounts(this.search, this.role, this.pageNumber, this.pageSize);
-    console.log(this.search);
+    // this.getAccounts(this.pageNumber, this.pageSize);
   }
 
-  getAccounts(
-    search: string,
-    role: string,
-    pageNumber: number,
-    pageSize: number
-  ) {
-    this.accountService
-      .getAccounts(search, role, pageNumber, pageSize)
-      .subscribe({
-        next: (response: ListAccountResponse) => {
-          this.accounts = response.data.items;
-          this.dataSource = new MatTableDataSource(this.accounts);
-          this.dataSource.sort = this.sort;
-          this.pageNumber = response.data.pageNumber;
-          this.pageSize = response.data.pageSize;
-          this.totalItemCount = response.data.totalItemCount;
-          this.isFirstPage = response.data.isFirstPage;
-          this.isLastPage = response.data.isLastPage;
-          this.hasNextPage = response.data.hasNextPage;
-          this.hasPreviousPage = response.data.hasPreviousPage;
-          this.statusService.statusLoadingSpinnerSource.next(false);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.statusService.statusLoadingSpinnerSource.next(false);
-          this.notificationService.handleApiError(error);
-        },
-      });
-  }
+  // getAccounts(pageNumber: number, pageSize: number){
+  //   this.accountService.getAccounts(pageNumber, pageSize).subscribe({
+  //     next: (response: ListAccountResponse) => {
+  //       const data = response.data as PaginationResponse<Account>;
+  //       this.accounts = data.items;
 
-  onInputChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.search = input.value;
-    this.searchSubject.next(this.search);
-  }
+  //       this.dataSource = new MatTableDataSource(this.accounts);
+  //       this.dataSource.sort = this.sort;
+  //       this.pageNumber = data.pageNumber;
+  //       this.pageSize = data.pageSize;
+  //       this.totalItemCount = data.totalItemCount;
+  //       this.isFirstPage = data.isFirstPage;
+  //       this.isLastPage = data.isLastPage;
+  //       this.hasNextPage = data.hasNextPage;
+  //       this.hasPreviousPage = data.hasPreviousPage;
+  //       this.statusService.statusLoadingSpinnerSource.next(false);
+  //     },
+  //     error: (error: HttpErrorResponse) => {
+  //       this.statusService.statusLoadingSpinnerSource.next(false);
+  //       this.notificationService.handleApiError(error);
+  //     },
+  //   });
+  // }
 
   btnGetAccount(id: string) {
-    this.route.navigate(['/admin/accounts/management', id]);
+    this.route.navigate(['/admin/account/', id]);
   }
 
   openBlockAccountDialog(id: string): void {
