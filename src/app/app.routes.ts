@@ -45,6 +45,14 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'signup-supplier',
+    loadComponent() {
+      return import(
+        './components/signup-supplier/signup-supplier.component'
+      ).then((m) => m.SignupSupplierComponent);
+    },
+  },
+  {
     path: '',
     loadComponent() {
       return import('./layouts/user/user.component').then(
@@ -66,6 +74,14 @@ export const routes: Routes = [
           return import('./components/suppliers/suppliers.component').then(
             (m) => m.SuppliersComponent
           );
+        },
+      },
+      {
+        path: 'supplier/:slug',
+        loadComponent() {
+          return import(
+            './components/supplier-detail/supplier-detail.component'
+          ).then((m) => m.SupplierDetailComponent);
         },
       },
     ],

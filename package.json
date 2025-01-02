@@ -27,6 +27,7 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@microsoft/signalr": "^8.0.7",
     "@ngx-translate/core": "^16.0.3",
     "@types/jquery": "^3.5.32",
     "@types/slick-carousel": "^1.6.40",

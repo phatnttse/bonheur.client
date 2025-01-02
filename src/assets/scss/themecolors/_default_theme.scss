@@ -10,8 +10,8 @@ $mat-primary: (
 );
 $mat-secondary: (
   100: white,
-  500: #707a82,
-  700: #707a82,
+  500: #fea99a,
+  700: #fea99a,
   contrast: (
     100: white,
     500: white,
@@ -180,12 +180,12 @@ $darkbluetheme: mat.m2-define-dark-theme(
   }
 }
 
-// :root {
-//   @include mat.snack-bar-overrides(
-//     (
-//       container-color: mat.m2-get-color-from-palette($theme-primary, 500),
-//       supporting-text-color: white,
-//       button-color: white,
-//     )
-//   );
-// }
+:root {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: mat.m2-get-color-from-palette($theme-primary, 500),
+      supporting-text-color: white,
+      button-color: white,
+    )
+  );
+}

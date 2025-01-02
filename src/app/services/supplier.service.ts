@@ -28,4 +28,17 @@ export class SupplierService extends EndpointBase {
         })
       );
   }
+
+  getSupplierBySlug(slug: string): Observable<BaseResponse<Supplier>> {
+    return this.http
+      .get<BaseResponse<Supplier>>(
+        `${environment.apiUrl}/api/v1/suppliers/slug/${slug}`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getSupplierBySlug(slug));
+        })
+      );
+  }
 }

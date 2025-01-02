@@ -16,17 +16,16 @@
   border-radius: $border-radius !important;
 }
 
-.mat-mdc-raised-button {
-  box-shadow: $cardshadow;
-}
-
+.mat-mdc-raised-button,
+.mat-mdc-raised-button:hover,
+.mat-mdc-raised-button:focus,
 .mat-mdc-fab,
 .mat-mdc-mini-fab,
 .mat-mdc-fab:hover,
 .mat-mdc-fab:focus,
 .mat-mdc-mini-fab:hover,
 .mat-mdc-mini-fab:focus {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .mat-button-toggle-button {

@@ -1,0 +1,146 @@
+<div class="flex w-screen flex-wrap text-slate-800">
+  <div
+    class="relative hidden min-h-screen select-none flex-col justify-center text-center md:flex md:w-1/2 w-full"
+    style="
+      background-image: url('https://www.hitched.co.uk/assets/img/vendors/signup/bg_signup.jpg');
+      background-position: center center;
+      object-fit: cover;
+      background-repeat: no-repeat;
+      background-size: cover;
+    "
+  >
+    <div class="mx-auto py-16 px-4 text-white w-full">
+      <span
+        routerLink="/"
+        class="rounded-full bg-white px-3 py-1 font-medium text-primary cursor-pointer"
+        >Bonheur</span
+      >
+      <p class="my-6 text-3xl font-semibold leading-10">
+        Boost your business with us
+      </p>
+
+      <a
+        href="#"
+        class="font-semibold tracking-wide text-white underline underline-offset-4"
+        >Learn More</a
+      >
+    </div>
+  </div>
+  <div class="flex w-full flex-col md:w-1/2 mb-6">
+    <div class="flex justify-center pt-12 md:justify-start md:pl-[4.5rem]">
+      <a routerLink="/" class="text-3xl font-bold text-primary"> Bonheur . </a>
+    </div>
+    <div
+      class="my-auto mx-auto flex flex-col justify-center px-4 pt-8 md:justify-start lg:w-[32rem] lg:ml-14"
+    >
+      <p class="text-start text-2xl md:text-start font-semibold">
+        Try Bonheur for free and grow your business.
+      </p>
+
+      <form
+        class="flex flex-col items-stretch pt-3 md:pt-6"
+        [formGroup]="formSignup"
+        (ngSubmit)="btnSignup()"
+      >
+        <div class="flex flex-col pt-2">
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              required
+              [class.is-invalid]="
+                formSignup.get('name')?.invalid &&
+                formSignup.get('name')?.touched
+              "
+            />
+            @if(formSignup.get('name')?.hasError('required')) {
+            <mat-error style="font-size: 12px"> Name is required </mat-error>
+            } @if (formSignup.get('name')?.hasError('minlength')) {
+            <mat-error style="font-size: 12px">
+              Name must be at least 2 characters
+            </mat-error>
+            } @if (formSignup.get('name')?.hasError('maxlength')) {
+            <mat-error style="font-size: 12px">
+              Name must be at most 50 characters
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col pt-2">
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Phone number</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="phoneNumber"
+              required
+              [class.is-invalid]="
+                formSignup.get('phoneNumber')?.invalid &&
+                formSignup.get('phoneNumber')?.touched
+              "
+            />
+            @if(formSignup.get('phoneNumber')?.hasError('required')) {
+            <mat-error style="font-size: 12px">
+              Phone number is required
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col pt-2">
+          <mat-form-field appearance="outline" class="w-full" color="primary">
+            <mat-label>Main business category</mat-label>
+            <mat-select
+              formControlName="supplierCategory"
+              [class.is-invalid]="
+                formSignup.get('supplierCategory')?.invalid &&
+                formSignup.get('supplierCategory')?.touched
+              "
+            >
+              @for (supplier of supplierCategories; track $index) {
+              <mat-option [value]="supplier.id">{{ supplier.name }}</mat-option>
+              }
+            </mat-select>
+            @if(formSignup.get('supplierCategory')?.hasError('required')) {
+            <mat-error style="font-size: 12px">
+              Main business category is required
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="mb-4 flex flex-col pt-2">
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>WebsiteUrl</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="websiteUrl"
+              [class.is-invalid]="
+                formSignup.get('websiteUrl')?.invalid &&
+                formSignup.get('websiteUrl')?.touched
+              "
+            />
+          </mat-form-field>
+        </div>
+        <div class="flex items-center justify-start">
+          <mat-checkbox>
+            I agree to the
+            <a class="underline text-primary" routerLink="/"
+              >Terms and Conditions</a
+            ></mat-checkbox
+          >
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="mt-6 text-center text-base font-semibold text-white outline-none transition py-2"
+          style="border-radius: 1rem"
+        >
+          Sign up
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

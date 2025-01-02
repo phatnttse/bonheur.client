@@ -28,34 +28,44 @@
                   <div class="bb-sidebar-block-item relative">
                     <mat-list role="list">
                       <mat-list-item role="listitem"
-                        ><mat-checkbox
+                        ><mat-checkbox color="primary"
                           >Photographers</mat-checkbox
                         ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox
+                        ><mat-checkbox color="primary"
                           >Makeup Artists</mat-checkbox
                         ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox>Stylists</mat-checkbox></mat-list-item
+                        ><mat-checkbox color="primary"
+                          >Stylists</mat-checkbox
+                        ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox>Florists</mat-checkbox></mat-list-item
+                        ><mat-checkbox color="primary"
+                          >Florists</mat-checkbox
+                        ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox>Decorators</mat-checkbox></mat-list-item
+                        ><mat-checkbox color="primary"
+                          >Decorators</mat-checkbox
+                        ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox>Planners</mat-checkbox></mat-list-item
+                        ><mat-checkbox color="primary"
+                          >Planners</mat-checkbox
+                        ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox
+                        ><mat-checkbox color="primary"
                           >Entertainers</mat-checkbox
                         ></mat-list-item
                       >
                       <mat-list-item role="listitem"
-                        ><mat-checkbox>Transport</mat-checkbox></mat-list-item
+                        ><mat-checkbox color="primary"
+                          >Transport</mat-checkbox
+                        ></mat-list-item
                       >
                     </mat-list>
                   </div>
@@ -239,15 +249,19 @@
                       >
                         <button
                           type="button"
-                          class="grid-btn btn-list-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent active mr-2"
-                          title="grid"
+                          class="list-btn btn-list-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-2"
+                          [ngClass]="!gridLayout ? 'active' : ''"
+                          title="list"
+                          (click)="btnChangeGridLayOut(false)"
                         >
                           <i-tabler name="list"></i-tabler>
                         </button>
                         <button
                           type="button"
                           class="grid-btn btn-grid-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-[5px]"
+                          [ngClass]="gridLayout ? 'active' : ''"
                           title="grid"
+                          (click)="btnChangeGridLayOut(true)"
                         >
                           <i-tabler name="layout-grid"></i-tabler>
                         </button>
@@ -287,28 +301,41 @@
             </div>
             @for (supplier of supplierList; track $index) {
             <div
-              class="width-100 min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full px-[12px] mb-[24px] pro-bb-content aos-init aos-animate border-b-[1px] border-solid border-[#eee]"
+              [ngClass]="
+                !gridLayout
+                  ? 'width-100 min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full px-[12px] mb-[24px] pro-bb-content border-b-[1px] border-solid border-[#eee]'
+                  : 'w-full sm:w-1/2 lg:w-1/3 mb-[20px] pro-bb-content rounded-[1rem] px-[8px]'
+              "
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-delay="200"
             >
-              <div class="bb-pro-box rounded-[20px]">
+              <div
+                class="bb-pro-box rounded-[20px]"
+                [ngClass]="
+                  gridLayout ? 'border border-solid border-[#eee]' : ''
+                "
+              >
                 <div
                   class="bb-pro-img overflow-hidden relative z-[4] max-[667px]:mb-[20px]"
                 >
-                  <a href="javascript:void(0)">
+                  <a
+                    href="javascript:void(0)"
+                    (click)="viewSupplierDetail(supplier.slug!)"
+                  >
                     <div
                       class="inner-img relative block overflow-hidden pointer-events-none rounded-[1rem]"
+                      [ngClass]="gridLayout ? 'rounded-b-none' : ''"
                     >
                       <img
                         class="main-img transition-all duration-[0.3s] ease-in-out w-full"
-                        [src]="supplier?.supplierImages?.[0]?.imageUrl"
-                        [alt]="supplier?.supplierName"
+                        [src]="supplier?.images?.[0]?.imageUrl"
+                        [alt]="supplier?.name"
                       />
                       <img
                         class="hover-img transition-all duration-[0.3s] ease-in-out absolute z-[2] top-[0] left-[0] opacity-[0] w-full"
-                        [src]="supplier?.supplierImages?.[0]?.imageUrl"
-                        [alt]="supplier?.supplierName"
+                        [src]="supplier?.images?.[0]?.imageUrl"
+                        [alt]="supplier?.name"
                       />
                     </div>
                   </a>
@@ -316,9 +343,10 @@
                 <div class="bb-pro-contact pl-6 pt-2 pb-6 max-[667px]:pl-2">
                   <h4 class="bb-pro-title mb-[8px] text-[16px] leading-[18px]">
                     <a
-                      href="product-left-sidebar.html"
-                      class="transition-all duration-[0.3s] text-[#222222] ease-in-out font-semibold w-full block whitespace-nowrap overflow-hidden text-ellipsis text-lg leading-[18px] tracking-[0.03rem]"
-                      >{{ supplier.supplierName }}</a
+                      class="cursor-pointer hover:text-primary transition-all duration-[0.3s] text-[#222222] ease-in-out font-semibold w-full block whitespace-nowrap overflow-hidden text-ellipsis text-lg leading-[18px] tracking-[0.03rem]"
+                      [ngClass]="gridLayout ? 'mt-4' : ''"
+                      (click)="viewSupplierDetail(supplier.slug!)"
+                      >{{ supplier.name }}</a
                     >
                   </h4>
                   <div class="flex items-center py-1">
@@ -330,26 +358,58 @@
                     <span class="text-sm text-gray-600 mr-1">5.0</span>
                     <span class="text-xs text-gray-500 mr-1">(19)</span>
                     <span class="text-gray-500 mr-1">.</span>
-                    <span class="text-gray-500">{{
-                      supplier.ward +
-                        ", " +
-                        supplier.district +
-                        ", " +
-                        supplier.province
-                    }}</span>
+                    <span class="text-gray-500">{{ supplier.province }}</span>
                   </div>
                   <p
                     class="hidden text-[14px] text-[#222222] font-light leading-[28px] tracking-[0.03rem]"
                   >
-                    {{ supplier.supplierDescription }}
+                    {{ supplier.description }}
                   </p>
-                  <div class="bb-price flex items-center mt-4">
-                    <mat-icon><i-tabler name="coins"></i-tabler></mat-icon>
-                    <span class="px-[3px] text-sm font-light"
-                      >From {{ supplier.price | number : "1.0" }}đ</span
-                    >
+                  <div class="bb-price flex justify-between mt-4">
+                    <div class="flex">
+                      <mat-icon><i-tabler name="coins"></i-tabler></mat-icon>
+                      <span class="px-[4px] text-sm font-light"
+                        >From {{ supplier.price | number : "1.0" }}đ</span
+                      >
+                    </div>
+                    @if (!gridLayout) {
+                    <div>
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        style="padding: 24px 48px; font-weight: 600"
+                      >
+                        Request Pricing
+                      </button>
+                    </div>
+                    }
                   </div>
+                  @if (!gridLayout) {
+                  <div class="flex justify-end mt-2">
+                    <div class="flex items-center mr-2">
+                      <mat-icon class="text-[#fea99a]">bolt</mat-icon>
+                      <span class="text-[#222222] text-sm font-light">
+                        Response within 24 hours
+                      </span>
+                    </div>
+                  </div>
+                  }
                 </div>
+                @if (gridLayout) {
+                <div class="flex justify-center mt-2 w-full px-4 mb-2">
+                  <button mat-raised-button color="primary" class="w-full">
+                    Request Pricing
+                  </button>
+                </div>
+                <div
+                  class="flex items-center mr-2 flex items-center justify-center mr-3 mb-4"
+                >
+                  <mat-icon class="text-[#fea99a]">bolt</mat-icon>
+                  <span class="text-[#222222] text-sm font-light">
+                    Response within 24 hours
+                  </span>
+                </div>
+                }
               </div>
             </div>
             }

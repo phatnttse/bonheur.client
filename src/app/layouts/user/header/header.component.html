@@ -87,6 +87,7 @@
                 <div
                   class="bb-header-buttons h-full flex justify-end items-center"
                 >
+                  @if (account) {
                   <div class="mt-1">
                     <button mat-icon-button>
                       <mat-icon
@@ -97,16 +98,16 @@
                       >
                     </button>
                   </div>
-                  <div class="mr-3 mt-1">
-                    <button mat-icon-button>
-                      <mat-icon
-                        fontSet="material-icons-outlined"
-                        style="font-size: 24px"
-                        >mark_email_unread</mat-icon
-                      >
+                  <div class="mr-4 mt-2">
+                    <button mat-icon-button aria-label="Notifications">
+                      <i-tabler
+                        class="flex items-center text-center"
+                        name="mail"
+                        matBadge="0"
+                        matBadgeColor="warn"
+                      ></i-tabler>
                     </button>
                   </div>
-                  @if (account) {
 
                   <div
                     class="d-flex align-items-center cursor-pointer"
