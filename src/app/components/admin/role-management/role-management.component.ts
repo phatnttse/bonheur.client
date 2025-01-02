@@ -2,7 +2,11 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MaterialModule } from '../../../material.module';
-import { Role, RoleResponse } from '../../../models/role.model';
+import {
+  ListRoleResponse,
+  Role,
+  RoleResponse,
+} from '../../../models/role.model';
 import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,11 +14,12 @@ import { StatusService } from '../../../services/status.service';
 import { StatusCode } from '../../../models/enums.model';
 
 import { TablerIconsModule } from 'angular-tabler-icons';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-role-management',
   standalone: true,
-  imports: [MaterialModule, TablerIconsModule],
+  imports: [MaterialModule, TablerIconsModule, RouterModule],
   templateUrl: './role-management.component.html',
   styleUrl: './role-management.component.scss',
 })
@@ -48,7 +53,7 @@ export class RoleManagementComponent implements OnInit, AfterViewInit {
 
   getRoles() {
     this.accountService.getRoles().subscribe({
-      next: (response: RoleResponse) => {
+      next: (response: ListRoleResponse) => {
         if (response.success && response.statusCode === StatusCode.OK) {
           if (Array.isArray(response.data)) {
             this.roles = response.data;

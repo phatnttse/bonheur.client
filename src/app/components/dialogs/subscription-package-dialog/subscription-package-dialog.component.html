@@ -1,0 +1,98 @@
+<div class="subscription-package-dialog">
+  <div class="my-2 p-0">
+    <h2 mat-dialog-title>
+      {{
+        isEditMode ? "Update Subscription Package" : "Add Subscription Package"
+      }}
+    </h2>
+  </div>
+  <form [formGroup]="subscriptionForm" (ngSubmit)="onSubmit()" class="mx-3">
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="{{ data.name }}" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Duration In Days</mat-label>
+        <input
+          matInput
+          placeholder="{{ data.durationInDays }}"
+          formControlName="durationInDays"
+        />
+        <div matSuffix class="flex flex-row">
+          <button
+            class="mx-2 hover:bg-gray-200 rounded-full duration-300"
+            (click)="addDurationDays($event)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            class="mx-2 hover:bg-gray-200 rounded-full duration-300"
+            (click)="subtractDurationDays($event)"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Price</mat-label>
+        <input
+          matInput
+          placeholder="{{ data.price }}"
+          formControlName="price"
+        />
+        <mat-icon matSuffix>attach_money</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Is Featured</mat-label>
+        <mat-select appearance="outline" formControlName="isFeatured">
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Priority</mat-label>
+        <input
+          matInput
+          placeholder="{{ data.priority }}"
+          formControlName="priority"
+        />
+        <mat-icon matSuffix>priority</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          placeholder="{{ data.description }}"
+          formControlName="description"
+        />
+      </mat-form-field>
+    </div>
+    <div class="flex justify-end">
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          type="submit"
+        >
+          {{ isEditMode ? "Update" : "Add" }}
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          color="warn"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
