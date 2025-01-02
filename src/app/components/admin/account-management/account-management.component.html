@@ -39,12 +39,21 @@
           </th>
           <td mat-cell *matCellDef="let account">
             <div class="d-flex align-items-center">
+              @if(account.pictureUrl === null){
+              <img
+                alt="users"
+                width="35"
+                class="rounded-circle"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH-bmqm7mCI2OBNsFo6PDo9QD3NPzXnpn9vA&s"
+              />
+              } @else {
               <img
                 alt="users"
                 width="35"
                 class="rounded-circle"
                 src="{{ account.pictureUrl }}"
               />
+              }
             </div>
           </td>
         </ng-container>

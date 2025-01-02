@@ -34,28 +34,19 @@ export const adminRoutes: Routes = [
         },
       },
       {
-        path: 'categories/management/:id',
-        loadComponent() {
-          return import(
-            './category-management/category-details-management/category-details-management.component'
-          ).then((m) => m.CategoryDetailsManagementComponent);
-        },
-      },
-      {
-        path: 'categories/management/create',
-        loadComponent() {
-          return import(
-            './category-management/category-create-management/category-create-management.component'
-          ).then((m) => m.CategoryCreateManagementComponent);
-        },
-      },
-
-      {
         path: 'request-pricing/management',
         loadComponent() {
           return import(
             './request-pricing-management/request-pricing-management.component'
           ).then((m) => m.RequestPricingManagementComponent);
+        },
+      },
+      {
+        path: 'request-pricing/management/:id',
+        loadComponent() {
+          return import(
+            './request-pricing-management/request-pricing-detail-management/request-pricing-detail-management.component'
+          ).then((m) => m.RequestPricingDetailManagementComponent);
         },
       },
       {
@@ -72,6 +63,14 @@ export const adminRoutes: Routes = [
           return import(
             './account-management/account-detail-management/account-detail-management.component'
           ).then((m) => m.AccountDetailManagementComponent);
+        },
+      },
+      {
+        path: 'subscription-packages/management',
+        loadComponent() {
+          return import(
+            './subscription-packages-management/subscription-packages-management.component'
+          ).then((m) => m.SubscriptionPackagesManagementComponent);
         },
       },
     ],

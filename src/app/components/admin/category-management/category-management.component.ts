@@ -24,6 +24,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { Router, RouterModule } from '@angular/router';
+import { SupplierCategoryDialogComponent } from '../../dialogs/supplier-category-dialog/supplier-category-dialog.component';
 
 @Component({
   selector: 'app-category-management',
@@ -110,18 +111,6 @@ export class CategoryManagementComponent {
     });
   }
 
-  // Thay đổi trạng thái của trang
-  btnChangeStatusPage(status: number, category?: SupplierCategory) {
-    this.statusPage = status;
-    if (category) {
-      this.selectedCategory = category;
-      this.categoryForm.patchValue({
-        name: category.name,
-        description: category.description,
-      });
-    }
-  }
-
   btnDeleteCategory(id: number) {
     this.categoryService.deleteCategory(id).subscribe({
       next: (response: SupplierCategoryResponse) => {
@@ -144,8 +133,11 @@ export class CategoryManagementComponent {
   // Hàm để mở dialog
   openDeleteDialog(id: number): void {
     const dialogRef = this.dialog.open(DeleteCategoryComponent, {
-      width: '300px',
-      data: id,
+      width: '400px',
+      data: {
+        id,
+        deleteFn: (id: number) => this.categoryService.deleteCategory(id),
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -167,11 +159,32 @@ export class CategoryManagementComponent {
     });
   }
 
-  btnNavigateToUpdate(id: string) {
-    this.route.navigate(['/admin/categories/management', id]);
-  }
+  openDialog(id?: number) {
+    if (id) {
+      this.categoryService.getCategory(id).subscribe({
+        next: (response: SupplierCategoryResponse) => {
+          const dialogRef = this.dialog.open(SupplierCategoryDialogComponent, {
+            data: response.data,
+            width: '700px',
+          });
 
-  btnNavigateToCreate() {
-    this.route.navigate(['admin', 'categories', 'create']);
+          dialogRef.afterClosed().subscribe((result) => {
+            this.getCategories();
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.error('ERROR', error.error.message);
+        },
+      });
+    } else {
+      const dialogRef = this.dialog.open(SupplierCategoryDialogComponent, {
+        data: {},
+        width: '700px',
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        this.getCategories();
+      });
+    }
   }
 }

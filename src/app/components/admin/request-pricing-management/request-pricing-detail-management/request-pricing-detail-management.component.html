@@ -1,0 +1,113 @@
+<div class="container">
+  <mat-card class="w-100">
+    <mat-card-content>
+      <mat-card class="p-4">
+        <mat-card-content>
+          <div
+            class="d-flex justify-content-between align-items-center mx-4 my-3"
+          >
+            <div>
+              <h4 class="font-bold m-0 text-2xl">Request Pricing Detail</h4>
+            </div>
+            <div>
+              <button
+                mat-raised-button
+                color="warn"
+                class="flex items-center text-white text-sm font-medium rounded-lg px-4 py-3 shadow-md transition-colors duration-200"
+                (click)="btnReturnListPage()"
+              >
+                <mat-icon class="mr-2">reply</mat-icon>
+                Back
+              </button>
+            </div>
+          </div>
+          <table
+            class="table-auto w-full border-separate border-spacing-y-4 border-spacing-x-4"
+          >
+            <tr class="mx-5 my-5">
+              <td><strong class="text-1xl">Name: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.name }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Email: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.email }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Phone Number: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.phoneNumber }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Message: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.message }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Expiration Date: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{
+                  selectedRequestPricing?.expirationDate | date : "dd/MM/yyyy"
+                }}
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="w-100">
+    <mat-card-content>
+      <mat-card class="p-4">
+        <mat-card-content>
+          <div class="d-flex align-items-center mx-4 my-3">
+            <h4 class="font-bold m-0 text-2xl">Supplier Infomation</h4>
+          </div>
+
+          <table
+            class="table-auto w-full border-separate border-spacing-y-4 border-spacing-x-4"
+          >
+            <tr class="mx-5 my-5">
+              <td><strong class="text-1xl">Supplier Name: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.supplier?.supplierName }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Supplier Email: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.email }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5">
+              <td><strong class="">Phone Number: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.phoneNumber }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Message: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{ selectedRequestPricing?.message }}
+              </td>
+            </tr>
+            <tr class="mx-5 my-5 p-24">
+              <td><strong class="">Expiration Date: </strong></td>
+              <td class="fw-bold text-dark col-6">
+                {{
+                  selectedRequestPricing?.expirationDate | date : "dd/MM/yyyy"
+                }}
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

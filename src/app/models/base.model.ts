@@ -1,6 +1,5 @@
 import { StatusCode } from './enums.model';
-
-export interface PaginationResponse<T> {
+export interface BaseResponse<T> {
   success: boolean;
   message: string;
   data: T;
