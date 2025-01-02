@@ -1,8 +1,4 @@
 import { StatusCode } from './enums.model';
-
-/**
- * Base response model
- */
 export interface BaseResponse<T> {
   success: boolean;
   message: string;

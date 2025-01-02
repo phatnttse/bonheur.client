@@ -9,4 +9,5 @@ export interface Role {
   permissions: Permission[];
 }
 
-export interface RoleResponse extends BaseResponse<Role[]> {}
+export interface ListRoleResponse extends BaseResponse<Role[]> {}
+export interface RoleResponse extends BaseResponse<Role> {}

@@ -24,6 +24,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PaginationResponse } from '../../../models/base.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-request-pricing-management',
@@ -72,51 +73,45 @@ export class RequestPricingManagementComponent {
     private requestPricingService: RequestPricingService,
     private notificationService: NotificationService,
     private statusService: StatusService,
-    private fb: FormBuilder,
-    private toastr: ToastrService,
-    private dialog: MatDialog
+    private route: Router
   ) {}
 
   ngOnInit() {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(true);
     });
-    // this.getAllRequestPricing(this.pageNumber, this.pageSize);
+    this.getAllRequestPricing(this.pageNumber, this.pageSize);
   }
 
-  // getAllRequestPricing(pageNumber: number, pageSize: number) {
-  //   this.requestPricingService
-  //     .getAllRequestPricingByAdmin(pageNumber, pageSize)
-  //     .subscribe({
-  //       next: (response: ListRequestPricingResponse) => {
-  //         const data = response.data as PaginationResponse<RequestPricing>;
-  //         this.listRequestPricing = data.items;
+  getAllRequestPricing(pageNumber: number, pageSize: number) {
+    this.requestPricingService
+      .getAllRequestPricingByAdmin(pageNumber, pageSize)
+      .subscribe({
+        next: (response: ListRequestPricingResponse) => {
+          this.listRequestPricing = response.data.items;
 
-  //         this.dataSource = new MatTableDataSource(this.listRequestPricing);
-  //         this.dataSource.sort = this.sort;
-  //         this.pageNumber = data.pageNumber;
-  //         this.pageSize = data.pageSize;
-  //         this.totalItemCount = data.totalItemCount;
-  //         this.isFirstPage = data.isFirstPage;
-  //         this.isLastPage = data.isLastPage;
-  //         this.hasNextPage = data.hasNextPage;
-  //         this.hasPreviousPage = data.hasPreviousPage;
-  //         this.statusService.statusLoadingSpinnerSource.next(false);
-  //       },
-  //       error: (error: HttpErrorResponse) => {
-  //         this.statusService.statusLoadingSpinnerSource.next(false);
-  //         this.notificationService.handleApiError(error);
-  //       },
-  //     });
-  // }
+          this.dataSource = new MatTableDataSource(this.listRequestPricing);
+          this.dataSource.sort = this.sort;
+          this.pageNumber = response.data.pageNumber;
+          this.pageSize = response.data.pageSize;
+          this.totalItemCount = response.data.totalItemCount;
+          this.isFirstPage = response.data.isFirstPage;
+          this.isLastPage = response.data.isLastPage;
+          this.hasNextPage = response.data.hasNextPage;
+          this.hasPreviousPage = response.data.hasPreviousPage;
+          this.statusService.statusLoadingSpinnerSource.next(false);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
+        },
+      });
+  }
 
-  btnGetRequestPricingById(statusPage: number, id: number) {
-    this.statusPage = statusPage;
+  btnGetRequestPricingById(id: number) {
     this.requestPricingService.getRequestPricingById(id).subscribe({
       next: (response: RequestPricingResponse) => {
-        const data = response.data as RequestPricing;
-        this.selectedRequestPricing = data;
-        console.log(this.selectedRequestPricing);
+        this.selectedRequestPricing = response.data;
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
       error: (error: HttpErrorResponse) => {
@@ -126,7 +121,7 @@ export class RequestPricingManagementComponent {
     });
   }
 
-  btnBackToMainPage() {
-    this.statusPage = 0;
+  btnGetRequestPricing(id: string) {
+    this.route.navigate(['/equest-pricing/management/', id]);
   }
 }

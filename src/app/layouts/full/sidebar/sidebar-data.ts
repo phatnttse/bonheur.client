@@ -38,10 +38,10 @@ export const navItems: NavItem[] = [
     route: '/admin/accounts/management',
   },
   {
-    displayName: 'Tooltips',
+    displayName: 'Subscription Packages',
     iconName: 'tooltip',
     bgcolor: 'primary',
-    route: '/ui-components/tooltips',
+    route: '/admin/subscription-packages/management',
   },
   {
     navCap: 'Auth',
