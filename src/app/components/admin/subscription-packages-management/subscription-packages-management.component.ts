@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 import { SubscriptionPackageDialogComponent } from '../../dialogs/subscription-package-dialog/subscription-package-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-subscription-packages-management',
@@ -43,19 +44,28 @@ export class SubscriptionPackagesManagementComponent {
     'description',
     'durationInDays',
     'price',
-    'isFeatured',
-    'priority',
     'action',
   ];
   constructor(
     private subscriptionPackageService: SubscriptionPackagesService,
     private notificationService: NotificationService,
     private statusService: StatusService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
-    this.getSubscriptionPackages();
+    this.dataService.subscriptionPackagesData$.subscribe(
+      (subscriptionPackages: SubscriptionPackage[] | null) => {
+        if (subscriptionPackages?.values) {
+          this.subscriptionPackages = subscriptionPackages;
+          this.dataSource = new MatTableDataSource(this.subscriptionPackages);
+          this.dataSource.sort = this.sort;
+        } else {
+          this.getSubscriptionPackages();
+        }
+      }
+    );
   }
 
   // Get all subscription packages
@@ -65,6 +75,9 @@ export class SubscriptionPackagesManagementComponent {
         this.subscriptionPackages = response.data;
         this.dataSource = new MatTableDataSource(this.subscriptionPackages);
         this.dataSource.sort = this.sort;
+        this.dataService.subscriptionPackagesDataSource.next(
+          this.subscriptionPackages
+        );
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
       error: (error: HttpErrorResponse) => {
@@ -75,35 +88,36 @@ export class SubscriptionPackagesManagementComponent {
   }
 
   openDialog(id?: number): void {
+    let selectedSubscriptionPackage;
+
     if (id) {
-      this.subscriptionPackageService.getSubscriptionPackageById(id).subscribe({
-        next: (response: SubscriptionPackageResponse) => {
-          const dialogRef = this.dialog.open(
-            SubscriptionPackageDialogComponent,
-            {
-              data: response.data,
-              width: '1500px',
-            }
-          );
-
-          dialogRef.afterClosed().subscribe((result) => {
-            this.getSubscriptionPackages();
-          });
-        },
-        error: (error: HttpErrorResponse) => {
-          this.notificationService.error('ERROR', error.error.message);
-        },
-      });
+      selectedSubscriptionPackage = this.subscriptionPackages.find(
+        (sp) => sp.id === id
+      );
     } else {
-      const dialogRef = this.dialog.open(SubscriptionPackageDialogComponent, {
-        data: {},
-        width: '1500px',
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        this.getSubscriptionPackages();
-      });
+      selectedSubscriptionPackage = {};
     }
+
+    const dialogRef = this.dialog.open(SubscriptionPackageDialogComponent, {
+      data: selectedSubscriptionPackage,
+    });
+
+    dialogRef.afterClosed().subscribe((result: SubscriptionPackage) => {
+      if (result) {
+        const index = this.subscriptionPackages.findIndex(
+          (item) => item.id === result.id
+        );
+        if (index !== -1) {
+          this.subscriptionPackages[index] = result;
+        } else {
+          this.subscriptionPackages.push(result);
+        }
+
+        this.dataService.subscriptionPackagesDataSource.next(
+          this.subscriptionPackages
+        );
+      }
+    });
   }
 
   openDeleteDialog(id: number): void {
@@ -127,7 +141,7 @@ export class SubscriptionPackagesManagementComponent {
           this.dataSource = new MatTableDataSource(this.subscriptionPackages);
           this.dataSource.sort = this.sort;
 
-          this.subscriptionPackageService.subscriptionPackagesDataSource.next(
+          this.dataService.subscriptionPackagesDataSource.next(
             this.subscriptionPackages
           );
         }

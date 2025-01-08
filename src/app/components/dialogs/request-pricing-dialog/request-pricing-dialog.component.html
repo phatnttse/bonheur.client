@@ -1,0 +1,91 @@
+<div class="subscription-package-dialog">
+  <div class="my-2 p-0">
+    <h2 mat-dialog-title>Request Pricing Details</h2>
+  </div>
+  <form [formGroup]="requestPricingForm" (ngSubmit)="onSubmit()" class="mx-3">
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Phone Number</mat-label>
+        <input
+          matInput
+          placeholder="Phone Number"
+          formControlName="phoneNumber"
+        />
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Expiration Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="expirationDatePicker"
+          placeholder="Expiration Date"
+          formControlName="expirationDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="expirationDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #expirationDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Event Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="eventDatePicker"
+          placeholder="Event Date"
+          formControlName="eventDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="eventDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #eventDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Message</mat-label>
+        <input matInput placeholder="Message" formControlName="message" />
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Reject reason</mat-label>
+        <input
+          matInput
+          placeholder="Reject reason"
+          formControlName="rejectReason"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Supplier Name</mat-label>
+        <input
+          matInput
+          placeholder="Supplier Name"
+          formControlName="supplierName"
+        />
+      </mat-form-field>
+    </div>
+    <div class="flex justify-end">
+      <a
+        mat-raised-button
+        color="primary"
+        class="mx-2 mb-3 p-24 text-white"
+        type="submit"
+        href="{{ data.supplier?.websiteUrl }}"
+        target="_blank"
+      >
+        Visit Website
+      </a>
+    </div>
+  </form>
+</div>
