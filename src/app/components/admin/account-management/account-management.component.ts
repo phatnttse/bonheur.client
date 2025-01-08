@@ -26,6 +26,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { AccountDialogComponent } from '../../dialogs/account-dialog/account-dialog.component';
 
 @Component({
   selector: 'app-account-management',
@@ -115,8 +116,19 @@ export class AccountManagementComponent {
       });
   }
 
-  btnGetAccount(id: string) {
-    this.route.navigate(['/admin/account/', id]);
+  openAccountDialog(id?: string): void {
+    if (id) {
+      this.accountService.getAccount(id).subscribe({
+        next: (response: AccountResponse) => {
+          this.dialog.open(AccountDialogComponent, {
+            data: response.data,
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.handleApiError(error);
+        },
+      });
+    }
   }
 
   openBlockAccountDialog(id: string): void {

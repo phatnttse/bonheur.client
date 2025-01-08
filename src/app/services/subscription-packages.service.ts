@@ -14,11 +14,6 @@ import { environment } from '../environments/environment.dev';
 })
 export class SubscriptionPackagesService extends EndpointBase {
   private http = inject(HttpClient);
-  public subscriptionPackagesDataSource = new BehaviorSubject<
-    SubscriptionPackage[] | null
-  >(null);
-  subscriptionPackagesData$ =
-    this.subscriptionPackagesDataSource.asObservable();
 
   getSubscriptionPackages(): Observable<ListSubscriptionPackageResponse> {
     return this.http

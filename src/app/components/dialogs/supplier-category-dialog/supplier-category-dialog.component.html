@@ -7,6 +7,9 @@
       <mat-form-field appearance="outline" class="w-100 mx-8 my-2">
         <mat-label>Name</mat-label>
         <input matInput placeholder="Name" formControlName="name" />
+        @if(supplierCategoryForm.get('name')?.errors?.['required']) {
+        <mat-error>Name is required.</mat-error>
+        }
       </mat-form-field>
     </div>
     <div class="flex flex-row gap-y-1">
@@ -17,6 +20,9 @@
           placeholder="Description"
           formControlName="description"
         />
+        @if(supplierCategoryForm.get('description')?.errors?.['required']) {
+        <mat-error>Description is required.</mat-error>
+        }
       </mat-form-field>
     </div>
     <div class="flex justify-end mx-5">

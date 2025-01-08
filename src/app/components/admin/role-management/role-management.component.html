@@ -78,7 +78,7 @@
               mat-icon-button
               type="button"
               class="m-t-4"
-              [routerLink]="'/admin/roles/management/' + role.id"
+              (click)="openRoleDialog(role.id)"
             >
               <mat-icon color="warn"
                 ><i-tabler

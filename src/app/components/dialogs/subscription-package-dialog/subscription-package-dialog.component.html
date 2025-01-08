@@ -1,22 +1,24 @@
 <div class="subscription-package-dialog">
   <div class="my-2 p-0">
     <h2 mat-dialog-title>
-      {{
-        isEditMode ? "Update Subscription Package" : "Add Subscription Package"
-      }}
+      @if (isEditMode == true) { Update Subscription Package } @else{ Add
+      Subscription Package }
     </h2>
   </div>
   <form [formGroup]="subscriptionForm" (ngSubmit)="onSubmit()" class="mx-3">
     <div class="flex flex-row">
       <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
         <mat-label>Name</mat-label>
-        <input matInput placeholder="{{ data.name }}" formControlName="name" />
+        <input matInput placeholder="Name" formControlName="name" />
+        @if(subscriptionForm.get('name')?.errors?.['required']){
+        <mat-error> Name is required. </mat-error>
+        }
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
         <mat-label>Duration In Days</mat-label>
         <input
           matInput
-          placeholder="{{ data.durationInDays }}"
+          placeholder="Duration In Days"
           formControlName="durationInDays"
         />
         <div matSuffix class="flex flex-row">
@@ -33,18 +35,22 @@
             <mat-icon>remove</mat-icon>
           </button>
         </div>
+        @if(subscriptionForm.get('durationInDays')?.errors?.['required']) {
+        <mat-error>Duration In Days is required.</mat-error>
+        }
       </mat-form-field>
     </div>
 
     <div class="flex flex-row">
       <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
         <mat-label>Price</mat-label>
-        <input
-          matInput
-          placeholder="{{ data.price }}"
-          formControlName="price"
-        />
-        <mat-icon matSuffix>attach_money</mat-icon>
+        <div class="flex flex-row">
+          <input matInput placeholder="Price" formControlName="price" />
+          <h5 class="fw-bold">(VND)</h5>
+        </div>
+        @if(subscriptionForm.get('price')?.errors?.['required']) {
+        <mat-error>Price is required.</mat-error>
+        }
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
         <mat-label>Is Featured</mat-label>
@@ -55,11 +61,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
         <mat-label>Priority</mat-label>
-        <input
-          matInput
-          placeholder="{{ data.priority }}"
-          formControlName="priority"
-        />
+        <input matInput placeholder="Priority" formControlName="priority" />
         <mat-icon matSuffix>priority</mat-icon>
       </mat-form-field>
     </div>
@@ -68,9 +70,12 @@
         <mat-label>Description</mat-label>
         <input
           matInput
-          placeholder="{{ data.description }}"
+          placeholder="Description"
           formControlName="description"
         />
+        @if(subscriptionForm.get('description')?.errors?.['required']) {
+        <mat-error>Description is required.</mat-error>
+        }
       </mat-form-field>
     </div>
     <div class="flex justify-end">
