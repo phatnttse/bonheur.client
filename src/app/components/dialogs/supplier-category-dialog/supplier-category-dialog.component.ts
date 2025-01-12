@@ -85,8 +85,11 @@ export class SupplierCategoryDialogComponent {
         ],
       });
     }
-
-    this.isEditMode = !!data;
+    if (this.data.id !== undefined && this.data.id > 0) {
+      this.isEditMode = true;
+    } else {
+      this.isEditMode = false;
+    }
   }
 
   ngOnInit(): void {}
@@ -96,29 +99,30 @@ export class SupplierCategoryDialogComponent {
       this.supplierCategoryForm.markAllAsTouched();
       return;
     }
-    if (this.data.id !== undefined) {
-      const name = this.supplierCategoryForm.get('name')?.value;
-      const description = this.supplierCategoryForm.get('description')?.value;
 
+    const name = this.supplierCategoryForm.get('name')?.value;
+    const description = this.supplierCategoryForm.get('description')?.value;
+
+    if (this.data.id !== undefined) {
+      // Cập nhật dữ liệu
       this.supplierCategoryService
         .updateCategory(this.data.id, name, description)
         .subscribe({
           next: (response: SupplierCategoryResponse) => {
+            // Truy cập giá trị từ BehaviorSubject
             this.notificationService.success('Success', response.message);
-            this.dialogRef.close(true);
+            this.dialogRef.close(response.data);
           },
           error: (error: HttpErrorResponse) => {
             this.notificationService.handleApiError(error);
           },
         });
     } else {
-      const name = this.supplierCategoryForm.get('name')?.value;
-      const description = this.supplierCategoryForm.get('description')?.value;
-
+      // Thêm mới dữ liệu
       this.supplierCategoryService.addNewCategory(name, description).subscribe({
         next: (response: SupplierCategoryResponse) => {
           this.notificationService.success('Success', response.message);
-          this.dialogRef.close(true);
+          this.dialogRef.close(response.data);
         },
         error: (error: HttpErrorResponse) => {
           this.notificationService.handleApiError(error);

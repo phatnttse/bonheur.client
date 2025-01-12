@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { Router, RouterModule } from '@angular/router';
 import { SupplierCategoryDialogComponent } from '../../dialogs/supplier-category-dialog/supplier-category-dialog.component';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-category-management',
@@ -56,7 +57,8 @@ export class CategoryManagementComponent {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private dialog: MatDialog,
-    private route: Router
+    private route: Router,
+    private dataService: DataService
   ) {
     this.categoryForm = this.fb.group({
       name: [
@@ -76,13 +78,27 @@ export class CategoryManagementComponent {
         ],
       ],
     });
+    setTimeout(() => {
+      this.dataService.supplierCategoryDataSource.next(this.supplierCategories);
+    }, 0);
   }
 
   ngOnInit() {
     setTimeout(() => {
-      this.statusService.statusLoadingSpinnerSource.next(true);
+      // this.statusService.statusLoadingSpinnerSource.next(true);
     });
-    this.getCategories();
+
+    this.dataService.supplierCategoryData$.subscribe(
+      (categories: SupplierCategory[] | null) => {
+        if (categories?.values) {
+          this.supplierCategories = categories;
+          this.dataSource = new MatTableDataSource(this.supplierCategories);
+          this.dataSource.sort = this.sort;
+        } else {
+          this.getCategories();
+        }
+      }
+    );
   }
 
   // Phương thức để kiểm tra trạng thái hợp lệ
@@ -100,6 +116,9 @@ export class CategoryManagementComponent {
             this.supplierCategories = response.data;
             this.dataSource = new MatTableDataSource(this.supplierCategories);
             this.dataSource.sort = this.sort;
+            this.dataService.supplierCategoryDataSource.next(
+              this.supplierCategories
+            );
             this.statusService.statusLoadingSpinnerSource.next(false);
           }
         }
@@ -119,7 +138,7 @@ export class CategoryManagementComponent {
         );
         this.dataSource = new MatTableDataSource(this.supplierCategories);
         this.dataSource.sort = this.sort;
-        this.categoryService.supplierCategoryDataSource.next(
+        this.dataService.supplierCategoryDataSource.next(
           this.supplierCategories
         );
         this.notificationService.success('Success', response.message);
@@ -151,7 +170,7 @@ export class CategoryManagementComponent {
           this.dataSource = new MatTableDataSource(this.supplierCategories);
           this.dataSource.sort = this.sort;
 
-          this.categoryService.supplierCategoryDataSource.next(
+          this.dataService.supplierCategoryDataSource.next(
             this.supplierCategories
           );
         }
@@ -160,31 +179,33 @@ export class CategoryManagementComponent {
   }
 
   openDialog(id?: number) {
+    let selectedCategory;
+
     if (id) {
-      this.categoryService.getCategory(id).subscribe({
-        next: (response: SupplierCategoryResponse) => {
-          const dialogRef = this.dialog.open(SupplierCategoryDialogComponent, {
-            data: response.data,
-            width: '700px',
-          });
-
-          dialogRef.afterClosed().subscribe((result) => {
-            this.getCategories();
-          });
-        },
-        error: (error: HttpErrorResponse) => {
-          this.notificationService.error('ERROR', error.error.message);
-        },
-      });
+      selectedCategory = this.supplierCategories.find((sp) => sp.id === id);
     } else {
-      const dialogRef = this.dialog.open(SupplierCategoryDialogComponent, {
-        data: {},
-        width: '700px',
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        this.getCategories();
-      });
+      selectedCategory = {};
     }
+
+    const dialogRef = this.dialog.open(SupplierCategoryDialogComponent, {
+      data: selectedCategory,
+    });
+
+    dialogRef.afterClosed().subscribe((result: SupplierCategory) => {
+      if (result) {
+        const index = this.supplierCategories.findIndex(
+          (item) => item.id === result.id
+        );
+        if (index !== -1) {
+          this.supplierCategories[index] = result;
+        } else {
+          this.supplierCategories.push(result);
+        }
+
+        this.dataService.supplierCategoryDataSource.next(
+          this.supplierCategories
+        );
+      }
+    });
   }
 }

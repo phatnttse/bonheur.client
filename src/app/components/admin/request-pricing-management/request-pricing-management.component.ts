@@ -25,6 +25,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PaginationResponse } from '../../../models/base.model';
 import { Router } from '@angular/router';
+import { RequestPricingDialogComponent } from '../../dialogs/request-pricing-dialog/request-pricing-dialog.component';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-request-pricing-management',
@@ -73,14 +76,26 @@ export class RequestPricingManagementComponent {
     private requestPricingService: RequestPricingService,
     private notificationService: NotificationService,
     private statusService: StatusService,
-    private route: Router
+    private route: Router,
+    private dialog: MatDialog,
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(true);
     });
-    this.getAllRequestPricing(this.pageNumber, this.pageSize);
+    this.dataService.requestPricingData$.subscribe(
+      (requestPricings: RequestPricing[] | null) => {
+        if (requestPricings?.values) {
+          (this.listRequestPricing = requestPricings),
+            (this.dataSource = new MatTableDataSource(this.listRequestPricing));
+          this.dataSource.sort = this.sort;
+        } else {
+          this.getAllRequestPricing(this.pageNumber, this.pageSize);
+        }
+      }
+    );
   }
 
   getAllRequestPricing(pageNumber: number, pageSize: number) {
@@ -108,6 +123,22 @@ export class RequestPricingManagementComponent {
       });
   }
 
+  getRequestPricingById(id: number): Observable<RequestPricing> {
+    this.statusService.statusLoadingSpinnerSource.next(true);
+
+    return this.requestPricingService.getRequestPricingById(id).pipe(
+      map((response: RequestPricingResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        return response.data;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.handleApiError(error);
+        return throwError(() => error);
+      })
+    );
+  }
+
   btnGetRequestPricingById(id: number) {
     this.requestPricingService.getRequestPricingById(id).subscribe({
       next: (response: RequestPricingResponse) => {
@@ -121,7 +152,34 @@ export class RequestPricingManagementComponent {
     });
   }
 
-  btnGetRequestPricing(id: string) {
-    this.route.navigate(['/equest-pricing/management/', id]);
+  openDialogRequestPricing(id?: number) {
+    let selectedRequestPricing;
+
+    if (id) {
+      selectedRequestPricing = this.listRequestPricing.find(
+        (sp) => sp.id === id
+      );
+    } else {
+      selectedRequestPricing = {};
+    }
+
+    const dialogRef = this.dialog.open(RequestPricingDialogComponent, {
+      data: selectedRequestPricing,
+    });
+
+    dialogRef.afterClosed().subscribe((result: RequestPricing) => {
+      if (result) {
+        const index = this.listRequestPricing.findIndex(
+          (item) => item.id === result.id
+        );
+        if (index !== -1) {
+          this.listRequestPricing[index] = result;
+        } else {
+          this.listRequestPricing.push(result);
+        }
+
+        this.dataService.requestPricingDataSource.next(this.listRequestPricing);
+      }
+    });
   }
 }

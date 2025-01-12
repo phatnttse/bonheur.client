@@ -16,10 +16,6 @@ import { environment } from '../environments/environment.dev';
 })
 export class CategoryService extends EndpointBase {
   private http = inject(HttpClient);
-  public supplierCategoryDataSource = new BehaviorSubject<
-    SupplierCategory[] | null
-  >(null);
-  supplierCategoryData$ = this.supplierCategoryDataSource.asObservable();
 
   getAllSupplierCategories(): Observable<ListSupplierCategoryResponse> {
     return this.http

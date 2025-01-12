@@ -26,13 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-subscription-package-dialog',
   standalone: true,
-  imports: [
-    MatDialogModule,
-    MatButtonModule,
-    RouterModule,
-    MaterialModule,
-    ReactiveFormsModule,
-  ],
+  imports: [RouterModule, MaterialModule, ReactiveFormsModule],
   templateUrl: './subscription-package-dialog.component.html',
   styleUrl: './subscription-package-dialog.component.scss',
 })
@@ -42,6 +36,7 @@ export class SubscriptionPackageDialogComponent {
   constructor(
     private subscriptionPackagesService: SubscriptionPackagesService,
     private notificationService: NotificationService,
+    private statusService: StatusService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<SubscriptionPackageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SubscriptionPackage
@@ -58,40 +53,53 @@ export class SubscriptionPackageDialogComponent {
       priority: [this.data?.priority || 0, Validators.required],
       isDeleted: [this.data?.isDeleted || false],
     });
-
-    this.isEditMode = !!data;
+    if (this.data.id !== undefined && this.data.id > 0) {
+      this.isEditMode = true;
+    } else {
+      this.isEditMode = false;
+    }
   }
 
   ngOnInit(): void {}
 
   onSubmit() {
-    if (this.subscriptionForm.valid) {
-      const formData: SubscriptionPackage = this.subscriptionForm.value;
-      if (this.isEditMode && this.data.id) {
-        this.subscriptionPackagesService
-          .updateSubscriptionPackage(this.data.id, formData)
-          .subscribe({
-            next: (response: SubscriptionPackageResponse) => {
-              this.notificationService.success('Success', response.message);
-              this.dialogRef.close(true);
-            },
-            error: (error: HttpErrorResponse) => {
-              this.notificationService.error('Error', error.error);
-            },
-          });
-      } else {
-        this.subscriptionPackagesService
-          .createSubscriptionPackage(formData)
-          .subscribe({
-            next: (response: SubscriptionPackageResponse) => {
-              this.notificationService.success('Success', response.message);
-              this.dialogRef.close(true);
-            },
-            error: (error: HttpErrorResponse) => {
-              this.notificationService.error('Error', error.error);
-            },
-          });
-      }
+    if (this.subscriptionForm.invalid) {
+      this.subscriptionForm.markAllAsTouched();
+      return;
+    }
+
+    this.statusService.statusLoadingSpinnerSource.next(true);
+
+    const formData: SubscriptionPackage = this.subscriptionForm.value;
+
+    if (this.isEditMode && this.data.id) {
+      this.subscriptionPackagesService
+        .updateSubscriptionPackage(this.data.id, formData)
+        .subscribe({
+          next: (response: SubscriptionPackageResponse) => {
+            this.statusService.statusLoadingSpinnerSource.next(false);
+            this.notificationService.success('Success', response.message);
+            this.dialogRef.close(response.data);
+          },
+          error: (error: HttpErrorResponse) => {
+            this.statusService.statusLoadingSpinnerSource.next(false);
+            this.notificationService.handleApiError(error);
+          },
+        });
+    } else {
+      this.subscriptionPackagesService
+        .createSubscriptionPackage(formData)
+        .subscribe({
+          next: (response: SubscriptionPackageResponse) => {
+            this.statusService.statusLoadingSpinnerSource.next(false);
+            this.notificationService.success('Success', response.message);
+            this.dialogRef.close(response.data);
+          },
+          error: (error: HttpErrorResponse) => {
+            this.statusService.statusLoadingSpinnerSource.next(false);
+            this.notificationService.handleApiError(error);
+          },
+        });
     }
   }
 

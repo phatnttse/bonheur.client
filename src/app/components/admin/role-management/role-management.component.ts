@@ -15,6 +15,9 @@ import { StatusCode } from '../../../models/enums.model';
 
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { RoleDialogComponent } from '../../dialogs/role-dialog/role-dialog.component';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-role-management',
@@ -32,14 +35,24 @@ export class RoleManagementComponent implements OnInit, AfterViewInit {
   constructor(
     private accountService: AccountService,
     private notificationService: NotificationService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private dialogRef: MatDialog,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(true);
     });
-    this.getRoles();
+    this.dataService.roleData$.subscribe((roles: Role[] | null) => {
+      if (roles?.values) {
+        this.roles = roles;
+        this.dataSource = new MatTableDataSource(this.roles);
+        this.dataSource.sort = this.sort;
+      } else {
+        this.getRoles();
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -65,6 +78,21 @@ export class RoleManagementComponent implements OnInit, AfterViewInit {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.handleApiError(error);
+        console.log(error);
+      },
+    });
+  }
+
+  openRoleDialog(id: string) {
+    this.accountService.getRole(id).subscribe({
+      next: (response: RoleResponse) => {
+        this.dialogRef.open(RoleDialogComponent, {
+          data: response.data,
+          width: '600px',
+        });
+      },
+      error: (error: HttpErrorResponse) => {
         this.notificationService.handleApiError(error);
         console.log(error);
       },

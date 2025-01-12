@@ -39,7 +39,7 @@ export interface SupplierListResponse extends PaginationResponse<Supplier> {}
 export interface SupplierRequestPricing {
   id: number;
   supplierCategory?: SupplierCategory;
-  supplierName?: string;
+  name?: string;
   supplierDescription?: string;
   price?: number;
   street?: string;
