@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Supplier } from '../../models/supplier.model';
+import { mockSupplierData, Supplier } from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
 import { StatusCode } from '../../models/enums.model';
+import { MaterialModule } from '../../material.module';
+import { TablerIconsModule } from 'angular-tabler-icons';
 
 @Component({
   selector: 'app-supplier-detail',
   standalone: true,
-  imports: [],
+  imports: [MaterialModule, TablerIconsModule],
   templateUrl: './supplier-detail.component.html',
   styleUrl: './supplier-detail.component.scss',
 })
@@ -25,7 +27,7 @@ export class SupplierDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.getSupplierBySlug(params['slug']);
+      this.getSupplierInMockData(params['slug']);
     });
   }
 
@@ -39,6 +41,15 @@ export class SupplierDetailComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.notificationService.handleApiError(error);
       },
+    });
+  }
+
+  getSupplierInMockData(slug: string): void {
+    const response = mockSupplierData;
+    response.data.items.map((item) => {
+      if (item.slug === slug) {
+        this.supplier = item;
+      }
     });
   }
 }

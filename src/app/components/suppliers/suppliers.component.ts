@@ -80,6 +80,6 @@ export class SuppliersComponent implements OnInit {
   }
 
   viewSupplierDetail(slug: string): void {
-    this.router.navigate(['/supplier', slug]);
+    this.router.navigate(['/suppliers', slug]);
   }
 }

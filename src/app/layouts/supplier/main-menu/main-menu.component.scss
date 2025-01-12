@@ -1,0 +1,15 @@
+@import "./../../../../assets/scss/variables";
+
+.nav-link {
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    border-color: $primary;
+  }
+
+  &.active-link {
+    border-color: $primary;
+  }
+}

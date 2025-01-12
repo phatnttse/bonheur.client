@@ -34,22 +34,14 @@ export const routes: Routes = [
           );
         },
       },
-      {
-        path: 'confirm-email',
-        loadComponent() {
-          return import(
-            './components/confirm-email/confirm-email.component'
-          ).then((m) => m.ConfirmEmailComponent);
-        },
-      },
     ],
   },
   {
-    path: 'signup-supplier',
+    path: 'confirm-email',
     loadComponent() {
-      return import(
-        './components/signup-supplier/signup-supplier.component'
-      ).then((m) => m.SignupSupplierComponent);
+      return import('./components/confirm-email/confirm-email.component').then(
+        (m) => m.ConfirmEmailComponent
+      );
     },
   },
   {
@@ -77,11 +69,61 @@ export const routes: Routes = [
         },
       },
       {
-        path: 'supplier/:slug',
+        path: 'suppliers/:slug',
         loadComponent() {
           return import(
             './components/supplier-detail/supplier-detail.component'
           ).then((m) => m.SupplierDetailComponent);
+        },
+      },
+    ],
+  },
+  {
+    path: 'supplier/signup',
+    loadComponent() {
+      return import(
+        './components/signup-supplier/signup-supplier.component'
+      ).then((m) => m.SignupSupplierComponent);
+    },
+  },
+  {
+    path: 'supplier',
+    loadComponent() {
+      return import('./layouts/supplier/supplier.component').then(
+        (m) => m.SupplierComponent
+      );
+    },
+    children: [
+      {
+        path: 'onboarding',
+        loadComponent() {
+          return import(
+            './components/supplier/onboarding/onboarding.component'
+          ).then((m) => m.OnboardingComponent);
+        },
+      },
+      {
+        path: 'onboarding/step-1',
+        loadComponent() {
+          return import('./components/supplier/step-1/step-1.component').then(
+            (m) => m.Step1Component
+          );
+        },
+      },
+      {
+        path: 'onboarding/step-2',
+        loadComponent() {
+          return import('./components/supplier/step-2/step-2.component').then(
+            (m) => m.Step2Component
+          );
+        },
+      },
+      {
+        path: 'onboarding/step-3',
+        loadComponent() {
+          return import('./components/supplier/step-3/step-3.component').then(
+            (m) => m.Step3Component
+          );
         },
       },
     ],

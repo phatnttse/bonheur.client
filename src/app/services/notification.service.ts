@@ -49,7 +49,21 @@ export class NotificationService {
   }
 
   handleApiError(error: HttpErrorResponse) {
-    this.show('An error occurred', error.error.detail, 'error');
+    if (error.status === 0) {
+      return this.show(
+        'An error occurred',
+        'Could not connect to server',
+        'error'
+      );
+    } else if (error.status === 403) {
+      return this.show(
+        'An error occurred',
+        'You are not authorized to perform this action',
+        'error'
+      );
+    } else {
+      return this.show('An error occurred', error.error.detail, 'error');
+    }
   }
 
   openSnackBarBottom(message: string, action: string, duration?: number) {

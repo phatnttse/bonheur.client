@@ -103,3 +103,28 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
     hasPreviousPage: false,
   },
 };
+
+export interface RegisterSupplierRequest {
+  name: string;
+  categoryId: number;
+  phoneNumber: string;
+  websiteUrl: string;
+}
+
+export interface UpdateSupplierProfileRequest {
+  name: string;
+  categoryId: number;
+  phoneNumber: string;
+  websiteUrl: string;
+  price: number;
+  description: string;
+  responseTime: string;
+  discount: string;
+}
+
+export interface UpdateSupplierAddressRequest {
+  street: string;
+  ward: string;
+  district: string;
+  province: string;
+}
