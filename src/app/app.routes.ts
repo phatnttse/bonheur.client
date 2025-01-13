@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminRoutes } from './components/admin/admin.routes';
+import { supplierRoutes } from './components/supplier/supplier.routes';
 
 export const routes: Routes = [
   {
@@ -34,15 +35,15 @@ export const routes: Routes = [
           );
         },
       },
-      {
-        path: 'confirm-email',
-        loadComponent() {
-          return import(
-            './components/confirm-email/confirm-email.component'
-          ).then((m) => m.ConfirmEmailComponent);
-        },
-      },
     ],
+  },
+  {
+    path: 'confirm-email',
+    loadComponent() {
+      return import('./components/confirm-email/confirm-email.component').then(
+        (m) => m.ConfirmEmailComponent
+      );
+    },
   },
   {
     path: '',
@@ -68,7 +69,23 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'suppliers/:slug',
+        loadComponent() {
+          return import(
+            './components/supplier-detail/supplier-detail.component'
+          ).then((m) => m.SupplierDetailComponent);
+        },
+      },
     ],
+  },
+  {
+    path: 'supplier/signup',
+    loadComponent() {
+      return import(
+        './components/signup-supplier/signup-supplier.component'
+      ).then((m) => m.SignupSupplierComponent);
+    },
   },
   {
     path: 'pages/404',
@@ -78,6 +95,7 @@ export const routes: Routes = [
       );
     },
   },
+  ...supplierRoutes,
   ...adminRoutes,
   { path: '**', redirectTo: 'pages/404' },
 ];

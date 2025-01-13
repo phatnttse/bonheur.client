@@ -15,6 +15,9 @@ import { Account } from '../../models/account.model';
 import { NotificationService } from '../../services/notification.service';
 import { StatusService } from '../../services/status.service';
 import { DataService } from '../../services/data.service';
+import { SupplierService } from '../../services/supplier.service';
+import { BaseResponse } from '../../models/base.model';
+import { Supplier } from '../../models/supplier.model';
 
 @Component({
   selector: 'app-signin',
@@ -39,7 +42,8 @@ export class SigninComponent {
     private authService: AuthService,
     private notificationService: NotificationService,
     private dataService: DataService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private supplierService: SupplierService
   ) {
     this.formSignin = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
@@ -63,7 +67,15 @@ export class SigninComponent {
         if (this.authService.isAdmin) {
           this.router.navigate(['/admin']);
         } else if (this.authService.isSupplier) {
-          this.router.navigate(['/supplier']);
+          this.supplierService.getSupplierByUserId(response.id).subscribe({
+            next: (response: BaseResponse<Supplier>) => {
+              this.dataService.supplierDataSource.next(response.data);
+              this.router.navigate(['/supplier']);
+            },
+            error: (error: HttpErrorResponse) => {
+              this.notificationService.handleApiError(error);
+            },
+          });
         } else {
           this.router.navigate(['/']);
         }

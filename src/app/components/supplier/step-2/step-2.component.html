@@ -1,0 +1,207 @@
+<section
+  [ngClass]="{
+  'py-10': !isEditMode,
+}"
+>
+  <div class="container mx-auto">
+    @if (!isEditMode) {
+    <div
+      class="flex justify-start items-center mb-10 hover:text-red-500 cursor-pointer"
+      routerLink="/supplier/onboarding"
+    >
+      <mat-icon class="mr-2"><i-tabler name="arrow-left"></i-tabler></mat-icon>
+      <span class="font-semibold text-base underline">Back</span>
+    </div>
+    }
+    <div class="mb-6">
+      @if (!isEditMode) {
+      <h1 class="text-2xl font-bold">Add your address</h1>
+      }@else {
+      <h1 class="text-2xl font-bold">Edit location and map</h1>
+      }
+    </div>
+    <div
+      class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 flex-wrap"
+    >
+      <div>
+        <img src="./../../../../assets/images/svgs/map.svg" alt="map" />
+      </div>
+      <div>
+        <h2 class="text-base font-semibold mb-2">
+          Update your business location by adding your address.
+        </h2>
+        <p class="text-[#6c6c6c]">
+          Address must contain the street name and any additional information
+          (building number, floor, suite, etc.).
+        </p>
+      </div>
+    </div>
+    <div class="mb-6">
+      <h1 class="text-lg font-semibold">Location details</h1>
+    </div>
+    <div class="mb-6">
+      <form
+        [formGroup]="formLocation"
+        class="py-6 px-6 border border-[#d9d9d9] border-solid rounded-lg"
+      >
+        <div class="w-full px-4 mb-4">
+          <div class="flex flex-wrap items-center">
+            <div class="flex flex-col md:w-2/3">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Street<span class="text-red-500">*</span></mat-label
+              >
+              <mat-form-field
+                appearance="outline"
+                class="w-100"
+                color="primary"
+              >
+                <input
+                  matInput
+                  type="text"
+                  formControlName="street"
+                  required
+                  [class.is-invalid]="
+                    formLocation.get('street')?.invalid &&
+                    formLocation.get('street')?.touched
+                  "
+                  placeholder="Enter your street"
+                />
+                @if(formLocation.get('street')?.hasError('required')) {
+                <mat-error style="font-size: 12px">
+                  Street is required
+                </mat-error>
+                } @if(formLocation.get('street')?.hasError('minlength')) {
+                <mat-error style="font-size: 12px">
+                  Street must be at least 2 characters
+                </mat-error>
+                } @if(formLocation.get('street')?.hasError('maxlength')) {
+                <mat-error style="font-size: 12px">
+                  Street must be at most 50 characters
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="md:w-1/3 flex justify-center">
+              <button
+                mat-stroked-button
+                color="accent"
+                style="padding: 20px"
+                class="flex items-center max-[667px]:mb-4"
+                (click)="btnUpdateMap()"
+              >
+                Update map
+                <mat-icon matIconPrefix>loop</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap">
+            <div class="w-full md:w-1/3">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Province<span class="text-red-500">*</span></mat-label
+              >
+              <mat-form-field appearance="outline" class="w-full">
+                <input
+                  matInput
+                  formControlName="province"
+                  [matAutocomplete]="autoProvince"
+                  placeholder="Chọn tỉnh/thành phố"
+                  (input)="onProvinceInput($event)"
+                />
+                <mat-autocomplete #autoProvince="matAutocomplete">
+                  @for (province of filteredProvinces; track $index) {
+                  <mat-option
+                    [value]="province.provinceName"
+                    (click)="onProvinceChange(province.provinceId)"
+                    (keydown.enter)="onProvinceChange(province.provinceId)"
+                  >
+                    {{ province.provinceName }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+                @if(formLocation.get('province')?.hasError('required')) {
+                <mat-error class="text-sm">
+                  Tỉnh/Thành phố không được để trống
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="w-full md:w-1/3 md:px-2">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >District<span class="text-red-500">*</span></mat-label
+              >
+              <mat-form-field appearance="outline" class="w-full">
+                <input
+                  matInput
+                  formControlName="district"
+                  [matAutocomplete]="autoDistrict"
+                  placeholder="Chọn quận/huyện"
+                  (input)="onDistrictInput($event)"
+                />
+                <mat-autocomplete #autoDistrict="matAutocomplete">
+                  @for (district of filteredDistricts; track $index) {
+                  <mat-option
+                    [value]="district.districtName"
+                    (click)="onDistrictChange(district.districtId)"
+                    (keydown.enter)="onDistrictChange(district.districtId)"
+                  >
+                    {{ district.districtName }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+                @if(formLocation.get('district')?.hasError('required')) {
+                <mat-error class="text-sm">
+                  Quận/Huyện không được để trống
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="w-full md:w-1/3 md:px-2">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Ward<span class="text-red-500">*</span></mat-label
+              >
+              <mat-form-field appearance="outline" class="w-full">
+                <input
+                  matInput
+                  formControlName="ward"
+                  [matAutocomplete]="autoWard"
+                  placeholder="Chọn phường/xã"
+                  (input)="onWardInput($event)"
+                  (keydown.enter)="onWardChange(selectedWard)"
+                />
+                <mat-autocomplete #autoWard="matAutocomplete">
+                  @for (commune of filteredWards; track $index) {
+                  <mat-option
+                    [value]="commune.communeName"
+                    (click)="onWardChange(commune.communeId)"
+                    (keydown.enter)="onWardChange(commune.communeId)"
+                  >
+                    {{ commune.communeName }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+                @if(formLocation.get('ward')?.hasError('required')) {
+                <mat-error class="text-sm">
+                  Phường/Xã không được để trống
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="px-4">
+          <button
+            (click)="btnUpdateSupplierAddress()"
+            mat-raised-button
+            color="accent"
+          >
+            Save changes
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="map-wrap">
+      <div class="map" #map></div>
+    </div>
+  </div>
+</section>

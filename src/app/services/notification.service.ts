@@ -49,26 +49,20 @@ export class NotificationService {
   }
 
   handleApiError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      this.show('An error occurred', error.error.message, 'error');
-    } else if (error.status === 401) {
-      this.show(
-        'Unauthorized',
-        'You are not authorized to access this resource',
+    if (error.status === 0) {
+      return this.show(
+        'An error occurred',
+        'Could not connect to server',
         'error'
       );
     } else if (error.status === 403) {
-      this.show(
-        'Forbidden',
-        'You are forbidden to access this resource',
+      return this.show(
+        'An error occurred',
+        'You are not authorized to perform this action',
         'error'
       );
     } else {
-      this.show(
-        'An error occurred',
-        'We are trying to fix it. Please come back later !',
-        'error'
-      );
+      return this.show('An error occurred', error.error.detail, 'error');
     }
   }
 

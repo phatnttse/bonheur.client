@@ -1,0 +1,103 @@
+<div class="subscription-package-dialog">
+  <div class="my-2 p-0">
+    <h2 mat-dialog-title>
+      @if (isEditMode == true) { Update Subscription Package } @else{ Add
+      Subscription Package }
+    </h2>
+  </div>
+  <form [formGroup]="subscriptionForm" (ngSubmit)="onSubmit()" class="mx-3">
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+        @if(subscriptionForm.get('name')?.errors?.['required']){
+        <mat-error> Name is required. </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Duration In Days</mat-label>
+        <input
+          matInput
+          placeholder="Duration In Days"
+          formControlName="durationInDays"
+        />
+        <div matSuffix class="flex flex-row">
+          <button
+            class="mx-2 hover:bg-gray-200 rounded-full duration-300"
+            (click)="addDurationDays($event)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            class="mx-2 hover:bg-gray-200 rounded-full duration-300"
+            (click)="subtractDurationDays($event)"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+        @if(subscriptionForm.get('durationInDays')?.errors?.['required']) {
+        <mat-error>Duration In Days is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Price</mat-label>
+        <div class="flex flex-row">
+          <input matInput placeholder="Price" formControlName="price" />
+          <h5 class="fw-bold">(VND)</h5>
+        </div>
+        @if(subscriptionForm.get('price')?.errors?.['required']) {
+        <mat-error>Price is required.</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Is Featured</mat-label>
+        <mat-select appearance="outline" formControlName="isFeatured">
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Priority</mat-label>
+        <input matInput placeholder="Priority" formControlName="priority" />
+        <mat-icon matSuffix>priority</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          placeholder="Description"
+          formControlName="description"
+        />
+        @if(subscriptionForm.get('description')?.errors?.['required']) {
+        <mat-error>Description is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="flex justify-end">
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          type="submit"
+        >
+          {{ isEditMode ? "Update" : "Add" }}
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          color="warn"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

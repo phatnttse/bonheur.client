@@ -1,0 +1,171 @@
+<section
+  [ngClass]="{
+  'py-10': !isEditMode,
+}"
+>
+  <div class="container mx-auto">
+    @if (!isEditMode) {
+    <div
+      class="flex justify-start items-center mb-10 hover:text-red-500 cursor-pointer"
+      routerLink="/supplier/onboarding"
+    >
+      <mat-icon class="mr-2"><i-tabler name="arrow-left"></i-tabler></mat-icon>
+      <span class="font-semibold text-base underline">Back</span>
+    </div>
+    }
+    <div class="mb-6">
+      @if (!isEditMode) {
+      <h1 class="text-2xl font-bold">
+        Add 4 high-quality photos of your business.
+      </h1>
+      }@else {
+      <h1 class="text-2xl font-bold">
+        Photos
+        <span class="text-[#6c6c6c] text-lg"
+          >({{ supplierImages.length }})</span
+        >
+      </h1>
+      }
+    </div>
+    <div
+      class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 max-[667px]:flex-wrap max-[667px]:gap-6 max-[667px]:justify-center"
+    >
+      <div>
+        <img src="./../../../../assets/images/svgs/camera.svg" alt="Photo" />
+      </div>
+      <div>
+        <h2 class="md:text-base font-semibold mb-2 max-[667px]:text-sm">
+          The best way to showcase your products or services to couples is to
+          include at least 4 photos to summarise your best work.
+        </h2>
+        <p class="text-[#6c6c6c] max-[667px]:text-xs">
+          Storefronts with more photos typically receive more enquiries.
+        </p>
+      </div>
+    </div>
+    <div class="mb-6">
+      <h1 class="text-lg font-semibold">Add photos</h1>
+    </div>
+    <div class="mb-6">
+      <div class="flex items-center justify-center w-full mb-6">
+        <label
+          for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-60 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg
+              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 16"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+              />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span class="font-semibold">Click to upload</span>
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              PNG, JPG or GIF (Maximum size 20MB)
+            </p>
+          </div>
+          <input
+            id="dropzone-file"
+            type="file"
+            class="hidden"
+            multiple
+            (change)="onUpload($event)"
+          />
+        </label>
+      </div>
+      @if (previewImages.length > 0) {
+      <h3 class="text-lg font-semibold mb-4">Preview photos</h3>
+      <div
+        class="grid md:grid-cols-4 gap-4 max-[1024px]:grid-cols-2 max-[667px]:grid-cols-1"
+      >
+        @for (url of previewImages; track $index) {
+        <div class="flex flex-col items-center justify-center gap-4">
+          <mat-card
+            class="w-full h-[300px] relative overflow-hidden"
+            appearance="outlined"
+          >
+            <img
+              mat-card-image
+              [src]="url"
+              alt="Photo"
+              class="w-full h-[220px] object-cover"
+            />
+            <div class="flex justify-between items-center py-4 px-2">
+              <mat-checkbox
+                color="secondary"
+                class="mt-1"
+                [checked]="primaryImageIndex === $index"
+                (change)="setPrimaryImage($index)"
+                >Main photo</mat-checkbox
+              >
+              <button mat-icon-button (click)="removeImage($index)">
+                <mat-icon class="cursor-pointer" color="warn"
+                  ><i-tabler name="photo-x"></i-tabler
+                ></mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+        }
+      </div>
+      } @if (supplierImages.length > 0) {
+      <h3 class="text-lg font-semibold mb-4">Your business photos</h3>
+      <div
+        class="grid md:grid-cols-4 gap-4 max-[1024px]:grid-cols-2 max-[667px]:grid-cols-1"
+      >
+        @for (image of supplierImages; track $index) {
+        <div class="flex flex-col items-center justify-center gap-4">
+          <mat-card
+            class="w-full h-[300px] relative overflow-hidden"
+            appearance="outlined"
+          >
+            <img
+              mat-card-image
+              [src]="image.imageUrl"
+              alt="Photo"
+              class="w-full h-[220px] object-cover"
+            />
+            <div class="flex justify-between items-center py-4 px-2">
+              <mat-checkbox
+                color="secondary"
+                class="mt-1"
+                [(ngModel)]="image.isPrimary"
+                (change)="openUpdateMainPhotoDialog(image.id)"
+                >Main photo</mat-checkbox
+              >
+              <button mat-icon-button (click)="openDeletePhotoDialog(image.id)">
+                <mat-icon class="cursor-pointer" color="warn"
+                  ><i-tabler name="photo-x"></i-tabler
+                ></mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+        }
+      </div>
+      }
+
+      <div class="mt-4">
+        <button
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="saveChanges()"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -9,9 +9,8 @@ import { NotificationService } from '../../services/notification.service';
 import { StatusService } from '../../services/status.service';
 import { StatusCode } from '../../models/enums.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ToolSidebarComponent } from './tool-sidebar/tool-sidebar.component';
 
 @Component({
   selector: 'app-suppliers',
@@ -22,7 +21,6 @@ import { ToolSidebarComponent } from './tool-sidebar/tool-sidebar.component';
     CommonModule,
     RouterModule,
     FormsModule,
-    ToolSidebarComponent,
   ],
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
@@ -31,11 +29,13 @@ export class SuppliersComponent implements OnInit {
   supplierList: Supplier[] = [];
   minPrice: number = 0;
   maxPrice: number = 10000000;
+  gridLayout: boolean = false;
 
   constructor(
     private supplierService: SupplierService,
     private notificationService: NotificationService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,5 +73,13 @@ export class SuppliersComponent implements OnInit {
   formatLabel(value: number): string {
     value = Math.round(value);
     return value.toLocaleString('vi-VN') + 'đ';
+  }
+
+  btnChangeGridLayOut(flag: boolean): void {
+    this.gridLayout = flag;
+  }
+
+  viewSupplierDetail(slug: string): void {
+    this.router.navigate(['/suppliers', slug]);
   }
 }

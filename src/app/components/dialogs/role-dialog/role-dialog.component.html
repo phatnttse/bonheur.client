@@ -1,0 +1,87 @@
+<div class="subscription-package-dialog">
+  <div class="my-2 p-0">
+    <h2 mat-dialog-title>Role Details</h2>
+  </div>
+  <form [formGroup]="roleForm">
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Name"
+          required
+          [class.is-invalid]="
+            roleForm.get('name')?.invalid && roleForm.get('name')?.touched
+          "
+        />
+        @if(isInvalid('name')){
+        <mat-error>
+          @if(roleForm.get('name')?.errors?.['required']){
+          <span> Category name is required. </span>
+          } @else if (roleForm.get('name')?.errors?.['minlength']) {
+          <span> Category name must be at least 6 characters. </span>
+          } @else if (roleForm.get('name')?.errors?.['maxlength']){
+          <span> Category name cannot exceed 100 characters. </span>
+          }
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          formControlName="description"
+          placeholder="Description"
+          required
+          [class.is-invalid]="
+            roleForm.get('description')?.invalid &&
+            roleForm.get('description')?.touched
+          "
+        />
+        @if(isInvalid('description')){
+        <mat-error>
+          @if(roleForm.get('description')?.errors?.['required']){
+          <span> Category description is required. </span>
+          } @else if (roleForm.get('description')?.errors?.['minlength']) {
+          <span> Category description must be at least 15 characters. </span>
+          } @else if (roleForm.get('description')?.errors?.['maxlength']){
+          <span> Category description must not exceed 200 characters. </span>
+          }
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Users Amount</mat-label>
+        <input
+          matInput
+          placeholder="Users Amount"
+          formControlName="usersCount"
+          required
+          [class.is-invalid]="
+            roleForm.get('usersCount')?.invalid &&
+            roleForm.get('usersCount')?.touched
+          "
+          readonly=""
+        />
+      </mat-form-field>
+    </div>
+    <div formGroupName="permissions">
+      <div class="flex flex-row px-4">
+        <div *ngFor="let group of permissionsGrouped | keyvalue">
+          <h3>{{ group.key }}</h3>
+          <div *ngFor="let permission of group.value">
+            <mat-checkbox [formControlName]="permission.value">{{
+              permission.name
+            }}</mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

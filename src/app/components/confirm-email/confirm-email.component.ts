@@ -43,7 +43,7 @@ export class ConfirmEmailComponent implements OnInit {
       next: (response: BaseResponse<null>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
           this.statusService.statusLoadingSpinnerSource.next(false);
-          this.router.navigate(['/signin']);
+          this.router.navigate(['/authentication/signin']);
           this.notificationService.openSnackBarTop(
             response.message,
             'OK',

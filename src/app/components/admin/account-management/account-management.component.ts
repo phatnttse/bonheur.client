@@ -24,6 +24,9 @@ import { BlockAccountComponent } from '../../dialogs/block-account/block-account
 import { UnblockAccountComponent } from '../../dialogs/unblock-account/unblock-account.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { AccountDialogComponent } from '../../dialogs/account-dialog/account-dialog.component';
 
 @Component({
   selector: 'app-account-management',
@@ -53,6 +56,9 @@ export class AccountManagementComponent {
   isLastPage: boolean = false;
   hasNextPage: boolean = false;
   hasPreviousPage: boolean = false;
+  role: string = '';
+  seach: string = '';
+  searchSubject: Subject<string> = new Subject<string>();
 
   constructor(
     private accountService: AccountService,
@@ -68,44 +74,61 @@ export class AccountManagementComponent {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.statusService.statusLoadingSpinnerSource.next(true);
-    });
-    this.accountService.accountData$.subscribe((accounts) => {
-      if (accounts) {
-        this.accounts = accounts;
-        this.dataSource = new MatTableDataSource(this.accounts);
-      }
-    });
-    // this.getAccounts(this.pageNumber, this.pageSize);
+    // Lắng nghe thay đổi search và gọi API sau debounceTime
+    if (this.searchSubject) {
+      this.searchSubject
+        .pipe(debounceTime(300), distinctUntilChanged())
+        .subscribe((search) => {
+          this.seach = search;
+          this.getAccounts(search, this.role, this.pageNumber, this.pageSize);
+        });
+    } else {
+      this.getAccounts(this.seach, this.role, this.pageNumber, this.pageSize);
+    }
+    this.getAccounts(this.seach, this.role, this.pageNumber, this.pageSize);
   }
 
-  // getAccounts(pageNumber: number, pageSize: number){
-  //   this.accountService.getAccounts(pageNumber, pageSize).subscribe({
-  //     next: (response: ListAccountResponse) => {
-  //       const data = response.data as PaginationResponse<Account>;
-  //       this.accounts = data.items;
+  getAccounts(
+    search: string,
+    role: string,
+    pageNumber: number,
+    pageSize: number
+  ) {
+    this.accountService
+      .getAccounts(search, role, pageNumber, pageSize)
+      .subscribe({
+        next: (response: ListAccountResponse) => {
+          this.accounts = response.data.items;
 
-  //       this.dataSource = new MatTableDataSource(this.accounts);
-  //       this.dataSource.sort = this.sort;
-  //       this.pageNumber = data.pageNumber;
-  //       this.pageSize = data.pageSize;
-  //       this.totalItemCount = data.totalItemCount;
-  //       this.isFirstPage = data.isFirstPage;
-  //       this.isLastPage = data.isLastPage;
-  //       this.hasNextPage = data.hasNextPage;
-  //       this.hasPreviousPage = data.hasPreviousPage;
-  //       this.statusService.statusLoadingSpinnerSource.next(false);
-  //     },
-  //     error: (error: HttpErrorResponse) => {
-  //       this.statusService.statusLoadingSpinnerSource.next(false);
-  //       this.notificationService.handleApiError(error);
-  //     },
-  //   });
-  // }
+          this.dataSource = new MatTableDataSource(this.accounts);
+          this.dataSource.sort = this.sort;
+          this.pageNumber = response.data.pageNumber;
+          this.pageSize = response.data.pageSize;
+          this.totalItemCount = response.data.totalItemCount;
+          this.isFirstPage = response.data.isFirstPage;
+          this.isLastPage = response.data.isLastPage;
+          this.hasNextPage = response.data.hasNextPage;
+          this.hasPreviousPage = response.data.hasPreviousPage;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.handleApiError(error);
+        },
+      });
+  }
 
-  btnGetAccount(id: string) {
-    this.route.navigate(['/admin/account/', id]);
+  openAccountDialog(id?: string): void {
+    if (id) {
+      this.accountService.getAccount(id).subscribe({
+        next: (response: AccountResponse) => {
+          this.dialog.open(AccountDialogComponent, {
+            data: response.data,
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.handleApiError(error);
+        },
+      });
+    }
   }
 
   openBlockAccountDialog(id: string): void {
@@ -118,5 +141,11 @@ export class AccountManagementComponent {
     this.dialog.open(UnblockAccountComponent, {
       data: { accountId: id },
     });
+  }
+
+  onInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const searchValue = input.value;
+    this.searchSubject.next(searchValue);
   }
 }

@@ -4,9 +4,11 @@ import { OnBoardStatus, StatusCode, SupplierStatus } from './enums.model';
 
 export interface Supplier {
   id: number;
-  supplierCategory?: SupplierCategory;
-  supplierName?: string;
-  supplierDescription?: string;
+  category?: SupplierCategory;
+  name?: string;
+  slug?: string;
+  phoneNumber?: string;
+  description?: string;
   price?: number;
   street?: string;
   province?: string;
@@ -16,12 +18,13 @@ export interface Supplier {
   responseTime?: string;
   priority: number;
   status?: SupplierStatus;
-  onboardStatus?: OnBoardStatus;
-  onboardPercent: number;
+  discount: number;
+  onBoardStatus?: OnBoardStatus;
+  onBoardPercent: number;
   isFeatured: boolean;
   priorityEnd?: Date;
   averageRating: number;
-  supplierImages?: SupplierImage[];
+  images?: SupplierImage[];
 }
 
 export interface SupplierImage {
@@ -36,7 +39,7 @@ export interface SupplierListResponse extends PaginationResponse<Supplier> {}
 export interface SupplierRequestPricing {
   id: number;
   supplierCategory?: SupplierCategory;
-  supplierName?: string;
+  name?: string;
   supplierDescription?: string;
   price?: number;
   street?: string;
@@ -56,8 +59,9 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
   data: {
     items: Array.from({ length: 10 }, (_, i) => ({
       id: i + 1,
-      supplierName: `Supplier ${i + 1}`,
-      supplierDescription: `Supplier ${i + 1} Based in Bath, Somerset, 
+      name: `Supplier ${i + 1}`,
+      slug: `supplier-${i + 1}`,
+      description: `Supplier ${i + 1} Based in Bath, Somerset, 
       Icarus Photography is a wedding photography service offering a blend of traditional and documentary styles...
        ${
          i + 1
@@ -70,10 +74,11 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
       websiteUrl: `https://supplier${i + 1}.com`,
       responseTime: `${24 + (i % 5)}h`,
       priority: (i % 3) + 1,
-      onboardPercent: 50 + (i % 50),
+      onBoardPercent: 50 + (i % 50),
       isFeatured: i % 2 === 0,
       averageRating: 3.5 + (i % 2),
-      supplierImages: [
+      discount: i % 2 === 0 ? 10 : 0,
+      images: [
         {
           id: 100 + i,
           imageUrl:
@@ -82,7 +87,7 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
           isPrimary: true,
         },
       ],
-      supplierCategory: {
+      category: {
         id: i + 1,
         name: `Category ${i + 1}`,
         description: `Description for Category ${i + 1}`,
@@ -98,3 +103,38 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
     hasPreviousPage: false,
   },
 };
+
+export interface RegisterSupplierRequest {
+  name: string;
+  categoryId: number;
+  phoneNumber: string;
+  websiteUrl: string;
+}
+
+export interface UpdateSupplierProfileRequest {
+  name: string;
+  categoryId: number;
+  phoneNumber: string;
+  websiteUrl: string;
+  price: number;
+  description: string;
+  responseTime: string;
+  discount: string;
+}
+
+export interface UpdateSupplierAddressRequest {
+  street: string;
+  ward: string;
+  district: string;
+  province: string;
+}
+
+export interface UpdateSupplierImagesRequest {
+  files: File[];
+  primaryImageIndex?: number;
+}
+
+export interface PreviewImage {
+  id?: number;
+  imageUrl?: string;
+}

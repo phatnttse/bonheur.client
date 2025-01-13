@@ -20,33 +20,33 @@ export const adminRoutes: Routes = [
       {
         path: 'categories/management',
         loadComponent() {
-          return import('./category-management/category-management.component').then(
-            (m) => m.CategoryManagementComponent
-          );
+          return import(
+            './category-management/category-management.component'
+          ).then((m) => m.CategoryManagementComponent);
         },
       },
       {
         path: 'request-pricing/management',
         loadComponent() {
-          return import('./request-pricing-management/request-pricing-management.component').then(
-            (m) => m.RequestPricingManagementComponent
-          );
+          return import(
+            './request-pricing-management/request-pricing-management.component'
+          ).then((m) => m.RequestPricingManagementComponent);
         },
       },
       {
         path: 'accounts/management',
         loadComponent() {
-          return import('./account-management/account-management.component').then(
-            (m) => m.AccountManagementComponent
-          );
+          return import(
+            './account-management/account-management.component'
+          ).then((m) => m.AccountManagementComponent);
         },
       },
       {
-        path: 'account/:id',
+        path: 'subscription-packages/management',
         loadComponent() {
-          return import('./account-management/account-detail-management/account-detail-management.component').then(
-            (m) => m.AccountDetailManagementComponent
-          );
+          return import(
+            './subscription-packages-management/subscription-packages-management.component'
+          ).then((m) => m.SubscriptionPackagesManagementComponent);
         },
       },
     ],

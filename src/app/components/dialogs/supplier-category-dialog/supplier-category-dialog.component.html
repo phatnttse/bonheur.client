@@ -1,0 +1,50 @@
+<div class="subscription-package-dialog">
+  <h2 mat-dialog-title class="mx-8 my-2">
+    {{ isEditMode ? "Update Supplier Category" : "Add Supplier Category" }}
+  </h2>
+  <form [formGroup]="supplierCategoryForm" (ngSubmit)="onSubmit()">
+    <div class="flex flex-row gap-y-0 leading-none">
+      <mat-form-field appearance="outline" class="w-100 mx-8 my-2">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+        @if(supplierCategoryForm.get('name')?.errors?.['required']) {
+        <mat-error>Name is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row gap-y-1">
+      <mat-form-field appearance="outline" class="w-100 mx-8 my-2">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          placeholder="Description"
+          formControlName="description"
+        />
+        @if(supplierCategoryForm.get('description')?.errors?.['required']) {
+        <mat-error>Description is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="flex justify-end mx-5">
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          type="submit"
+        >
+          {{ isEditMode ? "Update" : "Add" }}
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          color="warn"
+          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
