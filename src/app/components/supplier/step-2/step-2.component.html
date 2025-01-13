@@ -1,5 +1,10 @@
-<section class="py-10">
+<section
+  [ngClass]="{
+  'py-10': !isEditMode,
+}"
+>
   <div class="container mx-auto">
+    @if (!isEditMode) {
     <div
       class="flex justify-start items-center mb-10 hover:text-red-500 cursor-pointer"
       routerLink="/supplier/onboarding"
@@ -7,37 +12,19 @@
       <mat-icon class="mr-2"><i-tabler name="arrow-left"></i-tabler></mat-icon>
       <span class="font-semibold text-base underline">Back</span>
     </div>
+    }
     <div class="mb-6">
+      @if (!isEditMode) {
       <h1 class="text-2xl font-bold">Add your address</h1>
+      }@else {
+      <h1 class="text-2xl font-bold">Edit location and map</h1>
+      }
     </div>
     <div
       class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 flex-wrap"
     >
       <div>
-        <svg
-          width="64px"
-          height="64px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#878787"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z"
-              stroke="#616161"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </g>
-        </svg>
+        <img src="./../../../../assets/images/svgs/map.svg" alt="map" />
       </div>
       <div>
         <h2 class="text-base font-semibold mb-2">
@@ -99,7 +86,7 @@
                 mat-stroked-button
                 color="accent"
                 style="padding: 20px"
-                class="flex items-center"
+                class="flex items-center max-[667px]:mb-4"
                 (click)="btnUpdateMap()"
               >
                 Update map
@@ -114,19 +101,24 @@
                 >Province<span class="text-red-500">*</span></mat-label
               >
               <mat-form-field appearance="outline" class="w-full">
-                <mat-select
+                <input
+                  matInput
                   formControlName="province"
+                  [matAutocomplete]="autoProvince"
                   placeholder="Chọn tỉnh/thành phố"
-                >
-                  @for (province of provinceList; track $index) {
+                  (input)="onProvinceInput($event)"
+                />
+                <mat-autocomplete #autoProvince="matAutocomplete">
+                  @for (province of filteredProvinces; track $index) {
                   <mat-option
                     [value]="province.provinceName"
                     (click)="onProvinceChange(province.provinceId)"
+                    (keydown.enter)="onProvinceChange(province.provinceId)"
                   >
                     {{ province.provinceName }}
                   </mat-option>
                   }
-                </mat-select>
+                </mat-autocomplete>
                 @if(formLocation.get('province')?.hasError('required')) {
                 <mat-error class="text-sm">
                   Tỉnh/Thành phố không được để trống
@@ -139,19 +131,24 @@
                 >District<span class="text-red-500">*</span></mat-label
               >
               <mat-form-field appearance="outline" class="w-full">
-                <mat-select
+                <input
+                  matInput
                   formControlName="district"
+                  [matAutocomplete]="autoDistrict"
                   placeholder="Chọn quận/huyện"
-                >
-                  @for (district of districtList; track $index) {
+                  (input)="onDistrictInput($event)"
+                />
+                <mat-autocomplete #autoDistrict="matAutocomplete">
+                  @for (district of filteredDistricts; track $index) {
                   <mat-option
                     [value]="district.districtName"
                     (click)="onDistrictChange(district.districtId)"
+                    (keydown.enter)="onDistrictChange(district.districtId)"
                   >
                     {{ district.districtName }}
                   </mat-option>
                   }
-                </mat-select>
+                </mat-autocomplete>
                 @if(formLocation.get('district')?.hasError('required')) {
                 <mat-error class="text-sm">
                   Quận/Huyện không được để trống
@@ -164,16 +161,25 @@
                 >Ward<span class="text-red-500">*</span></mat-label
               >
               <mat-form-field appearance="outline" class="w-full">
-                <mat-select formControlName="ward" placeholder="Chọn phường/xã">
-                  @for (commune of wardList; track $index) {
+                <input
+                  matInput
+                  formControlName="ward"
+                  [matAutocomplete]="autoWard"
+                  placeholder="Chọn phường/xã"
+                  (input)="onWardInput($event)"
+                  (keydown.enter)="onWardChange(selectedWard)"
+                />
+                <mat-autocomplete #autoWard="matAutocomplete">
+                  @for (commune of filteredWards; track $index) {
                   <mat-option
                     [value]="commune.communeName"
                     (click)="onWardChange(commune.communeId)"
+                    (keydown.enter)="onWardChange(commune.communeId)"
                   >
                     {{ commune.communeName }}
                   </mat-option>
                   }
-                </mat-select>
+                </mat-autocomplete>
                 @if(formLocation.get('ward')?.hasError('required')) {
                 <mat-error class="text-sm">
                   Phường/Xã không được để trống

@@ -13,11 +13,11 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: "#ffbad0",
-          dark: "#83a6ce ",
+          dark: "#ffbad0 ",
         },
         secondary: {
-          DEFAULT: "#f8c076",
-          dark: "#cc7a00",
+          DEFAULT: "#fea99a",
+          dark: "#fea99a",
         },
         accent: {
           DEFAULT: "#4bd08b",
@@ -31,5 +31,5 @@ module.exports = {
     },
   },
   darkMode: "class",
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };

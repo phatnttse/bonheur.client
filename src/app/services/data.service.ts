@@ -5,6 +5,7 @@ import { SupplierCategory } from '../models/category.model';
 import { SubscriptionPackage } from '../models/subscription-packages.model';
 import { RequestPricing } from '../models/request-pricing.model';
 import { Role } from '../models/role.model';
+import { Supplier } from '../models/supplier.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,12 @@ export class DataService {
     RequestPricing[] | null
   >(null);
   requestPricingData$ = this.requestPricingDataSource.asObservable();
+
+  public supplierDataSource = new BehaviorSubject<Supplier | null>(null);
+  supplierData$ = this.supplierDataSource.asObservable();
+
+  public provinceDataSource = new BehaviorSubject<any | null>(null);
+  provinceData$ = this.provinceDataSource.asObservable();
 
   resetData() {
     this.accountDataSource.next(null);

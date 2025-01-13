@@ -1,3 +1,4 @@
+import { event } from 'jquery';
 import {
   Component,
   OnInit,
@@ -5,6 +6,7 @@ import {
   ElementRef,
   AfterViewInit,
   OnDestroy,
+  Input,
 } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import {
@@ -30,6 +32,8 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseResponse } from '../../../models/base.model';
 import { StatusCode } from '../../../models/enums.model';
+import { DataService } from '../../../services/data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-step-2',
@@ -39,12 +43,12 @@ import { StatusCode } from '../../../models/enums.model';
     ReactiveFormsModule,
     RouterModule,
     TablerIconsModule,
+    CommonModule,
   ],
   templateUrl: './step-2.component.html',
   styleUrl: './step-2.component.scss',
 })
 export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('map')
   formLocation: FormGroup; // Form địa chỉ
   account: Account | null = null; // Tài khoản
   supplier: Supplier | null = null; // Nhà cung cấp
@@ -57,9 +61,15 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
   selectedDistrict: string = ''; // Huyện được chọn
   selectedWard: string = ''; // Xã được chọn
   map: Map | undefined; // Bản đồ
+  @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>; // Container bản đồ
   longitudeSupplier: number = 0; // Kinh độ
   latitudeSupplier: number = 0; // Vĩ độ
+  filteredProvinces: any[] = []; // Danh sách tỉnh lọc
+  filteredDistricts: any[] = []; // Danh sách huyện lọc
+  filteredWards: any[] = []; // Danh sách xã lọc
+  currentMarker: Marker | null = null;
+  @Input() isEditMode: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,7 +77,8 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     private notificationService: NotificationService,
     private statusService: StatusService,
     private authService: AuthService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private dataService: DataService
   ) {
     this.formLocation = this.formBuilder.group({
       street: [
@@ -87,23 +98,33 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     config.apiKey = environment.mapTilerApiKey;
 
-    if (this.authService.isLoggedIn) {
-      if (this.authService.currentUser) {
-        this.account = this.authService.currentUser;
-        this.getSupplierByUserId(this.account.id);
-      }
-    }
-
-    this.locationService.getProvinces().subscribe({
-      next: (response) => {
-        this.valueProvince = response;
-      },
-      complete: () => {
+    this.dataService.provinceData$.subscribe((provinces: any) => {
+      if (provinces != null) {
+        this.valueProvince = provinces;
         this.getDetailProvinces();
-      },
-      error: (error) => {
-        console.log(error);
-      },
+      } else {
+        this.getProvinces();
+      }
+    });
+
+    this.dataService.supplierData$.subscribe((supplier: Supplier | null) => {
+      if (supplier != null) {
+        this.supplier = supplier;
+        setTimeout(() => {
+          if (this.valueProvince && this.valueProvince.length > 0) {
+            this.patchSupplerInfo(supplier);
+          }
+        }, 1000);
+      } else {
+        if (this.authService.currentUser) {
+          this.account = this.authService.currentUser;
+          setTimeout(() => {
+            if (this.valueProvince && this.valueProvince.length > 0) {
+              this.getSupplierByUserId(this.account!.id!);
+            }
+          }, 1000);
+        }
+      }
     });
   }
 
@@ -131,77 +152,122 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.map?.remove();
+    if (this.currentMarker) {
+      this.currentMarker.remove(); // Remove the marker if it exists
+    }
+  }
+
+  filterProvinces(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.provinceList.filter((province) =>
+      province.provinceName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onProvinceInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.filteredProvinces = this.filterProvinces(input);
+  }
+
+  filterDistricts(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.districtList.filter((district) =>
+      district.districtName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onDistrictInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.filteredDistricts = this.filterDistricts(input);
+  }
+
+  filterWards(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.wardList.filter((ward) =>
+      ward.communeName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onWardInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.filteredWards = this.filterWards(input);
+  }
+
+  getProvinces() {
+    this.locationService.getProvinces().subscribe({
+      next: (response: any) => {
+        this.dataService.provinceDataSource.next(response);
+        this.valueProvince = response;
+      },
+      complete: () => {
+        this.getDetailProvinces();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 
   btnUpdateMap() {
-    const address =
-      this.formLocation.value.street +
-      ', ' +
-      this.selectedWard +
-      ', ' +
-      this.selectedDistrict +
-      ', ' +
-      this.selectedProvince;
-    this.locationService.geocodeAddress(address).subscribe((response: any) => {
-      this.latitudeSupplier = response.features[0].geometry.coordinates[1]; // Vĩ độ
-      this.longitudeSupplier = response.features[0].geometry.coordinates[0]; // Kinh độ
-      this.map?.setCenter([this.longitudeSupplier, this.latitudeSupplier]);
-      new Marker({ color: '#FF0000' })
-        .setPopup(
-          new Popup()
-            .setText(this.supplier!.name!)
-            .setHTML(`<strong>Address:</strong> ${address}`)
-        )
-        .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
-        .addTo(this.map!);
+    if (this.formLocation.invalid) {
+      this.notificationService.warning(
+        'Warning',
+        'Please fill in all required fields'
+      );
+      return;
+    }
+
+    const address = `${this.formLocation.get('street')!.value}, ${
+      this.formLocation.get('ward')!.value
+    }, ${this.formLocation.get('district')!.value}, ${
+      this.formLocation.get('province')!.value
+    }`;
+
+    this.getGeoCodeAddress(address);
+  }
+
+  getGeoCodeAddress(address: string) {
+    this.locationService.geocodeAddress(address).subscribe({
+      next: (response: any) => {
+        this.patchGeoCodeAddressValue(response, address);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.notificationService.handleApiError(error);
+      },
     });
+  }
+
+  patchGeoCodeAddressValue(response: any, address: string) {
+    this.latitudeSupplier = response.features[0].geometry.coordinates[1]; // Vĩ độ
+    this.longitudeSupplier = response.features[0].geometry.coordinates[0]; // Kinh độ
+    this.map?.setCenter([this.longitudeSupplier, this.latitudeSupplier]);
+    this.currentMarker = new Marker({ color: '#FF0000' })
+      .setPopup(new Popup().setHTML(`<strong>Address:</strong> ${address}`))
+      .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
+      .addTo(this.map!);
+  }
+
+  patchSupplerInfo(supplier: Supplier) {
+    this.supplier = supplier;
+
+    this.formLocation.patchValue({
+      street: supplier.street,
+      ward: supplier.ward,
+      district: supplier.district,
+      province: supplier.province,
+    });
+
+    const address = `${supplier.street}, ${supplier.ward}, ${supplier.district}, ${supplier.province}`;
+    this.getGeoCodeAddress(address);
   }
 
   getSupplierByUserId(userId: string) {
     this.supplierService.getSupplierByUserId(userId).subscribe({
       next: (response: BaseResponse<Supplier>) => {
-        if (response.success && response.statusCode === StatusCode.OK)
-          this.supplier = response.data;
-
-        this.formLocation.patchValue({
-          street: this.supplier?.street,
-          ward: this.supplier?.ward,
-          district: this.supplier?.district,
-          province: this.supplier?.province,
-        });
-
-        const address =
-          this.supplier?.street +
-          ', ' +
-          this.supplier?.ward +
-          ', ' +
-          this.supplier?.district +
-          ', ' +
-          this.supplier?.province;
-
-        this.locationService.geocodeAddress(address).subscribe({
-          next: (response: any) => {
-            this.latitudeSupplier =
-              response.features[0].geometry.coordinates[1];
-            this.longitudeSupplier =
-              response.features[0].geometry.coordinates[0];
-            this.map?.setCenter([
-              this.longitudeSupplier,
-              this.latitudeSupplier,
-            ]);
-            new Marker({ color: '#FF0000' })
-              .setPopup(
-                new Popup()
-                  .setText(this.supplier!.name!)
-                  .setHTML(`<strong>Address:</strong> ${address}`)
-              )
-              .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
-              .addTo(this.map!);
-          },
-          error: (error: HttpErrorResponse) => {
-            this.notificationService.handleApiError(error);
-          },
-        });
+        if (response.success && response.statusCode === StatusCode.OK) {
+          this.patchSupplerInfo(response.data);
+          this.dataService.supplierDataSource.next(response.data);
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.handleApiError(error);
@@ -230,14 +296,9 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     this.supplierService.updateSupplierAddress(request).subscribe({
       next: (response: BaseResponse<Supplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
-          this.supplier = response.data;
-          this.formLocation.patchValue({
-            street: this.supplier?.street,
-            ward: this.supplier?.ward,
-            district: this.supplier?.district,
-            province: this.supplier?.province,
-          });
-          this.btnUpdateMap();
+          this.currentMarker?.remove().addTo(this.map!);
+          this.patchSupplerInfo(response.data);
+          this.dataService.supplierDataSource.next(response.data);
           this.statusService.statusLoadingSpinnerSource.next(false);
           this.notificationService.success('Success', response.message);
         }
@@ -263,13 +324,27 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
         setProvinces.add(response.provinceId);
       }
     });
+    this.filteredProvinces = this.provinceList;
   }
   onProvinceChange(provinceId: string) {
     this.selectedProvinceId = provinceId;
 
+    this.districtList = this.valueProvince
+      .filter((p) => p.provinceId === provinceId)
+      .map((p) => ({
+        districtName: p.districtName,
+        districtId: p.districtId,
+      }));
+
     // Reset danh sách huyện và xã
     this.districtList.splice(0, this.districtList.length);
     this.wardList.splice(0, this.wardList.length);
+    this.selectedDistrict = '';
+    this.selectedWard = '';
+    this.filteredDistricts = [];
+    this.filteredWards = [];
+    this.formLocation.get('district')?.reset();
+    this.formLocation.get('ward')?.reset();
 
     // Tìm tỉnh theo ID và lưu tên vào form
     const selectedProvince = this.valueProvince.find(
@@ -294,11 +369,16 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
         setDistricts.add(response.districtId);
       }
     });
+
+    this.filteredDistricts = this.districtList;
   }
 
   onDistrictChange(districtId: string) {
     // Reset danh sách xã
     this.wardList.splice(0, this.wardList.length);
+    this.selectedWard = '';
+    this.filteredWards = [];
+    this.formLocation.get('ward')?.reset();
 
     // Tìm quận theo ID và lưu tên vào form
     const selectedDistrict = this.valueProvince.find(
@@ -318,6 +398,8 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
         this.wardList.push(cloneCommune);
       }
     });
+
+    this.filteredWards = this.wardList;
   }
 
   onWardChange(communeId: string) {
