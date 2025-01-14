@@ -76,6 +76,14 @@ export const routes: Routes = [
           ).then((m) => m.SupplierDetailComponent);
         },
       },
+      {
+        path: 'profile',
+        loadComponent() {
+          return import(
+            './components/user-profile/user-profile.component'
+          ).then((m) => m.UserProfileComponent);
+        },
+      },
     ],
   },
   {
