@@ -1,5 +1,6 @@
 import {
   Component,
+  Input,
   OnInit,
   SecurityContext,
   ViewEncapsulation,
@@ -43,6 +44,9 @@ import { CategoryService } from '../../../services/category.service';
 import { Account } from '../../../models/account.model';
 import { AuthService } from '../../../services/auth.service';
 import { environment } from '../../../environments/environment.dev';
+import { DataService } from '../../../services/data.service';
+import { LocalStoreManager } from '../../../services/localstorage-manager.service';
+import { DBkeys } from '../../../services/db-keys';
 
 @Component({
   selector: 'app-step-1',
@@ -68,6 +72,7 @@ export class Step1Component implements OnInit {
   supplier: Supplier | null = null;
   responseTimeStart: number = 0;
   responseTimeEnd: number = 0;
+  @Input() isEditMode: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,7 +81,9 @@ export class Step1Component implements OnInit {
     private notificationService: NotificationService,
     private statusService: StatusService,
     private categoryService: CategoryService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dataService: DataService,
+    private localStorage: LocalStoreManager
   ) {
     this.formBusinessInfo = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -113,14 +120,40 @@ export class Step1Component implements OnInit {
       version: '44.1.0',
       premium: true,
     }).then(this._setupEditor.bind(this));
-    this.getSupplierCategories();
 
-    if (this.authService.isLoggedIn) {
-      if (this.authService.currentUser) {
-        this.account = this.authService.currentUser;
-        this.getSupplierByUserId(this.account.id);
+    this.dataService.supplierCategoryData$.subscribe(
+      (categories: SupplierCategory[] | null) => {
+        if (categories) {
+          this.supplierCategories = categories;
+        } else {
+          this.getSupplierCategories();
+        }
       }
-    }
+    );
+
+    this.account = this.localStorage.getDataObject(DBkeys.CURRENT_USER);
+
+    this.dataService.supplierData$.subscribe((supplier: Supplier | null) => {
+      if (supplier) {
+        this.supplier = supplier;
+        this.formBusinessInfo.patchValue({
+          email: this.account?.email,
+          name: this.supplier?.name,
+          phoneNumber: this.supplier?.phoneNumber,
+          websiteUrl: this.supplier?.websiteUrl,
+          categoryId: this.supplier?.category?.id,
+          price: this.supplier?.price,
+          responseTime: this.supplier?.responseTime,
+          discount: this.supplier?.discount,
+          description: this.supplier?.description,
+        });
+      } else {
+        if (this.authService.currentUser) {
+          this.account = this.authService.currentUser;
+          this.getSupplierByUserId(this.account.id);
+        }
+      }
+    });
   }
 
   private _setupEditor(
@@ -204,9 +237,11 @@ export class Step1Component implements OnInit {
 
     this.supplierService.updateSupplierProfile(request).subscribe({
       next: (response: BaseResponse<Supplier>) => {
-        if (response.success && response.statusCode === StatusCode.OK)
+        if (response.success && response.statusCode === StatusCode.OK) {
+          this.dataService.supplierDataSource.next(response.data);
           this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.success('Success', response.message);
+          this.notificationService.success('Success', response.message);
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
@@ -218,6 +253,7 @@ export class Step1Component implements OnInit {
   getSupplierCategories() {
     this.categoryService.getAllSupplierCategories().subscribe({
       next: (response: ListSupplierCategoryResponse) => {
+        this.dataService.supplierCategoryDataSource.next(response.data);
         this.supplierCategories = response.data;
       },
       error: (error: HttpErrorResponse) => {
@@ -229,19 +265,21 @@ export class Step1Component implements OnInit {
   getSupplierByUserId(userId: string) {
     this.supplierService.getSupplierByUserId(userId).subscribe({
       next: (response: BaseResponse<Supplier>) => {
-        if (response.success && response.statusCode === StatusCode.OK)
+        if (response.success && response.statusCode === StatusCode.OK) {
           this.supplier = response.data;
-        this.formBusinessInfo.patchValue({
-          email: this.account?.email,
-          name: this.supplier?.name,
-          phoneNumber: this.supplier?.phoneNumber,
-          websiteUrl: this.supplier?.websiteUrl,
-          categoryId: this.supplier?.category?.id,
-          price: this.supplier?.price,
-          responseTime: this.supplier?.responseTime,
-          discount: this.supplier?.discount,
-          description: this.supplier?.description,
-        });
+          this.dataService.supplierDataSource.next(this.supplier);
+          this.formBusinessInfo.patchValue({
+            email: this.account?.email,
+            name: this.supplier?.name,
+            phoneNumber: this.supplier?.phoneNumber,
+            websiteUrl: this.supplier?.websiteUrl,
+            categoryId: this.supplier?.category?.id,
+            price: this.supplier?.price,
+            responseTime: this.supplier?.responseTime,
+            discount: this.supplier?.discount,
+            description: this.supplier?.description,
+          });
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.handleApiError(error);

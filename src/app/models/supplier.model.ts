@@ -19,8 +19,8 @@ export interface Supplier {
   priority: number;
   status?: SupplierStatus;
   discount: number;
-  onboardStatus?: OnBoardStatus;
-  onboardPercent: number;
+  onBoardStatus?: OnBoardStatus;
+  onBoardPercent: number;
   isFeatured: boolean;
   priorityEnd?: Date;
   averageRating: number;
@@ -74,7 +74,7 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
       websiteUrl: `https://supplier${i + 1}.com`,
       responseTime: `${24 + (i % 5)}h`,
       priority: (i % 3) + 1,
-      onboardPercent: 50 + (i % 50),
+      onBoardPercent: 50 + (i % 50),
       isFeatured: i % 2 === 0,
       averageRating: 3.5 + (i % 2),
       discount: i % 2 === 0 ? 10 : 0,
@@ -127,4 +127,14 @@ export interface UpdateSupplierAddressRequest {
   ward: string;
   district: string;
   province: string;
+}
+
+export interface UpdateSupplierImagesRequest {
+  files: File[];
+  primaryImageIndex?: number;
+}
+
+export interface PreviewImage {
+  id?: number;
+  imageUrl?: string;
 }

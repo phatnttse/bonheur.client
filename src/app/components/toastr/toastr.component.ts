@@ -14,32 +14,40 @@ import { CommonModule } from '@angular/common';
   animations: [
     trigger('toastAnimation', [
       transition(':enter', [
-        style({transform: 'translateY(100%)', opacity: 0}),
-        animate('300ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate(
+          '300ms ease-out',
+          style({ transform: 'translateY(0)', opacity: 1 })
+        ),
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({transform: 'translateY(100%)', opacity:0}))
-      ])
-    ])
-  ]
+        animate(
+          '300ms ease-in',
+          style({ transform: 'translateY(100%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
-export class ToastrComponent implements OnInit, OnDestroy{
-    private toasterService = inject(NotificationService);
+export class ToastrComponent implements OnInit, OnDestroy {
+  private toasterService = inject(NotificationService);
 
-    toasts: Toast[] = [];
-    private subscription!: Subscription;
+  toasts: Toast[] = [];
+  private subscription!: Subscription;
 
-    ngOnInit(): void{
-      this.subscription = this.toasterService.toasts$.subscribe(toasts => this.toasts = toasts);
-    }
+  ngOnInit(): void {
+    this.subscription = this.toasterService.toasts$.subscribe(
+      (toasts) => (this.toasts = toasts)
+    );
+  }
 
-    ngOnDestroy(): void{
-      if(this.subscription){
-        this.subscription.unsubscribe()
-      }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
-    
-    removeToast(id: number){
-      this.toasterService.remove(id);
-    }
+  }
+
+  removeToast(id: number) {
+    this.toasterService.remove(id);
+  }
 }

@@ -36,6 +36,7 @@ import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { adminRoutes } from './components/admin/admin.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { supplierRoutes } from './components/supplier/supplier.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -50,6 +51,7 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules)
     ),
     importProvidersFrom(RouterModule.forChild(adminRoutes)),
+    importProvidersFrom(RouterModule.forChild(supplierRoutes)),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideToastr(),
@@ -66,6 +68,9 @@ export const appConfig: ApplicationConfig = {
       TranslateModule.forRoot({
         loader: { provide: TranslateLoader, useClass: TranslateLanguageLoader },
       })
-    ), provideAnimationsAsync(), provideAnimationsAsync(),provideNativeDateAdapter()
+    ),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideNativeDateAdapter(),
   ],
 };

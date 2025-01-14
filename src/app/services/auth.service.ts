@@ -163,7 +163,7 @@ export class AuthService {
       Array.isArray(decodedIdToken.role)
         ? decodedIdToken.role
         : [decodedIdToken.role],
-        decodedIdToken.lockOutEnd
+      decodedIdToken.lockOutEnd
     );
 
     user.isEnabled = true;

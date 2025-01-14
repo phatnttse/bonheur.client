@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminRoutes } from './components/admin/admin.routes';
+import { supplierRoutes } from './components/supplier/supplier.routes';
 
 export const routes: Routes = [
   {
@@ -95,48 +96,6 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'supplier',
-    loadComponent() {
-      return import('./layouts/supplier/supplier.component').then(
-        (m) => m.SupplierComponent
-      );
-    },
-    children: [
-      {
-        path: 'onboarding',
-        loadComponent() {
-          return import(
-            './components/supplier/onboarding/onboarding.component'
-          ).then((m) => m.OnboardingComponent);
-        },
-      },
-      {
-        path: 'onboarding/step-1',
-        loadComponent() {
-          return import('./components/supplier/step-1/step-1.component').then(
-            (m) => m.Step1Component
-          );
-        },
-      },
-      {
-        path: 'onboarding/step-2',
-        loadComponent() {
-          return import('./components/supplier/step-2/step-2.component').then(
-            (m) => m.Step2Component
-          );
-        },
-      },
-      {
-        path: 'onboarding/step-3',
-        loadComponent() {
-          return import('./components/supplier/step-3/step-3.component').then(
-            (m) => m.Step3Component
-          );
-        },
-      },
-    ],
-  },
-  {
     path: 'pages/404',
     loadComponent() {
       return import('./pages/page-not-found/page-not-found.component').then(
@@ -144,6 +103,7 @@ export const routes: Routes = [
       );
     },
   },
+  ...supplierRoutes,
   ...adminRoutes,
   { path: '**', redirectTo: 'pages/404' },
 ];

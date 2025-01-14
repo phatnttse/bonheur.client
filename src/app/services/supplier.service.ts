@@ -7,6 +7,7 @@ import { BaseResponse, PaginationResponse } from '../models/base.model';
 import {
   RegisterSupplierRequest,
   Supplier,
+  SupplierImage,
   UpdateSupplierAddressRequest,
   UpdateSupplierProfileRequest,
 } from '../models/supplier.model';
@@ -111,6 +112,60 @@ export class SupplierService extends EndpointBase {
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () =>
             this.updateSupplierAddress(request)
+          );
+        })
+      );
+  }
+
+  updateSupplierImages(request: any): Observable<BaseResponse<Supplier>> {
+    const formData = new FormData();
+    request.files.forEach((file: any) => {
+      formData.append('files', file);
+    });
+    formData.append('primaryImageIndex', request.primaryImageIndex);
+    return this.http
+      .post<BaseResponse<Supplier>>(
+        `${environment.apiUrl}/api/v1/suppliers/images/upload`,
+        formData,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.updateSupplierImages(request)
+          );
+        })
+      );
+  }
+
+  updatePrimaryImage(imageId: number): Observable<BaseResponse<SupplierImage>> {
+    return this.http
+      .patch<BaseResponse<SupplierImage>>(
+        `${environment.apiUrl}/api/v1/suppliers/images/update/primary/${imageId}`,
+        {},
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.updatePrimaryImage(imageId)
+          );
+        })
+      );
+  }
+
+  deleteSupplierImage(
+    imageId: number
+  ): Observable<BaseResponse<SupplierImage>> {
+    return this.http
+      .delete<BaseResponse<SupplierImage>>(
+        `${environment.apiUrl}/api/v1/suppliers/images/${imageId}`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.updatePrimaryImage(imageId)
           );
         })
       );
