@@ -1,6 +1,4 @@
-<header
-  class="bg-white sticky top-0 z-10 shadow-[0_2px_2px_0_rgba(0,0,0,0.05)]"
->
+<header class="bg-white shadow-[0_2px_2px_0_rgba(0,0,0,0.05)]">
   <div
     class="py-[20px] max-[991px]:py-[15px] border-b-[1px] border-[#eee] border-solid"
   >
@@ -44,11 +42,19 @@
             <p class="text-sm font-semibold">0800 193 5229</p>
           </div>
           <div>
+            @if (supplier && supplier.images && supplier.images.length > 0) {
             <img
               class="w-10 rounded-full h-10"
-              src="./../../../../assets/images/profile/user5.jpg"
+              [src]="supplier.images[0].imageUrl"
               alt="Avatar"
             />
+            }@else {
+            <img
+              class="w-10 rounded-full h-10"
+              [src]="account?.pictureUrl"
+              alt="Avatar"
+            />
+            }
           </div>
         </div>
       </div>

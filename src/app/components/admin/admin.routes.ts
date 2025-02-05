@@ -49,6 +49,14 @@ export const adminRoutes: Routes = [
           ).then((m) => m.SubscriptionPackagesManagementComponent);
         },
       },
+      {
+        path: 'suppliers/management',
+        loadComponent() {
+          return import(
+            './supplier-management/supplier-management.component'
+          ).then((m) => m.SupplierManagementComponent);
+        },
+      },
     ],
   },
 ];

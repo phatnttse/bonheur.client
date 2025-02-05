@@ -58,6 +58,6 @@ export class HeaderComponent {
 
   btnLogout() {
     this.authService.logout();
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/authentication/signin']);
   }
 }

@@ -107,6 +107,10 @@
                   [matAutocomplete]="autoProvince"
                   placeholder="Chọn tỉnh/thành phố"
                   (input)="onProvinceInput($event)"
+                  tabindex="0"
+                  (keydown.enter)="onEnter('province')"
+                  (keypress.enter)="onEnter('province')"
+                  (keyup.enter)="onEnter('province')"
                 />
                 <mat-autocomplete #autoProvince="matAutocomplete">
                   @for (province of filteredProvinces; track $index) {
@@ -137,6 +141,10 @@
                   [matAutocomplete]="autoDistrict"
                   placeholder="Chọn quận/huyện"
                   (input)="onDistrictInput($event)"
+                  tabindex="0"
+                  (keydown.enter)="onEnter('district')"
+                  (keypress.enter)="onEnter('district')"
+                  (keyup.enter)="onEnter('district')"
                 />
                 <mat-autocomplete #autoDistrict="matAutocomplete">
                   @for (district of filteredDistricts; track $index) {
@@ -167,7 +175,10 @@
                   [matAutocomplete]="autoWard"
                   placeholder="Chọn phường/xã"
                   (input)="onWardInput($event)"
-                  (keydown.enter)="onWardChange(selectedWard)"
+                  tabindex="0"
+                  (keydown.enter)="onEnter('ward')"
+                  (keypress.enter)="onEnter('ward')"
+                  (keyup.enter)="onEnter('ward')"
                 />
                 <mat-autocomplete #autoWard="matAutocomplete">
                   @for (commune of filteredWards; track $index) {

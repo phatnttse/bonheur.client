@@ -67,13 +67,13 @@ export class MainMenuComponent implements OnInit {
   }
 
   getCurrentStep() {
-    if (this.supplier?.onBoardStatus === OnBoardStatus.SUPPLIER_LOCATION) {
+    if (this.supplier?.onBoardStatus === OnBoardStatus.BusinessInfo) {
       this.completeStep = 1;
       this.completePercent = 33.33;
-    } else if (this.supplier?.onBoardStatus === OnBoardStatus.SUPPLIER_IMAGES) {
+    } else if (this.supplier?.onBoardStatus === OnBoardStatus.Photos) {
       this.completeStep = 2;
       this.completePercent = 66.67;
-    } else if (this.supplier?.onBoardStatus === OnBoardStatus.COMPLETED) {
+    } else if (this.supplier?.onBoardStatus === OnBoardStatus.Completed) {
       this.completeStep = 3;
       this.completePercent = 100;
     } else {
