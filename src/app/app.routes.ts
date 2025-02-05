@@ -85,6 +85,30 @@ export const routes: Routes = [
           ).then((m) => m.UserProfileComponent);
         },
       },
+      {
+        path: 'favorite-supplier',
+        loadComponent() {
+          return import(
+            './components/favorite-supplier/favorite-supplier.component'
+          ).then((m) => m.FavoriteSupplierComponent);
+        },
+      },
+      {
+        path: 'favorite-supplier/categories',
+        loadComponent() {
+          return import(
+            './components/favorite-supplier/favorite-supplier-list-categories/favorite-supplier-list-categories.component'
+          ).then((m) => m.FavoriteSupplierListCategoriesComponent);
+        },
+      },
+      {
+        path: 'favorite-supplier/categories/:categoryId',
+        loadComponent() {
+          return import(
+            './components/favorite-supplier/favorite-supplier-category/favorite-supplier-category.component'
+          ).then((m) => m.FavoriteSupplierCategoryComponent);
+        },
+      },
     ],
   },
   {

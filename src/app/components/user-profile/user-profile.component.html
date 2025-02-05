@@ -1,21 +1,54 @@
-<div class="container">
+<div>
   <div
-    class="bb-main-menu-desk bg-[#fff] py-[5px] border-t-[1px] border-solid border-[#eee] max-[991px]:hidden px-[81.5px]"
+    class="py-10 bb-main-menu-desk bg-[#fff] py-[5px] border-t-[1px] border-solid border-[#eee] px-[81.5px] max-[412px]:px-0"
   >
-    <div class="p-[15px] margin flex flex-row justify-between">
-      <div class="flex">
-        <img
-          src="https://cdn0.hitched.co.uk/usr/1/6/2/3/utmr_5851623.jpg?r=57264"
-          alt="avatar"
-          width="96"
-          style="height: 96px"
-          class="rounded-full"
-        />
+    <div class="grid grid-cols-5 p-[15px] margin flex flex-row justify-between">
+      <div class="col-span-4 flex max-[991px]:col-span-5">
+        <div class="relative w-20 h-20 max-[640px]:hidden">
+          <img
+            src="{{ userAccount?.pictureUrl }}"
+            alt="User Avatar"
+            class="w-full h-full rounded-full object-cover"
+          />
+          <label
+            for="avatar-upload"
+            class="absolute bottom-0 right-0 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer bg-primary"
+          >
+            <i-tabler
+              name="pencil"
+              class="icon-20 d-flex align-items-center text-white text-sm"
+            ></i-tabler>
+            <input
+              type="file"
+              id="avatar-upload"
+              class="hidden"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+            />
+          </label>
+        </div>
+
         <div class="px-[30px]">
-          <span class="font-bold text-2xl">Nguyen</span>
+          <span class="font-bold text-2xl">{{ userAccount?.fullName }}</span>
           <p>Da Nang, Duyen Hai Mien Trung · From January 2025</p>
+          <p class="truncate ...">
+            <span class="font-bold">Email:</span>
+            {{ userAccount?.email || "No infomation" }}
+            <span>
+              <button mat-button (click)="openChangeEmailDialog()">
+                <p class="underline underline-offset-1">Change</p>
+              </button>
+            </span>
+          </p>
+          <p class="truncate ...">
+            <span class="font-bold">Phone number:</span>
+            {{ userAccount?.phoneNumber || "No infomation" }}
+          </p>
+          <p class="truncate ...">
+            <span class="font-bold">Gender:</span>
+            {{ userAccount?.gender || "No infomation" }}
+          </p>
           <p class="italic">
-            I have not introduced myself to the community yet.
             <a
               class="link--primary ml10 icon icon-edit-red icon-left"
               href="/users-update.php?go=datospersonales-init"
@@ -23,7 +56,7 @@
             >
           </p>
           <div class="flex flex-row py-2">
-            <button mat-stroked-button>Basic</button>
+            <button mat-stroked-button>Edit</button>
             <mat-icon color="gray" class="ml-3 my-1">
               <i-tabler
                 name="Diamond"
@@ -34,9 +67,9 @@
           </div>
         </div>
       </div>
-      <mat-card appearance="outlined">
+      <div class="col-span-1">
         <div
-          class="shadow-md rounded-md pt-[20px] pb-[30px] px-[30px] w-[300px]"
+          class="shadow-md rounded-md pt-[20px] pb-[30px] px-[30px] w-[300px] lg:max-xl:w-[215px] max-[991px]:hidden"
         >
           <div class="pt-3 px-2 flex flex-row justify-center">
             <mat-icon color="gray" class="">
@@ -70,14 +103,14 @@
             </div>
           </div>
         </div>
-      </mat-card>
+      </div>
     </div>
   </div>
   <div
-    class="bb-main-menu-desk bg-[#fff] py-[5px] border-t-[1px] border-solid border-[#eee] max-[991px]:hidden px-[81.5px]"
+    class="bb-main-menu-desk bg-[#fff] py-[5px] border-t-[1px] border-solid border-[#eee] px-[81.5px] max-[412px]:px-0"
   >
-    <div class="p-[15px] margin flex flex-row justify-between">
-      <div>
+    <div class="grid grid-cols-5 p-[15px] margin flex flex-row justify-between">
+      <div class="col-span-4 max-[991px]:col-span-5">
         <div>
           <span class="font-bold text-xl"
             >Let's jot down some basic details...
@@ -85,7 +118,7 @@
         </div>
         <div class="flex gap-2 my-4">
           <div
-            class="shadow-md rounded-md w-[154px] h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
+            class="shadow-md rounded-md w-[154px] max-[960px]:w-full h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
           >
             <div class="flex flex-row justify-center">
               <div class="bg-[#f6f1ee] rounded-full w-[47px] h-[47px]"></div>
@@ -98,7 +131,7 @@
             </div>
           </div>
           <div
-            class="shadow-md rounded-md w-[154px] h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
+            class="shadow-md rounded-md w-[154px] max-[960px]:w-full h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
           >
             <div class="flex flex-row justify-center">
               <div class="bg-[#f6f1ee] rounded-full w-[47px] h-[47px]"></div>
@@ -111,7 +144,7 @@
             </div>
           </div>
           <div
-            class="shadow-md rounded-md w-[154px] h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
+            class="shadow-md rounded-md w-[154px] max-[960px]:w-full h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
           >
             <div class="flex flex-row justify-center">
               <div class="bg-[#f6f1ee] rounded-full w-[47px] h-[47px]"></div>
@@ -124,7 +157,7 @@
             </div>
           </div>
           <div
-            class="shadow-md rounded-md w-[154px] h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
+            class="shadow-md rounded-md w-[154px] max-[960px]:w-full h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
           >
             <div class="flex flex-row justify-center">
               <div class="bg-[#f6f1ee] rounded-full w-[47px] h-[47px]"></div>
@@ -137,13 +170,13 @@
             </div>
           </div>
           <div
-            class="shadow-md rounded-md w-[154px] h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee]"
+            class="shadow-md rounded-md w-[154px] max-[960px]:w-full h-[157px] place-content-center mx-2 border-[1px] border-solid border-[#eee] max-[1280px]:hidden"
           >
             <div class="flex flex-row justify-center">
               <div class="bg-[#f6f1ee] rounded-full w-[47px] h-[47px]"></div>
             </div>
             <div class="flex flex-row justify-center text-center py-2">
-              <p class="uppercase">Honeymoon</p>
+              <p class="uppercase text-ellipsis">Honey moon</p>
             </div>
             <div class="flex flex-row justify-center text-center py-2">
               <p class="uppercase">...</p>
@@ -154,7 +187,7 @@
           <span class="font-bold text-xl">Recent Photos</span>
         </div>
         <div
-          class="rounded-md w-[855px] h-[303px] place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4"
+          class="rounded-md w-full h-[303px] place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4 w-9/10 xl:w-4/5"
         >
           <div class="flex flex-row justify-center">
             <img
@@ -181,7 +214,7 @@
           <span class="font-bold text-xl">Recent Videos</span>
         </div>
         <div
-          class="rounded-md w-[855px] h-[303px] place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4"
+          class="rounded-md h-[303px] place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4 sm:w-9/10 xl:w-4/5"
         >
           <div class="flex flex-row justify-center">
             <img
@@ -200,15 +233,15 @@
               Hitched community
             </p>
           </div>
-          <div class="flex flex-row justify-center text-center py-2">
-            <button mat-flat-button color="primary">Upload Photos</button>
+          <div class="flex flex-row justify-center text-center py-2 mb-2">
+            <button mat-flat-button color="primary">Upload Videos</button>
           </div>
         </div>
         <div>
           <span class="font-bold text-xl">My Friends </span>
         </div>
         <div
-          class="rounded-md w-[855px] h-[303px] place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4 bg-[url('assets/images/backgrounds/add-friend.jpeg')] bg-cover bg-center bg-no-repeat"
+          class="rounded-md sm:w-9/10 xl:w-4/5 h-[303px] place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4 bg-[url('assets/images/backgrounds/add-friend.jpeg')] bg-cover bg-center bg-no-repeat"
         >
           <div class="flex flex-row justify-center text-center py-2 text-xl">
             <p class="text-xl font-bold">
@@ -223,7 +256,7 @@
             </p>
           </div>
           <div class="flex justify-center text-center py-2">
-            <div class="flex flex-row justify-center px-1">
+            <div class="flex flex-row justify-center px-1 max-[417px]:hidden">
               <img
                 src="https://i.pinimg.com/736x/df/16/27/df1627ff1a050ae165cc31f576308243.jpg"
                 width="60"
@@ -232,7 +265,7 @@
                 alt="Friend 1"
               />
             </div>
-            <div class="flex flex-row justify-center px-1">
+            <div class="flex flex-row justify-center px-1 max-[417px]:hidden">
               <img
                 src="https://i.pinimg.com/736x/df/16/27/df1627ff1a050ae165cc31f576308243.jpg"
                 width="60"
@@ -241,7 +274,7 @@
                 alt="Friend 1"
               />
             </div>
-            <div class="flex flex-row justify-center px-1">
+            <div class="flex flex-row justify-center px-1 max-[417px]:hidden">
               <img
                 src="https://i.pinimg.com/736x/df/16/27/df1627ff1a050ae165cc31f576308243.jpg"
                 width="60"
@@ -250,7 +283,7 @@
                 alt="Friend 1"
               />
             </div>
-            <div class="flex flex-row justify-center px-1">
+            <div class="flex flex-row justify-center px-1 max-[417px]:hidden">
               <img
                 src="https://i.pinimg.com/736x/df/16/27/df1627ff1a050ae165cc31f576308243.jpg"
                 width="60"
@@ -299,7 +332,7 @@
         </div>
       </div>
       <div
-        class="shadow-md rounded-md pt-[20px] pb-[30px] px-[30px] w-[300px] h-[220px] border-[1px] border-solid border-[#eee]"
+        class="lg:col-span-1 rounded-md pt-[20px] pb-[30px] px-[30px] w-[300px] h-[220px] border-[1px] border-solid border-[#eee] max-[991px]:hidden"
       >
         <div class="pt-3 px-2 flex flex-row justify-center">
           <mat-icon color="gray">

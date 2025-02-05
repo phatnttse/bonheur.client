@@ -1,0 +1,32 @@
+<div class="subscription-package-dialog">
+  <div class="my-2 p-0">
+    <h2 mat-dialog-title>Change email</h2>
+  </div>
+  <form [formGroup]="changeEmailForm" class="mx-3" (ngSubmit)="onSubmit()">
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" />
+      </mat-form-field>
+    </div>
+    <div class="flex justify-end">
+      <button
+        mat-raised-button
+        color="primary"
+        class="mx-2 mb-3 p-24 text-white"
+        type="submit"
+      >
+        Change email
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        class="mx-2 mb-3 p-24 text-white"
+        type="button"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
