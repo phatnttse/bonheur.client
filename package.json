@@ -37,6 +37,7 @@
     "@zxcvbn-ts/core": "^3.0.0",
     "@zxcvbn-ts/language-en": "^3.0.0",
     "angular-oauth2-oidc": "^17.0.2",
+    "angular-responsive-carousel": "^2.1.2",
     "angular-tabler-icons": "^3.1.0",
     "aos": "^2.3.4",
     "jquery": "^3.7.1",
@@ -46,6 +47,7 @@
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

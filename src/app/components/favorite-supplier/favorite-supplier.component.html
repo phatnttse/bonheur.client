@@ -1,0 +1,251 @@
+<div class="bg-[#fff]">
+  <div
+    class="bg-[#fff] py-[5px] border-t-[2px] border-solid border-[#eee] px-[81.5px]"
+  >
+    <div class="text-center place-content-center my-[20px]">
+      <div class="flex items-center justify-center">
+        <h1 class="text-xl font-bold mx-1 my-[10px]">Favorites</h1>
+      </div>
+
+      <p class="">
+        Keep all of your wedding favourites here! Click the to save your
+        favourite suppliers, jewellery, dresses,
+      </p>
+      <p>Real Weddings, and articles here.</p>
+    </div>
+  </div>
+  <div
+    class="bg-[#fff] py-[5px] border-t-[2px] border-solid border-[#eee] px-[81.5px]"
+  >
+    <div class="flex justify-between my-8">
+      <h1 class="text-xl font-bold">Favourite Suppliers</h1>
+      <button
+        color="primary"
+        mat-raised-button
+        routerLink="/favorite-supplier/categories"
+      >
+        View all
+      </button>
+    </div>
+
+    <ngx-slick-carousel
+      class="carousel px-4"
+      #slickModal="slick-carousel"
+      [config]="slideConfig"
+    >
+      @for (category of supplierCategories; track $index) {
+      <div
+        ngxSlickItem
+        routerLink="/favorite-supplier/categories/{{ category.id }}"
+        class="cursor-pointer"
+      >
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="grid grid-cols-2 grid-rows-2 bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee]"
+          >
+            @for (item of favoriteSuppliers.slice(0, 4); track $index) { @if
+            (item?.supplier?.category?.id == category?.id) {
+            <div class="flex items-center justify-center border p-[1px]">
+              <img
+                [src]="item?.supplier?.images?.[0]?.imageUrl"
+                alt="Supplier Image"
+                class="h-full w-full"
+              />
+            </div>
+            } }
+          </div>
+        </div>
+
+        <!-- Category Name -->
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">{{ category.name }}</h5>
+        </div>
+        <!-- Search Icon -->
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+      }
+    </ngx-slick-carousel>
+  </div>
+
+  <div
+    class="bg-[#fff] py-[5px] border-t-[2px] border-solid border-[#eee] px-[81.5px]"
+  >
+    <div class="flex justify-between my-8">
+      <h1 class="text-xl font-bold">My inspiration boards</h1>
+      <button color="primary" mat-raised-button>View all</button>
+    </div>
+
+    <ngx-slick-carousel
+      class="slickSwiper px-4"
+      #slickModal="slick-carousel"
+      [config]="slideConfig"
+    >
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+
+      <div ngxSlickItem>
+        <div class="flex gap-2 mt-2 px-4 place-content-center">
+          <div
+            class="flex items-center justify-center bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee] px-4"
+          >
+            <div class="flex flex-row justify-center text-center py-2">
+              image
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <h5 class="ml-1">Category Name</h5>
+        </div>
+        <div class="flex gap-2 mt-2 place-content-center font-semibold">
+          <i-tabler
+            name="search"
+            class="icon-20 d-flex align-items-center"
+          ></i-tabler>
+          <h5 class="ml-1">Search</h5>
+        </div>
+      </div>
+    </ngx-slick-carousel>
+  </div>
+</div>

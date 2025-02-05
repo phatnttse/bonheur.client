@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
@@ -7,7 +7,7 @@ import {
   Supplier,
 } from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
-import { PaginationResponse } from '../../models/base.model';
+import { BaseResponse, PaginationResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
 import { StatusService } from '../../services/status.service';
