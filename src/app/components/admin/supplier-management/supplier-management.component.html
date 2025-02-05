@@ -1,0 +1,299 @@
+<mat-card>
+  <mat-card-content>
+    <div class="grid md:grid-cols-3 sm:grid-cols-2 items-center w-full">
+      <div class="flex items-center px-1 pt-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            type="text"
+            placeholder="Type to search"
+            (keyup)="applyFilter($event)"
+            #input
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="flex items-center px-1 pt-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            [matAutocomplete]="autoProvince"
+            placeholder="Select province/city"
+            [(ngModel)]="province"
+            (input)="onProvinceInput($event)"
+          />
+          <mat-autocomplete #autoProvince="matAutocomplete">
+            @for (province of filteredProvinces; track $index) {
+            <mat-option
+              [value]="province.provinceName"
+              (click)="onProvinceChange(province.provinceId)"
+              (keydown.enter)="onProvinceChange(province.provinceId)"
+            >
+              {{ province.provinceName }}
+            </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="flex items-center px-1 pt-4">
+        <mat-form-field appearance="outline" class="w-full" color="primary">
+          <mat-select
+            placeholder="Select category"
+            [(ngModel)]="supplierCategoryId"
+            (selectionChange)="onCategoryChange($event)"
+          >
+            @for (supplier of supplierCategories; track $index) {
+            <mat-option [value]="supplier.id">{{ supplier.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex items-center px-1 pt-4">
+        <mat-form-field appearance="outline" class="w-full" color="primary">
+          <mat-select
+            placeholder="Select featured"
+            [(ngModel)]="isFeatured"
+            (selectionChange)="onFeaturedChange($event)"
+          >
+            <mat-option [value]="true">True</mat-option>
+            <mat-option [value]="false">False</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex items-center px-1 pt-4">
+        <mat-form-field appearance="outline" class="w-full" color="primary">
+          <mat-select
+            placeholder="Select status"
+            [(ngModel)]="status"
+            (selectionChange)="onStatusChange($event)"
+          >
+            @for (status of supplierStatuses; track $index) {
+            <mat-option [value]="status">{{ status }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex items-center px-4">
+        <button
+          mat-stroked-button
+          style="height: 48px"
+          (click)="btnExportExcel()"
+          class="mr-4"
+        >
+          <div class="flex items-center">
+            <img
+              width="24"
+              height="24"
+              src="./../../../../assets/images/svgs/excel.svg"
+              alt="Excel"
+            />
+            <span class="px-2">Export</span>
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g id="Interface / Download">
+                  <path
+                    id="Vector"
+                    d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12"
+                    stroke="#000000"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </button>
+        <button mat-stroked-button style="height: 48px" (click)="reloadData()">
+          <div class="flex items-center">
+            <mat-icon matIconPrefix>loop</mat-icon>
+            <span class="px-2">Reload data</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card class="w-100">
+  <mat-card-content>
+    <div
+      class="col-12 d-flex align-items-center justify-content-center mb-5 mt-3"
+    ></div>
+    <div class="table-responsive mt-20">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="w-100 text-nowrap"
+        bgColor="white"
+      >
+        <ng-container matColumnDef="image">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
+            Photo
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <img
+              [src]="supplier.images[0].imageUrl"
+              alt="Photo"
+              class="w-full h-16 rounded-lg object-cover"
+            />
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="name"
+          >
+            Name
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span class="f-s-14">{{ supplier.name }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="category">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="category"
+          >
+            Category
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span class="f-s-14">{{ supplier.category.name }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="phoneNumber">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="phoneNumber"
+          >
+            Phone
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span class="f-s-14">{{ supplier.phoneNumber }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="status"
+          >
+            Status
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span
+              class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded"
+              [ngClass]="{
+                'bg-green-100 text-green-800':
+                  supplier.status === supplierStatus.APPROVED,
+                'bg-yellow-100 text-yellow-800':
+                  supplier.status === supplierStatus.PENDING,
+                'bg-red-100 text-red-800':
+                  supplier.status === supplierStatus.REJECTED,
+                'bg-blue-100 text-blue-800':
+                  supplier.status === supplierStatus.IN_REVIEW
+              }"
+            >
+              {{ supplier.status }}
+            </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="priority">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="priority"
+          >
+            Priority
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span class="f-s-14">{{ supplier.priority }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="onBoardStatus">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="onBoardStatus"
+          >
+            Onboard Status
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span
+              class="f-s-14 font-semibold"
+              [ngClass]="{
+                'text-green-700':
+                  supplier.onBoardStatus === onBoardStatus.Completed,
+                'text-orange-700':
+                  supplier.onBoardStatus === onBoardStatus.Photos,
+                'text-purple-700':
+                  supplier.onBoardStatus === onBoardStatus.Location,
+                'text-blue-700':
+                  supplier.onBoardStatus === onBoardStatus.BusinessInfo
+              }"
+              >{{ supplier.onBoardStatus }}</span
+            >
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="onBoardPercent">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="onBoardPercent"
+          >
+            Onboard Percent
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <span class="f-s-14 ms-10">{{ supplier.onBoardPercent }}%</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let supplier">
+            <button
+              mat-icon-button
+              type="button"
+              class="m-t-4"
+              (click)="openUpdateSupplierStatusDialog(supplier)"
+            >
+              <mat-icon color="warn"
+                ><i-tabler
+                  name="edit"
+                  class="icon-20 d-flex align-items-center"
+                ></i-tabler
+              ></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

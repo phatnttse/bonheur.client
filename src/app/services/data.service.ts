@@ -40,6 +40,9 @@ export class DataService {
   public provinceDataSource = new BehaviorSubject<any | null>(null);
   provinceData$ = this.provinceDataSource.asObservable();
 
+  public supplierListDataSource = new BehaviorSubject<Supplier[] | null>(null);
+  supplierListData$ = this.supplierListDataSource.asObservable();
+
   resetData() {
     this.accountDataSource.next(null);
   }

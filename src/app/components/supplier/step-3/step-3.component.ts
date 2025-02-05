@@ -108,12 +108,12 @@ export class Step3Component implements OnInit {
     if (this.fileUploads.length === 0) {
       this.notificationService.warning(
         'Warning',
-        'Please upload at least 8 photos'
+        'Please upload at least 4 photos'
       );
       return;
     }
 
-    if (this.primaryImageIndex === null) {
+    if (this.primaryImageIndex == null && this.supplierImages.length === 0) {
       this.notificationService.warning('Warning', 'Please select a main photo');
       return;
     }
@@ -122,12 +122,13 @@ export class Step3Component implements OnInit {
 
     const request: UpdateSupplierImagesRequest = {
       files: this.fileUploads,
-      primaryImageIndex: this?.primaryImageIndex,
+      primaryImageIndex: this.primaryImageIndex ?? null,
     };
 
     this.supplierService.updateSupplierImages(request).subscribe({
       next: (response: BaseResponse<Supplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
+          this.previewImages = [];
           this.getSupplierByUserId(this.account!.id!);
           this.statusService.statusLoadingSpinnerSource.next(false);
           this.notificationService.success('Success', response.message);

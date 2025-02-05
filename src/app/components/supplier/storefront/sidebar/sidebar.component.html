@@ -4,15 +4,20 @@
 >
   <img
     mat-card-image
-    src="https://cdn0.hitched.co.uk/vendor/3873/3_2/640/jpg/vendor7_4_373873-173673904267171.webp"
+    [src]="this.supplier?.images?.[0]?.imageUrl || ''"
     alt="Photo"
     class="w-full h-[140px] object-cover"
   />
 
   <div
-    class="absolute top-0 left-0 w-full h-[140px] flex justify-center items-center"
+    class="absolute top-0 left-0 w-full h-[140px] flex justify-center items-center text-center px-2 overflow-hidden"
   >
-    <span class="uppercase text-white font-semibold text-lg">Bonheur</span>
+    <span
+      class="uppercase text-white font-semibold text-lg truncate"
+      style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+    >
+      {{ this.supplier?.name }}
+    </span>
   </div>
 
   <div

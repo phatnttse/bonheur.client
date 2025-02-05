@@ -79,7 +79,6 @@ export class SigninComponent {
         } else {
           this.router.navigate(['/']);
         }
-        this.notificationService.success('Welcome', response.fullName);
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);

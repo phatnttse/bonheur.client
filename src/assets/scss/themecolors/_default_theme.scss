@@ -189,3 +189,7 @@ $darkbluetheme: mat.m2-define-dark-theme(
 //     )
 //   );
 // }
+
+.mat-mdc-text-field-wrapper {
+  will-change: opacity, transform, color !important;
+}

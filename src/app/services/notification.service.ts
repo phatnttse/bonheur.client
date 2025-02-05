@@ -61,6 +61,8 @@ export class NotificationService {
         'You are not authorized to perform this action',
         'error'
       );
+    } else if (error.status === 401) {
+      return;
     } else {
       return this.show('An error occurred', error.error.detail, 'error');
     }

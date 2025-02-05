@@ -48,7 +48,6 @@ export class SigninGoogleComponent {
               this.dataService.accountDataSource.next(response);
               this.statusService.statusLoadingSpinnerSource.next(false);
               this.router.navigate(['/']);
-              this.notificationService.success('Welcome', response.fullName);
             },
             error: (error: HttpErrorResponse) => {
               this.statusService.statusLoadingSpinnerSource.next(false);

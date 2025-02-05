@@ -119,7 +119,6 @@ export interface UpdateSupplierProfileRequest {
   price: number;
   description: string;
   responseTime: string;
-  discount: string;
 }
 
 export interface UpdateSupplierAddressRequest {
@@ -131,10 +130,24 @@ export interface UpdateSupplierAddressRequest {
 
 export interface UpdateSupplierImagesRequest {
   files: File[];
-  primaryImageIndex?: number;
+  primaryImageIndex: number | null;
 }
 
 export interface PreviewImage {
   id?: number;
   imageUrl?: string;
+}
+
+export interface GetSuppliersParams {
+  supplierName?: string;
+  supplierCategoryId?: number;
+  province?: string;
+  isFeatured?: boolean;
+  averageRating?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  status?: SupplierStatus;
+  sortAsc?: boolean;
+  pageNumber?: number;
+  pageSize?: number;
 }

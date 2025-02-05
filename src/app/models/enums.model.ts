@@ -1,7 +1,7 @@
 export enum Gender {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  OTHER = 'OTHER',
+  MALE = 'Male',
+  FEMALE = 'Female',
+  OTHER = 'Other',
 }
 
 export enum StatusCode {
@@ -45,21 +45,21 @@ export enum Role {
 }
 
 export enum RequestPricingStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
+  PENDING = 'Pending',
+  RESPONDED = 'Responded',
+  REJECTED = 'Rejected',
 }
 
 export enum SupplierStatus {
-  PENDING = 'PENDING',
-  IN_REVIEW = 'IN_REVIEW',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
+  PENDING = 'Pending',
+  IN_REVIEW = 'InReview',
+  APPROVED = 'Approved',
+  REJECTED = 'Rejected',
 }
 
 export enum OnBoardStatus {
-  SUPPLIER_INFO = 'SUPPLIER_INFO',
-  SUPPLIER_LOCATION = 'SUPPLIER_LOCATION',
-  SUPPLIER_IMAGES = 'SUPPLIER_IMAGES',
-  COMPLETED = 'COMPLETED',
+  BusinessInfo = 'BusinessInfo',
+  Location = 'Location',
+  Photos = 'Photos',
+  Completed = 'Completed',
 }

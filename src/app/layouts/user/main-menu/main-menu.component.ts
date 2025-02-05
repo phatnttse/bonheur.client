@@ -13,7 +13,7 @@ import { NotificationService } from '../../../services/notification.service';
 export class MainMenuComponent {
   constructor(
     private router: Router,
-    private authService: AuthService,
+    public authService: AuthService,
     private notificationService: NotificationService
   ) {}
 

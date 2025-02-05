@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { mockSupplierData, Supplier } from '../../models/supplier.model';
+import {
+  GetSuppliersParams,
+  mockSupplierData,
+  Supplier,
+} from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
 import { PaginationResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
 import { StatusService } from '../../services/status.service';
-import { StatusCode } from '../../models/enums.model';
+import { StatusCode, SupplierStatus } from '../../models/enums.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ToolSidebarComponent } from './tool-sidebar/tool-sidebar.component';
 
 @Component({
   selector: 'app-suppliers',
@@ -21,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     FormsModule,
+    ToolSidebarComponent,
   ],
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
@@ -30,6 +36,14 @@ export class SuppliersComponent implements OnInit {
   minPrice: number = 0;
   maxPrice: number = 10000000;
   gridLayout: boolean = false;
+  supplierName?: string;
+  supplierCategoryId?: number;
+  province?: string;
+  isFeatured?: boolean;
+  averageRating?: number;
+  sortAsc?: boolean;
+  pageNumber?: number;
+  pageSize?: number;
 
   constructor(
     private supplierService: SupplierService,
@@ -46,7 +60,19 @@ export class SuppliersComponent implements OnInit {
   }
 
   getSuppliers(): void {
-    this.supplierService.getSuppliers().subscribe({
+    const params: GetSuppliersParams = {
+      supplierName: this.supplierName,
+      supplierCategoryId: this.supplierCategoryId,
+      province: this.province,
+      isFeatured: this.isFeatured,
+      averageRating: this.averageRating,
+      minPrice: this.minPrice,
+      maxPrice: this.maxPrice,
+      sortAsc: this.sortAsc,
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+    };
+    this.supplierService.getSuppliers(params).subscribe({
       next: (response: PaginationResponse<Supplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
           this.statusService.statusLoadingSpinnerSource.next(false);

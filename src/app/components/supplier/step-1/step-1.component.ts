@@ -103,7 +103,6 @@ export class Step1Component implements OnInit {
       websiteUrl: [''],
       price: [0, [Validators.required]],
       responseTime: ['', [Validators.required]],
-      discount: [0],
       description: [
         '',
         [
@@ -144,7 +143,6 @@ export class Step1Component implements OnInit {
           categoryId: this.supplier?.category?.id,
           price: this.supplier?.price,
           responseTime: this.supplier?.responseTime,
-          discount: this.supplier?.discount,
           description: this.supplier?.description,
         });
       } else {
@@ -231,7 +229,6 @@ export class Step1Component implements OnInit {
       websiteUrl: this.formBusinessInfo.get('websiteUrl')!.value,
       price: this.formBusinessInfo.get('price')!.value,
       responseTime: this.formBusinessInfo.get('responseTime')!.value,
-      discount: this.formBusinessInfo.get('discount')!.value,
       description: sanitizedDescription,
     };
 
@@ -276,7 +273,6 @@ export class Step1Component implements OnInit {
             categoryId: this.supplier?.category?.id,
             price: this.supplier?.price,
             responseTime: this.supplier?.responseTime,
-            discount: this.supplier?.discount,
             description: this.supplier?.description,
           });
         }
