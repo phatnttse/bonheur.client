@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Account } from '../../../models/account.model';
 import { DataService } from '../../../services/data.service';
 import { LocalStoreManager } from '../../../services/localstorage-manager.service';
 import { DBkeys } from '../../../services/db-keys';
 import { Supplier } from '../../../models/supplier.model';
+import { MaterialModule } from '../../../material.module';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TablerIconsModule, MatIconModule, MainMenuComponent, RouterModule],
+  imports: [TablerIconsModule, MainMenuComponent, RouterModule, MaterialModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -22,7 +24,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private localStorage: LocalStoreManager
+    private localStorage: LocalStoreManager,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -39,5 +43,11 @@ export class HeaderComponent implements OnInit {
         this.supplier = supplier;
       }
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.dataService.resetData();
+    this.router.navigate(['/authentication/signin']);
   }
 }
