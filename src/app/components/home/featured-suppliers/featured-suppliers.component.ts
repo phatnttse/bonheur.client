@@ -3,6 +3,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { NotificationService } from '../../../services/notification.service';
+import { StatusService } from '../../../services/status.service';
+import { DataService } from '../../../services/data.service';
+import { FavoriteSupplierService } from '../../../services/favorite-supplier.service';
+import { BaseResponse } from '../../../models/base.model';
+import { FavoriteSupplier } from '../../../models/favorite-supplier.model';
+import { StatusCode } from '../../../models/enums.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-featured-suppliers',

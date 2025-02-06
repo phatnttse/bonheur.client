@@ -89,7 +89,7 @@
                 >
                   @if (account) {
                   <div class="mt-1">
-                    <button mat-icon-button>
+                    <button mat-icon-button routerLink="/favorite-supplier">
                       <mat-icon
                         fontSet="material-icons-outlined"
                         style="font-size: 24px"
@@ -127,7 +127,7 @@
                     xPosition="after"
                   >
                     @if (account) {
-                    <button mat-menu-item>
+                    <button mat-menu-item routerLink="/profile">
                       <div class="flex items-center">
                         <mat-icon>manage_accounts</mat-icon>
                         <span>My Account</span>

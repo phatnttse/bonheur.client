@@ -91,6 +91,8 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
         id: i + 1,
         name: `Category ${i + 1}`,
         description: `Description for Category ${i + 1}`,
+        imageUrl: `Image for Category ${i + 1}`,
+        imageFileName: `Image for Category ${i + 1}`,
       },
     })),
     pageNumber: 1,

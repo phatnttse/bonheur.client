@@ -4,11 +4,16 @@ import { MaterialModule } from './material.module';
 import { StatusService } from './services/status.service';
 import AOS from 'aos';
 import { ScrollToTopComponent } from './layouts/scroll-to-top/scroll-to-top.component';
-import { ToastrComponent } from "./components/toastr/toastr.component";
+import { ToastrComponent } from './components/toastr/toastr.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MaterialModule, ScrollToTopComponent, ToastrComponent],
+  imports: [
+    RouterOutlet,
+    MaterialModule,
+    ScrollToTopComponent,
+    ToastrComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

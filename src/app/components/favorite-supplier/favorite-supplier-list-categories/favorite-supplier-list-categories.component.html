@@ -1,0 +1,52 @@
+<div class="bg-[#fff]">
+  <div
+    class="py-[5px] border-t-[2px] border-solid border-[#eee] mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]"
+  >
+    <div class="grid grid-cols-4 gap-[20px] mb-5 mt-5">
+      @for (category of supplierCategories; track $index) {
+      @if(hasData(category.id)){
+      <div
+        class="relative transition-transform duration-300 transform hover:scale-105 rounded-lg border-[1px] border-solid border-[#eee] sm:w-[120px] sm:h-[100px] md:w-[150px] md:h-[120px] lg:w-full lg:h-[212px]"
+        [ngStyle]="{
+          'background-image':
+            'url(' + getImageUrl(category.id, favoriteSuppliers) + ')',
+          'background-size': 'cover',
+          'background-position': 'center',
+          'border-radius': '0.5rem'
+        }"
+      >
+        <div
+          class="absolute rounded-lg inset-0 flex justify-center items-center text-center font-semibold bg-black bg-opacity-60 z-10"
+          routerLink="/favorite-supplier/categories/{{ category.id }}"
+        >
+          <div>
+            <h5 class="text-lg text-white">{{ category.name }}</h5>
+          </div>
+        </div>
+      </div>
+
+      } @else {
+      <div
+        class="relative bg-[#f1f1f1] rounded-lg border-[1px] border-solid border-[#eee] sm:w-[120px] sm:h-[100px] md:w-[150px] md:h-[120px] lg:w-full lg:h-[212px]"
+      >
+        <div
+          class="absolute inset-0 flex justify-center items-center text-center font-semibold bg-opacity-60 z-10"
+        >
+          <div>
+            <h5 class="text-lg">{{ category.name }}</h5>
+            <button mat-stroked-button class="mt-2" color="background">
+              <div class="flex gap-2 justify-center items-center">
+                <i-tabler
+                  name="search"
+                  class="icon-20 d-flex align-items-center"
+                ></i-tabler>
+                <h5 class="ml-1">Search</h5>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      } }
+    </div>
+  </div>
+</div>
