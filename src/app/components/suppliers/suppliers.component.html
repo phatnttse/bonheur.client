@@ -323,8 +323,7 @@
                   class="bb-pro-img overflow-hidden relative z-[4] max-[667px]:mb-[20px]"
                 >
                   <a href="javascript:void(0)">
-                    @for (fs of favoriteSuppliers; track $index) {
-                    @if(supplier.id == fs.supplierId){
+                    @if(isFavorite(supplier.id)){
                     <div
                       class="absolute right-1 z-10"
                       (click)="openDeleteDialog(supplier.id)"
@@ -347,12 +346,12 @@
                         <mat-icon
                           fontSet="material-icons-outlined"
                           style="font-size: 24px"
-                          class="text-red-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
+                          class="text-gray-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
                           >favorite_border</mat-icon
                         >
                       </button>
                     </div>
-                    } } @if(favoriteSuppliers.length ===0) {
+                    } @if(favoriteSuppliers.length ===0) {
                     <div
                       class="absolute right-1 z-10"
                       (click)="btnAddFavoriteSupplier(supplier.id)"
@@ -361,7 +360,7 @@
                         <mat-icon
                           fontSet="material-icons-outlined"
                           style="font-size: 24px"
-                          class="text-red-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
+                          class="text-gray-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
                           >favorite_border</mat-icon
                         >
                       </button>

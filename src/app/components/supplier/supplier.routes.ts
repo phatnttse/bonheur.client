@@ -82,6 +82,14 @@ export const supplierRoutes: Routes = [
           },
         ],
       },
+      {
+        path: 'review',
+        loadComponent() {
+          return import('./review/review.component').then(
+            (m) => m.ReviewComponent
+          );
+        },
+      },
     ],
   },
 ];
