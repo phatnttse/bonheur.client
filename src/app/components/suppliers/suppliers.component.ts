@@ -74,7 +74,6 @@ export class SuppliersComponent implements OnInit {
       (favoriteSuppliers: FavoriteSupplier[] | null) => {
         if (favoriteSuppliers?.values) {
           this.favoriteSuppliers = favoriteSuppliers;
-          console.log(this.favoriteSuppliers);
           this.dataSource = new MatTableDataSource(this.favoriteSuppliers);
           this.dataSource.sort = this.sort;
         } else {
@@ -85,21 +84,30 @@ export class SuppliersComponent implements OnInit {
   }
 
   btnAddFavoriteSupplier(supplierId: number) {
-    // this.statusService.statusLoadingSpinnerSource.next(true);
+    debugger;
+    this.statusService.statusLoadingSpinnerSource.next(true);
     this.favoriteSupplierService.addFavoriteSupplier(supplierId).subscribe({
       next: (response: BaseResponse<FavoriteSupplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
-          this.supplierList = mockSupplierData.data.items;
-          this.favoriteSuppliers.push(response.data);
-          this.notificationService.success('Success', response.message);
+          // this.supplierList = mockSupplierData.data.items;
+          // Kiểm tra nếu supplier đã có trong favoriteSuppliers thì không thêm nữa
+          if (
+            !this.favoriteSuppliers.some((fs) => fs.supplierId === supplierId)
+          ) {
+            this.favoriteSuppliers.push(response.data);
+          }
         }
-        // this.statusService.statusLoadingSpinnerSource.next(false);
+        this.statusService.statusLoadingSpinnerSource.next(false);
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
         this.notificationService.handleApiError(error);
       },
     });
+  }
+
+  isFavorite(supplierId: number): boolean {
+    return this.favoriteSuppliers.some((fs) => fs.supplierId === supplierId);
   }
 
   // getSuppliers(): void {
