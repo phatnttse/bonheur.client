@@ -2,22 +2,16 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
-  },
-  {
     displayName: 'Dashboard',
     iconName: 'layout-dashboard',
     bgcolor: 'primary',
     route: '/dashboard',
   },
   {
-    navCap: 'Ui Components',
-  },
-  {
-    displayName: 'Role Management',
-    iconName: 'shield-checkered',
-    bgcolor: 'success',
-    route: '/admin/roles/management',
+    displayName: 'Supplier Management',
+    iconName: 'users',
+    bgcolor: 'error',
+    route: '/admin/suppliers/management',
   },
   {
     displayName: 'Category Management',
@@ -40,31 +34,19 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Subscription Packages',
     iconName: 'tooltip',
-    bgcolor: 'primary',
+    bgcolor: 'warning',
     route: '/admin/subscription-packages/management',
   },
   {
-    navCap: 'Auth',
-  },
-  {
-    displayName: 'Login',
-    iconName: 'lock',
-    bgcolor: 'accent',
-    route: '/authentication/login',
-  },
-  {
-    displayName: 'Register',
-    iconName: 'user-plus',
-    bgcolor: 'warning',
-    route: '/authentication/register',
-  },
-  {
-    navCap: 'Extra',
-  },
-  {
-    displayName: 'Icons',
-    iconName: 'mood-smile',
+    displayName: 'Role Management',
+    iconName: 'shield-checkered',
     bgcolor: 'success',
-    route: '/extra/icons',
+    route: '/admin/roles/management',
+  },
+  {
+    displayName: 'Social Networks',
+    iconName: 'brand-meta',
+    bgcolor: 'accent',
+    route: '/admin/social-networks/management',
   },
 ];

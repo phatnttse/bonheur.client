@@ -66,20 +66,9 @@ export class SigninComponent {
         this.statusService.statusLoadingSpinnerSource.next(false);
         if (this.authService.isAdmin) {
           this.router.navigate(['/admin']);
-        } else if (this.authService.isSupplier) {
-          this.supplierService.getSupplierByUserId(response.id).subscribe({
-            next: (response: BaseResponse<Supplier>) => {
-              this.dataService.supplierDataSource.next(response.data);
-              this.router.navigate(['/supplier']);
-            },
-            error: (error: HttpErrorResponse) => {
-              this.notificationService.handleApiError(error);
-            },
-          });
         } else {
           this.router.navigate(['/']);
         }
-        this.notificationService.success('Welcome', response.fullName);
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);

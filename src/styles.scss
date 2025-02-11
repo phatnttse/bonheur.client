@@ -14,3 +14,8 @@
   width: 100%;
   height: 100%;
 }
+
+.mat-mdc-menu-panel {
+  min-width: none !important;
+  max-width: 100% !important;
+}

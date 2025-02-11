@@ -81,14 +81,7 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     private dataService: DataService
   ) {
     this.formLocation = this.formBuilder.group({
-      street: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
-        ],
-      ],
+      street: [''],
       ward: ['', [Validators.required]],
       district: ['', [Validators.required]],
       province: ['', [Validators.required]],
@@ -147,7 +140,11 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
       this.map?.resize();
     }, 0);
 
-    window.addEventListener('resize', () => this.map?.resize());
+    window.addEventListener('resize', () => {
+      if (this.map) {
+        this.map.resize();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -157,10 +154,16 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  removeAccents(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
   filterProvinces(value: string): any[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = this.removeAccents(value.toLowerCase());
     return this.provinceList.filter((province) =>
-      province.provinceName.toLowerCase().includes(filterValue)
+      this.removeAccents(province.provinceName.toLowerCase()).includes(
+        filterValue
+      )
     );
   }
 
@@ -170,9 +173,11 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
   }
 
   filterDistricts(value: string): any[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = this.removeAccents(value.toLowerCase());
     return this.districtList.filter((district) =>
-      district.districtName.toLowerCase().includes(filterValue)
+      this.removeAccents(district.districtName.toLowerCase()).includes(
+        filterValue
+      )
     );
   }
 
@@ -182,9 +187,9 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
   }
 
   filterWards(value: string): any[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = this.removeAccents(value.toLowerCase());
     return this.wardList.filter((ward) =>
-      ward.communeName.toLowerCase().includes(filterValue)
+      this.removeAccents(ward.communeName.toLowerCase()).includes(filterValue)
     );
   }
 
@@ -232,7 +237,11 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
         this.patchGeoCodeAddressValue(response, address);
       },
       error: (error: HttpErrorResponse) => {
-        this.notificationService.handleApiError(error);
+        if (error.status === 404) {
+          this.notificationService.warning('Warning', 'Address not found');
+        } else {
+          this.notificationService.handleApiError(error);
+        }
       },
     });
   }
@@ -241,8 +250,38 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     this.latitudeSupplier = response.features[0].geometry.coordinates[1]; // Vĩ độ
     this.longitudeSupplier = response.features[0].geometry.coordinates[0]; // Kinh độ
     this.map?.setCenter([this.longitudeSupplier, this.latitudeSupplier]);
+    const cardHTML = `
+  <img
+    src=${this.supplier?.images?.[0]?.imageUrl || ''}
+    class="max-h-[201px] w-full object-cover rounded-t-md"
+  />
+  <div
+    class="flex flex-col justify-between"
+  >
+    <div class="px-4 py-4">
+      <h2 class="text-[#3d4750] text-base font-bold truncate mb-2">
+        ${this.supplier?.name || 'Supplier Name'}
+      </h2>
+      <p class="text-[#3d4750] text-[14px]">${address}</p>
+      <div class="flex items-center mt-2">
+        <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
+        <span class="text-sm mr-1"></span>${this.supplier?.averageRating || 0}
+        <span class="text-[#7d7d7d] text-[12px] ml-2"> (0 reviews) </span>
+      </div>
+      <span class="text-sm font-semibold mt-2"><span class="font-medium">From: </span> ${(
+        this.supplier?.price || 0
+      ).toLocaleString('en-US')}đ</span>
+    </div>       
+  </div>
+
+`;
     this.currentMarker = new Marker({ color: '#FF0000' })
-      .setPopup(new Popup().setHTML(`<strong>Address:</strong> ${address}`))
+      .setPopup(
+        new Popup()
+          .setHTML(`${cardHTML}`)
+          .setMaxWidth('300px')
+          .setOffset([0, -40])
+      )
       .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
       .addTo(this.map!);
   }
@@ -408,6 +447,28 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     );
     if (selectedCommune) {
       this.selectedWard = selectedCommune.communeName;
+    }
+  }
+
+  onEnter(type: string) {
+    if (type === 'province') {
+      const provinceName = this.formLocation.get('province')!.value;
+      const provinceId = this.provinceList.find(
+        (province) => province.provinceName === provinceName
+      )?.provinceId;
+      this.onProvinceChange(provinceId!);
+    } else if (type === 'district') {
+      const districtName = this.formLocation.get('district')!.value;
+      const districtId = this.districtList.find(
+        (district) => district.districtName === districtName
+      )?.districtId;
+      this.onDistrictChange(districtId!);
+    } else if (type === 'ward') {
+      const wardName = this.formLocation.get('ward')!.value;
+      const communeId = this.wardList.find(
+        (ward) => ward.communeName === wardName
+      )?.communeId;
+      this.onWardChange(communeId!);
     }
   }
 }

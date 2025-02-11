@@ -265,6 +265,12 @@
                         >
                           <i-tabler name="layout-grid"></i-tabler>
                         </button>
+                        <button
+                          type="button"
+                          class="h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-[5px]"
+                        >
+                          <i-tabler name="map-pin"></i-tabler>
+                        </button>
                       </div>
                       <button mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon matIconSuffix>sort</mat-icon>
@@ -316,13 +322,55 @@
                 <div
                   class="bb-pro-img overflow-hidden relative z-[4] max-[667px]:mb-[20px]"
                 >
-                  <a
-                    href="javascript:void(0)"
-                    (click)="viewSupplierDetail(supplier.slug!)"
-                  >
+                  <a href="javascript:void(0)">
+                    @if(isFavorite(supplier.id)){
+                    <div
+                      class="absolute right-1 z-10"
+                      (click)="openDeleteDialog(supplier.id)"
+                    >
+                      <button mat-icon-button class="group">
+                        <mat-icon
+                          fontSet="material-icons-outlined"
+                          style="font-size: 24px"
+                          class="text-red-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
+                          >favorite</mat-icon
+                        >
+                      </button>
+                    </div>
+                    } @else{
+                    <div
+                      class="absolute right-1 z-10"
+                      (click)="btnAddFavoriteSupplier(supplier.id)"
+                    >
+                      <button mat-icon-button class="group">
+                        <mat-icon
+                          fontSet="material-icons-outlined"
+                          style="font-size: 24px"
+                          class="text-gray-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
+                          >favorite_border</mat-icon
+                        >
+                      </button>
+                    </div>
+                    } @if(favoriteSuppliers.length ===0) {
+                    <div
+                      class="absolute right-1 z-10"
+                      (click)="btnAddFavoriteSupplier(supplier.id)"
+                    >
+                      <button mat-icon-button class="group">
+                        <mat-icon
+                          fontSet="material-icons-outlined"
+                          style="font-size: 24px"
+                          class="text-gray-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
+                          >favorite_border</mat-icon
+                        >
+                      </button>
+                    </div>
+                    }
+
                     <div
                       class="inner-img relative block overflow-hidden pointer-events-none rounded-[1rem]"
                       [ngClass]="gridLayout ? 'rounded-b-none' : ''"
+                      (click)="viewSupplierDetail(supplier.slug!)"
                     >
                       <img
                         class="main-img transition-all duration-[0.3s] ease-in-out w-full"
@@ -464,4 +512,5 @@
       </div>
     </div>
   </div>
+  <app-tool-sidebar></app-tool-sidebar>
 </section>

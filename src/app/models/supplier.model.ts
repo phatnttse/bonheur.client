@@ -91,6 +91,8 @@ export const mockSupplierData: PaginationResponse<Supplier> = {
         id: i + 1,
         name: `Category ${i + 1}`,
         description: `Description for Category ${i + 1}`,
+        imageUrl: `Image for Category ${i + 1}`,
+        imageFileName: `Image for Category ${i + 1}`,
       },
     })),
     pageNumber: 1,
@@ -112,14 +114,14 @@ export interface RegisterSupplierRequest {
 }
 
 export interface UpdateSupplierProfileRequest {
-  name: string;
-  categoryId: number;
-  phoneNumber: string;
-  websiteUrl: string;
-  price: number;
-  description: string;
-  responseTime: string;
-  discount: string;
+  name?: string;
+  categoryId?: number;
+  phoneNumber?: string;
+  websiteUrl?: string;
+  price?: number;
+  description?: string;
+  responseTime?: string;
+  discount?: number;
 }
 
 export interface UpdateSupplierAddressRequest {
@@ -131,10 +133,51 @@ export interface UpdateSupplierAddressRequest {
 
 export interface UpdateSupplierImagesRequest {
   files: File[];
-  primaryImageIndex?: number;
+  primaryImageIndex: number | null;
 }
 
 export interface PreviewImage {
   id?: number;
   imageUrl?: string;
+}
+
+export interface GetSuppliersParams {
+  supplierName?: string;
+  supplierCategoryId?: number;
+  province?: string;
+  isFeatured?: boolean;
+  averageRating?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  status?: SupplierStatus;
+  sortAsc?: boolean;
+  pageNumber?: number;
+  pageSize?: number;
+}
+
+export interface SaveDiscountRequest {
+  discount: number;
+}
+
+export interface SupplierSocialNetwork {
+  id: number;
+  socialNetworkId: number;
+  url: string;
+}
+
+export interface SupplierFAQ {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+export interface SupplierSocialNetworkRequest {
+  id?: number;
+  socialNetworkId: number;
+  url: string;
+}
+export interface SupplierFAQRequest {
+  id?: number;
+  question: string;
+  answer: string;
 }

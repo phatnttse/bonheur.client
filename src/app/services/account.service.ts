@@ -16,6 +16,7 @@ import { EndpointBase } from './endpoint-base.service';
 import { ListRoleResponse, RoleResponse } from '../models/role.model';
 import { BaseResponse } from '../models/base.model';
 import { Permission } from '../models/permission.model';
+import { error } from 'jquery';
 
 @Injectable({
   providedIn: 'root',
@@ -119,6 +120,46 @@ export class AccountService extends EndpointBase {
           return this.handleError(error, () =>
             this.blockAccount(id, lockoutEnd, isEnable)
           );
+        })
+      );
+  }
+  getProfile() {
+    return this.http
+      .get<AccountResponse>(
+        `${environment.apiUrl}/api/v1/account/users/me`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getProfile());
+        })
+      );
+  }
+
+  uploadProfile(formData: FormData): Observable<AccountResponse> {
+    return this.http
+      .post<AccountResponse>(
+        `${environment.apiUrl}/api/v1/account/users/avatar`,
+        formData,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.uploadProfile(formData));
+        })
+      );
+  }
+
+  updateEmail(email: string): Observable<BaseResponse<null>> {
+    return this.http
+      .post<BaseResponse<null>>(
+        `${environment.apiUrl}/api/v1/account/users/change-email`,
+        { email },
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.updateEmail(email));
         })
       );
   }

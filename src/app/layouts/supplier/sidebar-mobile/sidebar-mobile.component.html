@@ -1,0 +1,116 @@
+<!-- Overlay khi mở menu -->
+<div
+  class="hidden w-full h-screen fixed top-0 left-0 bg-[#00000080] z-[17]"
+  [style.display]="isMenuOpen ? 'block' : 'none'"
+  (click)="closeMenu($event)"
+></div>
+
+<div
+  class="w-2/3 h-full pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-0 right-0 block transition-all duration-500 ease-in-out translate-x-[100%] bg-white overflow-auto opacity-0"
+  [ngClass]="isMenuOpen ? 'open' : ''"
+>
+  <div class="flex justify-between items-center py-4 px-4 mb-4">
+    <a
+      routerLink="/"
+      class="text-2xl font-bold text-primary hover:text-primary-dark transition-colors"
+    >
+      <span class="font-bold">Bonheur.</span>
+    </a>
+    <button
+      class="absolute top-4 right-4 text-gray-500 focus:outline-none"
+      (click)="toggleMenu()"
+    >
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  <div class="flex items-center justify-center mb-4">
+    @if (supplier && supplier.images && supplier.images.length > 0) {
+    <img
+      class="rounded-sm"
+      [src]="supplier.images[0].imageUrl"
+      alt="Avatar"
+      width="100"
+      height="100"
+    />
+    }@else {
+    <img
+      class="rounded-sm"
+      [src]="account?.pictureUrl"
+      alt="Avatar"
+      width="100"
+      height="100"
+    />
+    }
+  </div>
+  <div class="flex items-center justify-center mb-6">
+    <h1 class="text-sm font-bold">{{ supplier?.name }}</h1>
+  </div>
+  <ul>
+    @for (item of sidebarItems; track $index) {
+    <li class="border-b border-[#eee] border-solid">
+      <div
+        class="cursor-pointer flex items-center justify-between py-4 px-4 gap-x-4"
+        [ngClass]="{
+          'bg-gray-200': isActive(item.route) || isParentActive(item)
+        }"
+        (click)="item.route ? navigateTo(item.route) : toggleDropdown($index)"
+        [routerLink]="item.route"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <div class="flex items-center gap-x-4">
+          <img
+            [src]="'./../../../../assets/images/svgs/' + item.icon + '.svg'"
+            width="24"
+            height="24"
+            alt=""
+          />
+          <p>{{ item.label }}</p>
+        </div>
+        @if (item.subItems) {
+        <span class="material-icons">{{
+          openDropdownIndex === $index ? "expand_less" : "expand_more"
+        }}</span>
+        }
+      </div>
+
+      @if (item.subItems && openDropdownIndex === $index) {
+      <ul class="ml-6 rounded-md">
+        @for (subItem of item.subItems; track $index) {
+        <li class="border-b border-[#ddd] border-solid last:border-none">
+          <a
+            class="flex items-center py-3 px-4 gap-x-4 transition-colors hover:bg-gray-200 rounded-md"
+            [ngClass]="{ 'bg-gray-200': isActive(subItem.route) }"
+            [routerLink]="subItem.route"
+            [routerLinkActive]="'active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="toggleMenu()"
+          >
+            <img
+              [src]="
+                './../../../../assets/images/svgs/' + subItem.icon + '.svg'
+              "
+              width="20"
+              height="20"
+              alt=""
+            />
+            <p>{{ subItem.label }}</p>
+          </a>
+        </li>
+        }
+      </ul>
+
+      }
+    </li>
+    }
+    <li>
+      <a
+        class="flex items-center py-4 px-4 gap-x-4 hover:bg-gray-100"
+        (click)="onLogout()"
+      >
+        <mat-icon>logout</mat-icon>
+        <p>Logout</p>
+      </a>
+    </li>
+  </ul>
+</div>

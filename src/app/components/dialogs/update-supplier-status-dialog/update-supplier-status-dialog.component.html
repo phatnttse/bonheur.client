@@ -1,0 +1,28 @@
+<h2 mat-dialog-title class="text-center my-2">Update Supplier Status</h2>
+<mat-dialog-content>
+  <p class="mb-4">Select status to update</p>
+  <div class="flex items-center px-1 pt-4">
+    <mat-form-field appearance="outline" class="w-full" color="primary">
+      <mat-select placeholder="Select status" [(ngModel)]="selectedStatus">
+        @for (status of supplierStatuses; track $index) {
+        <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'center'" class="my-3">
+  <div class="px-2">
+    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+  </div>
+  <div class="px-2">
+    <button
+      type="button"
+      mat-raised-button
+      color="accent"
+      (click)="btnUpdateSupplierStatus()"
+    >
+      Update
+    </button>
+  </div>
+</mat-dialog-actions>

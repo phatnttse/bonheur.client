@@ -29,7 +29,6 @@ import { MatBadgeModule } from '@angular/material/badge';
     SidebarMobileComponent,
     TopBarComponent,
     MainMenuComponent,
-    ToolSidebarComponent,
     MatBadgeModule,
   ],
   templateUrl: './header.component.html',

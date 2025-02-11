@@ -1,6 +1,6 @@
 <!-- Main Menu -->
 <div
-  class="bb-main-menu-desk bg-[#fff] py-[5px] border-t-[1px] border-solid border-[#eee] max-[991px]:hidden"
+  class="bb-main-menu-desk bg-[#fff] border-t-[1px] border-solid border-[#eee] max-[991px]:hidden py-4"
 >
   <div
     class="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]"
@@ -12,7 +12,6 @@
         >
           <div
             class="bb-main-menu relative flex flex-[auto] justify-start max-[991px]:hidden"
-            id="navbarSupportedContent"
           >
             <ul class="navbar-nav flex flex-wrap flex-row">
               <li
@@ -208,15 +207,19 @@
             </ul>
           </div>
           <div class="max-[991px]:hidden">
-            <button
-              mat-button
-              type="button"
-              style="font-size: 16px; padding: 10px; font-weight: bold"
-              class="text-primary"
-              (click)="goToRegisterSupplier()"
+            @if (this.authService.isSupplier) {
+            <a
+              routerLink="/supplier"
+              class="text-secondary font-semibold text-base cursor-pointer"
+              >Supplier Channel</a
             >
-              Become a supplier ?
-            </button>
+            }@else {
+            <a
+              class="text-secondary font-semibold text-base cursor-pointer"
+              (click)="goToRegisterSupplier()"
+              >Become a supplier ?
+            </a>
+            }
           </div>
         </div>
       </div>

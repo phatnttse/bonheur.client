@@ -1,4 +1,4 @@
-<header class="bg-white sticky top-0 z-10">
+<header class="bg-white">
   <!-- Top Bar -->
   <app-top-bar></app-top-bar>
   <!-- Top Bar -->
@@ -89,7 +89,7 @@
                 >
                   @if (account) {
                   <div class="mt-1">
-                    <button mat-icon-button>
+                    <button mat-icon-button routerLink="/favorite-supplier">
                       <mat-icon
                         fontSet="material-icons-outlined"
                         style="font-size: 24px"
@@ -127,7 +127,7 @@
                     xPosition="after"
                   >
                     @if (account) {
-                    <button mat-menu-item>
+                    <button mat-menu-item routerLink="/profile">
                       <div class="flex items-center">
                         <mat-icon>manage_accounts</mat-icon>
                         <span>My Account</span>
@@ -218,8 +218,4 @@
     (toggleMenuEvent)="toggleMenu()"
   ></app-sidebar-mobile>
   <!-- Mobile Sidebar -->
-
-  <!-- Filter Menu -->
-  <app-tool-sidebar></app-tool-sidebar>
-  <!-- Filter Menu -->
 </header>

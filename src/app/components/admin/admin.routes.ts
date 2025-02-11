@@ -49,6 +49,22 @@ export const adminRoutes: Routes = [
           ).then((m) => m.SubscriptionPackagesManagementComponent);
         },
       },
+      {
+        path: 'suppliers/management',
+        loadComponent() {
+          return import(
+            './supplier-management/supplier-management.component'
+          ).then((m) => m.SupplierManagementComponent);
+        },
+      },
+      {
+        path: 'social-networks/management',
+        loadComponent() {
+          return import(
+            './social-networks-management/social-networks-management.component'
+          ).then((m) => m.SocialNetworksManagementComponent);
+        },
+      },
     ],
   },
 ];

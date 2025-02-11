@@ -1,0 +1,42 @@
+/* Nút "Previous" tùy chỉnh */
+.custom-prev-button {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.custom-prev-button svg {
+  fill: #ffffff; /* Màu của biểu tượng */
+  width: 30px;
+  height: 30px;
+}
+
+/* Nút "Next" tùy chỉnh */
+.custom-next-button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.custom-next-button svg {
+  fill: #ffffff; /* Màu của biểu tượng */
+  width: 30px;
+  height: 30px;
+}
+
+/* Tùy chỉnh phân trang */
+.swiper-pagination-bullet {
+  background-color: red;
+  width: 40px;
+  height: 40px;
+}
+
+.swiper-pagination-bullet:hover {
+  background-color: green;
+}
