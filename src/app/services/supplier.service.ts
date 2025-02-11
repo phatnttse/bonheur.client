@@ -11,8 +11,13 @@ import { BaseResponse, PaginationResponse } from '../models/base.model';
 import {
   GetSuppliersParams,
   RegisterSupplierRequest,
+  SaveDiscountRequest,
   Supplier,
+  SupplierFAQ,
+  SupplierFAQRequest,
   SupplierImage,
+  SupplierSocialNetwork,
+  SupplierSocialNetworkRequest,
   UpdateSupplierAddressRequest,
   UpdateSupplierProfileRequest,
 } from '../models/supplier.model';
@@ -261,6 +266,117 @@ export class SupplierService extends EndpointBase {
           return this.handleError(error, () =>
             this.updateSupplierStatus(supplierId, status)
           );
+        })
+      );
+  }
+
+  getSupplierSocialNetworks(): Observable<
+    BaseResponse<SupplierSocialNetwork[]>
+  > {
+    return this.http
+      .get<BaseResponse<SupplierSocialNetwork[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/social-networks`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.getSupplierSocialNetworks()
+          );
+        })
+      );
+  }
+
+  createSupplierSocialNetworks(
+    socialNetworks: SupplierSocialNetworkRequest[]
+  ): Observable<BaseResponse<SupplierSocialNetwork[]>> {
+    return this.http
+      .post<BaseResponse<SupplierSocialNetwork[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/social-networks`,
+        socialNetworks,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.createSupplierSocialNetworks(socialNetworks)
+          );
+        })
+      );
+  }
+
+  updateSupplierSocialNetworks(
+    socialNetworks: SupplierSocialNetworkRequest[]
+  ): Observable<BaseResponse<SupplierSocialNetwork[]>> {
+    return this.http
+      .put<BaseResponse<SupplierSocialNetwork[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/social-networks`,
+        socialNetworks,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.updateSupplierSocialNetworks(socialNetworks)
+          );
+        })
+      );
+  }
+
+  getSupplierFAQs(): Observable<BaseResponse<SupplierFAQ[]>> {
+    return this.http
+      .get<BaseResponse<SupplierFAQ[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/faqs`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getSupplierFAQs());
+        })
+      );
+  }
+
+  createSupplierFAQs(
+    faqs: SupplierFAQRequest[]
+  ): Observable<BaseResponse<SupplierFAQ[]>> {
+    return this.http
+      .post<BaseResponse<SupplierFAQ[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/faqs`,
+        faqs,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.createSupplierFAQs(faqs));
+        })
+      );
+  }
+
+  updateSupplierFAQs(
+    faqs: SupplierFAQRequest[]
+  ): Observable<BaseResponse<SupplierFAQ[]>> {
+    return this.http
+      .put<BaseResponse<SupplierFAQ[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/faqs`,
+        faqs,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.updateSupplierFAQs(faqs));
+        })
+      );
+  }
+
+  deleteSupplierFAQ(id: number): Observable<BaseResponse<SupplierFAQ>> {
+    return this.http
+      .delete<BaseResponse<SupplierFAQ>>(
+        `${environment.apiUrl}/api/v1/suppliers/faqs/${id}`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.deleteSupplierFAQ(id));
         })
       );
   }

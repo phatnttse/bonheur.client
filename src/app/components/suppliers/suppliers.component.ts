@@ -21,6 +21,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DeleteCategoryComponent } from '../dialogs/delete-category/delete-category.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ToolSidebarComponent } from './tool-sidebar/tool-sidebar.component';
 
 @Component({
   selector: 'app-suppliers',
@@ -31,6 +32,7 @@ import { MatDialog } from '@angular/material/dialog';
     CommonModule,
     RouterModule,
     FormsModule,
+    ToolSidebarComponent,
   ],
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',

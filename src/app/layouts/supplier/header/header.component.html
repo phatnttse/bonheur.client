@@ -7,7 +7,7 @@
     >
       <div class="max-[768px]:block hidden">
         <div>
-          <div class="flex items-center px-4">
+          <div class="flex items-center px-4" routerLink="/supplier">
             <mat-icon><i-tabler name="chevron-left"></i-tabler></mat-icon>
           </div>
         </div>
@@ -153,7 +153,7 @@
         </div>
       </div>
       <div class="max-[768px]:block hidden">
-        <div class="flex items-center px-4">
+        <div class="flex items-center px-4" (click)="toggleMenu()">
           <mat-icon><i-tabler name="menu-2"></i-tabler></mat-icon>
         </div>
       </div>
@@ -162,3 +162,12 @@
 
   <app-main-menu></app-main-menu>
 </header>
+<!-- Mobile Sidebar-->
+<app-sidebar-mobile
+  [isMenuOpen]="isMenuOpen"
+  [account]="account"
+  [supplier]="supplier"
+  (logoutEvent)="logout()"
+  (toggleMenuEvent)="toggleMenu()"
+></app-sidebar-mobile>
+<!-- Mobile Sidebar -->

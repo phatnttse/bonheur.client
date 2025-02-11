@@ -7,6 +7,7 @@ import { RequestPricing } from '../models/request-pricing.model';
 import { Role } from '../models/role.model';
 import { Supplier } from '../models/supplier.model';
 import { FavoriteSupplier } from '../models/favorite-supplier.model';
+import { SocialNetwork } from '../models/social-network';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,11 @@ export class DataService {
 
   public supplierListDataSource = new BehaviorSubject<Supplier[] | null>(null);
   supplierListData$ = this.supplierListDataSource.asObservable();
+
+  public socialNetworkDataSource = new BehaviorSubject<SocialNetwork[] | null>(
+    null
+  );
+  socialNetworkData$ = this.socialNetworkDataSource.asObservable();
 
   resetData() {
     this.accountDataSource.next(null);

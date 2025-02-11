@@ -10,17 +10,25 @@ import { DBkeys } from '../../../services/db-keys';
 import { Supplier } from '../../../models/supplier.model';
 import { MaterialModule } from '../../../material.module';
 import { AuthService } from '../../../services/auth.service';
+import { SidebarMobileComponent } from '../sidebar-mobile/sidebar-mobile.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TablerIconsModule, MainMenuComponent, RouterModule, MaterialModule],
+  imports: [
+    TablerIconsModule,
+    MainMenuComponent,
+    RouterModule,
+    MaterialModule,
+    SidebarMobileComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   account: Account | null = null;
   supplier: Supplier | null = null;
+  isMenuOpen = false;
 
   constructor(
     private dataService: DataService,
@@ -43,6 +51,10 @@ export class HeaderComponent implements OnInit {
         this.supplier = supplier;
       }
     });
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   logout() {
