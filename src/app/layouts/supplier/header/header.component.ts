@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   account: Account | null = null;
   supplier: Supplier | null = null;
   isMenuOpen = false;
+  primaryImage: string = '';
 
   constructor(
     private dataService: DataService,
@@ -49,6 +50,13 @@ export class HeaderComponent implements OnInit {
     this.dataService.supplierData$.subscribe((supplier: Supplier | null) => {
       if (supplier) {
         this.supplier = supplier;
+        if (this.supplier.images) {
+          this.supplier.images.forEach((image) => {
+            if (image.isPrimary) {
+              this.primaryImage = image.imageUrl ?? '';
+            }
+          });
+        }
       }
     });
   }

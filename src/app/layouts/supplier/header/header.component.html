@@ -54,7 +54,7 @@
             @if (supplier && supplier.images && supplier.images.length > 0) {
             <img
               class="w-10 rounded-full h-10"
-              [src]="supplier.images[0].imageUrl"
+              [src]="primaryImage"
               alt="Avatar"
             />
             }@else {
@@ -65,7 +65,7 @@
             />
             }
           </div>
-          <mat-menu #accountMenu="matMenu" xPosition="after">
+          <mat-menu #accountMenu="matMenu" xPosition="before">
             @if (supplier) {
             <div
               style="min-width: 340px !important; max-width: 480px !important"

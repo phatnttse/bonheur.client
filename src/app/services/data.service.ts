@@ -5,7 +5,11 @@ import { SupplierCategory } from '../models/category.model';
 import { SubscriptionPackage } from '../models/subscription-packages.model';
 import { RequestPricing } from '../models/request-pricing.model';
 import { Role } from '../models/role.model';
-import { Supplier } from '../models/supplier.model';
+import {
+  Supplier,
+  SupplierFAQ,
+  SupplierSocialNetwork,
+} from '../models/supplier.model';
 import { FavoriteSupplier } from '../models/favorite-supplier.model';
 import { SocialNetwork } from '../models/social-network';
 
@@ -13,12 +17,15 @@ import { SocialNetwork } from '../models/social-network';
   providedIn: 'root',
 })
 export class DataService {
+  //Behavior subject: Account
   public accountDataSource = new BehaviorSubject<Account | null>(null);
   accountData$ = this.accountDataSource.asObservable();
 
+  //Behavior subject: Role
   public roleDataSource = new BehaviorSubject<Role[] | null>(null);
   roleData$ = this.roleDataSource.asObservable();
 
+  //Behavior subject: Supplier Category
   public supplierCategoryDataSource = new BehaviorSubject<
     SupplierCategory[] | null
   >(null);
@@ -43,19 +50,34 @@ export class DataService {
   >(null);
   favoriteSupplierData$ = this.favoriteSupplierDataSource.asObservable();
 
+  //Behavior subject: Supplier
   public supplierDataSource = new BehaviorSubject<Supplier | null>(null);
   supplierData$ = this.supplierDataSource.asObservable();
 
+  //Behavior subject: Province
   public provinceDataSource = new BehaviorSubject<any | null>(null);
   provinceData$ = this.provinceDataSource.asObservable();
 
+  //Behavior subject: Supplier List
   public supplierListDataSource = new BehaviorSubject<Supplier[] | null>(null);
   supplierListData$ = this.supplierListDataSource.asObservable();
 
+  //Behavior subject: Social Network
   public socialNetworkDataSource = new BehaviorSubject<SocialNetwork[] | null>(
     null
   );
   socialNetworkData$ = this.socialNetworkDataSource.asObservable();
+
+  //Behavior subject: Supplier Social Network
+  public supplierSocialNetworkDataSource = new BehaviorSubject<
+    SupplierSocialNetwork[] | null
+  >(null);
+  supplierSocialNetworkData$ =
+    this.supplierSocialNetworkDataSource.asObservable();
+
+  //Behavior subject: Supplier FAQ
+  public faqDataSource = new BehaviorSubject<SupplierFAQ[] | null>(null);
+  faqData$ = this.faqDataSource.asObservable();
 
   resetData() {
     this.accountDataSource.next(null);
