@@ -1,0 +1,152 @@
+<section>
+  <div class="container mx-auto">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold">FAQs</h1>
+    </div>
+    <div
+      class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 max-[667px]:flex-wrap max-[667px]:gap-6 max-[667px]:justify-center"
+    >
+      <div class="">
+        <img
+          src="./../../../../assets/images/svgs/paperAndPencil.svg"
+          alt="Edit Business Info"
+        />
+      </div>
+      <div>
+        <h2
+          class="md:text-base font-semibold max-[667px]::text-sm max-[667px]:mb-1"
+        >
+          Please provide details about your services.
+        </h2>
+        <p class="md:text-[#6c6c6c] md:text-sm max-[667px]::text-xs">
+          Add answers to frequently asked questions about your business to give
+          couples a better understanding of your offering before deciding
+          whether to contact you.
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="flex justify-end items-center mb-6">
+        <button
+          mat-raised-button
+          color="accent"
+          class="text-white"
+          type="button"
+          style="font-weight: bold"
+          (click)="addNewFaqControl()"
+        >
+          <mat-icon matIconPrefix>add</mat-icon>
+          Add new question
+        </button>
+      </div>
+      <form [formGroup]="faqForm">
+        <div class="flex flex-col" formArrayName="faqs">
+          @for (faq of faqsFormArray().controls; track faq; let i = $index) {
+          <div
+            class="border border-solid rounded mb-10 overflow-hidden"
+            [formGroupName]="i"
+          >
+            <header
+              style="padding: 15px 15px; border-bottom: 1px solid #d9d9d9"
+              class="bg-[#fffdf9]"
+            >
+              @if (faq.get('id')?.value) {
+              <div class="flex items-center justify-end">
+                <button
+                  mat-icon-button
+                  type="button"
+                  color="warn"
+                  (click)="openRemoveFaqDialog(i)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              }@else {
+              <div class="flex items-center justify-end">
+                <button
+                  mat-icon-button
+                  type="button"
+                  color="warn"
+                  (click)="removeFaqControl(i)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              }
+              <div class="flex items-center pt-2">
+                <span class="text-lg font-bold pe-4 mb-4">{{ i + 1 }}.</span>
+                <mat-form-field
+                  appearance="outline"
+                  class="w-full"
+                  color="primary"
+                >
+                  <mat-label>Question</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="question"
+                    required
+                    [class.is-invalid]="
+                      faq.get('question')?.invalid &&
+                      faq.get('question')?.touched
+                    "
+                  />
+                  @if(faq.get('question')?.hasError('required')) {
+                  <mat-error style="font-size: 12px">
+                    Question is required
+                  </mat-error>
+                  } @if(faq.get('question')?.hasError('minlength')) {
+                  <mat-error style="font-size: 12px">
+                    Question must be at least 10 characters
+                  </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            </header>
+            <div class="py-6 px-6">
+              <mat-form-field
+                appearance="outline"
+                class="w-full"
+                color="primary"
+              >
+                <mat-label>Answer</mat-label>
+                <textarea
+                  matInput
+                  rows="6"
+                  formControlName="answer"
+                  required
+                  [class.is-invalid]="
+                    faq.get('answer')?.invalid && faq.get('answer')?.touched
+                  "
+                ></textarea>
+                @if(faq.get('answer')?.hasError('required')) {
+                <mat-error style="font-size: 12px">
+                  Answer is required
+                </mat-error>
+                } @if(faq.get('answer')?.hasError('minlength')) {
+                <mat-error style="font-size: 12px">
+                  Answer must be at least 10 characters
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          }
+        </div>
+      </form>
+
+      <div class="flex justify-start items-center">
+        <button
+          mat-raised-button
+          color="primary"
+          class="text-white"
+          type="button"
+          style="font-weight: bold; padding: 20px 20px"
+          (click)="insertUpdateSupplierFaqs()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

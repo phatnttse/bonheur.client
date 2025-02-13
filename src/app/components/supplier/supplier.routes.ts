@@ -80,6 +80,30 @@ export const supplierRoutes: Routes = [
               );
             },
           },
+          {
+            path: 'deals',
+            loadComponent() {
+              return import('./storefront/deals/deals.component').then(
+                (m) => m.DealsComponent
+              );
+            },
+          },
+          {
+            path: 'faqs',
+            loadComponent() {
+              return import('./storefront/faqs/faqs.component').then(
+                (m) => m.FaqsComponent
+              );
+            },
+          },
+          {
+            path: 'social-networks',
+            loadComponent() {
+              return import(
+                './storefront/social-networks/social-networks.component'
+              ).then((m) => m.SocialNetworksComponent);
+            },
+          },
         ],
       },
       {

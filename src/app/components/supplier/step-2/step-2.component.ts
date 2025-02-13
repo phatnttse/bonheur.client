@@ -81,14 +81,7 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     private dataService: DataService
   ) {
     this.formLocation = this.formBuilder.group({
-      street: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
-        ],
-      ],
+      street: [''],
       ward: ['', [Validators.required]],
       district: ['', [Validators.required]],
       province: ['', [Validators.required]],
@@ -147,7 +140,11 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
       this.map?.resize();
     }, 0);
 
-    window.addEventListener('resize', () => this.map?.resize());
+    window.addEventListener('resize', () => {
+      if (this.map) {
+        this.map.resize();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -240,7 +237,11 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
         this.patchGeoCodeAddressValue(response, address);
       },
       error: (error: HttpErrorResponse) => {
-        this.notificationService.handleApiError(error);
+        if (error.status === 404) {
+          this.notificationService.warning('Warning', 'Address not found');
+        } else {
+          this.notificationService.handleApiError(error);
+        }
       },
     });
   }

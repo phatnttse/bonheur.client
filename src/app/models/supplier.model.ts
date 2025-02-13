@@ -114,13 +114,14 @@ export interface RegisterSupplierRequest {
 }
 
 export interface UpdateSupplierProfileRequest {
-  name: string;
-  categoryId: number;
-  phoneNumber: string;
-  websiteUrl: string;
-  price: number;
-  description: string;
-  responseTime: string;
+  name?: string;
+  categoryId?: number;
+  phoneNumber?: string;
+  websiteUrl?: string;
+  price?: number;
+  description?: string;
+  responseTime?: string;
+  discount?: number;
 }
 
 export interface UpdateSupplierAddressRequest {
@@ -152,4 +153,31 @@ export interface GetSuppliersParams {
   sortAsc?: boolean;
   pageNumber?: number;
   pageSize?: number;
+}
+
+export interface SaveDiscountRequest {
+  discount: number;
+}
+
+export interface SupplierSocialNetwork {
+  id: number;
+  socialNetworkId: number;
+  url: string;
+}
+
+export interface SupplierFAQ {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+export interface SupplierSocialNetworkRequest {
+  id?: number;
+  socialNetworkId: number;
+  url: string;
+}
+export interface SupplierFAQRequest {
+  id?: number;
+  question: string;
+  answer: string;
 }

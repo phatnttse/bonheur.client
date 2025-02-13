@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit {
   supplier: Supplier | null = null;
   photoCount: number = 0;
   menuItems: MenuItem[] = [];
+  primaryImage: string = '';
 
   constructor(private dataService: DataService) {}
 
@@ -31,6 +32,13 @@ export class SidebarComponent implements OnInit {
       if (supplier != null) {
         this.supplier = supplier;
         this.photoCount = this.supplier!.images!.length;
+        if (this.supplier.images) {
+          this.supplier.images.forEach((image) => {
+            if (image.isPrimary) {
+              this.primaryImage = image.imageUrl ?? '';
+            }
+          });
+        }
         const menuItems: MenuItem[] = [
           {
             title: 'Business details',

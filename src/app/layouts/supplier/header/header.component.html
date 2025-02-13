@@ -7,7 +7,7 @@
     >
       <div class="max-[768px]:block hidden">
         <div>
-          <div class="flex items-center px-4">
+          <div class="flex items-center px-4" routerLink="/supplier">
             <mat-icon><i-tabler name="chevron-left"></i-tabler></mat-icon>
           </div>
         </div>
@@ -39,13 +39,22 @@
           </div>
           <div class="flex flex-col mr-4">
             <p class="text-sm">Need help?</p>
-            <p class="text-sm font-semibold">0800 193 5229</p>
+            <a
+              href="tel:84392341142"
+              class="text-sm font-semibold cursor-pointer hover:underline"
+              target="_blank"
+              >0392 2341 142</a
+            >
           </div>
-          <div>
+          <div
+            [matMenuTriggerFor]="accountMenu"
+            aria-label="Account"
+            class="cursor-pointer"
+          >
             @if (supplier && supplier.images && supplier.images.length > 0) {
             <img
               class="w-10 rounded-full h-10"
-              [src]="supplier.images[0].imageUrl"
+              [src]="primaryImage"
               alt="Avatar"
             />
             }@else {
@@ -56,10 +65,95 @@
             />
             }
           </div>
+          <mat-menu #accountMenu="matMenu" xPosition="before">
+            @if (supplier) {
+            <div
+              style="min-width: 340px !important; max-width: 480px !important"
+              class="px-4 py-4"
+            >
+              <div class="flex items-center justify-end font-light mb-4">
+                <a class="cursor-pointer" (click)="logout()">Log out</a>
+              </div>
+              <div class="flex items-center justify-center mb-2">
+                <h1 class="text-base font-bold">{{ supplier.name }}</h1>
+              </div>
+              <div
+                class="flex items-center justify-center border-b border-[#d9d9d9] border-solid pb-4 mb-4"
+              >
+                <a class="font-light text-sm mx-4">Setting</a>
+                <a class="font-light text-sm">View my storefront</a>
+              </div>
+              <div
+                class="grid grid-cols-2 gap-y-8 border-b border-[#d9d9d9] border-solid pb-4 mb-4"
+              >
+                <div class="flex items-center justify-center">
+                  <div
+                    class="flex flex-col items-center text-center cursor-pointer gap-2"
+                  >
+                    <img
+                      src="./../../../../assets/images/svgs/business.svg"
+                      alt=""
+                      width="24"
+                      height="24"
+                    />
+                    <p>Home</p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-center">
+                  <div
+                    class="flex flex-col items-center text-center cursor-pointer gap-2"
+                  >
+                    <img
+                      src="./../../../../assets/images/svgs/storefront.svg"
+                      alt=""
+                      width="24"
+                      height="24"
+                    />
+                    <p>Storefront</p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-center">
+                  <div
+                    class="flex flex-col items-center text-center cursor-pointer gap-2"
+                  >
+                    <img
+                      src="./../../../../assets/images/svgs/email.svg"
+                      alt=""
+                      width="24"
+                      height="24"
+                    />
+                    <p>Enquiries</p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-center">
+                  <div
+                    class="flex flex-col items-center text-center cursor-pointer gap-2"
+                  >
+                    <img
+                      src="./../../../../assets/images/svgs/review.svg"
+                      alt=""
+                      width="24"
+                      height="24"
+                    />
+                    <p>Reviews</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <p class="text-base mb-2">Boost your results</p>
+                <a
+                  class="uppercase text-underline text-orange-500 font-semibold"
+                  href=""
+                  >Upgrade</a
+                >
+              </div>
+            </div>
+            }
+          </mat-menu>
         </div>
       </div>
       <div class="max-[768px]:block hidden">
-        <div class="flex items-center px-4">
+        <div class="flex items-center px-4" (click)="toggleMenu()">
           <mat-icon><i-tabler name="menu-2"></i-tabler></mat-icon>
         </div>
       </div>
@@ -68,3 +162,12 @@
 
   <app-main-menu></app-main-menu>
 </header>
+<!-- Mobile Sidebar-->
+<app-sidebar-mobile
+  [isMenuOpen]="isMenuOpen"
+  [account]="account"
+  [supplier]="supplier"
+  (logoutEvent)="logout()"
+  (toggleMenuEvent)="toggleMenu()"
+></app-sidebar-mobile>
+<!-- Mobile Sidebar -->

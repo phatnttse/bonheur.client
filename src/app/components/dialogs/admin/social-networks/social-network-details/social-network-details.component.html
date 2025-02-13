@@ -1,0 +1,66 @@
+<form class="max-w-sm mx-auto w-full py-10 px-10" [formGroup]="form">
+  <!-- Input file -->
+  <div class="mb-6">
+    <label for="fileUpload" class="block mb-2 font-semibold"
+      >Upload Image</label
+    >
+    <input
+      type="file"
+      id="fileUpload"
+      (change)="onFileSelected($event)"
+      accept="image/*,.svg"
+      class="w-full p-2 border border-gray-300 rounded-lg"
+    />
+  </div>
+
+  <!-- Hiển thị ảnh xem trước -->
+  @if (imagePreview) {
+  <div class="mb-5">
+    <img [src]="imagePreview" alt="Preview" class="w-full h-auto rounded-lg" />
+  </div>
+  }
+  <div class="mb-6">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+      >Name</mat-label
+    >
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        required
+        [class.is-invalid]="
+          form.get('name')?.invalid && form.get('name')?.touched
+        "
+      />
+      @if (form.get('name')?.hasError('required')) {
+      <mat-error style="font-size: 12px"> Name is required </mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="flex items-center gap-6">
+    @if (data) {
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="updateSocialNetwork()"
+    >
+      Update
+    </button>
+
+    }@else {
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="createSocialNetwork()"
+    >
+      Submit
+    </button>
+    }
+
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+  </div>
+</form>

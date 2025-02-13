@@ -43,4 +43,10 @@ export const navItems: NavItem[] = [
     bgcolor: 'success',
     route: '/admin/roles/management',
   },
+  {
+    displayName: 'Social Networks',
+    iconName: 'brand-meta',
+    bgcolor: 'accent',
+    route: '/admin/social-networks/management',
+  },
 ];

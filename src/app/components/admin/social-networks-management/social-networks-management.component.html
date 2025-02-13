@@ -1,0 +1,111 @@
+<mat-card>
+  <mat-card-content>
+    <div class="row items-center justify-content-between">
+      <div class="col-lg-4 m-t-10 px-4">
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            matInput
+            type="text"
+            placeholder="Type to search..."
+            (keyup)="applyFilter($event)"
+            #input
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-start mx-4 my-2">
+        <button
+          mat-flat-button
+          color="primary"
+          class="flex items-center text-white text-sm font-medium p-24 shadow-md transition-colors duration-200"
+          (click)="openSNDetailsDialog()"
+        >
+          <mat-icon class="icon-20 mt-1 d-flex align-items-center">
+            <i-tabler name="plus"></i-tabler>
+          </mat-icon>
+          Add New Social Network
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card class="w-100">
+  <mat-card-content>
+    <div
+      class="col-12 d-flex align-items-center justify-content-center mb-5 mt-3"
+    ></div>
+    <div class="table-responsive mt-20">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="w-100 text-nowrap"
+        bgColor="white"
+      >
+        <ng-container matColumnDef="icon">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>Icon</th>
+          <td mat-cell *matCellDef="let socialNetwork">
+            <img
+              width="64"
+              height="64"
+              [src]="socialNetwork.imageUrl"
+              alt="Icon"
+              class="rounded-sm object-cover"
+            />
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="name"
+          >
+            Name
+          </th>
+          <td mat-cell *matCellDef="let socialNetwork">
+            <span class="f-s-14">{{ socialNetwork.name }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let socialNetwork">
+            <div class="flex items-center gap-6">
+              <button
+                mat-icon-button
+                type="button"
+                class="m-t-4"
+                (click)="openSNDetailsDialog(socialNetwork)"
+              >
+                <mat-icon color="accent"
+                  ><i-tabler
+                    name="edit"
+                    class="icon-20 d-flex align-items-center"
+                  ></i-tabler
+                ></mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                type="button"
+                class="m-t-4"
+                (click)="openDeleteDialog(socialNetwork.id)"
+              >
+                <mat-icon color="warn"
+                  ><i-tabler
+                    name="trash-x"
+                    class="icon-20 d-flex align-items-center"
+                  ></i-tabler
+                ></mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
