@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 
 @Component({
-  selector: 'app-review',
+  selector: 'app-hitched-rated',
   standalone: true,
   imports: [MaterialModule, CommonModule, TablerIconsModule],
-  templateUrl: './review.component.html',
-  styleUrl: './review.component.scss',
+  templateUrl: './hitched-rated.component.html',
+  styleUrl: './hitched-rated.component.scss',
 })
-export class ReviewComponent {}
+export class HitchedRatedComponent {}

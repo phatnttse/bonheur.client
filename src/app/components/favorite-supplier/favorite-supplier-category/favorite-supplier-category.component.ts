@@ -23,6 +23,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
+import { BaseResponse } from '../../../models/base.model';
 
 @Component({
   selector: 'app-favorite-supplier-category',
@@ -146,29 +147,29 @@ export class FavoriteSupplierCategoryComponent {
     });
   }
 
-  openDeleteDialog(id: number): void {
-    const dialogRef = this.dialog.open(DeleteCategoryComponent, {
-      width: '400px',
-      data: {
-        id,
-        deleteFn: (id: number) =>
-          this.favoriteSupplierService.deleteFavoriteSupplier(id),
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+  deleteFavoriteSupplier(id: number): void {
+    this.statusService.statusLoadingSpinnerSource.next(true);
+    this.favoriteSupplierService.deleteFavoriteSupplier(id).subscribe({
+      next: (response: BaseResponse<FavoriteSupplier>) => {
+        // Xóa supplier khỏi danh sách
         const index = this.favoriteSuppliers.findIndex(
           (supplier) => supplier.supplierId === id
         );
         if (index !== -1) {
           this.favoriteSuppliers.splice(index, 1);
-
           this.dataService.favoriteSupplierDataSource.next(
             this.favoriteSuppliers
           );
         }
-      }
+
+        // Hiển thị thông báo thành công
+        this.notificationService.success('Success', response.message);
+        this.statusService.statusLoadingSpinnerSource.next(false);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.success('Success', err.message);
+      },
     });
   }
 }

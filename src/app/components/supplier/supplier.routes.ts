@@ -90,6 +90,14 @@ export const supplierRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'reviews',
+        loadComponent() {
+          return import('./review/reviews/reviews.component').then(
+            (m) => m.ReviewsComponent
+          );
+        },
+      },
     ],
   },
 ];

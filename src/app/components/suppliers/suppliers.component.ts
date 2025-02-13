@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { mockSupplierData, Supplier } from '../../models/supplier.model';
@@ -60,7 +60,8 @@ export class SuppliersComponent implements OnInit {
     private router: Router,
     private dataService: DataService,
     private favoriteSupplierService: FavoriteSupplierService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +75,7 @@ export class SuppliersComponent implements OnInit {
           this.favoriteSuppliers = favoriteSuppliers;
           this.dataSource = new MatTableDataSource(this.favoriteSuppliers);
           this.dataSource.sort = this.sort;
+          this.cdr.detectChanges();
         } else {
           this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
         }
@@ -94,6 +96,9 @@ export class SuppliersComponent implements OnInit {
           ) {
             this.favoriteSuppliers.push(response.data);
           }
+          this.dataService.favoriteSupplierDataSource.next(
+            this.favoriteSuppliers
+          );
         }
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
