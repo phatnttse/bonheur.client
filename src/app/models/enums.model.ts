@@ -63,3 +63,8 @@ export enum OnBoardStatus {
   Photos = 'Photos',
   Completed = 'Completed',
 }
+
+export enum PaymentStatus {
+  CANCELLED = 'CANCELLED',
+  PAID = 'PAID',
+}
