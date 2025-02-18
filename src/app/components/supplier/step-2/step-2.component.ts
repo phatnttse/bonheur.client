@@ -34,6 +34,7 @@ import { BaseResponse } from '../../../models/base.model';
 import { StatusCode } from '../../../models/enums.model';
 import { DataService } from '../../../services/data.service';
 import { CommonModule } from '@angular/common';
+import { PlaceService } from '../../../services/place.service';
 
 @Component({
   selector: 'app-step-2',
@@ -78,7 +79,8 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     private statusService: StatusService,
     private authService: AuthService,
     private locationService: LocationService,
-    private dataService: DataService
+    private dataService: DataService,
+    private placeService: PlaceService
   ) {
     this.formLocation = this.formBuilder.group({
       street: [''],

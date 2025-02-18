@@ -1,0 +1,7 @@
+@if (success != null && success === true) {
+<app-success [orderInfo]="orderInfo"></app-success>
+}@else if (success != null && success === false) {
+<app-fail [paymentLinkInfo]="paymentLinkInfo"></app-fail>
+}@else {
+<div class="loading"><mat-spinner></mat-spinner></div>
+}

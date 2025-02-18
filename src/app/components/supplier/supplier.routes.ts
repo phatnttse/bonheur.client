@@ -114,6 +114,14 @@ export const supplierRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'upgrade',
+        loadComponent() {
+          return import('./upgrade/upgrade.component').then(
+            (m) => m.UpgradeComponent
+          );
+        },
+      },
     ],
   },
 ];
