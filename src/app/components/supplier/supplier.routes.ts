@@ -122,6 +122,22 @@ export const supplierRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'hitched-rated',
+        loadComponent() {
+          return import('./review/hitched-rated/hitched-rated.component').then(
+            (m) => m.HitchedRatedComponent
+          );
+        },
+      },
+      {
+        path: 'review-widget',
+        loadComponent() {
+          return import('./review/review-widget/review-widget.component').then(
+            (m) => m.ReviewWidgetComponent
+          );
+        },
+      },
     ],
   },
 ];

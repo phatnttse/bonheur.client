@@ -33,3 +33,11 @@ export interface PaginationResponse<T> {
     hasPreviousPage: boolean;
   };
 }
+
+export interface AverageScores {
+  averageValueOfMoney: number;
+  averageFlexibility: number;
+  averageProfessionalism: number;
+  averageQualityOfService: number;
+  averageResponseTime: number;
+}

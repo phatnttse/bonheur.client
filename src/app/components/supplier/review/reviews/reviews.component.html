@@ -22,23 +22,26 @@
             <span class="font-bold">Reviews</span>
           </li>
         </a>
-
-        <li class="flex mb-4">
-          <i-tabler
-            name="heart-rate-monitor"
-            class="icon-20 d-flex align-items-center mr-1"
-          >
-          </i-tabler>
-          <span>Hitched rated</span>
-        </li>
-        <li class="flex mb-4">
-          <i-tabler
-            name="settings"
-            class="icon-20 d-flex align-items-center mr-1"
-          >
-          </i-tabler>
-          <span>Reviews Hitched</span>
-        </li>
+        <a href="/supplier/hitched-rated">
+          <li class="flex mb-4">
+            <i-tabler
+              name="heart-rate-monitor"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Hitched rated</span>
+          </li>
+        </a>
+        <a href="/supplier/review-widget"
+          ><li class="flex mb-4">
+            <i-tabler
+              name="settings"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Reviews widget</span>
+          </li></a
+        >
       </ul>
     </div>
 
@@ -82,7 +85,7 @@
           <div
             class="w-32 h-32 bg-white p-4 border-[#d9d9d9] border-solid border-[1px] flex flex-col items-center justify-center"
           >
-            <div class="text-6xl font-medium">0</div>
+            <div class="text-6xl font-medium">{{ averageRate }}</div>
             <div class="">out of 5.0</div>
             <div class="flex">
               <div class="pr-1">
@@ -145,7 +148,11 @@
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="ml-2 font-bold">0</div>
+                  <div class="ml-2 font-bold">
+                    {{
+                      responseData?.data?.averageScores?.averageQualityOfService
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,7 +173,11 @@
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="ml-2 font-bold">0</div>
+                  <div class="ml-2 font-bold">
+                    {{
+                      responseData?.data?.averageScores?.averageProfessionalism
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -187,7 +198,9 @@
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="ml-2 font-bold">0</div>
+                  <div class="ml-2 font-bold">
+                    {{ responseData?.data?.averageScores?.averageFlexibility }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -208,7 +221,9 @@
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="ml-2 font-bold">0</div>
+                  <div class="ml-2 font-bold">
+                    {{ responseData?.data?.averageScores?.averageValueOfMoney }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -229,7 +244,9 @@
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
                   <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="ml-2 font-bold">0</div>
+                  <div class="ml-2 font-bold">
+                    {{ responseData?.data?.averageScores?.averageResponseTime }}
+                  </div>
                 </div>
               </div>
             </div>

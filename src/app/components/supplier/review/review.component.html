@@ -22,23 +22,26 @@
             <span>Reviews</span>
           </li>
         </a>
-
-        <li class="flex mb-4">
-          <i-tabler
-            name="heart-rate-monitor"
-            class="icon-20 d-flex align-items-center mr-1"
-          >
-          </i-tabler>
-          <span>Hitched rated</span>
-        </li>
-        <li class="flex mb-4">
-          <i-tabler
-            name="settings"
-            class="icon-20 d-flex align-items-center mr-1"
-          >
-          </i-tabler>
-          <span>Reviews Hitched</span>
-        </li>
+        <a href="/supplier/hitched-rated">
+          <li class="flex mb-4">
+            <i-tabler
+              name="heart-rate-monitor"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Hitched rated</span>
+          </li>
+        </a>
+        <a href="/supplier/review-widget"
+          ><li class="flex mb-4">
+            <i-tabler
+              name="settings"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Reviews widget</span>
+          </li></a
+        >
       </ul>
     </div>
 
@@ -58,7 +61,9 @@
             />
           </div>
           <div class="py-2 px-4">
-            <p class="text-lg font-semibold">You've received 0 reviews</p>
+            <p class="text-lg font-semibold">
+              You've received {{ averageRate }} reviews
+            </p>
             <div class="flex flex-row">
               <div class="flex flex-row mr-2">
                 <i-tabler

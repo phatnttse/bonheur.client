@@ -3,7 +3,6 @@ import { MaterialModule } from '../../../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ListReviewResponse, Review } from '../../../../models/review.model';
-import { ReviewService } from '../../../../services/review.service';
 import { NotificationService } from '../../../../services/notification.service';
 import { StatusService } from '../../../../services/status.service';
 import { FormBuilder } from '@angular/forms';
@@ -11,18 +10,18 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../services/data.service';
+import { ReviewService } from '../../../../services/review.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-reviews',
+  selector: 'app-review-widget',
   standalone: true,
   imports: [MaterialModule, CommonModule, TablerIconsModule],
-  templateUrl: './reviews.component.html',
-  styleUrl: './reviews.component.scss',
+  templateUrl: './review-widget.component.html',
+  styleUrl: './review-widget.component.scss',
 })
-export class ReviewsComponent {
-  // supplierId: number | null = null;
-  supplierId: number = 2;
+export class ReviewWidgetComponent {
+  supplierId: number | null = null;
   responseData: ListReviewResponse | null = null;
   listReviewResponse: Review[] = [];
   pageNumber: number = 1; // Trang hiện tại
@@ -33,7 +32,6 @@ export class ReviewsComponent {
   isLastPage: boolean = false; // Có phải trang cuối cùng không
   hasNextPage: boolean = false; // Có trang tiếp theo không
   hasPreviousPage: boolean = false; // Có trang trước đó không
-  averageRate: number = 0;
 
   /**
    *
@@ -50,9 +48,9 @@ export class ReviewsComponent {
   ) {}
 
   ngOnInit() {
-    // setTimeout(() => {
-    //   this.statusService.statusLoadingSpinnerSource.next(true);
-    // });
+    setTimeout(() => {
+      this.statusService.statusLoadingSpinnerSource.next(true);
+    });
     if (this.supplierId !== null) {
       this.getReviews(this.supplierId, this.pageNumber, this.pageSize);
     }
@@ -61,20 +59,16 @@ export class ReviewsComponent {
   getReviews(supplierId: number, pageNumber: number, pageSize: number) {
     this.reviewService.getReviews(supplierId, pageNumber, pageSize).subscribe({
       next: (response: ListReviewResponse) => {
-        debugger;
         this.responseData = response;
-        // this.listReviewResponse = response.data.reviews.data.items;
-        // this.pageNumber = response.data.reviews.data.pageNumber;
-        // this.pageSize = response.data.reviews.data.pageSize;
-        // this.totalItemCount = response.data.reviews.data.totalItemCount;
-        // this.isFirstPage = response.data.reviews.data.isFirstPage;
-        // this.isLastPage = response.data.reviews.data.isLastPage;
-        // this.hasNextPage = response.data.reviews.data.hasNextPage;
-        // this.hasPreviousPage = response.data.reviews.data.hasPreviousPage;
-        debugger;
-        const scores = response.data.averageScores;
-
-        this.averageRate = this.calculateAverage(scores);
+        this.listReviewResponse = response.data.reviews.data.items;
+        this.pageNumber = response.data.reviews.data.pageNumber;
+        this.pageSize = response.data.reviews.data.pageSize;
+        this.totalItemCount = response.data.reviews.data.totalItemCount;
+        this.isFirstPage = response.data.reviews.data.isFirstPage;
+        this.isLastPage = response.data.reviews.data.isLastPage;
+        this.hasNextPage = response.data.reviews.data.hasNextPage;
+        this.hasPreviousPage = response.data.reviews.data.hasPreviousPage;
+        this.dataService;
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
       error: (error: HttpErrorResponse) => {
@@ -82,15 +76,5 @@ export class ReviewsComponent {
         this.notificationService.handleApiError(error);
       },
     });
-  }
-
-  calculateAverage(obj: Record<string, any>): number {
-    const values = Object.values(obj).filter(
-      (value) => typeof value === 'number' && !isNaN(value)
-    );
-
-    if (values.length === 0) return 0.0;
-
-    return values.reduce((sum, num) => sum + num, 0) / values.length;
   }
 }
