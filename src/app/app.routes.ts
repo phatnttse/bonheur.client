@@ -120,6 +120,22 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'payment',
+    loadComponent() {
+      return import('./components/payment/payment.component').then(
+        (m) => m.PaymentComponent
+      );
+    },
+  },
+  {
+    path: 'mailbox',
+    loadComponent() {
+      return import('./components/mailbox/mailbox.component').then(
+        (m) => m.MailboxComponent
+      );
+    },
+  },
+  {
     path: 'pages/404',
     loadComponent() {
       return import('./pages/page-not-found/page-not-found.component').then(

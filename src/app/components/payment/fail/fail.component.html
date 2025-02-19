@@ -1,0 +1,78 @@
+@if (paymentLinkInfo) {
+<div
+  class="container flex justify-center items-center min-h-screen mx-auto px-4 sm:px-10 md:px-10 py-6"
+>
+  <mat-card
+    class="p-5 shadow-lg"
+    style="max-width: 600px; width: 100%"
+    data-aos="fade-up"
+    data-aos-duration="1000"
+    data-aos-delay="300"
+  >
+    <mat-card-content>
+      <div class="mx-auto flex align-items-center justify-center">
+        <img
+          width="56"
+          src="./../../../../assets/images/svgs/cancel.svg"
+          alt="Cancel"
+        />
+      </div>
+      <h1 class="fw-bold text-dark mt-3 text-center">Huỷ giao dịch</h1>
+      <p class="text-black mt-3 text-center mb-5">
+        Thanh toán không thành công. Vui lòng thử lại sau !
+      </p>
+      <div class="detail-section">
+        <div class="row mb-4">
+          <div class="col-6 text-black flex justify-start">
+            Số tiền thanh toán:
+          </div>
+          <div class="col-6 font-bold text-dark flex justify-end">
+            {{ paymentLinkInfo.amount | number : "1.0" }}đ
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-6 text-black flex justify-start">Mã giao dịch:</div>
+          <div class="col-6 font-bold text-dark flex justify-end">
+            {{ paymentLinkInfo.orderCode }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-6 text-black flex justify-start">Thời gian:</div>
+          <div class="col-6 fw-bold text-dark d-flex justify-content-end">
+            {{ paymentLinkInfo.createdAt | date : "dd/MM/yyyy HH:mm:ss" }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-6 text-black d-flex justify-content-start">
+            Trạng thái:
+          </div>
+          <div class="col-6 font-bold text-dark flex justify-end">
+            <span style="color: #f44336">{{ paymentLinkInfo.status }}</span>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-6 text-black flex justify-start">
+            Số tiền đã thanh toán:
+          </div>
+          <div class="col-6 font-bold text-dark flex justify-end">
+            {{ paymentLinkInfo.amountPaid }}đ
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions class="flex justify-center mt-4">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        routerLink="/supplier/upgrade"
+        style="background-color: #f44336"
+      >
+        <mat-icon>reply</mat-icon>
+        Quay lại
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+}

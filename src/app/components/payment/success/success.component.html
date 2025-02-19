@@ -1,0 +1,222 @@
+@if (orderInfo) {
+<div class="min-h-screen bg-blue-50 flex justify-center items-center">
+  <div class="container mx-auto px-4 sm:px-10 md:px-10 py-6">
+    <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+      <div
+        class="bg-white rounded-[2rem] shadow-lg max-[667px]:pt-2 py-20 max-[667px]:px-4 md:px-6 min-[1025px]:px-20 relative"
+      >
+        <div
+          class="flex max-[667px]:flex-col lg:flex-row items-start lg:items-stretch"
+        >
+          <div
+            class="w-full lg:w-1/2 pr-0 lg:pr-10 mt-10 lg:mt-14 px-6 max-[667px]:px-2 lg:px-10 pb-10"
+          >
+            <div class="mb-10">
+              <a
+                routerLink="/supplier"
+                class="mb-6 text-primary flex items-center text-base"
+              >
+                <mat-icon>arrow_left</mat-icon>
+                Go Back Home
+              </a>
+              <h1 class="font-bold text-4xl sm:text-5xl mb-10">
+                Thank you for your purchase!
+              </h1>
+              <p class="text-base">
+                Your service package order has been successfully received. Below
+                are the details for your reference.
+              </p>
+            </div>
+            <div class="mb-10">
+              <h3 class="font-semibold text-lg mb-6">Billing Information</h3>
+              <div class="space-y-4">
+                <div class="flex items-center">
+                  <span class="font-semibold mr-10"> Name: </span>
+                  <span>{{ orderInfo.supplier.name }}</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-semibold mr-9"> Phone: </span>
+                  <span>{{ orderInfo.supplier.phoneNumber }}</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-semibold mr-6"> Address: </span>
+                  <span>{{ orderInfo.supplier.province }}</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-semibold mr-12"> Email: </span>
+                  <span>{{ orderInfo.user.email }}</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                type="button"
+                color="accent"
+                mat-raised-button
+                routerLink="/supplier/invoices"
+              >
+                <mat-icon matPrefix>receipt_long</mat-icon>
+                Invoices
+              </button>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-1/2 pl-0 lg:pl-4">
+            <div
+              class="px-4 sm:px-10 pt-10 pb-[140px] max-[667px]:pb-[100px] rounded-lg shadow-lg relative"
+              style="
+                background-color: rgb(247 244 244);
+                clip-path: polygon(
+                  0 0,
+                  100% 0,
+                  100% 100%,
+                  96% 95%,
+                  92% 100%,
+                  88% 95%,
+                  84% 100%,
+                  80% 95%,
+                  76% 100%,
+                  72% 95%,
+                  68% 100%,
+                  64% 95%,
+                  60% 100%,
+                  56% 95%,
+                  52% 100%,
+                  48% 95%,
+                  44% 100%,
+                  40% 95%,
+                  36% 100%,
+                  32% 95%,
+                  28% 100%,
+                  24% 95%,
+                  20% 100%,
+                  16% 95%,
+                  12% 100%,
+                  10% 95%,
+                  6% 100%,
+                  4% 95%,
+                  0% 100%
+                );
+              "
+            >
+              <div class="border-b pt-4 max-[667px]:pt-2 pb-6">
+                <h3 class="text-2xl font-bold max-[667px]:text-lg">
+                  Order Summary
+                </h3>
+              </div>
+
+              <div
+                class="flex justify-between items-center py-6 max-[667px]:py-8"
+              >
+                <div class="flex-1 pr-2">
+                  <div class="text-gray-700 mb-1 max-[667px]:text-xs">Date</div>
+                  <div class="font-semibold max-[667px]:text-xs">
+                    {{ orderInfo.createdAt | date : "dd/MM/yyyy" }}
+                  </div>
+                </div>
+
+                <div class="border-r border-gray-300 h-10"></div>
+
+                <div class="flex-1 px-4">
+                  <div class="text-gray-700 mb-1 max-[667px]:text-xs">
+                    Order Code
+                  </div>
+                  <div class="font-semibold max-[667px]:text-xs">
+                    {{ orderInfo.orderCode }}
+                  </div>
+                </div>
+
+                <div class="border-r border-gray-300 h-10"></div>
+
+                <div class="flex-1 pl-6 max-[667px]:pl-4">
+                  <div
+                    class="text-gray-700 mb-1 max-[667px]:mb-0 max-[667px]:text-xs"
+                  >
+                    Payment Method
+                  </div>
+                  <div class="font-semibold max-[667px]:text-xs">
+                    {{ orderInfo.paymentMethod }}
+                  </div>
+                </div>
+              </div>
+              <div
+                class="relative my-4"
+                style="
+                  border-top: 2px dashed #d1d5db transparent;
+                  border-top-width: 2px;
+                  border-top-color: #d1d5db;
+                  border-style: dashed;
+                "
+              >
+                <div
+                  class="absolute w-12 h-12 max-[667px]:w-10 max-[667px]:h-10 bg-white rounded-full left-[-40px] md:left-[-60px] lg:left-[-64px] top-1/2 transform -translate-y-1/2"
+                ></div>
+                <div
+                  class="absolute w-12 h-12 max-[667px]:w-10 max-[667px]:h-10 bg-white rounded-full right-[-40px] md:right-[-60px] lg:right-[-64px] top-1/2 transform -translate-y-1/2"
+                ></div>
+              </div>
+
+              <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right">
+                  <thead class="lg:text-sm max-[667px]:text-xs text-gray-700">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">Product name</th>
+                      <th scope="col" class="px-6 py-3">Price</th>
+                      <th scope="col" class="px-6 py-3">Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (item of orderInfo.orderDetails; track $index) {
+                    <tr class="border-b border-gray-200">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                      >
+                        {{ item.name }}
+                      </th>
+                      <td class="px-6 py-4 font-semibold">
+                        {{ item.price | number : "1.0" }}đ
+                      </td>
+                      <td class="px-6 py-4 font-semibold">
+                        x{{ item.quantity }}
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="mt-6 space-y-3 pt-6 border-t">
+                <div
+                  class="flex justify-between text-sm max-[667px]:text-xs pb-1"
+                >
+                  <span>SubTotal</span>
+                  <span class="font-medium">10.000đ</span>
+                </div>
+                <div
+                  class="flex justify-between text-sm max-[667px]:text-xs pb-3"
+                >
+                  Tax
+                  <span></span>
+                  <span>-</span>
+                </div>
+                <div
+                  class="flex justify-between text-lg font-bold pt-6 border-t"
+                >
+                  Total
+                  <span></span>
+                  <span
+                    class="text-xl text-primary font-bold max-[667px]:text-sm"
+                  >
+                    10.000đ
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}
