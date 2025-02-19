@@ -1,0 +1,279 @@
+<div class="container mx-auto">
+  <div class="flex flex-wrap mt-2 border-t-[1px] border-solid border-[#eee]">
+    <div class="max-[664px]:hidden w-1/5 px-2">
+      <ul class="mt-4 pt-2 pl-4">
+        <a href="/supplier/review">
+          <li class="flex mb-4">
+            <i-tabler
+              name="settings"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Review collectors</span>
+          </li>
+        </a>
+        <a href="/supplier/reviews">
+          <li class="flex mb-4">
+            <i-tabler
+              name="note"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span class="font-bold">Reviews</span>
+          </li>
+        </a>
+        <a href="/supplier/hitched-rated">
+          <li class="flex mb-4">
+            <i-tabler
+              name="heart-rate-monitor"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Hitched rated</span>
+          </li>
+        </a>
+        <a href="/supplier/review-widget"
+          ><li class="flex mb-4">
+            <i-tabler
+              name="settings"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Reviews widget</span>
+          </li></a
+        >
+      </ul>
+    </div>
+
+    <div class="w-4/5 mt-2 px-4">
+      <h1 class="text-2xl font-bold mx-1 my-[10px]">Reviews</h1>
+
+      <div
+        class="rounded-md w-full place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4 w-9/10 xl:w-4/5"
+      >
+        <div class="flex">
+          <div class="flex flex-row justify-center mr-2">
+            <img
+              src="assets/images/svgs/star.svg"
+              alt="Your photo"
+              width="54"
+              height="54"
+            />
+          </div>
+          <div class="py-2 px-4">
+            <p class="text-lg font-semibold">Get reviews from your couples</p>
+            <p>
+              Reviews are critical when it comes time to choose a supplier.
+              Encourage your past couples to leave a review about their
+              experience with you.
+            </p>
+          </div>
+          <div class="flex flex-row mr-2 py-2 px-2">
+            <button
+              mat-raised-button
+              color="primary"
+              class="mr-2 font-bold p-3"
+            >
+              Request Reviews
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex">
+        <div class="flex flex-row justify-center mr-2">
+          <div
+            class="w-32 h-32 bg-white p-4 border-[#d9d9d9] border-solid border-[1px] flex flex-col items-center justify-center"
+          >
+            <div class="text-6xl font-medium">{{ averageRate }}</div>
+            <div class="">out of 5.0</div>
+            <div class="flex">
+              <div *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index">
+                <i-tabler
+                  name="star"
+                  class="filled"
+                  [ngClass]="getStarStyle(idx, averageRate)"
+                ></i-tabler>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 grid-rows-2 gap-4 px-5">
+            <div class="flex">
+              <div class="mx-2 mt-2">
+                <img
+                  src="assets/images/svgs/medal.svg"
+                  alt="Your photo"
+                  width="20"
+                  height="40"
+                />
+              </div>
+              <div>
+                <div class="">Quality of the service</div>
+                <div class="flex items-center">
+                  <div class="flex">
+                    <div
+                      *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                      class="w-6 h-2 mr-[1px]"
+                      [ngClass]="
+                        getBlockStyle(
+                          idx,
+                          responseData?.data?.averageScores
+                            ?.averageQualityOfService ?? 0
+                        )
+                      "
+                    ></div>
+                  </div>
+
+                  <div class="ml-2 font-bold">
+                    {{
+                      responseData?.data?.averageScores?.averageQualityOfService
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="mx-2 mt-2">
+                <img
+                  src="assets/images/svgs/shopping-bag.svg"
+                  alt="Your photo"
+                  width="20"
+                  height="40"
+                />
+              </div>
+              <div>
+                <div class="">Professionalism</div>
+                <div class="flex items-center">
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores
+                          ?.averageProfessionalism ?? 0
+                      )
+                    "
+                  ></div>
+                  <div class="ml-2 font-bold">
+                    {{
+                      responseData?.data?.averageScores?.averageProfessionalism
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="mx-2 mt-2">
+                <img
+                  src="assets/images/svgs/right-alignment.svg"
+                  alt="Your photo"
+                  width="20"
+                  height="40"
+                />
+              </div>
+              <div>
+                <div class="">Flexibility</div>
+                <div class="flex items-center">
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores?.averageFlexibility ??
+                          0
+                      )
+                    "
+                  ></div>
+                  <div class="ml-2 font-bold">
+                    {{ responseData?.data?.averageScores?.averageFlexibility }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="mx-2 mt-2">
+                <img
+                  src="assets/images/svgs/coin.svg"
+                  alt="Your photo"
+                  width="20"
+                  height="40"
+                />
+              </div>
+              <div>
+                <div class="">Value for money</div>
+                <div class="flex items-center">
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores
+                          ?.averageValueOfMoney ?? 0
+                      )
+                    "
+                  ></div>
+                  <div class="ml-2 font-bold">
+                    {{ responseData?.data?.averageScores?.averageValueOfMoney }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="mx-2 mt-2">
+                <img
+                  src="assets/images/svgs/message.svg"
+                  alt="Your photo"
+                  width="20"
+                  height="40"
+                />
+              </div>
+              <div>
+                <div class="">Response time</div>
+                <div class="flex items-center">
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores
+                          ?.averageResponseTime ?? 0
+                      )
+                    "
+                  ></div>
+                  <div class="ml-2 font-bold">
+                    {{ responseData?.data?.averageScores?.averageResponseTime }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="rounded-md w-full h-[303px] place-content-center p-[20px] bg-[#fff] border-[#d9d9d9] border-solid border-[1px] my-4 w-9/10 xl:w-4/5"
+      >
+        <div class="flex flex-row justify-center">
+          <img
+            src="assets/images/svgs/star.svg"
+            alt="Your photo"
+            width="123"
+            height="95"
+          />
+        </div>
+        <div class="flex flex-row justify-center text-center py-2 text-sm">
+          <p>You do not have any recommendations yet.</p>
+        </div>
+        <div class="flex flex-row justify-center text-center py-2">
+          <button mat-raised-button color="primary" class="mr-2 font-bold p-3">
+            Request Reviews
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

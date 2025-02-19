@@ -12,6 +12,7 @@ import {
 } from '../models/supplier.model';
 import { FavoriteSupplier } from '../models/favorite-supplier.model';
 import { SocialNetwork } from '../models/social-network';
+import { Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -78,6 +79,10 @@ export class DataService {
   //Behavior subject: Supplier FAQ
   public faqDataSource = new BehaviorSubject<SupplierFAQ[] | null>(null);
   faqData$ = this.faqDataSource.asObservable();
+
+  //Behavior subject: Reviews
+  public reviewDataSource = new BehaviorSubject<Review[] | null>(null);
+  reviewData$ = this.reviewDataSource.asObservable();
 
   resetData() {
     this.accountDataSource.next(null);
