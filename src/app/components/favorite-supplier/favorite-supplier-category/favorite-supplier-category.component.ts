@@ -1,5 +1,5 @@
 import { catchError } from 'rxjs';
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -24,11 +24,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
 import { BaseResponse } from '../../../models/base.model';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 
 @Component({
   selector: 'app-favorite-supplier-category',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule],
+  imports: [MaterialModule, CommonModule, TablerIconsModule, FontAwesomeModule],
   templateUrl: './favorite-supplier-category.component.html',
   styleUrl: './favorite-supplier-category.component.scss',
 })
@@ -48,6 +50,15 @@ export class FavoriteSupplierCategoryComponent {
   categoryImage: string = '';
   favoriteSuppliersCategory: FavoriteSupplier[] = [];
   favoriteCount: number = 0;
+  faStar = faStar;
+
+  @Input() rating: number = 0;
+  @Input() readonly: boolean = false;
+
+  setRating(value: number) {
+    if (this.readonly) return;
+    this.rating = value;
+  }
   /**
    *
    */

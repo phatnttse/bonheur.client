@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -12,11 +12,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule],
+  imports: [MaterialModule, CommonModule, TablerIconsModule, FontAwesomeModule],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.scss',
 })
@@ -34,7 +36,15 @@ export class ReviewsComponent {
   hasNextPage: boolean = false; // Có trang tiếp theo không
   hasPreviousPage: boolean = false; // Có trang trước đó không
   averageRate: number = 0;
+  faStar = faStar;
 
+  @Input() rating: number = 0;
+  @Input() readonly: boolean = false;
+
+  setRating(value: number) {
+    if (this.readonly) return;
+    this.rating = value;
+  }
   /**
    *
    */
@@ -82,6 +92,20 @@ export class ReviewsComponent {
         this.notificationService.handleApiError(error);
       },
     });
+  }
+
+  getBlockStyle(index: number, averageRating: number): string {
+    const rating = averageRating - index;
+    if (rating >= 1) return 'bg-yellow-500'; // Ô đầy đủ màu
+    if (rating >= 0.5) return 'bg-yellow-300'; // Ô nửa màu
+    return 'bg-gray-200'; // Ô nhạt
+  }
+
+  getStarStyle(index: number, averageRating: number): string {
+    const rating = averageRating - index;
+    if (rating >= 1) return 'filled'; // Ô đầy đủ màu
+    if (rating >= 0.5) return 'half-filled'; // Ô nửa màu
+    return 'empty'; // Ô nhạt
   }
 
   calculateAverage(obj: Record<string, any>): number {

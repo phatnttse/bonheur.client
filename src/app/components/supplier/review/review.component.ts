@@ -21,7 +21,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './review.component.scss',
 })
 export class ReviewComponent {
-  supplierId: number | null = null;
+  // supplierId: number | null = null;
+  supplierId: number = 2;
   responseData: ListReviewResponse | null = null;
   listReviewResponse: Review[] = [];
   pageNumber: number = 1; // Trang hiện tại
@@ -61,14 +62,15 @@ export class ReviewComponent {
     this.reviewService.getReviews(supplierId, pageNumber, pageSize).subscribe({
       next: (response: ListReviewResponse) => {
         this.responseData = response;
-        this.listReviewResponse = response.data.reviews.data.items;
-        this.pageNumber = response.data.reviews.data.pageNumber;
-        this.pageSize = response.data.reviews.data.pageSize;
-        this.totalItemCount = response.data.reviews.data.totalItemCount;
-        this.isFirstPage = response.data.reviews.data.isFirstPage;
-        this.isLastPage = response.data.reviews.data.isLastPage;
-        this.hasNextPage = response.data.reviews.data.hasNextPage;
-        this.hasPreviousPage = response.data.reviews.data.hasPreviousPage;
+        this.listReviewResponse = response.data.reviews.items;
+        this.pageNumber = response.data.reviews.pageNumber;
+        this.pageSize = response.data.reviews.pageSize;
+        debugger;
+        this.totalItemCount = response?.data?.reviews?.totalItemCount ?? 0;
+        this.isFirstPage = response.data.reviews.isFirstPage;
+        this.isLastPage = response.data.reviews.isLastPage;
+        this.hasNextPage = response.data.reviews.hasNextPage;
+        this.hasPreviousPage = response.data.reviews.hasPreviousPage;
         const scores = response.data.averageScores;
         this.averageRate =
           (scores.averageFlexibility +

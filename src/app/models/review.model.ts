@@ -1,4 +1,9 @@
-import { AverageScores, BaseResponse, PaginationResponse } from './base.model';
+import {
+  AverageScores,
+  BaseResponse,
+  PaginationData,
+  PaginationResponse,
+} from './base.model';
 import { Account } from './account.model';
 
 export interface Review {
@@ -15,7 +20,7 @@ export interface Review {
 }
 
 export interface ReviewResponse {
-  reviews: PaginationResponse<Review>;
+  reviews: PaginationData<Review>;
   averageScores: AverageScores;
 }
 

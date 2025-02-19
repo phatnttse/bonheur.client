@@ -48,9 +48,6 @@ export class ReviewWidgetComponent {
   ) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.statusService.statusLoadingSpinnerSource.next(true);
-    });
     if (this.supplierId !== null) {
       this.getReviews(this.supplierId, this.pageNumber, this.pageSize);
     }
@@ -60,14 +57,14 @@ export class ReviewWidgetComponent {
     this.reviewService.getReviews(supplierId, pageNumber, pageSize).subscribe({
       next: (response: ListReviewResponse) => {
         this.responseData = response;
-        this.listReviewResponse = response.data.reviews.data.items;
-        this.pageNumber = response.data.reviews.data.pageNumber;
-        this.pageSize = response.data.reviews.data.pageSize;
-        this.totalItemCount = response.data.reviews.data.totalItemCount;
-        this.isFirstPage = response.data.reviews.data.isFirstPage;
-        this.isLastPage = response.data.reviews.data.isLastPage;
-        this.hasNextPage = response.data.reviews.data.hasNextPage;
-        this.hasPreviousPage = response.data.reviews.data.hasPreviousPage;
+        this.listReviewResponse = response.data.reviews.items;
+        this.pageNumber = response.data.reviews.pageNumber;
+        this.pageSize = response.data.reviews.pageSize;
+        this.totalItemCount = response.data.reviews.totalItemCount;
+        this.isFirstPage = response.data.reviews.isFirstPage;
+        this.isLastPage = response.data.reviews.isLastPage;
+        this.hasNextPage = response.data.reviews.hasNextPage;
+        this.hasPreviousPage = response.data.reviews.hasPreviousPage;
         this.dataService;
         this.statusService.statusLoadingSpinnerSource.next(false);
       },

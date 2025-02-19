@@ -88,45 +88,12 @@
             <div class="text-6xl font-medium">{{ averageRate }}</div>
             <div class="">out of 5.0</div>
             <div class="flex">
-              <div class="pr-1">
-                <img
-                  src="assets/images/svgs/star.svg"
-                  alt="Your photo"
-                  width="20"
-                  height="20"
-                />
-              </div>
-              <div class="pr-1">
-                <img
-                  src="assets/images/svgs/star.svg"
-                  alt="Your photo"
-                  width="20"
-                  height="20"
-                />
-              </div>
-              <div class="pr-1">
-                <img
-                  src="assets/images/svgs/star.svg"
-                  alt="Your photo"
-                  width="20"
-                  height="20"
-                />
-              </div>
-              <div class="pr-1">
-                <img
-                  src="assets/images/svgs/star.svg"
-                  alt="Your photo"
-                  width="20"
-                  height="20"
-                />
-              </div>
-              <div class="pr-1">
-                <img
-                  src="assets/images/svgs/star.svg"
-                  alt="Your photo"
-                  width="20"
-                  height="20"
-                />
+              <div *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index">
+                <i-tabler
+                  name="star"
+                  class="filled"
+                  [ngClass]="getStarStyle(idx, averageRate)"
+                ></i-tabler>
               </div>
             </div>
           </div>
@@ -143,11 +110,20 @@
               <div>
                 <div class="">Quality of the service</div>
                 <div class="flex items-center">
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
+                  <div class="flex">
+                    <div
+                      *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                      class="w-6 h-2 mr-[1px]"
+                      [ngClass]="
+                        getBlockStyle(
+                          idx,
+                          responseData?.data?.averageScores
+                            ?.averageQualityOfService ?? 0
+                        )
+                      "
+                    ></div>
+                  </div>
+
                   <div class="ml-2 font-bold">
                     {{
                       responseData?.data?.averageScores?.averageQualityOfService
@@ -168,11 +144,17 @@
               <div>
                 <div class="">Professionalism</div>
                 <div class="flex items-center">
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores
+                          ?.averageProfessionalism ?? 0
+                      )
+                    "
+                  ></div>
                   <div class="ml-2 font-bold">
                     {{
                       responseData?.data?.averageScores?.averageProfessionalism
@@ -193,11 +175,17 @@
               <div>
                 <div class="">Flexibility</div>
                 <div class="flex items-center">
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores?.averageFlexibility ??
+                          0
+                      )
+                    "
+                  ></div>
                   <div class="ml-2 font-bold">
                     {{ responseData?.data?.averageScores?.averageFlexibility }}
                   </div>
@@ -216,11 +204,17 @@
               <div>
                 <div class="">Value for money</div>
                 <div class="flex items-center">
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores
+                          ?.averageValueOfMoney ?? 0
+                      )
+                    "
+                  ></div>
                   <div class="ml-2 font-bold">
                     {{ responseData?.data?.averageScores?.averageValueOfMoney }}
                   </div>
@@ -239,11 +233,17 @@
               <div>
                 <div class="">Response time</div>
                 <div class="flex items-center">
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
-                  <div class="w-6 h-2 bg-[#f6f1ee] mr-[1px]"></div>
+                  <div
+                    *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index"
+                    class="w-6 h-2 mr-[1px]"
+                    [ngClass]="
+                      getBlockStyle(
+                        idx,
+                        responseData?.data?.averageScores
+                          ?.averageResponseTime ?? 0
+                      )
+                    "
+                  ></div>
                   <div class="ml-2 font-bold">
                     {{ responseData?.data?.averageScores?.averageResponseTime }}
                   </div>

@@ -55,26 +55,36 @@
               <div
                 class="flex absolute left-1 bottom-1 text-lg font-bold text-white px-1"
               >
-                <i-tabler
-                  name="star"
-                  class="icon-20 d-flex align-items-center"
-                ></i-tabler>
-                <i-tabler
-                  name="star"
-                  class="icon-20 d-flex align-items-center"
-                ></i-tabler>
-                <i-tabler
-                  name="star"
-                  class="icon-20 d-flex align-items-center"
-                ></i-tabler>
-                <i-tabler
-                  name="star"
-                  class="icon-20 d-flex align-items-center"
-                ></i-tabler>
-                <i-tabler
-                  name="star"
-                  class="icon-20 d-flex align-items-center"
-                ></i-tabler>
+                <div id="container" [class.readOnly]="readonly">
+                  <fa-icon
+                    [class.rated]="rating >= 5"
+                    [icon]="faStar"
+                    (click)="setRating(5)"
+                  ></fa-icon>
+                  <fa-icon
+                    [class.rated]="rating >= 4"
+                    [icon]="faStar"
+                    (click)="setRating(4)"
+                  ></fa-icon>
+
+                  <fa-icon
+                    [class.rated]="rating >= 3"
+                    [icon]="faStar"
+                    (click)="setRating(3)"
+                  ></fa-icon>
+
+                  <fa-icon
+                    [class.rated]="rating >= 2"
+                    [icon]="faStar"
+                    (click)="setRating(2)"
+                  ></fa-icon>
+
+                  <fa-icon
+                    [class.rated]="rating >= 1"
+                    [icon]="faStar"
+                    (click)="setRating(1)"
+                  ></fa-icon>
+                </div>
               </div>
             </div>
             <div class="flex justify-between font-bold mt-[25px] mx-4">
