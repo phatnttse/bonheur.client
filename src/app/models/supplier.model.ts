@@ -153,6 +153,7 @@ export interface GetSuppliersParams {
   sortAsc?: boolean;
   pageNumber?: number;
   pageSize?: number;
+  orderBy?: string;
 }
 
 export interface SaveDiscountRequest {

@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { mockSupplierData, Supplier } from '../../models/supplier.model';
+import {
+  GetSuppliersParams,
+  mockSupplierData,
+  Supplier,
+} from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
 import { BaseResponse, PaginationResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,6 +26,7 @@ import { MatSort } from '@angular/material/sort';
 import { DeleteCategoryComponent } from '../dialogs/delete-category/delete-category.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToolSidebarComponent } from './tool-sidebar/tool-sidebar.component';
+import { Utilities } from '../../services/utilities';
 
 @Component({
   selector: 'app-suppliers',
@@ -43,7 +48,7 @@ export class SuppliersComponent implements OnInit {
     new MatTableDataSource<FavoriteSupplier>();
   supplierList: Supplier[] = [];
   minPrice: number = 0;
-  maxPrice: number = 10000000;
+  maxPrice: number = 0;
   gridLayout: boolean = false;
   favoriteSuppliers: FavoriteSupplier[] = [];
   pageNumber: number = 1; // Trang hiện tại
@@ -54,6 +59,13 @@ export class SuppliersComponent implements OnInit {
   isLastPage: boolean = false; // Có phải trang cuối cùng không
   hasNextPage: boolean = false; // Có trang tiếp theo không
   hasPreviousPage: boolean = false; // Có trang trước đó không
+  search: string = ''; // Search theo tên supplier
+  categoryId: number = 0; // Lọc theo category
+  province: string = ''; // Lọc theo tỉnh thành
+  isFeatured: boolean = false; // Lọc theo supplier nổi bật
+  averageRating: number = 0; // Lọc theo rating
+  sortAsc: boolean = true; // Sắp xếp tăng dần
+  orderBy: string = ''; // Sắp xếp theo
 
   constructor(
     private supplierService: SupplierService,
@@ -69,7 +81,7 @@ export class SuppliersComponent implements OnInit {
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(false);
     });
-    this.getMockDataSuppliers();
+    this.getSuppliers();
     this.dataService.favoriteSupplierData$.subscribe(
       (favoriteSuppliers: FavoriteSupplier[] | null) => {
         if (favoriteSuppliers?.values) {
@@ -124,6 +136,32 @@ export class SuppliersComponent implements OnInit {
   //     },
   //   });
   // }
+
+  getSuppliers() {
+    const getSupplierParams: GetSuppliersParams = {
+      supplierName: this.search,
+      supplierCategoryId: this.categoryId > 0 ? this.categoryId : undefined,
+      province: this.province,
+      isFeatured: this.isFeatured,
+      averageRating: this.averageRating,
+      minPrice: this.minPrice,
+      maxPrice: this.maxPrice,
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+      sortAsc: this.sortAsc,
+      orderBy: this.orderBy,
+    };
+    this.supplierService.getSuppliers(getSupplierParams).subscribe({
+      next: (response: PaginationResponse<Supplier>) => {
+        if (response.success && response.statusCode === StatusCode.OK) {
+          this.supplierList = response.data.items;
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.notificationService.handleApiError(error);
+      },
+    });
+  }
 
   getMockDataSuppliers(): void {
     setTimeout(() => {
@@ -194,8 +232,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   formatLabel(value: number): string {
-    value = Math.round(value);
-    return value.toLocaleString('vi-VN') + 'đ';
+    return Utilities.formatVND(value);
   }
 
   btnChangeGridLayOut(flag: boolean): void {
