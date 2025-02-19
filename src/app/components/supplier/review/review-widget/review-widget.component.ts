@@ -1,28 +1,27 @@
 import { Component } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { ListReviewResponse, Review } from '../../../models/review.model';
-import { ReviewService } from '../../../services/review.service';
-import { NotificationService } from '../../../services/notification.service';
-import { StatusService } from '../../../services/status.service';
+import { ListReviewResponse, Review } from '../../../../models/review.model';
+import { NotificationService } from '../../../../services/notification.service';
+import { StatusService } from '../../../../services/status.service';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DataService } from '../../../services/data.service';
+import { DataService } from '../../../../services/data.service';
+import { ReviewService } from '../../../../services/review.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-review',
+  selector: 'app-review-widget',
   standalone: true,
   imports: [MaterialModule, CommonModule, TablerIconsModule],
-  templateUrl: './review.component.html',
-  styleUrl: './review.component.scss',
+  templateUrl: './review-widget.component.html',
+  styleUrl: './review-widget.component.scss',
 })
-export class ReviewComponent {
-  // supplierId: number | null = null;
-  supplierId: number = 2;
+export class ReviewWidgetComponent {
+  supplierId: number | null = null;
   responseData: ListReviewResponse | null = null;
   listReviewResponse: Review[] = [];
   pageNumber: number = 1; // Trang hiện tại
@@ -33,7 +32,6 @@ export class ReviewComponent {
   isLastPage: boolean = false; // Có phải trang cuối cùng không
   hasNextPage: boolean = false; // Có trang tiếp theo không
   hasPreviousPage: boolean = false; // Có trang trước đó không
-  averageRate: number = 0.0;
 
   /**
    *
@@ -50,9 +48,6 @@ export class ReviewComponent {
   ) {}
 
   ngOnInit() {
-    // setTimeout(() => {
-    //   this.statusService.statusLoadingSpinnerSource.next(true);
-    // });
     if (this.supplierId !== null) {
       this.getReviews(this.supplierId, this.pageNumber, this.pageSize);
     }
@@ -65,20 +60,12 @@ export class ReviewComponent {
         this.listReviewResponse = response.data.reviews.items;
         this.pageNumber = response.data.reviews.pageNumber;
         this.pageSize = response.data.reviews.pageSize;
-        debugger;
-        this.totalItemCount = response?.data?.reviews?.totalItemCount ?? 0;
+        this.totalItemCount = response.data.reviews.totalItemCount;
         this.isFirstPage = response.data.reviews.isFirstPage;
         this.isLastPage = response.data.reviews.isLastPage;
         this.hasNextPage = response.data.reviews.hasNextPage;
         this.hasPreviousPage = response.data.reviews.hasPreviousPage;
-        const scores = response.data.averageScores;
-        this.averageRate =
-          (scores.averageFlexibility +
-            scores.averageProfessionalism +
-            scores.averageQualityOfService +
-            scores.averageResponseTime +
-            scores.averageValueOfMoney) /
-          5;
+        this.dataService;
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
       error: (error: HttpErrorResponse) => {

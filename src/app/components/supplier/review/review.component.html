@@ -1,1 +1,224 @@
-<p>review works!</p>
+<div class="container mx-auto">
+  <div class="flex flex-wrap mt-2 border-t-[1px] border-solid border-[#eee]">
+    <div class="max-[664px]:hidden w-1/5 px-2">
+      <ul class="mt-4 pt-2 pl-4">
+        <a href="/supplier/review">
+          <li class="flex mb-4">
+            <i-tabler
+              name="settings"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span class="font-bold">Review collectors</span>
+          </li>
+        </a>
+        <a href="/supplier/reviews">
+          <li class="flex mb-4">
+            <i-tabler
+              name="note"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Reviews</span>
+          </li>
+        </a>
+        <a href="/supplier/hitched-rated">
+          <li class="flex mb-4">
+            <i-tabler
+              name="heart-rate-monitor"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Hitched rated</span>
+          </li>
+        </a>
+        <a href="/supplier/review-widget"
+          ><li class="flex mb-4">
+            <i-tabler
+              name="settings"
+              class="icon-20 d-flex align-items-center mr-1"
+            >
+            </i-tabler>
+            <span>Reviews widget</span>
+          </li></a
+        >
+      </ul>
+    </div>
+
+    <div class="w-4/5 mt-2 px-4">
+      <h1 class="text-2xl font-bold mx-1 my-[10px]">Review collector</h1>
+
+      <div
+        class="rounded-md w-full place-content-center p-[20px] bg-[#f8f8f8] border-[#d9d9d9] border-solid border-[1px] my-4 w-9/10 xl:w-4/5"
+      >
+        <div class="flex">
+          <div class="flex flex-row justify-center mr-2">
+            <img
+              src="assets/images/svgs/star.svg"
+              alt="Your photo"
+              width="54"
+              height="54"
+            />
+          </div>
+          <div class="py-2 px-4">
+            <p class="text-lg font-semibold">
+              You've received
+              {{ responseData?.data?.reviews?.totalItemCount }} reviews
+            </p>
+            <div class="flex flex-row">
+              <div class="flex flex-row mr-2">
+                <i-tabler
+                  name="arrow-right"
+                  class="icon-20 d-flex align-items-center mr-1"
+                >
+                </i-tabler>
+                <span>0 requests sent</span>
+              </div>
+              <div class="flex flex-row mr-2">
+                <i-tabler
+                  name="clock"
+                  class="icon-20 d-flex align-items-center mr-1"
+                >
+                </i-tabler>
+                <span>0 not replied to</span>
+              </div>
+              <div class="flex flex-row mr-2">
+                <i-tabler
+                  name="question-mark"
+                  class="icon-20 d-flex align-items-center mr-1"
+                >
+                </i-tabler>
+                <span>0 without a photo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="rounded-md w-full place-content-center p-[20px] bg-[#fcf5eb] border-[#d9d9d9] border-solid border-[1px] my-4 w-9/10 xl:w-4/5"
+      >
+        <div class="flex">
+          <div class="flex flex-row justify-center mr-2">
+            <p>
+              You are unable to request reviews until your business has been
+              validated. Make sure to add high-quality photos and a description
+              to your storefront so it can be published.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="w-full place-content-center p-[20px] bg-[#fff] border-[#d9d9d9] border-solid border-[1px] my-4 w-9/10 xl:w-4/5"
+      >
+        <div class="px-4">
+          <div class="flex flex-row mr-2">
+            <h3 class="font-semibold text-xl">Recipients</h3>
+          </div>
+          <div class="flex flex-row justify-center mr-2 py-4">
+            <p>
+              It's the perfect moment to write a personal email to your past
+              couples (don't forget to ask for a review!).
+            </p>
+          </div>
+          <div class="flex flex-row mr-2">
+            <p class="text-lg font-semibold">To:</p>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <mat-form-field
+              appearance="outline"
+              class="mr-2 w-1/2"
+              style="width: 200px"
+            >
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-2 w-2/6">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+            <button
+              mat-raised-button
+              color="primary"
+              class="mr-2 w-1/6"
+              style="height: 55px"
+            >
+              Add
+            </button>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <i-tabler name="file-isr" class="icon-20 mr-1"> </i-tabler>
+            <button class="underline">Add clients</button>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <p class="font-semibold">CC:</p>
+            <p>bonheur.wedding.1910&#64;gmail.com</p>
+          </div>
+          <div class="flex flex-row mr-2">
+            <h3 class="font-semibold text-xl">Message</h3>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <textarea
+              style="height: 200px"
+              id="message"
+              rows="4"
+              class="block p-2.5 w-full text-sm shadow-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Write your thoughts here..."
+            >
+    Hi ...,
+    
+    It was a pleasure to be a part of your wedding!
+    
+    If you have a few moments, can you share your experience with other engaged couples on hitched.co.uk? Your review of our services will help them plan their wedding.
+                
+    Thanks,             
+    Best,
+    Bonheur
+              </textarea
+            >
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <p class="font-medium text-gray-500">
+              Note: a link to write a review directly on your storefront will be
+              included in the email:[Link]
+            </p>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <mat-checkbox class="example-margin">Save as template</mat-checkbox>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <button
+              mat-raised-button
+              color="primary"
+              class="mr-2"
+              style="height: 42px"
+            >
+              Send
+            </button>
+          </div>
+
+          <div class="flex flex-row mr-2 py-4">
+            <h3 class="font-semibold text-xl">Recipients</h3>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <p class="text-lg">
+              Send this custom URL to your past clients to quickly collect
+              reviews.
+            </p>
+          </div>
+          <div class="flex flex-row mr-2 py-2">
+            <mat-form-field appearance="outline" class="w-full">
+              <input
+                matInput
+                placeholder="Placeholder"
+                value="http://localhost:4200/supplier/review"
+              />
+              <button mat-button matSuffix>COPY</button>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
