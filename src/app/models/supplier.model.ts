@@ -1,6 +1,10 @@
+import { SafeHtml } from '@angular/platform-browser';
 import { BaseResponse, PaginationResponse } from './base.model';
 import { SupplierCategory } from './category.model';
 import { OnBoardStatus, StatusCode, SupplierStatus } from './enums.model';
+import { SubscriptionPackage } from './subscription-packages.model';
+import { SocialNetwork } from './social-network';
+import { Review } from './review.model';
 
 export interface Supplier {
   id: number;
@@ -14,6 +18,8 @@ export interface Supplier {
   province?: string;
   ward?: string;
   district?: string;
+  longitude?: string;
+  latitude?: string;
   websiteUrl?: string;
   responseTime?: string;
   priority: number;
@@ -25,6 +31,10 @@ export interface Supplier {
   priorityEnd?: Date;
   averageRating: number;
   images?: SupplierImage[];
+  socialNetworks?: SupplierSocialNetworkDetail[];
+  faqs?: SupplierFAQ[];
+  reviews?: Review[];
+  subscriptionPackage?: SubscriptionPackage;
 }
 
 export interface SupplierImage {
@@ -32,6 +42,12 @@ export interface SupplierImage {
   imageUrl?: string;
   imageFileName?: string;
   isPrimary: boolean;
+}
+
+export interface SupplierSocialNetworkDetail {
+  id: number;
+  socialNetwork: SocialNetwork;
+  url: string;
 }
 
 export interface SupplierListResponse extends PaginationResponse<Supplier> {}
@@ -129,6 +145,8 @@ export interface UpdateSupplierAddressRequest {
   ward: string;
   district: string;
   province: string;
+  longitude: string;
+  latitude: string;
 }
 
 export interface UpdateSupplierImagesRequest {
@@ -143,6 +161,7 @@ export interface PreviewImage {
 
 export interface GetSuppliersParams {
   supplierName?: string;
+  supplierCategoryIds?: number[];
   supplierCategoryId?: number;
   province?: string;
   isFeatured?: boolean;
@@ -150,7 +169,7 @@ export interface GetSuppliersParams {
   minPrice?: number;
   maxPrice?: number;
   status?: SupplierStatus;
-  sortAsc?: boolean;
+  sortAsc?: boolean | null;
   pageNumber?: number;
   pageSize?: number;
   orderBy?: string;

@@ -11,7 +11,6 @@ import { BaseResponse, PaginationResponse } from '../models/base.model';
 import {
   GetSuppliersParams,
   RegisterSupplierRequest,
-  SaveDiscountRequest,
   Supplier,
   SupplierFAQ,
   SupplierFAQRequest,
@@ -42,11 +41,10 @@ export class SupplierService extends EndpointBase {
       params = params.set('supplierName', getSuppliersParams.supplierName);
     }
 
-    if (getSuppliersParams.supplierCategoryId! > 0) {
-      params = params.set(
-        'supplierCategoryId',
-        getSuppliersParams.supplierCategoryId!.toString()
-      );
+    if (getSuppliersParams.supplierCategoryIds?.length) {
+      getSuppliersParams.supplierCategoryIds.forEach((id) => {
+        params = params.append('supplierCategoryIds', id);
+      });
     }
 
     if (getSuppliersParams.province) {
