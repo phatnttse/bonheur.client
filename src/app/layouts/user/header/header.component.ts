@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { Router, RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { Account } from '../../../models/account.model';
 import { AuthService } from '../../../services/auth.service';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 import { DataService } from '../../../services/data.service';
 import { SidebarMobileComponent } from '../sidebar-mobile/sidebar-mobile.component';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
-import { ToolSidebarComponent } from '../../../components/suppliers/tool-sidebar/tool-sidebar.component';
-import { MatBadgeModule } from '@angular/material/badge';
+import { LocationService } from '../../../services/location.service';
+import { MaterialModule } from '../../../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -23,13 +19,12 @@ import { MatBadgeModule } from '@angular/material/badge';
     CommonModule,
     TablerIconsModule,
     RouterModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
     SidebarMobileComponent,
     TopBarComponent,
     MainMenuComponent,
-    MatBadgeModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -37,11 +32,17 @@ import { MatBadgeModule } from '@angular/material/badge';
 export class HeaderComponent implements OnInit {
   isMenuOpen = false;
   account: Account | null = null;
+  valueProvince: any = [];
+  provinceList: any = []; // Danh sách tỉnh
+  selectedProvince: string = ''; // Tỉnh đã chọn
+  isDropdownOpen = false;
+  searchValue: string = '';
 
   constructor(
     private dataService: DataService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private locationService: LocationService
   ) {}
 
   toggleMenu() {
@@ -56,11 +57,66 @@ export class HeaderComponent implements OnInit {
         this.account = this.authService.currentUser;
       }
     });
+
+    this.dataService.provinceData$.subscribe((province: any | null) => {
+      if (province) {
+        this.getDetailProvinces();
+      } else {
+        this.getProvinces();
+      }
+    });
   }
 
   btnLogout() {
     this.authService.logout();
     this.dataService.resetData();
     this.router.navigate(['/authentication/signin']);
+  }
+
+  getProvinces() {
+    this.locationService.getProvinces().subscribe({
+      next: (response: any) => {
+        this.dataService.provinceDataSource.next(response);
+        this.valueProvince = response;
+      },
+      complete: () => {
+        this.getDetailProvinces();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  selectProvince(province: string) {
+    this.selectedProvince = province;
+    this.isDropdownOpen = false;
+    this.router.navigate(['/suppliers'], {
+      queryParams: { province: this.selectedProvince },
+    });
+  }
+
+  onSearch() {
+    this.router.navigate(['/suppliers'], {
+      queryParams: { q: this.searchValue },
+    });
+  }
+
+  getDetailProvinces() {
+    let setProvinces = new Set();
+    this.valueProvince.forEach((response: any) => {
+      if (!setProvinces.has(response.provinceId)) {
+        let cloneProvince = {
+          provinceName: response.provinceName,
+          provinceId: response.provinceId,
+        };
+        this.provinceList.push(cloneProvince);
+        setProvinces.add(response.provinceId);
+      }
+    });
   }
 }

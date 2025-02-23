@@ -84,6 +84,14 @@ export class DataService {
   public reviewDataSource = new BehaviorSubject<Review[] | null>(null);
   reviewData$ = this.reviewDataSource.asObservable();
 
+  //Behavior subject: Search
+  public searchDataSource = new BehaviorSubject<string | null>(null);
+  searchData$ = this.searchDataSource.asObservable();
+
+  //Behavior subject: Province
+  public provinceSearchDataSource = new BehaviorSubject<string | null>(null);
+  provinceSearch$ = this.provinceSearchDataSource.asObservable();
+
   resetData() {
     this.accountDataSource.next(null);
   }
