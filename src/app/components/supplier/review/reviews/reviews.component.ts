@@ -71,19 +71,16 @@ export class ReviewsComponent {
   getReviews(supplierId: number, pageNumber: number, pageSize: number) {
     this.reviewService.getReviews(supplierId, pageNumber, pageSize).subscribe({
       next: (response: ListReviewResponse) => {
-        debugger;
         this.responseData = response;
-        // this.listReviewResponse = response.data.reviews.data.items;
-        // this.pageNumber = response.data.reviews.data.pageNumber;
-        // this.pageSize = response.data.reviews.data.pageSize;
-        // this.totalItemCount = response.data.reviews.data.totalItemCount;
-        // this.isFirstPage = response.data.reviews.data.isFirstPage;
-        // this.isLastPage = response.data.reviews.data.isLastPage;
-        // this.hasNextPage = response.data.reviews.data.hasNextPage;
-        // this.hasPreviousPage = response.data.reviews.data.hasPreviousPage;
-        debugger;
+        this.listReviewResponse = response.data.reviews.items;
+        this.pageNumber = response.data.reviews.pageNumber;
+        this.pageSize = response.data.reviews.pageSize;
+        this.totalItemCount = response.data.reviews.totalItemCount;
+        this.isFirstPage = response.data.reviews.isFirstPage;
+        this.isLastPage = response.data.reviews.isLastPage;
+        this.hasNextPage = response.data.reviews.hasNextPage;
+        this.hasPreviousPage = response.data.reviews.hasPreviousPage;
         const scores = response.data.averageScores;
-
         this.averageRate = this.calculateAverage(scores);
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
@@ -96,16 +93,16 @@ export class ReviewsComponent {
 
   getBlockStyle(index: number, averageRating: number): string {
     const rating = averageRating - index;
-    if (rating >= 1) return 'bg-yellow-500'; // Ô đầy đủ màu
-    if (rating >= 0.5) return 'bg-yellow-300'; // Ô nửa màu
-    return 'bg-gray-200'; // Ô nhạt
+    if (rating >= 1) return 'bg-yellow-500';
+    if (rating >= 0.5) return 'bg-yellow-300';
+    return 'bg-gray-200';
   }
 
   getStarStyle(index: number, averageRating: number): string {
     const rating = averageRating - index;
-    if (rating >= 1) return 'filled'; // Ô đầy đủ màu
-    if (rating >= 0.5) return 'half-filled'; // Ô nửa màu
-    return 'empty'; // Ô nhạt
+    if (rating >= 1) return 'filled';
+    if (rating >= 0.5) return 'half-filled';
+    return 'empty';
   }
 
   calculateAverage(obj: Record<string, any>): number {
