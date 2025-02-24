@@ -12,7 +12,11 @@
                   <div class="w-1/2 p-2 gap-4">
                     <img
                       class="w-full h-full rounded-tl-lg rounded-bl-lg cursor-pointer"
-                      src="https://cdn0.hitched.co.uk/vendor/4649/3_2/640/jpg/image-9_4_314649-173038695951376.webp"
+                      [src]="
+                        supplier && supplier.images
+                          ? supplier.images[0].imageUrl
+                          : ''
+                      "
                       alt=""
                     />
                   </div>
@@ -21,20 +25,40 @@
                     <div class="grid grid-cols-2 gap-4">
                       <img
                         class="w-full h-auto cursor-pointer"
-                        src="https://cdn0.hitched.co.uk/vendor/4649/3_2/640/jpg/woodboroughhallweddingphotographer-517_4_314649-170267610139085.webp"
+                        [src]="
+                          supplier && supplier.images
+                            ? supplier.images[1].imageUrl
+                            : ''
+                        "
                         alt=""
                       />
                       <img
                         class="w-full h-auto rounded-tr-lg cursor-pointer"
-                        src="https://cdn0.hitched.co.uk/vendor/4649/3_2/640/jpg/1000011797_4_314649-170267381441104.webp"
+                        [src]="
+                          supplier && supplier.images
+                            ? supplier.images[2].imageUrl
+                            : ''
+                        "
                         alt=""
                       />
                     </div>
-                    <img
-                      class="w-full h-auto rounded-br-lg cursor-pointer"
-                      src="https://cdn0.hitched.co.uk/vendor/4649/3_2/640/jpg/upstairs-dining-room-5_4_314649-169650225863378.webp"
-                      alt=""
-                    />
+                    <div class="relative w-full">
+                      <img
+                        class="w-full h-auto rounded-br-lg cursor-pointer"
+                        [src]="
+                          supplier && supplier.images
+                            ? supplier.images[3].imageUrl
+                            : ''
+                        "
+                        alt=""
+                      />
+                      <button
+                        class="absolute bottom-4 right-4 bg-white text-black px-4 py-2 rounded-lg shadow-md cursor-pointer"
+                        (click)="openInFullScreen(supplier?.images?.length!)"
+                      >
+                        View photos {{ supplier?.images?.length }}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -45,7 +69,7 @@
                   <h4
                     class="font-quicksand text-[22px] tracking-[0.03rem] font-bold leading-[1.2] text-[#222222]"
                   >
-                    Woodborough Hall
+                    {{ supplier?.name }}
                   </h4>
                 </div>
                 <div class="mb-4 flex items-center">
@@ -59,22 +83,31 @@
                     }
                   </span>
                   <span class="font-semibold text-[14px] mr-2"
-                    >4.9 Excellent
+                    >{{ supplier?.averageRating }}
                   </span>
                   <span class="mr-2">.</span>
                   <span>
-                    <a class="underline text-[#222222] text-[14px]">
-                      4 reviews</a
+                    <a
+                      class="underline text-[#222222] text-[14px]"
+                      routerLink="."
+                      fragment="reviews"
+                    >
+                      {{ supplier?.totalRating }} reviews</a
                     >
                   </span>
                 </div>
                 <div class="flex items-center gap-4 mb-4">
-                  <mat-icon class="mb-1" fontSet="material-icons-outlined"
+                  <mat-icon
+                    class="mb-1 w-full"
+                    fontSet="material-icons-outlined"
+                    style="overflow: initial !important"
                     >location_on</mat-icon
                   >
                   <span
-                    class="underline text-[#3d4750] font-light cursor-pointer"
-                    >Woodborough Hall, Nottingham</span
+                    class="underline text-[#3d4750] font-light cursor-pointer ml-4"
+                    routerLink="."
+                    fragment="map"
+                    >{{ supplier?.address }}</span
                   >
                 </div>
                 <div class="flex items-center gap-4 mb-6">
@@ -84,32 +117,51 @@
                     alt="Web Browsing"
                     class="mx-1"
                   />
-                  <span class="underline text-[#222222] cursor-pointer"
-                    >Visite website</span
+                  <a
+                    [href]="supplier?.websiteUrl"
+                    class="underline text-[#222222] cursor-pointer"
+                    target="_blank"
+                    >Visite website</a
                   >
                 </div>
+                @if (supplier?.discount! > 0) {
+                <div class="flex items-center gap-4 mb-6">
+                  <mat-icon class="mx-1">local_offer</mat-icon>
+                  <span class="text-red-500 font-light cursor-pointer"
+                    >{{ supplier?.discount }}% discount</span
+                  >
+                </div>
+                }
+
                 <div
                   class="shadow-[0_2px_8px_#00000026] p-10 rounded-lg bg-white mb-6"
                 >
-                  <div
-                    class="flex items-center mb-4 border-b border-solid border-[#eee] p-8"
-                  >
+                  <div class="flex items-center p-8">
                     <mat-icon class="mr-4"
                       ><i-tabler name="coins"></i-tabler
                     ></mat-icon>
-                    <span class="text-[#222]">Starting at 5.000.000đ</span>
+                    <span class="text-[#222]"
+                      >Starting at {{ supplier?.price! | vndCurrency }}</span
+                    >
                   </div>
-                  <div class="flex items-center p-8">
+                  <!-- <div class="flex items-center p-8">
                     <mat-icon fontSet="material-icons-outlined" class="mr-4"
                       >people_alt</mat-icon
                     >
                     <span class="text-[#222] mt-[2px]">20 to 180 guests</span>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="flex justify-start ml-12 mb-1">
                   <div class="flex items-center mr-2">
                     <mat-icon class="text-[#fea99a]">bolt</mat-icon>
-                    <span class="text-sm"> Response within 24 hours </span>
+                    <span class="text-sm">
+                      @if (supplier?.responseTimeStart === '00:00:00' &&
+                      supplier?.responseTimeEnd === '00:00:00') { Response time
+                      within 24 hours } @else { Response time:
+                      {{ getFormattedTime(supplier?.responseTimeStart) }} -
+                      {{ getFormattedTime(supplier?.responseTimeEnd) }}
+                      }</span
+                    >
                   </div>
                 </div>
                 <div class="flex flex-wrap">
@@ -119,6 +171,7 @@
                       color="primary"
                       class="w-full"
                       style="padding: 24px 0; font-weight: 600; font-size: 15px"
+                      (click)="openRequestPricingDialog()"
                     >
                       Request Pricing
                     </button>
@@ -149,334 +202,323 @@
               <li class="nav-item relative leading-[28px] active">
                 <a
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
-                  href="#detail"
+                  routerLink="."
+                  fragment="about"
                   >About</a
                 >
               </li>
               <li class="nav-item relative leading-[28px]">
                 <a
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
-                  href="#information"
-                  >Information</a
+                  routerLink="."
+                  fragment="social"
+                  >Social Networks</a
                 >
               </li>
               <li class="nav-item relative leading-[28px]">
                 <a
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
-                  href="#reviews"
-                  >Reviews</a
+                  routerLink="."
+                  fragment="faqs"
+                  >FAQs</a
+                >
+              </li>
+              <li class="nav-item relative leading-[28px]">
+                <a
+                  class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                  routerLink="."
+                  fragment="reviews"
+                  >Reviews <span class="text-sm">(4)</span></a
+                >
+              </li>
+              <li class="nav-item relative leading-[28px]">
+                <a
+                  class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                  routerLink="."
+                  fragment="map"
+                  >Map</a
                 >
               </li>
             </ul>
           </div>
-          <div class="tab-content">
-            <div class="tab-pro-pane" id="detail">
-              <div class="p-[15px] rounded-[20px]">
+          <div class="tab-content mb-6">
+            <div class="tab-pro-pane" id="about">
+              <div class="rounded-[20px]">
                 <div class="bb-details">
-                  <p
-                    class="mb-[12px] text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light"
-                  >
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Libero, voluptatum. Vitae dolores alias repellat eligendi,
-                    officiis, exercitationem corporis quisquam delectus cum non
-                    recusandae numquam dignissimos molestiae magnam hic natus.
-                    Cumque.
+                  <p class="font-semibold md:text-xl max-[667px]:text-lg mb-4">
+                    About:
                   </p>
-                  <div class="details-info">
-                    <ul class="list-disc pl-[20px] mb-[0]">
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        Any Product types that You want - Simple, Configurable
-                      </li>
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        Downloadable/Digital Products, Virtual Products
-                      </li>
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        Inventory Management with Backordered items
-                      </li>
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        Flatlock seams throughout.
-                      </li>
-                    </ul>
-                    <ul class="list-disc pl-[20px] mb-[0]">
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        <span class="inline-flex font-medium min-w-[150px]"
-                          >Highlights</span
-                        >Form FactorWhole
-                      </li>
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        <span class="inline-flex font-medium min-w-[150px]"
-                          >Seller</span
-                        >No Returns Allowed
-                      </li>
-                      <li
-                        class="py-[5px] text-[15px] text-[#686e7d] leading-[28px] font-light"
-                      >
-                        <span class="inline-flex font-medium min-w-[150px]"
-                          >Services</span
-                        >Cash on Delivery available
-                      </li>
-                    </ul>
-                  </div>
+                  <p class="font-light mb-4">On Bonheur since 2025</p>
+                  <p class="mb-[12px]" [innerHTML]="supplier?.description"></p>
                 </div>
               </div>
             </div>
-            <div class="tab-pro-pane" id="information" style="display: none">
-              <div
-                class="bb-inner-tabs border-[1px] border-solid border-[#eee] p-[15px] rounded-[20px]"
-              >
-                <div class="information">
-                  <ul class="list-disc pl-[20px]">
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Weight</span
-                      >
-                      500 g
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Dimensions</span
-                      >
-                      17 × 15 × 3 cm
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Color</span
-                      >
-                      black,yellow,red
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Brand</span
-                      >
-                      Wonder Fort
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Form Factor</span
-                      >Whole
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Quantity</span
-                      >1
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Container Type</span
-                      >Pouch
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Shelf Life</span
-                      >12 Months
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Ingredients</span
-                      >Dalchini, Dhaniya, Badi Elaichi, Laung
-                    </li>
-                    <li
-                      class="text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]"
-                    >
-                      <span class="inline-flex min-w-[130px] font-medium"
-                        >Other Features</span
-                      >Ingredient Type: Vegetarian
-                    </li>
-                  </ul>
+          </div>
+          <div class="tab-social mb-4" id="social">
+            <div class="rounded-[20px]">
+              <div class="bb-details">
+                <div class="mb-1">
+                  <p class="font-semibold md:text-xl max-[667px]:text-lg">
+                    Follow On:
+                  </p>
                 </div>
-              </div>
-            </div>
-            <div class="tab-pro-pane" id="reviews" style="display: none">
-              <div
-                class="bb-inner-tabs border-[1px] border-solid border-[#eee] p-[15px] rounded-[20px]"
-              >
-                <div class="bb-reviews">
-                  <div
-                    class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col"
-                  >
-                    <div
-                      class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]"
-                    >
+                <div class="flex flex-col py-4">
+                  @for (item of supplier?.socialNetworks; track $index) {
+                  <div class="flex items-center gap-8">
+                    <div class="mb-4">
                       <img
-                        src="assets/img/reviews/1.jpg"
-                        alt="img-1"
-                        class="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
+                        [src]="item.socialNetwork.imageUrl"
+                        alt=""
+                        width="24"
+                        height="24"
+                        class="mt-4"
                       />
                     </div>
-                    <div class="inner-contact">
-                      <h4
-                        class="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]"
-                      >
-                        Mariya Lykra
-                      </h4>
-                      <div class="bb-pro-rating flex">
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"
-                        ></i>
-                      </div>
-                      <p
-                        class="text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]"
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Illo, hic expedita asperiores eos neque cumque impedit
-                        quam, placeat laudantium soluta repellendus possimus a
-                        distinctio voluptate veritatis nostrum perspiciatis est!
-                        Commodi!
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col"
-                  >
-                    <div
-                      class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]"
-                    >
-                      <img
-                        src="assets/img/reviews/2.jpg"
-                        alt="img-2"
-                        class="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
-                      />
-                    </div>
-                    <div class="inner-contact">
-                      <h4
-                        class="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]"
-                      >
-                        Saddika Alard
-                      </h4>
-                      <div class="bb-pro-rating flex">
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                        ></i>
-                        <i
-                          class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"
-                        ></i>
-                      </div>
-                      <p
-                        class="text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]"
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Illo, hic expedita asperiores eos neque cumque impedit
-                        quam, placeat laudantium soluta repellendus possimus a
-                        distinctio voluptate veritatis nostrum perspiciatis est!
-                        Commodi!
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="bb-reviews-form">
-                  <h3
-                    class="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[8px] text-[20px] font-bold text-[#3d4750]"
-                  >
-                    Add a Review
-                  </h3>
-                  <div class="bb-review-rating flex mb-[12px]">
-                    <span
-                      class="pr-[10px] text-[15px] font-semibold leading-[26px] tracking-[0.02rem] text-[#3d4750]"
-                      >Your ratting :</span
-                    >
-                    <div class="bb-pro-rating">
-                      <i
-                        class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                      ></i>
-                      <i
-                        class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                      ></i>
-                      <i
-                        class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                      ></i>
-                      <i
-                        class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"
-                      ></i>
-                      <i
-                        class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"
-                      ></i>
-                    </div>
-                  </div>
-                  <form action="#">
-                    <div class="input-box mb-[24px]">
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        name="your-name"
-                        class="w-full h-[50px] border-[1px] border-solid border-[#eee] pl-[20px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
-                      />
-                    </div>
-                    <div class="input-box mb-[24px]">
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        name="your-email"
-                        class="w-full h-[50px] border-[1px] border-solid border-[#eee] pl-[20px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
-                      />
-                    </div>
-                    <div class="input-box mb-[24px]">
-                      <textarea
-                        name="your-comment"
-                        placeholder="Enter Your Comment"
-                        class="w-full h-[100px] border-[1px] border-solid border-[#eee] py-[20px] pl-[20px] pr-[10px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
-                      ></textarea>
-                    </div>
-                    <div class="input-button">
+                    <div>
                       <a
-                        href="javascript:void(0)"
-                        class="bb-btn-2 transition-all duration-[0.3s] ease-in-out h-[40px] inline-flex leading-[28px] tracking-[0.03rem] py-[4px] px-[15px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
-                        >View Cart</a
+                        class="underline text-[#222222] text-[14px]"
+                        [href]="item.url"
+                        target="_blank"
+                        >{{ item.socialNetwork.name }}</a
                       >
                     </div>
-                  </form>
+                  </div>
+                  }
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="mb-10" id="faqs">
+            <div class="mb-4">
+              <p class="font-semibold md:text-xl max-[667px]:text-lg">
+                Frequently asked questions
+              </p>
+            </div>
+            <div class="flex flex-col">
+              @for (item of supplier?.faqs; track $index) {
+              <div
+                class="flex flex-col gap-10 border-b border-solid border-[#eee] py-4"
+              >
+                <p class="font-semibold">{{ item.question }}?</p>
+                <p>{{ item.answer }}</p>
+              </div>
+              }
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-between bg-white shadow-[0_2px_8px_#00000026] rounded-lg mb-10 py-8 px-4"
+          >
+            <div class="flex items-center gap-4">
+              <img
+                src="./../../../assets/images/svgs/paperAndPencil.svg"
+                alt=""
+                width="40"
+                height="40"
+                class="mx-4"
+              />
+              <p class="mx-2 font-semibold text-base">
+                Do you have any questions?
+              </p>
+            </div>
+            <div>
+              <button mat-stroked-button color="primary" style="padding: 22px">
+                Request Pricing
+              </button>
+            </div>
+          </div>
+          <div class="mb-10" id="reviews">
+            <p class="font-semibold md:text-xl max-[667px]:text-lg mb-6">
+              Reviews For {{ supplier?.name }}
+            </p>
+            <div
+              class="flex items-center gap-6 bg-white shadow-[0_2px_8px_#00000026] rounded-lg mb-10 py-6 px-4"
+            >
+              <mat-icon>info_outline</mat-icon>
+              <p>
+                We're all about trust. Our community relies on honest reviews to
+                make your big decisions easier.
+              </p>
+            </div>
+            <div
+              class="flex items-center flex-row md:gap-80 max-[667px]:gap-10 flex-wrap mb-10 border-b border-solid border-[#eee] pb-10"
+            >
+              <div class="flex flex-col">
+                <div class="flex items-center gap-6 mb-2 mx-1">
+                  <span class="text-lg font-bold">4.9</span>
+                  <span class="text-base font-semibold">Excellent</span>
+                </div>
+                <div class="flex items-center mb-4">
+                  @for (item of [1, 2, 3, 4, 5]; track $index) {
+                  <mat-icon
+                    fontSet="material-icons-outlined"
+                    class="text-xl text-[#fea99a]"
+                    style="font-size: 26px"
+                    >star</mat-icon
+                  >
+                  }
+                </div>
+                <div class="mb-4 mx-1">
+                  <span class="text-[#222222] font-medium">4 Reviews</span>
+                </div>
+                <div class="mb-2">
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    style="
+                      padding: 24px 60px;
+                      font-weight: 600;
+                      font-size: 15px;
+                    "
+                    class="w-full"
+                  >
+                    Write a review
+                  </button>
+                </div>
+              </div>
+              <div>
+                @if (averageScores) {
+                <ul class="space-y-4">
+                  <li class="flex items-center justify-between gap-30">
+                    <span>Quality of the service</span>
+                    <div class="flex items-center gap-10">
+                      <mat-progress-bar
+                        style="width: 150px"
+                        mode="determinate"
+                        [value]="
+                          (averageScores.averageQualityOfService * 100) / 5
+                        "
+                        color="accent"
+                      ></mat-progress-bar>
+                      <span>{{ averageScores.averageQualityOfService }}</span>
+                    </div>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span>Response time</span>
+                    <div class="flex items-center gap-10">
+                      <mat-progress-bar
+                        style="width: 150px"
+                        mode="determinate"
+                        [value]="(averageScores.averageResponseTime * 100) / 5"
+                        color="accent"
+                      ></mat-progress-bar>
+                      <span>{{ averageScores.averageResponseTime }}</span>
+                    </div>
+                  </li>
+                  <li class="flex items-center justify-between gap-2">
+                    <span>Professionalism</span>
+                    <div class="flex items-center gap-10">
+                      <mat-progress-bar
+                        style="width: 150px"
+                        mode="determinate"
+                        [value]="
+                          (averageScores.averageProfessionalism * 100) / 5
+                        "
+                        color="accent"
+                      ></mat-progress-bar>
+                      <span>{{ averageScores.averageProfessionalism }}</span>
+                    </div>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span>Value for money</span>
+                    <div class="flex items-center gap-10">
+                      <mat-progress-bar
+                        style="width: 150px"
+                        mode="determinate"
+                        [value]="(averageScores.averageValueOfMoney * 100) / 5"
+                        color="accent"
+                      ></mat-progress-bar>
+                      <span>{{ averageScores.averageValueOfMoney }}</span>
+                    </div>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span>Flexibility</span>
+                    <div class="flex items-center gap-10">
+                      <mat-progress-bar
+                        style="width: 150px"
+                        mode="determinate"
+                        [value]="(averageScores.averageFlexibility * 100) / 5"
+                        color="accent"
+                      ></mat-progress-bar>
+                      <span>{{ averageScores.averageFlexibility }}</span>
+                    </div>
+                  </li>
+                </ul>
+                }
+              </div>
+            </div>
+            <ngx-slick-carousel
+              class="carousel px-4"
+              #slickModal="slick-carousel"
+              [config]="slideConfig"
+            >
+              @for (item of supplier?.reviews; track $index) {
+              <div ngxSlickItem class="slide">
+                <div
+                  class="flex flex-col items-center justify-center gap-4 px-4 max-[1024px]:px-1 max-[667px]:px-3"
+                >
+                  <mat-card
+                    class="relative h-[460px] w-full flex flex-col justify-between bg-white shadow-lg rounded-md"
+                    appearance="outlined"
+                    data-aos="fade-up"
+                    data-aos-duration="1500"
+                    data-aos-delay="200"
+                  >
+                    <div class="py-4 px-4">
+                      <div class="flex items-center gap-6 mb-4">
+                        <div>
+                          <img
+                            [src]="item.user.pictureUrl"
+                            class="rounded-full object-cover w-14 h-14"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-[#222222]">{{
+                            item.user.fullName
+                          }}</span>
+                          <span class="text-[#3d4750] text-[14px]"
+                            >Sent on 21/02/2025</span
+                          >
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-6 mb-4">
+                        <div class="flex items-center">
+                          @for (item of [1, 2, 3, 4, 5]; track $index) {
+                          <mat-icon
+                            fontSet="material-icons-outlined"
+                            class="text-lg text-[#fea99a]"
+                            >star</mat-icon
+                          >
+                          }
+                        </div>
+                        <div class="mt-2">
+                          <span class="font-semibold">{{
+                            (item.flexibility +
+                              item.professionalism +
+                              item.qualityOfService +
+                              item.responseTime +
+                              item.valueForMoney) /
+                              5
+                          }}</span>
+                        </div>
+                      </div>
+                      <p class="font-semibold mb-4 text-[#222222]">
+                        {{ item.summaryExperience }}
+                      </p>
+                      <p class="text-[#3d4750]">
+                        {{ item.content }}
+                      </p>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+              }
+            </ngx-slick-carousel>
+          </div>
+          <div class="mb-6" id="map">
+            <p class="font-semibold md:text-xl max-[667px]:text-lg mb-6">Map</p>
+            <div class="map-wrap">
+              <div class="map" #map></div>
             </div>
           </div>
         </div>

@@ -180,7 +180,7 @@
             </div>
             <div class="flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Response Time (Ex: 8h-20h, 24/24)
+                >Response Time Start
                 <span class="text-red-500">*</span></mat-label
               >
               <mat-form-field
@@ -190,19 +190,48 @@
               >
                 <input
                   matInput
-                  type="text"
-                  formControlName="responseTime"
+                  type="time"
+                  formControlName="responseTimeStart"
                   required
                   [class.is-invalid]="
-                    formBusinessInfo.get('responseTime')?.invalid &&
-                    formBusinessInfo.get('responseTime')?.touched
+                    formBusinessInfo.get('responseTimeStart')?.invalid &&
+                    formBusinessInfo.get('responseTimeStart')?.touched
                   "
-                  placeholder="Enter your response time"
+                  placeholder="Enter your response time start"
                 />
-                @if(formBusinessInfo.get('responseTime')?.hasError('required'))
+                @if(formBusinessInfo.get('responseTimeStart')?.hasError('required'))
                 {
                 <mat-error style="font-size: 12px">
-                  Response time is required
+                  Response time start is required
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="flex flex-col pt-2">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Response Time End
+                <span class="text-red-500">*</span></mat-label
+              >
+              <mat-form-field
+                appearance="outline"
+                class="w-100"
+                color="primary"
+              >
+                <input
+                  matInput
+                  type="time"
+                  formControlName="responseTimeEnd"
+                  required
+                  [class.is-invalid]="
+                    formBusinessInfo.get('responseTimeEnd')?.invalid &&
+                    formBusinessInfo.get('responseTimeEnd')?.touched
+                  "
+                  placeholder="Enter your response time end"
+                />
+                @if(formBusinessInfo.get('responseTimeEnd')?.hasError('required'))
+                {
+                <mat-error style="font-size: 12px">
+                  Response time end is required
                 </mat-error>
                 }
               </mat-form-field>

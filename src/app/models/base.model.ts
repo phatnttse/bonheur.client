@@ -33,3 +33,23 @@ export interface PaginationResponse<T> {
     hasPreviousPage: boolean;
   };
 }
+
+export interface PaginationData<T> {
+  items: T[];
+  pageNumber: number;
+  pageSize: number;
+  totalItemCount: number;
+  pageCount: number;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export interface AverageScores {
+  averageValueOfMoney: number;
+  averageFlexibility: number;
+  averageProfessionalism: number;
+  averageQualityOfService: number;
+  averageResponseTime: number;
+}

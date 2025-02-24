@@ -49,6 +49,7 @@ export class NotificationService {
   }
 
   handleApiError(error: HttpErrorResponse) {
+    debugger;
     if (error.status === 0) {
       return this.show(
         'An error occurred',
@@ -64,7 +65,13 @@ export class NotificationService {
     } else if (error.status === 401) {
       return;
     } else {
-      return this.show('An error occurred', error.error.detail, 'error');
+      if (error.error) {
+        return this.show('An error occurred', error.error.detail, 'error');
+      }
+      if (error.error) {
+        return this.show('An error occurred', error.error.message, 'error');
+      }
+      return;
     }
   }
 

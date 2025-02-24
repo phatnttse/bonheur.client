@@ -1,4 +1,3 @@
-import { event } from 'jquery';
 import {
   Component,
   OnInit,
@@ -34,7 +33,6 @@ import { BaseResponse } from '../../../models/base.model';
 import { StatusCode } from '../../../models/enums.model';
 import { DataService } from '../../../services/data.service';
 import { CommonModule } from '@angular/common';
-import { PlaceService } from '../../../services/place.service';
 
 @Component({
   selector: 'app-step-2',
@@ -79,8 +77,7 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     private statusService: StatusService,
     private authService: AuthService,
     private locationService: LocationService,
-    private dataService: DataService,
-    private placeService: PlaceService
+    private dataService: DataService
   ) {
     this.formLocation = this.formBuilder.group({
       street: [''],
@@ -275,7 +272,6 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
       ).toLocaleString('en-US')}đ</span>
     </div>       
   </div>
-
 `;
     this.currentMarker = new Marker({ color: '#FF0000' })
       .setPopup(
@@ -298,8 +294,50 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
       province: supplier.province,
     });
 
-    const address = `${supplier.street}, ${supplier.ward}, ${supplier.district}, ${supplier.province}`;
-    this.getGeoCodeAddress(address);
+    if (this.supplier.latitude && this.supplier.longitude) {
+      this.latitudeSupplier = parseFloat(this.supplier.latitude);
+      this.longitudeSupplier = parseFloat(this.supplier.longitude);
+      this.map?.setCenter([this.longitudeSupplier, this.latitudeSupplier]);
+      const address = `${supplier.street}, ${supplier.ward}, ${supplier.district}, ${supplier.province}`;
+      const cardHTML = `
+      <img
+        src=${this.supplier?.images?.[0]?.imageUrl || ''}
+        class="max-h-[201px] w-full object-cover rounded-t-md"
+      />
+      <div
+        class="flex flex-col justify-between"
+      >
+        <div class="px-4 py-4">
+          <h2 class="text-[#3d4750] text-base font-bold truncate mb-2">
+            ${this.supplier?.name || 'Supplier Name'}
+          </h2>
+          <p class="text-[#3d4750] text-[14px]">${address}</p>
+          <div class="flex items-center mt-2">
+            <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
+            <span class="text-sm mr-1"></span>${
+              this.supplier?.averageRating || 0
+            }
+            <span class="text-[#7d7d7d] text-[12px] ml-2"> (0 reviews) </span>
+          </div>
+          <span class="text-sm font-semibold mt-2"><span class="font-medium">From: </span> ${(
+            this.supplier?.price || 0
+          ).toLocaleString('vi-VN')}đ</span>
+        </div>       
+      </div>
+    `;
+      this.currentMarker = new Marker({ color: '#FF0000' })
+        .setPopup(
+          new Popup()
+            .setHTML(`${cardHTML}`)
+            .setMaxWidth('300px')
+            .setOffset([0, -40])
+        )
+        .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
+        .addTo(this.map!);
+    } else {
+      const address = `${supplier.street}, ${supplier.ward}, ${supplier.district}, ${supplier.province}`;
+      this.getGeoCodeAddress(address);
+    }
   }
 
   getSupplierByUserId(userId: string) {
@@ -332,6 +370,8 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
       ward: this.formLocation.get('ward')!.value,
       district: this.formLocation.get('district')!.value,
       province: this.formLocation.get('province')!.value,
+      latitude: this.latitudeSupplier.toString(),
+      longitude: this.longitudeSupplier.toString(),
     };
 
     this.supplierService.updateSupplierAddress(request).subscribe({

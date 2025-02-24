@@ -1,0 +1,88 @@
+<div
+  class="flex justify-start items-center mb-6 hover:text-red-500 cursor-pointer"
+  routerLink="/supplier/mailbox"
+>
+  <mat-icon class="mr-2"><i-tabler name="arrow-left"></i-tabler></mat-icon>
+  <span class="font-semibold text-base underline">Back</span>
+</div>
+<div
+  class="flex-1 flex flex-col bg-white px-6 py-2 space-y-4 h-full border-l border-r border-solid border-gray-200"
+>
+  <!-- Header (Giảm padding) -->
+  <div class="p-2 flex items-center border-b">
+    @if (requestPricing) {
+    <div class="p-2 flex items-center border-b">
+      <img
+        [src]="requestPricing.user?.pictureUrl"
+        class="w-10 h-10 rounded-full mr-2"
+      />
+      <div>
+        <h3 class="font-semibold text-base">
+          {{ requestPricing.user?.fullName }}
+        </h3>
+        <p class="text-gray-500 text-sm">{{ requestPricing.user?.email }}</p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Tin nhắn (Làm cao hơn) -->
+  <div
+    #messageContainer
+    class="flex-1 p-3 overflow-y-auto min-h-[500px] max-h-[500px] space-y-3"
+  >
+    @for (msg of messages; track $index) {
+    <div
+      class="flex items-end"
+      [ngClass]="msg.senderId === account?.id ? 'justify-end' : 'justify-start'"
+    >
+      <!-- Bong bóng tin nhắn -->
+      <div
+        class="flex flex-col max-w-sm"
+        [ngClass]="
+          msg.senderId === account?.id
+            ? 'self-end items-end'
+            : 'self-start items-start'
+        "
+      >
+        <div
+          class="rounded-lg py-2 px-3 min-w-[60px] max-w-xs break-words"
+          [ngClass]="
+            msg.senderId === account?.id
+              ? 'bg-blue-500 text-white text-right'
+              : 'bg-gray-200 text-black text-left'
+          "
+        >
+          <p class="text-sm text-center">
+            {{ msg.content }}
+          </p>
+        </div>
+        <span class="text-xs text-gray-500 mt-1">
+          {{ msg.createdAt | timeago }}
+        </span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Nhập tin nhắn (Giảm padding) -->
+  <div class="p-2 border-t flex items-center">
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        type="text"
+        placeholder="Reply..."
+        [(ngModel)]="messageContent"
+        (keydown.enter)="sendMessage()"
+      />
+    </mat-form-field>
+    <button
+      mat-icon-button
+      type="button"
+      class="ml-3 mb-2"
+      (click)="sendMessage()"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>

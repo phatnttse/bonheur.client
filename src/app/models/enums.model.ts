@@ -47,7 +47,8 @@ export enum Role {
 export enum RequestPricingStatus {
   PENDING = 'Pending',
   RESPONDED = 'Responded',
-  REJECTED = 'Rejected',
+  BOOKED = 'Booked',
+  DISCARDED = 'Discarded',
 }
 
 export enum SupplierStatus {

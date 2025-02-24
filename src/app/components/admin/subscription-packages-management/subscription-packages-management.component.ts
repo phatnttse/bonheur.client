@@ -15,10 +15,10 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { RouterModule } from '@angular/router';
-import { SubscriptionPackageDialogComponent } from '../../dialogs/subscription-package-dialog/subscription-package-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
 import { DataService } from '../../../services/data.service';
+import { DeleteCategoryComponent } from '../../dialogs/admin/delete-category/delete-category.component';
+import { SubscriptionPackageDialogComponent } from '../../dialogs/admin/subscription-package-dialog/subscription-package-dialog.component';
 
 @Component({
   selector: 'app-subscription-packages-management',

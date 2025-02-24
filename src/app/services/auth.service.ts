@@ -8,7 +8,7 @@ import { DBkeys } from './db-keys';
 import { Utilities } from './utilities';
 import { PermissionValues } from '../models/permission.model';
 import { OidcHelperService } from './oidc.service';
-import { LocalStoreManager } from './localstorage-manager.service';
+import { LocalStorageManager } from './localstorage-manager.service';
 import { JwtHelper } from './jwt.service';
 import { Account } from '../models/account.model';
 import { Gender, Role } from '../models/enums.model';
@@ -21,7 +21,7 @@ export class AuthService {
   private router = inject(Router);
   private oidcHelperService = inject(OidcHelperService);
   private configurations = inject(ConfigurationService);
-  private localStorage = inject(LocalStoreManager);
+  private localStorage = inject(LocalStorageManager);
   private notificationService = inject(NotificationService);
 
   public get homeUrl() {

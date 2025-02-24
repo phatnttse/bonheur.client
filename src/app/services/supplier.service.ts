@@ -11,7 +11,6 @@ import { BaseResponse, PaginationResponse } from '../models/base.model';
 import {
   GetSuppliersParams,
   RegisterSupplierRequest,
-  SaveDiscountRequest,
   Supplier,
   SupplierFAQ,
   SupplierFAQRequest,
@@ -35,20 +34,57 @@ export class SupplierService extends EndpointBase {
   getSuppliers(
     getSuppliersParams: GetSuppliersParams
   ): Observable<PaginationResponse<Supplier>> {
-    const params = new HttpParams()
-      .set('supplierName', getSuppliersParams.supplierName || '')
-      .set(
-        'supplierCategoryId',
-        getSuppliersParams.supplierCategoryId?.toString() || ''
-      )
-      .set('province', getSuppliersParams.province || '')
-      .set('isFeatured', getSuppliersParams.isFeatured?.toString() || '')
-      .set('averageRating', getSuppliersParams.averageRating?.toString() || '')
-      .set('minPrice', getSuppliersParams.minPrice?.toString() || '')
-      .set('maxPrice', getSuppliersParams.maxPrice?.toString() || '')
-      .set('sortAsc', getSuppliersParams.sortAsc?.toString() || '')
-      .set('pageNumber', getSuppliersParams.pageNumber?.toString() || '1')
-      .set('pageSize', getSuppliersParams.pageSize?.toString() || '10');
+    let params = new HttpParams();
+
+    // Only set params if they are valid (not empty or greater than zero)
+    if (getSuppliersParams.supplierName) {
+      params = params.set('supplierName', getSuppliersParams.supplierName);
+    }
+
+    if (getSuppliersParams.supplierCategoryIds?.length) {
+      getSuppliersParams.supplierCategoryIds.forEach((id) => {
+        params = params.append('supplierCategoryIds', id);
+      });
+    }
+
+    if (getSuppliersParams.province) {
+      params = params.set('province', getSuppliersParams.province);
+    }
+
+    if (getSuppliersParams.isFeatured) {
+      params = params.set(
+        'isFeatured',
+        getSuppliersParams.isFeatured?.toString()
+      );
+    }
+
+    if (getSuppliersParams.averageRating) {
+      params = params.set(
+        'averageRating',
+        getSuppliersParams.averageRating?.toString()
+      );
+    }
+
+    if (getSuppliersParams.minPrice && getSuppliersParams.minPrice > 0) {
+      params = params.set('minPrice', getSuppliersParams.minPrice?.toString());
+    }
+
+    if (getSuppliersParams.maxPrice && getSuppliersParams.maxPrice > 0) {
+      params = params.set('maxPrice', getSuppliersParams.maxPrice?.toString());
+    }
+
+    if (getSuppliersParams.sortAsc) {
+      params = params.set('sortAsc', getSuppliersParams.sortAsc?.toString());
+    }
+
+    params = params.set(
+      'pageNumber',
+      getSuppliersParams.pageNumber?.toString() || '1'
+    );
+    params = params.set(
+      'pageSize',
+      getSuppliersParams.pageSize?.toString() || '10'
+    );
 
     return this.http
       .get<PaginationResponse<Supplier>>(

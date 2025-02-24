@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environment.dev';
 import { SignInResponse } from '../models/signin-response.model';
-import { LocalStoreManager } from './localstorage-manager.service';
+import { LocalStorageManager } from './localstorage-manager.service';
 import { ConfigurationService } from './configuration.service';
 import { DBkeys } from './db-keys';
 import { Gender } from '../models/enums.model';
@@ -15,7 +15,7 @@ import { BaseResponse } from '../models/base.model';
 })
 export class OidcHelperService {
   private http = inject(HttpClient);
-  private localStorage = inject(LocalStoreManager);
+  private localStorage = inject(LocalStorageManager);
 
   private readonly clientId = 'bonheur_spa';
   private readonly scope = 'openid email phone profile offline_access roles';

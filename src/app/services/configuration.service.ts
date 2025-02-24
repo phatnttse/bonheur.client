@@ -2,14 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { DBkeys } from './db-keys';
 import { Utilities } from './utilities';
 import { environment } from '../environments/environment.dev';
-import { LocalStoreManager } from './localstorage-manager.service';
+import { LocalStorageManager } from './localstorage-manager.service';
 import { AppTranslationService } from './app-translation.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigurationService {
-  private localStorage = inject(LocalStoreManager);
+  private localStorage = inject(LocalStorageManager);
   private translationService = inject(AppTranslationService);
 
   constructor() {

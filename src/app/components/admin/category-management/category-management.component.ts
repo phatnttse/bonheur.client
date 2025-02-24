@@ -19,13 +19,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Toast, ToastrService } from 'ngx-toastr';
-import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { Router, RouterModule } from '@angular/router';
-import { SupplierCategoryDialogComponent } from '../../dialogs/supplier-category-dialog/supplier-category-dialog.component';
 import { DataService } from '../../../services/data.service';
+import { DeleteCategoryComponent } from '../../dialogs/admin/delete-category/delete-category.component';
+import { SupplierCategoryDialogComponent } from '../../dialogs/admin/supplier-category-dialog/supplier-category-dialog.component';
 
 @Component({
   selector: 'app-category-management',

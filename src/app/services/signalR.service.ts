@@ -6,18 +6,19 @@ import {
   LogLevel,
 } from '@microsoft/signalr';
 import { DBkeys } from './db-keys';
-import { LocalStoreManager } from './localstorage-manager.service';
+import { LocalStorageManager } from './localstorage-manager.service';
+import { Message } from '../models/chat.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignalRService {
   private hubConnection!: HubConnection;
-  private localStorageManager = inject(LocalStoreManager);
+  private localStorageManager = inject(LocalStorageManager);
 
-  public startConnection = (accountId: string) => {
+  public startConnection = () => {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/hubs/chat?uid=${accountId}`, {
+      .withUrl(`${environment.apiUrl}/hubs/chat`, {
         accessTokenFactory: () => {
           const token = this.localStorageManager
             .getData(DBkeys.ACCESS_TOKEN)
@@ -64,18 +65,36 @@ export class SignalRService {
   public sendMessage = (
     senderId: string,
     receiverId: string,
-    content: string
+    content: string,
+    requestPricingId?: number,
+    isSupplierReply?: boolean
   ) => {
     this.hubConnection
-      .invoke('SendMessage', { senderId, receiverId, content })
+      .invoke('SendMessage', {
+        senderId,
+        receiverId,
+        content,
+        requestPricingId,
+        isSupplierReply,
+      })
       .catch((err) => console.error('Error sending message: ', err));
   };
 
-  public loadMessages = (recipientId: string, page: number) => {
-    this.hubConnection
-      .invoke('LoadMessages', recipientId, page)
-      .catch((err) => console.error('Error loading messages: ', err));
-  };
+  public async loadMessages(
+    recipientId: string,
+    pageNumber: number
+  ): Promise<Message[]> {
+    try {
+      return await this.hubConnection.invoke(
+        'LoadMessages',
+        recipientId,
+        pageNumber
+      );
+    } catch (err) {
+      console.error('Error loading messages: ', err);
+      return []; // Trả về mảng rỗng để tránh lỗi undefined
+    }
+  }
 
   // Check notify typing event
   notifyTyping(recipientId: string): void {

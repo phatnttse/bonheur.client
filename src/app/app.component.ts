@@ -5,6 +5,8 @@ import { StatusService } from './services/status.service';
 import AOS from 'aos';
 import { ScrollToTopComponent } from './layouts/scroll-to-top/scroll-to-top.component';
 import { ToastrComponent } from './components/toastr/toastr.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,6 +15,7 @@ import { ToastrComponent } from './components/toastr/toastr.component';
     MaterialModule,
     ScrollToTopComponent,
     ToastrComponent,
+    FontAwesomeModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

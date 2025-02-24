@@ -45,7 +45,7 @@ import { Account } from '../../../models/account.model';
 import { AuthService } from '../../../services/auth.service';
 import { environment } from '../../../environments/environment.dev';
 import { DataService } from '../../../services/data.service';
-import { LocalStoreManager } from '../../../services/localstorage-manager.service';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 import { DBkeys } from '../../../services/db-keys';
 
 @Component({
@@ -83,7 +83,7 @@ export class Step1Component implements OnInit {
     private categoryService: CategoryService,
     private authService: AuthService,
     private dataService: DataService,
-    private localStorage: LocalStoreManager
+    private localStorage: LocalStorageManager
   ) {
     this.formBusinessInfo = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -102,7 +102,8 @@ export class Step1Component implements OnInit {
       categoryId: [0, [Validators.required]],
       websiteUrl: [''],
       price: [0, [Validators.required]],
-      responseTime: ['', [Validators.required]],
+      responseTimeStart: ['', [Validators.required]],
+      responseTimeEnd: ['', [Validators.required]],
       description: [
         '',
         [
@@ -142,7 +143,8 @@ export class Step1Component implements OnInit {
           websiteUrl: this.supplier?.websiteUrl,
           categoryId: this.supplier?.category?.id,
           price: this.supplier?.price,
-          responseTime: this.supplier?.responseTime,
+          responseTimeStart: this.formatTime(this.supplier?.responseTimeStart),
+          responseTimeEnd: this.formatTime(this.supplier?.responseTimeEnd),
           description: this.supplier?.description,
         });
       } else {
@@ -152,6 +154,11 @@ export class Step1Component implements OnInit {
         }
       }
     });
+  }
+
+  formatTime(time: string | undefined): string {
+    if (!time) return ''; // Tránh lỗi nếu time không có giá trị
+    return time.substring(0, 5); // Cắt bỏ giây để giữ lại HH:mm
   }
 
   private _setupEditor(
@@ -228,7 +235,10 @@ export class Step1Component implements OnInit {
       categoryId: this.formBusinessInfo.get('categoryId')!.value,
       websiteUrl: this.formBusinessInfo.get('websiteUrl')!.value,
       price: this.formBusinessInfo.get('price')!.value,
-      responseTime: this.formBusinessInfo.get('responseTime')!.value,
+      responseTimeStart:
+        this.formBusinessInfo.get('responseTimeStart')!.value + ':00',
+      responseTimeEnd:
+        this.formBusinessInfo.get('responseTimeEnd')!.value + ':00',
       description: sanitizedDescription,
     };
 
@@ -272,7 +282,10 @@ export class Step1Component implements OnInit {
             websiteUrl: this.supplier?.websiteUrl,
             categoryId: this.supplier?.category?.id,
             price: this.supplier?.price,
-            responseTime: this.supplier?.responseTime,
+            responseTimeStart: this.formatTime(
+              this.supplier?.responseTimeStart
+            ),
+            responseTimeEnd: this.formatTime(this.supplier?.responseTimeEnd),
             description: this.supplier?.description,
           });
         }

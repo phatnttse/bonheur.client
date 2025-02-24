@@ -1,0 +1,35 @@
+<div
+  class="overflow-y-auto h-screen bg-white p-4 border-r border-solid border-gray-400"
+>
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl font-semibold mb-4">Messages</h2>
+    <img
+      src="./../../../../assets/images/svgs/email.svg"
+      alt=""
+      class="w-10 h-10 mx-1 px-1 mb-2"
+    />
+  </div>
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-label>Search messages</mat-label>
+    <input matInput type="text" placeholder="Search..." />
+  </mat-form-field>
+
+  <div class="mt-4 space-y-2">
+    @if(onlineUsers) { @for (user of onlineUsers; track $index) {
+    <div
+      class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-gray-200"
+    >
+      <div class="flex items-center">
+        <img [src]="user.pictureUrl" class="w-12 h-12 rounded-full mr-3" />
+        <div>
+          <p class="font-semibold mb-1">{{ user.fullName }}</p>
+          <p class="text-sm text-gray-500 truncate">
+            Hello, Wedding Planner Phatnttse
+          </p>
+        </div>
+      </div>
+      <span class="text-xs text-gray-500 mb-6">22/02/2025</span>
+    </div>
+    } }
+  </div>
+</div>

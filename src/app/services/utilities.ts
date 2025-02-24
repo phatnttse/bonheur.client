@@ -66,4 +66,9 @@ export class Utilities {
 
     return params;
   }
+
+  public static formatVND(value: number): string {
+    value = Math.round(value);
+    return value.toLocaleString('vi-VN') + 'đ';
+  }
 }

@@ -1,0 +1,73 @@
+<div class="flex-1 flex flex-col bg-white px-6 py-4 space-y-4 h-full">
+  <!-- Header -->
+  <div class="p-4 flex items-center border-b">
+    @if (selectedUser) {
+    <img [src]="selectedUser.pictureUrl" class="w-12 h-12 rounded-full mr-3" />
+    <div>
+      <h3 class="font-semibold text-lg">{{ selectedUser.fullName }}</h3>
+      @if (selectedUser.isOnline) {
+      <span class="text-green-500 text-sm">Online</span>
+      }@else {
+      <span class="text-red-500 text-sm">Offline</span>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Tin nhắn -->
+  <div class="flex-1 p-3 overflow-y-auto min-h-[500px] max-h-[500px] space-y-3">
+    @for (msg of messages; track $index) {
+    <div
+      class="flex items-end"
+      [ngClass]="msg.senderId === account?.id ? 'justify-end' : 'justify-start'"
+    >
+      <!-- Bong bóng tin nhắn -->
+      <div
+        class="flex flex-col max-w-sm"
+        [ngClass]="
+          msg.senderId === account?.id
+            ? 'self-end items-end'
+            : 'self-start items-start'
+        "
+      >
+        <div
+          class="rounded-lg py-2 px-3 min-w-[60px] max-w-xs break-words"
+          [ngClass]="
+            msg.senderId === account?.id
+              ? 'bg-blue-500 text-white text-right'
+              : 'bg-gray-200 text-black text-left'
+          "
+        >
+          <p class="text-sm text-center">
+            {{ msg.content }}
+          </p>
+        </div>
+        <span class="text-xs text-gray-500 mt-1">
+          {{ msg.createdAt | timeago }}
+        </span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Nhập tin nhắn -->
+  <div class="p-4 border-t flex items-center">
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        type="text"
+        placeholder="Reply..."
+        [(ngModel)]="messageContent"
+        (keydown.enter)="sendMessage()"
+      />
+    </mat-form-field>
+    <button
+      mat-icon-button
+      type="button"
+      class="ml-4 mb-4"
+      (click)="sendMessage()"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>

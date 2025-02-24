@@ -25,7 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PaginationResponse } from '../../../models/base.model';
 import { Router } from '@angular/router';
-import { RequestPricingDialogComponent } from '../../dialogs/request-pricing-dialog/request-pricing-dialog.component';
+import { RequestPricingDialogComponent } from '../../dialogs/admin/request-pricing-dialog/request-pricing-dialog.component';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { DataService } from '../../../services/data.service';
 
