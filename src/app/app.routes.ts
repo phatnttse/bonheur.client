@@ -109,6 +109,14 @@ export const routes: Routes = [
           ).then((m) => m.FavoriteSupplierCategoryComponent);
         },
       },
+      {
+        path: 'inbox',
+        loadComponent() {
+          return import('./components/chat/chat.component').then(
+            (m) => m.ChatComponent
+          );
+        },
+      },
     ],
   },
   {
@@ -124,14 +132,6 @@ export const routes: Routes = [
     loadComponent() {
       return import('./components/payment/payment.component').then(
         (m) => m.PaymentComponent
-      );
-    },
-  },
-  {
-    path: 'mailbox',
-    loadComponent() {
-      return import('./components/mailbox/mailbox.component').then(
-        (m) => m.MailboxComponent
       );
     },
   },

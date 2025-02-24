@@ -83,12 +83,16 @@
                     }
                   </span>
                   <span class="font-semibold text-[14px] mr-2"
-                    >{{ supplier?.averageRating }} Excellent
+                    >{{ supplier?.averageRating }}
                   </span>
                   <span class="mr-2">.</span>
                   <span>
-                    <a class="underline text-[#222222] text-[14px]">
-                      4 reviews</a
+                    <a
+                      class="underline text-[#222222] text-[14px]"
+                      routerLink="."
+                      fragment="reviews"
+                    >
+                      {{ supplier?.totalRating }} reviews</a
                     >
                   </span>
                 </div>
@@ -101,15 +105,9 @@
                   >
                   <span
                     class="underline text-[#3d4750] font-light cursor-pointer ml-4"
-                    >{{
-                      supplier?.street +
-                        ", " +
-                        supplier?.ward +
-                        ", " +
-                        supplier?.district +
-                        ", " +
-                        supplier?.province
-                    }}</span
+                    routerLink="."
+                    fragment="map"
+                    >{{ supplier?.address }}</span
                   >
                 </div>
                 <div class="flex items-center gap-4 mb-6">
@@ -126,18 +124,19 @@
                     >Visite website</a
                   >
                 </div>
+                @if (supplier?.discount! > 0) {
                 <div class="flex items-center gap-4 mb-6">
                   <mat-icon class="mx-1">local_offer</mat-icon>
                   <span class="text-red-500 font-light cursor-pointer"
-                    >5% discount</span
+                    >{{ supplier?.discount }}% discount</span
                   >
                 </div>
+                }
+
                 <div
                   class="shadow-[0_2px_8px_#00000026] p-10 rounded-lg bg-white mb-6"
                 >
-                  <div
-                    class="flex items-center mb-4 border-b border-solid border-[#eee] p-8"
-                  >
+                  <div class="flex items-center p-8">
                     <mat-icon class="mr-4"
                       ><i-tabler name="coins"></i-tabler
                     ></mat-icon>
@@ -145,17 +144,24 @@
                       >Starting at {{ supplier?.price! | vndCurrency }}</span
                     >
                   </div>
-                  <div class="flex items-center p-8">
+                  <!-- <div class="flex items-center p-8">
                     <mat-icon fontSet="material-icons-outlined" class="mr-4"
                       >people_alt</mat-icon
                     >
                     <span class="text-[#222] mt-[2px]">20 to 180 guests</span>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="flex justify-start ml-12 mb-1">
                   <div class="flex items-center mr-2">
                     <mat-icon class="text-[#fea99a]">bolt</mat-icon>
-                    <span class="text-sm"> Response within 24 hours </span>
+                    <span class="text-sm">
+                      @if (supplier?.responseTimeStart === '00:00:00' &&
+                      supplier?.responseTimeEnd === '00:00:00') { Response time
+                      within 24 hours } @else { Response time:
+                      {{ getFormattedTime(supplier?.responseTimeStart) }} -
+                      {{ getFormattedTime(supplier?.responseTimeEnd) }}
+                      }</span
+                    >
                   </div>
                 </div>
                 <div class="flex flex-wrap">
@@ -165,6 +171,7 @@
                       color="primary"
                       class="w-full"
                       style="padding: 24px 0; font-weight: 600; font-size: 15px"
+                      (click)="openRequestPricingDialog()"
                     >
                       Request Pricing
                     </button>
@@ -369,6 +376,7 @@
                 </div>
               </div>
               <div>
+                @if (averageScores) {
                 <ul class="space-y-4">
                   <li class="flex items-center justify-between gap-30">
                     <span>Quality of the service</span>
@@ -376,10 +384,12 @@
                       <mat-progress-bar
                         style="width: 150px"
                         mode="determinate"
-                        value="96"
+                        [value]="
+                          (averageScores.averageQualityOfService * 100) / 5
+                        "
                         color="accent"
                       ></mat-progress-bar>
-                      <span>4.8</span>
+                      <span>{{ averageScores.averageQualityOfService }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
@@ -388,10 +398,10 @@
                       <mat-progress-bar
                         style="width: 150px"
                         mode="determinate"
-                        value="100"
+                        [value]="(averageScores.averageResponseTime * 100) / 5"
                         color="accent"
                       ></mat-progress-bar>
-                      <span>5.0</span>
+                      <span>{{ averageScores.averageResponseTime }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between gap-2">
@@ -400,10 +410,12 @@
                       <mat-progress-bar
                         style="width: 150px"
                         mode="determinate"
-                        value="100"
+                        [value]="
+                          (averageScores.averageProfessionalism * 100) / 5
+                        "
                         color="accent"
                       ></mat-progress-bar>
-                      <span>5.0</span>
+                      <span>{{ averageScores.averageProfessionalism }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
@@ -412,10 +424,10 @@
                       <mat-progress-bar
                         style="width: 150px"
                         mode="determinate"
-                        value="100"
+                        [value]="(averageScores.averageValueOfMoney * 100) / 5"
                         color="accent"
                       ></mat-progress-bar>
-                      <span>5.0</span>
+                      <span>{{ averageScores.averageValueOfMoney }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
@@ -424,13 +436,14 @@
                       <mat-progress-bar
                         style="width: 150px"
                         mode="determinate"
-                        value="98"
+                        [value]="(averageScores.averageFlexibility * 100) / 5"
                         color="accent"
                       ></mat-progress-bar>
-                      <span>4.9</span>
+                      <span>{{ averageScores.averageFlexibility }}</span>
                     </div>
                   </li>
                 </ul>
+                }
               </div>
             </div>
             <ngx-slick-carousel
@@ -438,7 +451,7 @@
               #slickModal="slick-carousel"
               [config]="slideConfig"
             >
-              <!-- @for (item of supplier.; track $index) { -->
+              @for (item of supplier?.reviews; track $index) {
               <div ngxSlickItem class="slide">
                 <div
                   class="flex flex-col items-center justify-center gap-4 px-4 max-[1024px]:px-1 max-[667px]:px-3"
@@ -454,15 +467,15 @@
                       <div class="flex items-center gap-6 mb-4">
                         <div>
                           <img
-                            src="https://bonheurfiles.blob.core.windows.net/web/638754454391510088_premium_photo-1671656349218-5218444643d8.jpg"
+                            [src]="item.user.pictureUrl"
                             class="rounded-full object-cover w-14 h-14"
                             alt=""
                           />
                         </div>
                         <div class="flex flex-col">
-                          <span class="font-semibold text-[#222222]"
-                            >John Doe</span
-                          >
+                          <span class="font-semibold text-[#222222]">{{
+                            item.user.fullName
+                          }}</span>
                           <span class="text-[#3d4750] text-[14px]"
                             >Sent on 21/02/2025</span
                           >
@@ -479,24 +492,27 @@
                           }
                         </div>
                         <div class="mt-2">
-                          <span class="font-semibold">4.8</span>
+                          <span class="font-semibold">{{
+                            (item.flexibility +
+                              item.professionalism +
+                              item.qualityOfService +
+                              item.responseTime +
+                              item.valueForMoney) /
+                              5
+                          }}</span>
                         </div>
                       </div>
                       <p class="font-semibold mb-4 text-[#222222]">
-                        Our guests loved the dance
+                        {{ item.summaryExperience }}
                       </p>
                       <p class="text-[#3d4750]">
-                        We had booked dancing lessons for our wedding dance. We
-                        did not have much experience dancing. Our instructor
-                        Lucy had put together a choreography for us to the song
-                        we wanted as our first dance. We had fun learning it and
-                        our guests loved the dance at our wedding.
+                        {{ item.content }}
                       </p>
                     </div>
                   </mat-card>
                 </div>
               </div>
-              <!-- } -->
+              }
             </ngx-slick-carousel>
           </div>
           <div class="mb-6" id="map">

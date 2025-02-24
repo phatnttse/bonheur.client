@@ -16,8 +16,8 @@ import { StatusCode } from '../../../models/enums.model';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { RoleDialogComponent } from '../../dialogs/role-dialog/role-dialog.component';
 import { DataService } from '../../../services/data.service';
+import { RoleDialogComponent } from '../../dialogs/admin/role-dialog/role-dialog.component';
 
 @Component({
   selector: 'app-role-management',

@@ -1,0 +1,57 @@
+@if (requestPricing) {
+<div
+  class="w-full bg-white border-l p-6 border-gray-200 border-solid border rounded-lg"
+>
+  <div class="flex flex-col items-center justify-center mb-4 py-4">
+    <img
+      [src]="requestPricing.user?.pictureUrl"
+      alt="user"
+      class="w-20 h-20 rounded-full mb-4"
+    />
+    <h3 class="font-semibold text-lg">{{ requestPricing.user?.fullName }}</h3>
+  </div>
+  <div class="flex items-center mb-4 px-4">
+    <ul>
+      <li class="flex items-center gap-4 mb-2">
+        <img
+          width="24px"
+          height="24px"
+          src="./../../../../../../assets/images/svgs/date.svg"
+          alt=""
+          class="mr-1"
+        />
+        <span
+          ><span class="font-semibold mr-2">Event:</span>
+          {{ requestPricing.eventDate | date : "dd/MM/yyyy" }}</span
+        >
+      </li>
+      <li class="flex items-center gap-4 mb-2">
+        <img
+          width="24px"
+          height="24px"
+          src="./../../../../../../assets/images/svgs/mobile.svg"
+          alt=""
+          class="mr-1"
+        />
+        <span
+          ><span class="font-semibold mr-2">Phone:</span>
+          {{ requestPricing.phoneNumber }}</span
+        >
+      </li>
+      <li class="flex items-center gap-4 mb-2">
+        <img
+          width="24px"
+          height="24px"
+          src="./../../../../../../assets/images/svgs/email.svg"
+          alt=""
+          class="mr-1"
+        />
+        <span
+          ><span class="font-semibold mr-2">Email:</span>
+          {{ requestPricing.email }}</span
+        >
+      </li>
+    </ul>
+  </div>
+</div>
+}

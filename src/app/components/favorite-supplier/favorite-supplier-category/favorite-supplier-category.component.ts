@@ -22,7 +22,6 @@ import { StatusCode } from '../../../models/enums.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteCategoryComponent } from '../../dialogs/delete-category/delete-category.component';
 import { BaseResponse } from '../../../models/base.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';

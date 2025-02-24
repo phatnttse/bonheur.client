@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -9,11 +8,7 @@ import {
 } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import {
-  GetSuppliersParams,
-  mockSupplierData,
-  Supplier,
-} from '../../models/supplier.model';
+import { GetSuppliersParams, Supplier } from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
 import { BaseResponse, PaginationResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,9 +24,6 @@ import {
   FavoriteSupplier,
   PaginatedFavoriteSupplier,
 } from '../../models/favorite-supplier.model';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { DeleteCategoryComponent } from '../dialogs/delete-category/delete-category.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Utilities } from '../../services/utilities';
 import { TruncatePipe } from '../../pipes/truncate.pipte';
@@ -42,8 +34,10 @@ import {
 } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { config, Map, MapStyle, Marker, Popup } from '@maptiler/sdk';
-import { LocationService } from '../../services/location.service';
 import { environment } from '../../environments/environment.dev';
+import { DeleteCategoryComponent } from '../dialogs/admin/delete-category/delete-category.component';
+import { AuthService } from '../../services/auth.service';
+import { RequestPricingDialogComponent } from '../dialogs/user/request-pricing-dialog/request-pricing-dialog.component';
 
 @Component({
   selector: 'app-suppliers',
@@ -60,14 +54,10 @@ import { environment } from '../../environments/environment.dev';
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
 })
-//AfterViewInit
 export class SuppliersComponent implements OnInit, OnDestroy {
   map: Map | undefined; // Bản đồ
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>; // Container bản đồ
-  @ViewChild(MatSort) sort!: MatSort;
-  dataSource: MatTableDataSource<FavoriteSupplier> =
-    new MatTableDataSource<FavoriteSupplier>();
   supplierList: Supplier[] = []; // Danh sách supplier
   minPrice: number = 0; // Giá tối thiểu
   maxPrice: number = 0; // Giá tối đa
@@ -106,15 +96,13 @@ export class SuppliersComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private locationService: LocationService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     config.apiKey = environment.mapTilerApiKey;
 
-    setTimeout(() => {
-      this.statusService.statusLoadingSpinnerSource.next(false);
-    });
+    this.cdr.detectChanges();
 
     this.route.queryParams.subscribe((params) => {
       this.search = params['q'] || '';
@@ -148,8 +136,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
       (favoriteSuppliers: FavoriteSupplier[] | null) => {
         if (favoriteSuppliers?.values) {
           this.favoriteSuppliers = favoriteSuppliers;
-          this.dataSource = new MatTableDataSource(this.favoriteSuppliers);
-          this.dataSource.sort = this.sort;
           this.cdr.detectChanges();
         } else {
           this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
@@ -191,6 +177,14 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   btnAddFavoriteSupplier(supplierId: number) {
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['/authentication/signin']);
+      this.notificationService.info(
+        'Information',
+        'Please sign in to continue'
+      );
+      return;
+    }
     this.favoriteSupplierService.addFavoriteSupplier(supplierId).subscribe({
       next: (response: BaseResponse<FavoriteSupplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
@@ -207,7 +201,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.statusService.statusLoadingSpinnerSource.next(false);
         this.notificationService.handleApiError(error);
       },
     });
@@ -252,16 +245,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
     });
   }
 
-  getMockDataSuppliers(): void {
-    setTimeout(() => {
-      const response = mockSupplierData;
-      if (response.success && response.statusCode === StatusCode.OK) {
-        this.supplierList = response.data.items;
-        this.statusService.statusLoadingSpinnerSource.next(false);
-      }
-    }, 1000);
-  }
-
   getAllFavoriteSupplier(pageNumber: number, pageSize: number) {
     //Lấy toàn bộ danh sách
     this.favoriteSupplierService
@@ -271,8 +254,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
           if (response.success && response.statusCode === StatusCode.OK) {
             if (Array.isArray(response.data)) {
               this.favoriteSuppliers = response.data;
-              this.dataSource = new MatTableDataSource(this.favoriteSuppliers);
-              this.dataSource.sort = this.sort;
               this.pageNumber = response.data.pageNumber;
               this.pageSize = response.data.pageSize;
               this.totalItemCount = response.data.totalItemCount;
@@ -288,8 +269,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
           }
         },
         error: (error: HttpErrorResponse) => {
-          this.statusService.statusLoadingSpinnerSource.next(false);
-          this.notificationService.handleApiError(error);
+          console.log(error);
         },
       });
   }
@@ -596,11 +576,33 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
       this.cdr.detectChanges();
       this.cdr.markForCheck();
-    }, 3000);
+    }, 2000);
   }
 
   closeMap() {
     this.openMap = false;
   }
   /**End Handle Map */
+
+  getFormattedTime(time: string | undefined): string {
+    return time ? time.substring(0, 5) : '';
+  }
+
+  openRequestPricingDialog(supplierId: number): void {
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['/authentication/signin']);
+      this.notificationService.info(
+        'Information',
+        'Please sign in to continue'
+      );
+      return;
+    }
+
+    const supplier = this.supplierList.find((s) => s.id === supplierId);
+    if (!supplier) return;
+
+    const dialogRef = this.dialog.open(RequestPricingDialogComponent, {
+      data: supplier,
+    });
+  }
 }

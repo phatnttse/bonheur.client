@@ -90,7 +90,8 @@ export class DealsComponent implements OnInit {
       websiteUrl: this.supplier?.websiteUrl!,
       price: this.supplier?.price!,
       description: this.supplier?.description!,
-      responseTime: this.supplier?.responseTime!,
+      responseTimeStart: this.supplier?.responseTimeStart!,
+      responseTimeEnd: this.supplier?.responseTimeEnd!,
       discount: this.selectedDiscount,
     };
 

@@ -12,7 +12,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from '../../../material.module';
 import { Account } from '../../../models/account.model';
 import { AuthService } from '../../../services/auth.service';
-import { LocalStoreManager } from '../../../services/localstorage-manager.service';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 import { DBkeys } from '../../../services/db-keys';
 import { DataService } from '../../../services/data.service';
 
@@ -42,7 +42,7 @@ export class HeaderComponent {
   constructor(
     private dataService: DataService,
     private authService: AuthService,
-    private localStorage: LocalStoreManager,
+    private localStorage: LocalStorageManager,
     private router: Router
   ) {}
 

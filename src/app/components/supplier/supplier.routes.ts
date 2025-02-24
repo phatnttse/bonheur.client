@@ -146,6 +146,22 @@ export const supplierRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'mailbox',
+        loadComponent() {
+          return import('./mailbox/mailbox.component').then(
+            (m) => m.MailboxComponent
+          );
+        },
+      },
+      {
+        path: 'mailbox/reply',
+        loadComponent() {
+          return import('./mailbox/reply/reply.component').then(
+            (m) => m.ReplyComponent
+          );
+        },
+      },
     ],
   },
 ];

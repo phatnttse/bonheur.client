@@ -1,0 +1,16 @@
+<div
+  class="flex pt-6 pb-24 bg-white px-4 border-t border-solid border-gray-200 md:flex max-[667px]:hidden"
+>
+  <!-- Cửa sổ chat chính -->
+  <app-reply-chat-window
+    [userId]="userId"
+    [requestPricing]="requestPricing"
+    class="flex-1 max-[1024px]:hidden mr-6"
+  ></app-reply-chat-window>
+
+  <!-- Thông tin nhà cung cấp -->
+  <app-reply-user-info
+    [requestPricing]="requestPricing"
+    class="w-1/4 border-l max-[1024px]:hidden"
+  ></app-reply-user-info>
+</div>

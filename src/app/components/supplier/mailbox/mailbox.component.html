@@ -1,0 +1,142 @@
+<section class="py-8">
+  <div class="flex flex-wrap justify-between relative items-center mx-auto">
+    <div class="flex flex-wrap w-full mb-[-24px]">
+      <div
+        class="min-[992px]:w-[20%] w-full px-[12px] mb-[24px] block max-[992px]:hidden"
+      >
+        <div class="menu-list mt-4 border-b border-solid border-gray-200 pb-4">
+          @for (item of messageTypeItems; track $index) {
+          <a
+            routerLinkActive="text-secondary font-semibold"
+            class="menu-item cursor-pointer flex justify-between items-center py-3 border-b border-gray-200 hover:text-secondary transition-colors duration-200 rounded"
+          >
+            <div class="flex items-center">
+              <span>{{ item.title }}</span>
+            </div>
+            <span class="font-light mr-2">{{ item.count }}</span>
+          </a>
+          }
+        </div>
+        <div class="menu-list mt-4">
+          @for (status of requestPricingStatuses; track $index) {
+          <a
+            routerLinkActive="text-secondary font-semibold"
+            class="menu-item cursor-pointer flex justify-between items-center py-3 border-b border-gray-200 hover:text-secondary transition-colors duration-200 rounded"
+          >
+            <div class="flex items-center">
+              <i
+                class="inline-block w-[10px] h-[10px] mr-[8px] rounded-[50%] shadow-[0 0 0 0 transparent]"
+                [ngStyle]="{ 'background-color': status.color }"
+              ></i>
+              <span>{{ status.status }}</span>
+            </div>
+            <span class="font-light mr-2">{{ status.count }}</span>
+          </a>
+          }
+        </div>
+      </div>
+      <div class="min-[992px]:w-[80%] w-full px-8 mb-[24px]">
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold">Enquiries</h1>
+        </div>
+
+        @if (requestPricingList.length <= 0) {
+        <div>
+          <div
+            class="border-solid bg-white py-10 px-10 text-center mb-6 rounded-[8px] border border-gray-200"
+          >
+            <div class="flex items-center justify-center py-6 px-4">
+              <img
+                width="80"
+                src="./../../../../assets/images/svgs/email.svg"
+                alt=""
+              />
+            </div>
+            <p class="text-base">No messages have been found in this folder</p>
+          </div>
+        </div>
+        }@else {
+
+        <div class="relative overflow-x-auto">
+          <div
+            class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+          ></div>
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">Phone</th>
+                <th scope="col" class="px-6 py-3">Event Date</th>
+                <th scope="col" class="px-6 py-3">Status</th>
+                <th scope="col" class="px-6 py-3">Sent at</th>
+                <th scope="col" class="px-6 py-3">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of requestPricingList; track $index) {
+              <tr
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <th
+                  scope="row"
+                  class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  <img
+                    class="w-10 h-10 rounded-full"
+                    [src]="item.user?.pictureUrl"
+                    [alt]="item.user?.fullName"
+                  />
+                  <div class="ps-3">
+                    <div class="text-base font-semibold">
+                      {{ item.user?.fullName }}
+                    </div>
+                    <div class="font-normal text-gray-500">
+                      {{ item.user?.email }}
+                    </div>
+                  </div>
+                </th>
+                <td class="px-6 py-4">{{ item.phoneNumber }}</td>
+                <td class="px-6 py-4">
+                  {{ item.eventDate | date : "dd/MM/yyyy" }}
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div
+                      class="h-2.5 w-2.5 rounded-full me-2"
+                      [ngClass]="{
+                        'bg-green-500': item.status === 'Booked',
+                        'bg-blue-500': item.status === 'Responded',
+                        'bg-yellow-500': item.status === 'Pending',
+                        'bg-red-500': item.status === 'Discarded'
+                      }"
+                    ></div>
+
+                    {{ item.status }}
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="text-gray-500">
+                    {{ item.createdAt | timeago }}
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <a
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                    (click)="onOpenChatWindow(item)"
+                    >Reply</a
+                  >
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
