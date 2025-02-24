@@ -99,26 +99,26 @@ export class SupplierDetailComponent
   }
 
   ngAfterViewInit() {
-    // // HCM
-    // const initialState = {
-    //   lng: 106.629662,
-    //   lat: 10.823099,
-    //   zoom: 10,
-    // };
-    // this.map = new Map({
-    //   container: this.mapContainer.nativeElement,
-    //   style: MapStyle.STREETS,
-    //   center: [initialState.lng, initialState.lat],
-    //   zoom: initialState.zoom,
-    // });
-    // setTimeout(() => {
-    //   this.map?.resize();
-    // }, 0);
-    // window.addEventListener('resize', () => {
-    //   if (this.map) {
-    //     this.map.resize();
-    //   }
-    // });
+    // HCM
+    const initialState = {
+      lng: 106.629662,
+      lat: 10.823099,
+      zoom: 10,
+    };
+    this.map = new Map({
+      container: this.mapContainer.nativeElement,
+      style: MapStyle.STREETS,
+      center: [initialState.lng, initialState.lat],
+      zoom: initialState.zoom,
+    });
+    setTimeout(() => {
+      this.map?.resize();
+    }, 0);
+    window.addEventListener('resize', () => {
+      if (this.map) {
+        this.map.resize();
+      }
+    });
   }
 
   ngOnDestroy(): void {
