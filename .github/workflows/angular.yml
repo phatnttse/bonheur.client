@@ -14,17 +14,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Build Angular project
-        run: npm run build --prod
-
       - name: Install Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -36,7 +25,7 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t bonheur.client:latest -f bonheur.client/Dockerfile .
+          docker build -t bonheur.client:latest -f Dockerfile .
           docker tag bonheur.client:latest ${{ secrets.DOCKER_USERNAME }}/bonheur.client:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/bonheur.client:latest
 
