@@ -8,13 +8,16 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install dependencies
-RUN npm install --production --legacy-peer-deps
+RUN npm install --legacy-peer-deps
+
+# Install Angular CLI (nếu chưa cài trong package.json)
+RUN npm install -g @angular/cli
 
 # Copy the rest of the application's source code
-COPY . ./
+COPY . .
 
 # Build the Angular application
-RUN npm run build --prod
+RUN npm run build --configuration=production
 
 # Use nginx:alpine as the runtime image
 FROM nginx:alpine
@@ -22,15 +25,8 @@ FROM nginx:alpine
 # Copy the built Angular application to the nginx html directory
 COPY --from=builder /app/dist/bonheur.client/browser /usr/share/nginx/html
 
-# Expose port 80 and 443
+# Expose port 80
 EXPOSE 4200
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
-
-
-#docker build -t nature-harvest-client:1.0.4 -f ./DockerfileAngular .
-#docker login
-#create phatnttse1923/nature-harvest-client:1.0.4 repository on DockerHub
-#docker tag nature-harvest-client:1.0.4 phatnttse1923/nature-harvest-client:1.0.4
-#docker push phatnttse1923/nature-harvest-client:1.0.4
