@@ -20,7 +20,7 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy the built Angular application to the nginx html directory
-COPY --from=builder /app/dist/bonheur-client/browser /usr/share/nginx/html
+COPY --from=builder /app/dist/bonheur.client/browser /usr/share/nginx/html
 
 # Expose port 80 and 443
 EXPOSE 4200
