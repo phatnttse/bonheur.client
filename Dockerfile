@@ -26,7 +26,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist/bonheur.client/browser /usr/share/nginx/html
 
 # Expose port 80
-EXPOSE 4200
+EXPOSE 80 443
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
