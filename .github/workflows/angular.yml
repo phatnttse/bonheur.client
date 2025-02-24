@@ -36,7 +36,7 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t bonheur.client:latest -f bonheur.client/Dockerfile .
+          docker build -t bonheur.client:latest -f Dockerfile .
           docker tag bonheur.client:latest ${{ secrets.DOCKER_USERNAME }}/bonheur.client:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/bonheur.client:latest
 
