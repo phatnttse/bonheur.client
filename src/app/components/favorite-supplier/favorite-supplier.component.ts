@@ -125,6 +125,13 @@ export class FavoriteSupplierComponent {
       });
   }
 
+  getFavoritesCount(categoryId: number): number {
+    if (!this.favoriteSuppliers || !categoryId) return 0;
+    return this.favoriteSuppliers.filter(
+      (item) => item?.supplier?.category?.id === categoryId
+    ).length;
+  }
+
   //Lấy toàn bộ danh sách
   getCategories() {
     this.categoryService.getAllSupplierCategories().subscribe({
