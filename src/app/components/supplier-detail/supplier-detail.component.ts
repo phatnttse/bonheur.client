@@ -12,7 +12,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AverageScores, BaseResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
-import { StatusCode } from '../../models/enums.model';
+import { StatusCode, SupplierStatus } from '../../models/enums.model';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { DataService } from '../../services/data.service';
@@ -131,6 +131,9 @@ export class SupplierDetailComponent
     this.supplierService.getSupplierBySlug(slug).subscribe({
       next: (response: BaseResponse<Supplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
+          if (this.supplier?.status !== SupplierStatus.APPROVED) {
+            this.router.navigate(['/suppliers']);
+          }
           this.supplier = response.data;
           this.getAverageScore();
           this.initializeGallery();

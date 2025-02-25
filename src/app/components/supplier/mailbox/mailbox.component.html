@@ -137,6 +137,56 @@
         </div>
         }
       </div>
+      @if (pageCount > 1) {
+      <div class="w-full px-[12px] py-10">
+        <div
+          class="bb-pro-pagination mb-[24px] flex justify-between max-[575px]:flex-col max-[575px]:items-center"
+        >
+          <ul class="flex">
+            @if (hasPreviousPage && !isFirstPage) {
+            <li class="leading-[28px] mr-[6px]">
+              <a
+                href="javascript:void(0)"
+                (click)="changePage(pageNumber - 1)"
+                class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+              >
+                <i-tabler
+                  name="arrow-narrow-left"
+                  class="transition-all duration-[0.3s] ease-in-out ml-[10px] text-[20px] w-[8px] text-[#fff]"
+                ></i-tabler>
+              </a>
+            </li>
+            } @for (item of [].constructor(pageCount); track $index) {
+            <li
+              class="leading-[28px] mr-[6px]"
+              [ngClass]="{ active: $index === pageNumber - 1 }"
+            >
+              <a
+                href="javascript:void(0)"
+                (click)="changePage($index + 1)"
+                class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                >{{ $index + 1 }}</a
+              >
+            </li>
+            } @if (hasNextPage && !isLastPage) {
+            <li class="leading-[28px]">
+              <a
+                href="javascript:void(0)"
+                (click)="changePage(pageNumber + 1)"
+                class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+                >Next
+
+                <i-tabler
+                  name="arrow-narrow-right"
+                  class="transition-all duration-[0.3s] ease-in-out ml-[10px] text-[20px] w-[8px] text-[#fff]"
+                ></i-tabler>
+              </a>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+      }
     </div>
   </div>
 </section>

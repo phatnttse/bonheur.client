@@ -48,6 +48,9 @@ export class SubscriptionPackageDialogComponent {
       isFeatured: [this.data?.isFeatured || false],
       priority: [this.data?.priority || 0, Validators.required],
       isDeleted: [this.data?.isDeleted || false],
+      badgeText: [this.data?.badgeText || '', Validators.required],
+      badgeColor: [this.data?.badgeColor || '', Validators.required],
+      badgeTextColor: [this.data?.badgeTextColor || ''],
     });
     if (this.data.id !== undefined && this.data.id > 0) {
       this.isEditMode = true;

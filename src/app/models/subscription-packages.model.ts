@@ -9,6 +9,9 @@ export interface SubscriptionPackage {
   isFeatured: boolean;
   priority: number;
   isDeleted: boolean;
+  badgeText?: string;
+  badgeColor?: string;
+  badgeTextColor?: string;
 }
 
 export interface ListSubscriptionPackageResponse

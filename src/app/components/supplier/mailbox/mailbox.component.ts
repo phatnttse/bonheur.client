@@ -15,6 +15,7 @@ import { TimeAgoPipe } from '../../../pipes/timeago.pipe';
 import { MessageService } from '../../../services/message.service';
 import { MessageStatistics } from '../../../models/chat.model';
 import { BaseResponse } from '../../../models/base.model';
+import { TablerIconsModule } from 'angular-tabler-icons';
 
 interface MessageTypeItems {
   title: string;
@@ -35,6 +36,7 @@ interface RequestPricingStatusItems {
     MaterialModule,
     RouterModule,
     TimeAgoPipe,
+    TablerIconsModule,
   ],
   templateUrl: './mailbox.component.html',
   styleUrls: ['./mailbox.component.scss'],
@@ -44,6 +46,14 @@ export class MailboxComponent implements OnInit {
   requestPricingStatuses: RequestPricingStatusItems[] = [];
   requestPricingList: RequestPricing[] = [];
   messageStatistics: MessageStatistics | null = null;
+  pageNumber: number = 1; // Trang hiện tại
+  pageSize: number = 10; // Số item mỗi trang
+  totalItemCount: number = 0; // Tổng số item
+  pageCount: number = 0; // Tổng số trang
+  isFirstPage: boolean = false; // Có phải trang đầu tiên không
+  isLastPage: boolean = false; // Có phải trang cuối cùng không
+  hasNextPage: boolean = false; // Có trang tiếp theo không
+  hasPreviousPage: boolean = false; // Có trang trước đó không
 
   constructor(
     private signalRService: SignalRService,
@@ -98,19 +108,29 @@ export class MailboxComponent implements OnInit {
   }
 
   getRequestPricingList(): void {
-    this.requestPricingService.getRequestPricingListBySupplier().subscribe({
-      next: (response: ListRequestPricingResponse) => {
-        this.requestPricingList = response.data.items;
-        this.requestPricingStatuses.forEach((status) => {
-          status.count = this.requestPricingList.filter(
-            (r) => r.status === status.status
-          ).length;
-        });
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error(error);
-      },
-    });
+    this.requestPricingService
+      .getRequestPricingListBySupplier(this.pageNumber, this.pageSize)
+      .subscribe({
+        next: (response: ListRequestPricingResponse) => {
+          this.requestPricingList = response.data.items;
+          this.pageNumber = response.data.pageNumber;
+          this.pageSize = response.data.pageSize;
+          this.totalItemCount = response.data.totalItemCount;
+          this.pageCount = response.data.pageCount;
+          this.isFirstPage = response.data.isFirstPage;
+          this.isLastPage = response.data.isLastPage;
+          this.hasNextPage = response.data.hasNextPage;
+          this.hasPreviousPage = response.data.hasPreviousPage;
+          this.requestPricingStatuses.forEach((status) => {
+            status.count = this.requestPricingList.filter(
+              (r) => r.status === status.status
+            ).length;
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        },
+      });
   }
 
   onOpenChatWindow(requestPricing: RequestPricing): void {
@@ -133,5 +153,10 @@ export class MailboxComponent implements OnInit {
         console.error(error);
       },
     });
+  }
+
+  changePage(pageNumber: number): void {
+    this.pageNumber = pageNumber;
+    this.getRequestPricingList();
   }
 }

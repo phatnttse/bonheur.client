@@ -65,7 +65,7 @@ export class SidebarMobileComponent {
         },
       ],
     },
-    { icon: 'email', label: 'Enquiries', route: '/supplier/enquiries' },
+    { icon: 'email', label: 'Enquiries', route: '/supplier/mailbox' },
     { icon: 'review', label: 'Reviews', route: '/supplier/reviews' },
     { icon: 'invoice', label: 'Invoices', route: '/supplier/invoices' },
     { icon: 'setting', label: 'Settings', route: '/supplier/settings' },

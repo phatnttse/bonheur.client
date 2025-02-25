@@ -78,12 +78,42 @@
         }
       </mat-form-field>
     </div>
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Badge Text</mat-label>
+        <div class="flex flex-row">
+          <input
+            matInput
+            placeholder="Badge Text"
+            formControlName="badgeText"
+          />
+        </div>
+        @if(subscriptionForm.get('badgeText')?.errors?.['required']) {
+        <mat-error>Badge Text is required.</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Badge Color</mat-label>
+        <input matInput placeholder="Badge Text" formControlName="badgeColor" />
+        @if(subscriptionForm.get('badgeColor')?.errors?.['required']) {
+        <mat-error>Badge Color is required.</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Badge Text Color</mat-label>
+        <input
+          matInput
+          placeholder="Badge Text Color"
+          formControlName="badgeTextColor"
+        />
+      </mat-form-field>
+    </div>
     <div class="flex justify-end">
       <div mat-dialog-actions>
         <button
           mat-raised-button
           color="primary"
-          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          class="flex items-center mx-1 p-20 text-white text-sm font-medium shadow-md transition-colors duration-200"
           type="submit"
         >
           {{ isEditMode ? "Update" : "Add" }}
@@ -92,7 +122,7 @@
           mat-raised-button
           type="button"
           color="warn"
-          class="flex items-center mx-1 p-24 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          class="flex items-center mx-1 p-20 text-white text-sm font-medium shadow-md transition-colors duration-200"
           (click)="onCancel()"
         >
           Cancel

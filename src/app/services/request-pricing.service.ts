@@ -6,11 +6,10 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import {
   CreateRequestPricing,
   ListRequestPricingResponse,
-  RequestPricing,
   RequestPricingResponse,
 } from '../models/request-pricing.model';
 import { environment } from '../environments/environment.dev';
@@ -79,17 +78,20 @@ export class RequestPricingService extends EndpointBase {
       );
   }
 
-  getRequestPricingListBySupplier() {
+  getRequestPricingListBySupplier(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<ListRequestPricingResponse> {
     const headers = this.requestHeaders;
     return this.http
-      .get<BaseResponse<ListRequestPricingResponse>>(
+      .get<ListRequestPricingResponse>(
         `${environment.apiUrl}/api/v1/request-pricing/supplier`,
         headers
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () =>
-            this.getRequestPricingListBySupplier()
+            this.getRequestPricingListBySupplier(pageNumber, pageSize)
           );
         })
       );
