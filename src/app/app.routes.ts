@@ -77,6 +77,7 @@ export const routes: Routes = [
           ).then((m) => m.SupplierDetailComponent);
         },
       },
+
       {
         path: 'profile',
         loadComponent() {
@@ -140,6 +141,14 @@ export const routes: Routes = [
     loadComponent() {
       return import('./pages/page-not-found/page-not-found.component').then(
         (m) => m.PageNotFoundComponent
+      );
+    },
+  },
+  {
+    path: 'review-detail/:supplierId',
+    loadComponent() {
+      return import('./components/review-detail/review-detail.component').then(
+        (m) => m.ReviewDetailComponent
       );
     },
   },

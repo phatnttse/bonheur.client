@@ -2,7 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { EndpointBase } from './endpoint-base.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
-import { ListReviewResponse } from '../models/review.model';
+import {
+  CreateReview,
+  ListReviewResponse,
+  Review,
+  ReviewCreation,
+} from '../models/review.model';
 import { environment } from '../environments/environment.dev';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -29,6 +34,36 @@ export class ReviewService extends EndpointBase {
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () =>
             this.getReviews(supplierId, pageNumber, pageSize)
+          );
+        })
+      );
+  }
+
+  createReview(review: CreateReview): Observable<ReviewCreation> {
+    return this.http
+      .post<ReviewCreation>(
+        `${environment.apiUrl}/api/v1/review`,
+        review,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.createReview(review));
+        })
+      );
+  }
+
+  createRequestReview(email: string, content: string): Observable<any> {
+    return this.http
+      .post<any>(
+        `${environment.apiUrl}/api/v1/review/request-review`,
+        { email, content },
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.createRequestReview(email, content)
           );
         })
       );
