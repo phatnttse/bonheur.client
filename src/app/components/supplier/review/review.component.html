@@ -126,17 +126,18 @@
             <p class="text-lg font-semibold">To:</p>
           </div>
           <div class="flex flex-row mr-2 py-2">
-            <mat-form-field
+            <!-- <mat-form-field
               appearance="outline"
               class="mr-2 w-1/2"
               style="width: 200px"
             >
               <mat-label>Name</mat-label>
               <input matInput placeholder="Placeholder" />
-            </mat-form-field>
+            </mat-form-field> -->
+
             <mat-form-field appearance="outline" class="mr-2 w-2/6">
               <mat-label>Email</mat-label>
-              <input matInput placeholder="Placeholder" />
+              <input matInput [(ngModel)]="email" placeholder="Placeholder" />
             </mat-form-field>
             <button
               mat-raised-button
@@ -165,18 +166,9 @@
               rows="4"
               class="block p-2.5 w-full text-sm shadow-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Write your thoughts here..."
+              [(ngModel)]="contentEmail"
             >
-    Hi ...,
-    
-    It was a pleasure to be a part of your wedding!
-    
-    If you have a few moments, can you share your experience with other engaged couples on hitched.co.uk? Your review of our services will help them plan their wedding.
-                
-    Thanks,             
-    Best,
-    Bonheur
-              </textarea
-            >
+            </textarea>
           </div>
           <div class="flex flex-row mr-2 py-2">
             <p class="font-medium text-gray-500">
@@ -193,6 +185,7 @@
               color="primary"
               class="mr-2"
               style="height: 42px"
+              (click)="createRequestReview()"
             >
               Send
             </button>

@@ -19,9 +19,22 @@ export interface Review {
   user: Account;
 }
 
+export interface CreateReview {
+  userId: string;
+  supplierId: number;
+  summaryExperience: string;
+  content: string;
+  qualityOfService: number;
+  responseTime: number;
+  professionalism: number;
+  valueForMoney: number;
+  flexibility: number;
+}
+
 export interface ReviewResponse {
   reviews: PaginationData<Review>;
   averageScores: AverageScores;
 }
 
 export interface ListReviewResponse extends BaseResponse<ReviewResponse> {}
+export interface ReviewCreation extends BaseResponse<CreateReview> {}
