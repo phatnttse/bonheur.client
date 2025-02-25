@@ -17,7 +17,7 @@
           </a>
           }
         </div>
-        <div class="menu-list mt-4">
+        <div class="menu-list mt-4 border-b border-solid border-gray-200 pb-4">
           @for (status of requestPricingStatuses; track $index) {
           <a
             routerLinkActive="text-secondary font-semibold"
@@ -33,6 +33,22 @@
             <span class="font-light mr-2">{{ status.count }}</span>
           </a>
           }
+        </div>
+        <div class="mt-6">
+          <a
+            class="menu-item cursor-pointer flex justify-between items-center py-3 border-b border-gray-200 hover:text-green-500 transition-colors duration-200 rounded"
+            (click)="exportToExcel()"
+          >
+            <div class="flex items-center gap-4">
+              <img
+                src="./../../../../assets/images/svgs/excel.svg"
+                class="w-6 h-6"
+                alt=""
+              />
+              <span>Export To Excel</span>
+            </div>
+            <span class="text-yellow-500 font-semibold mr-2">Premium</span>
+          </a>
         </div>
       </div>
       <div class="min-[992px]:w-[80%] w-full px-8 mb-[24px]">

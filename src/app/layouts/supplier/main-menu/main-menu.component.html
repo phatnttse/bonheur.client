@@ -78,6 +78,9 @@
             </div>
             <div
               class="flex flex-col justify-center items-center py-4 px-10 nav-link"
+              routerLink="/supplier/invoices"
+              [routerLinkActive]="'active-link'"
+              [routerLinkActiveOptions]="{ exact: false }"
             >
               <div class="mb-2">
                 <img
@@ -109,7 +112,10 @@
           === supplierStatus.IN_REVIEW) {
           <div class="max-[991px]:hidden flex items-center">
             <div class="flex items-center flex-col">
-              <div class="flex items-center justify-between mb-2">
+              <div
+                class="flex items-center justify-between mb-2"
+                routerLink="/supplier/onboarding"
+              >
                 <p class="font-semibold mr-4">Create your storefront</p>
                 <span class="font-semibold">{{ completeStep }}/3</span>
               </div>

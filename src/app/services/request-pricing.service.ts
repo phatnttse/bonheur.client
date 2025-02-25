@@ -96,4 +96,20 @@ export class RequestPricingService extends EndpointBase {
         })
       );
   }
+
+  exportToExcel(): Observable<Blob> {
+    return this.http
+      .get(
+        `${environment.apiUrl}/api/v1/request-pricing/supplier/export/excel`,
+        {
+          responseType: 'blob',
+          headers: this.requestHeaders.headers,
+        }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.exportToExcel());
+        })
+      );
+  }
 }

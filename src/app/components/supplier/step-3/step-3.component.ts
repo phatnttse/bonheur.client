@@ -116,7 +116,7 @@ export class Step3Component implements OnInit {
   }
 
   saveChanges() {
-    if (this.fileUploads.length === 0) {
+    if (this.fileUploads.length < 4) {
       this.notificationService.warning(
         'Warning',
         'Please upload at least 4 photos'

@@ -17,6 +17,7 @@ export interface Invoice {
   taxNumber: string;
   taxAmount: number;
   fileUrl: string;
+  safeFileUrl?: string;
   fileName: string;
   transactionId: string;
   companyName: string;
