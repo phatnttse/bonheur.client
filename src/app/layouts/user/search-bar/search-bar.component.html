@@ -4,7 +4,7 @@
   (click)="closeMenu($event)"
 ></div>
 <div
-  class="sb-menu w-full h-1/3 pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-[0] left-[0] block transition-all duration-[0.5s] ease delay-[0s] -translate-y-[100%] bg-[#fff] opacity-[0]"
+  class="sb-menu w-full h-1/4 pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-[0] left-[0] block transition-all duration-[0.5s] ease delay-[0s] -translate-y-[100%] bg-[#fff] opacity-[0]"
   [ngClass]="isSearchBarOpen ? 'open' : ''"
 >
   <div class="flex justify-between align-center py-4 px-4">
@@ -21,70 +21,41 @@
       <span class="material-icons">close</span>
     </button>
   </div>
-  <div>
-    <form
-      class="bb-btn-group-form flex relative max-[991px]:ml-[20px] max-[767px]:m-[0]"
-    >
-      <div
-        class="border-r-[1px] border-solid border-[#eee] h-full px-[20px] flex items-center absolute top-[0] left-[0] max-[991px]:hidden"
-      >
-        <div
-          class="custom-select w-[100px] capitalize text-[#777] flex items-center justify-between transition-all duration-[0.2s] ease-in text-[14px] relative"
-        >
-          <li class="nav-item bb-main-dropdown flex items-center mr-[45px]">
-            <a
-              class="relative p-[0] leading-[28px] text-[15px] font-semibold block tracking-[0.03rem] cursor-pointer flex items-center"
-              [matMenuTriggerFor]="provinceMenu"
-              >Location
-              <mat-icon style="width: 20px" class="pl-[2px]"
-                >expand_more</mat-icon
-              >
-            </a>
-          </li>
-          <mat-menu
-            #provinceMenu="matMenu"
-            class="px-6"
-            xPosition="after"
-            class="h-[600px] w-[400px] overflow-y-auto"
-            style="height: fit-content"
-          >
-            <input
-              type="text"
-              [(ngModel)]="searchProvince"
-              class="px-4 py-2 w-full border-b focus:outline-none focus:border-blue-500"
-              placeholder="Search province..."
-              (keydown.enter)="onSearchProvince()"
-              (input)="onSearchProvince()"
-              (click)="$event.stopPropagation()"
-              [ngModelOptions]="{ standalone: true }"
-              autofocus
-            />
-            @for (province of filteredProvinces; track $index) {
-            <button
-              class="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer text-left w-full"
-              (click)="selectProvince(province.provinceName)"
-            >
-              {{ province.provinceName }}
-            </button>
-            }
-          </mat-menu>
-        </div>
-      </div>
+  <div class="flex flex-col mt-10 px-4">
+    <mat-form-field class="example-full-width">
+      <mat-label>Search suppliers by province</mat-label>
       <input
-        [(ngModel)]="searchValue"
-        [ngModelOptions]="{ standalone: true }"
-        class="form-control bb-search-bar bg-[#fff] block w-full min-h-[45px] h-[48px] py-[10px] pr-[10px] pl-[160px] max-[991px]:min-h-[40px] max-[991px]:h-[40px] max-[991px]:p-[10px] text-[14px] font-normal leading-[1] text-[#777] rounded-[10px] border-[1px] border-solid border-[#eee] tracking-[0.5px]"
-        placeholder="Search suppliers..."
         type="text"
+        placeholder="Pick one"
+        aria-label="Province"
+        matInput
+        [matAutocomplete]="auto"
+        [(ngModel)]="searchProvince"
+        (input)="onSearchProvince()"
+        (ngModelChange)="onSearchProvince()"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="selectProvince($event.option.value)"
+      >
+        @for (province of filteredProvinces; track province) {
+        <mat-option [value]="province.provinceName">{{
+          province.provinceName
+        }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full" color="primary">
+      <mat-label>Search suppliers by keywords</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchValue"
         (keydown.enter)="onSearch()"
       />
-      <button
-        class="submit absolute top-[0] left-[auto] right-[0] flex items-center justify-center w-[45px] h-full bg-transparent text-[#555] text-[16px] rounded-[0] outline-[0] border-[0] padding-[0]"
-        type="button"
-        (click)="onSearch()"
-      >
-        <i-tabler name="search"></i-tabler>
-      </button>
-    </form>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
   </div>
 </div>

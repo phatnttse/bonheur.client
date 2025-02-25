@@ -73,9 +73,20 @@ export class Step3Component implements OnInit {
 
   onUpload(event: any) {
     const files: FileList = event.target.files;
+    const maxSize = 2 * 1024 * 1024;
+
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+
+        if (file.size > maxSize) {
+          this.notificationService.warning(
+            'Warning',
+            'File size must be less than 2MB'
+          );
+          continue;
+        }
+
         this.fileUploads.push(file);
         const reader = new FileReader();
         reader.onload = (e: any) => {

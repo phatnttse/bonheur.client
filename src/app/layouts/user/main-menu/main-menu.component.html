@@ -65,12 +65,16 @@
                 <a
                   class="nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem]"
                   href="javascript:void(0)"
-                  routerLink="/"
                   >Planning Tools</a
                 >
+
                 <ul
                   class="bb-dropdown-menu min-w-[205px] p-[10px] transition-all duration-[0.3s] ease-in-out mt-[25px] absolute top-[40px] z-[16] text-left opacity-[0] invisible left-[0] right-[auto] bg-[#fff] border-[1px] border-solid border-[#eee] flex flex-col rounded-[10px]"
                 >
+                  <span
+                    class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full my-1 w-fit mx-2"
+                    >Coming Soon</span
+                  >
                   <li
                     class="m-[0] py-[5px] px-[15px] relative flex items-center"
                   >
@@ -156,27 +160,26 @@
             </ul>
           </div>
           <div class="max-[991px]:hidden">
-            @if (this.authService.isSupplier) {
-            <a
-              routerLink="/supplier"
-              class="text-secondary font-semibold text-base cursor-pointer"
-              >Supplier Channel</a
-            >
-            }@else {
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-6 mx-2 mt-4">
               <img
                 src="./../../../../assets/images/svgs/bag.svg"
                 alt=""
                 class="w-5 h-5 mb-1"
               />
+              @if (account?.roles?.includes(role.SUPPLIER)) {
               <a
                 class="text-secondary font-semibold text-base cursor-pointer"
-                (click)="goToRegisterSupplier()"
+                routerLink="/supplier"
+                >Supplier Channel
+              </a>
+              }@else {
+              <a
+                class="text-secondary font-semibold text-base cursor-pointer"
+                routerLink="/supplier/signup"
                 >Are you a supplier ?
               </a>
+              }
             </div>
-
-            }
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
   searchValue: string = '';
   searchProvince: string = '';
   filteredProvinces: any = []; // Danh sách tỉnh lọc
-  messageUnreadCount: number = 0;
+  @Output() messageUnreadCount: number = 0;
   isSidebarOpen = false;
   searchQuery: string = '';
   isSearchBarOpen = false;
@@ -111,8 +111,8 @@ export class HeaderComponent implements OnInit {
 
     this.dataService.messageUnreadCountUserData$.subscribe(
       (count: number | null) => {
-        if (count) {
-          this.messageUnreadCount = count;
+        if (count !== null || count !== undefined) {
+          this.messageUnreadCount = count ?? 0;
         } else {
           this.getUnreadMessagesCountByUser();
         }
@@ -181,8 +181,10 @@ export class HeaderComponent implements OnInit {
   getUnreadMessagesCountByUser() {
     this.messageService.getUnreadMessagesCountByUser().subscribe({
       next: (response: BaseResponse<number>) => {
-        this.dataService.messageUnreadCountUserDataSource.next(response.data);
-        this.messageUnreadCount = response.data;
+        if (response.data !== this.messageUnreadCount) {
+          this.messageUnreadCount = response.data;
+          this.dataService.messageUnreadCountUserDataSource.next(response.data);
+        }
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);

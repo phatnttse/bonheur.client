@@ -9,6 +9,8 @@ import {
   SupplierCategory,
 } from '../../../models/category.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Account } from '../../../models/account.model';
+import { Role } from '../../../models/enums.model';
 
 @Component({
   selector: 'app-main-menu',
@@ -19,6 +21,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class MainMenuComponent implements OnInit {
   categories: SupplierCategory[] = [];
+  account: Account | null = null;
+  role = Role;
 
   constructor(
     private router: Router,
@@ -38,6 +42,14 @@ export class MainMenuComponent implements OnInit {
         }
       }
     );
+
+    this.dataService.accountData$.subscribe((data: Account | null) => {
+      if (data) {
+        this.account = data;
+      } else {
+        this.account = this.authService.currentUser;
+      }
+    });
   }
 
   goToRegisterSupplier() {
