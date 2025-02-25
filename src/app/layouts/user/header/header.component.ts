@@ -121,9 +121,9 @@ export class HeaderComponent implements OnInit {
   }
 
   btnLogout() {
+    this.router.navigate(['/authentication/signin']);
     this.authService.logout();
     this.dataService.resetData();
-    this.router.navigate(['/authentication/signin']);
   }
 
   getProvinces() {

@@ -56,7 +56,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(),
     provideOAuthClient(),
-    { provide: ErrorHandler, useClass: AppErrorHandler },
+    // { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: TitleStrategy, useClass: AppTitleService },
     { provide: UrlSerializer, useClass: LowerCaseUrlSerializer },
     importProvidersFrom(
