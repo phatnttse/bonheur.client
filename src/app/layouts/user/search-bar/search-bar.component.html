@@ -1,0 +1,61 @@
+<div
+  class="hidden w-full h-screen fixed top-[0] left-[0] bg-[#00000080] z-[17]"
+  [style.display]="isSearchBarOpen ? 'block' : 'none'"
+  (click)="closeMenu($event)"
+></div>
+<div
+  class="sb-menu w-full h-1/4 pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-[0] left-[0] block transition-all duration-[0.5s] ease delay-[0s] -translate-y-[100%] bg-[#fff] opacity-[0]"
+  [ngClass]="isSearchBarOpen ? 'open' : ''"
+>
+  <div class="flex justify-between align-center py-4 px-4">
+    <a
+      routerLink="/"
+      class="text-2xl font-bold text-primary hover:text-primary-dark transition-colors absolute lg:static lg:translate-x-0"
+    >
+      <span class="font-bold">Bonheur.</span>
+    </a>
+    <button
+      class="absolute top-4 right-4 text-gray-500 focus:outline-none"
+      (click)="toggleSearchBar()"
+    >
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  <div class="flex flex-col mt-10 px-4">
+    <mat-form-field class="example-full-width">
+      <mat-label>Search suppliers by province</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        aria-label="Province"
+        matInput
+        [matAutocomplete]="auto"
+        [(ngModel)]="searchProvince"
+        (input)="onSearchProvince()"
+        (ngModelChange)="onSearchProvince()"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="selectProvince($event.option.value)"
+      >
+        @for (province of filteredProvinces; track province) {
+        <mat-option [value]="province.provinceName">{{
+          province.provinceName
+        }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full" color="primary">
+      <mat-label>Search suppliers by keywords</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchValue"
+        (keydown.enter)="onSearch()"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+</div>

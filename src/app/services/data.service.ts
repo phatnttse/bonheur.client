@@ -99,7 +99,17 @@ export class DataService {
   messageUnreadCountUserData$ =
     this.messageUnreadCountUserDataSource.asObservable();
 
+  //Behavior subject: Request Pricing
+  public requestPricingBySupplierDataSource = new BehaviorSubject<
+    RequestPricing[] | null
+  >(null);
+  requestPricingBySupplierData$ =
+    this.requestPricingBySupplierDataSource.asObservable();
+
   resetData() {
     this.accountDataSource.next(null);
+    this.supplierDataSource.next(null);
+    this.messageUnreadCountUserDataSource.next(null);
+    this.requestPricingBySupplierDataSource.next(null);
   }
 }

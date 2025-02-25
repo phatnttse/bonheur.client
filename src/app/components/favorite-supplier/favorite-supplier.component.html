@@ -34,25 +34,35 @@
       [config]="slideConfig"
     >
       @for (category of supplierCategories; track $index) {
-      <div
-        ngxSlickItem
-        routerLink="/favorite-supplier/categories/{{ category.id }}"
-        class="cursor-pointer"
-      >
+      <div ngxSlickItem>
         <div class="flex gap-2 mt-2 px-4 place-content-center">
           <div
             class="grid grid-cols-2 grid-rows-2 bg-[#f6f1ee] rounded-md w-full h-[225px] place-content-center border-[1px] border-solid border-[#eee]"
           >
-            @for (item of favoriteSuppliers.slice(0, 4); track $index) { @if
+            @if(category?.id && getFavoritesCount(category.id) > 0){ @for (item
+            of favoriteSuppliers.slice(0, 4); track $index) { @if
             (item?.supplier?.category?.id == category?.id) {
-            <div class="flex items-center justify-center border p-[1px]">
+            <div
+              class="flex items-center justify-center border p-[1px]"
+              routerLink="/favorite-supplier/categories/{{ category.id }}"
+              class="cursor-pointer"
+            >
               <img
                 [src]="item?.supplier?.images?.[0]?.imageUrl"
                 alt="Supplier Image"
                 class="h-full w-full"
               />
             </div>
-            } }
+            } } } @else {
+            <div class="flex items-center justify-center col-span-2 row-span-2">
+              <img
+                src="{{ category.imageUrl }}"
+                alt=""
+                height="32"
+                width="32"
+              />
+            </div>
+            }
           </div>
         </div>
 

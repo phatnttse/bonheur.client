@@ -64,3 +64,16 @@
     border-color: $primary;
   }
 }
+/* Sidebar mở/đóng */
+.sidebar-open {
+  transform: translateX(0);
+}
+
+.sidebar-closed {
+  transform: translateX(-100%);
+}
+
+/* Hiệu ứng overlay */
+.sidebar-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}

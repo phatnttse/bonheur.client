@@ -1,10 +1,10 @@
 <div
-  class="hidden w-full h-screen fixed top-[0] right-[0] bg-[#00000080] z-[17]"
+  class="hidden w-full h-screen fixed top-[0] left-[0] bg-[#00000080] z-[17]"
   [style.display]="isMenuOpen ? 'block' : 'none'"
   (click)="closeMenu($event)"
 ></div>
 <div
-  class="sb-menu w-2/3 h-full pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-[0] right-[0] block transition-all duration-[0.5s] ease delay-[0s] translate-x-[100%] bg-[#fff] overflow-auto opacity-[0]"
+  class="sb-menu w-2/3 h-full pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-[0] left-[0] block transition-all duration-[0.5s] ease delay-[0s] -translate-x-[100%] bg-[#fff] overflow-auto opacity-[0]"
   [ngClass]="isMenuOpen ? 'open' : ''"
 >
   <div class="flex justify-between align-center py-4 px-4">
@@ -22,7 +22,7 @@
     </button>
   </div>
 
-  <nav class="flex flex-col space-y-6 px-8 py-12">
+  <nav class="flex flex-col space-y-6 px-8 pt-12 pb-6">
     <a
       routerLink="/"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
@@ -33,16 +33,14 @@
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
       >Suppliers</a
     >
-    <a
-      href="#"
-      class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
-      >Venues</a
-    >
-    <a
-      href="#"
-      class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
-      >Planning Tools</a
-    >
+    <div class="flex flex-col">
+      <span class="text-gray-700 text-base font-medium">Planning Tools</span>
+      <span
+        class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full mt-1 w-fit"
+        >Coming Soon</span
+      >
+    </div>
+
     <a
       routerLink="/about-us"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
@@ -55,16 +53,8 @@
     >
   </nav>
   <div class="flex flex-col space-y-2 p-6">
-    <button
-      mat-button
-      type="button"
-      routerLink="/signup-supplier"
-      class="mb-8"
-      style="font-size: 16px; padding: 10px; font-weight: bold"
-    >
-      Become a Supplier ?
-    </button>
-    <div class="cols flex justify-start ml-4">
+    @if (!account) {
+    <div class="cols flex justify-start mx-2 mb-6">
       <div class="bb-flex-justify max-[575px]:flex max-[575px]:justify-between">
         <div class="bb-header-buttons h-full flex justify-end items-center">
           <div class="bb-acc-drop relative">
@@ -103,6 +93,86 @@
           </div>
         </div>
       </div>
+    </div>
+    }@else {
+    <div class="flex items-center gap-4 mb-6">
+      <div class="mt-1">
+        <button mat-icon-button routerLink="/favorite-supplier">
+          <mat-icon
+            fontSet="material-icons-outlined"
+            style="font-size: 24px"
+            class="text-red-500"
+            >favorite</mat-icon
+          >
+        </button>
+      </div>
+      <div class="mr-4 mt-2">
+        <button mat-icon-button aria-label="Notifications" routerLink="/inbox">
+          <i-tabler
+            class="flex items-center text-center"
+            name="mail"
+            [matBadge]="messageUnreadCount"
+            matBadgeColor="warn"
+          ></i-tabler>
+        </button>
+      </div>
+
+      <div
+        class="d-flex align-items-center cursor-pointer"
+        [matMenuTriggerFor]="accountMenu"
+        aria-label="Account"
+      >
+        <img
+          [src]="account.pictureUrl"
+          alt="avatar"
+          class="rounded-full object-cover w-[36px] h-[36px]"
+        />
+      </div>
+      <mat-menu #accountMenu="matMenu" class="p-6" xPosition="after">
+        @if (account) {
+        <button mat-menu-item routerLink="/profile">
+          <div class="flex items-center">
+            <mat-icon>manage_accounts</mat-icon>
+            <span>My Account</span>
+          </div>
+        </button>
+        <div class="p-x-12 m-t-12">
+          <button
+            type="button"
+            mat-stroked-button
+            color="primary"
+            class="w-100"
+            (click)="btnLogout()"
+          >
+            <div class="flex items-center">
+              <mat-icon class="mr-1">logout</mat-icon>
+              <span>Logout</span>
+            </div>
+          </button>
+        </div>
+        }
+      </mat-menu>
+    </div>
+    }
+    <div class="flex items-center gap-6 mx-2 mt-4">
+      <img
+        src="./../../../../assets/images/svgs/bag.svg"
+        alt=""
+        class="w-5 h-5 mb-1"
+      />
+      @if (account?.roles?.includes(role.SUPPLIER)) {
+      <a
+        class="text-secondary font-semibold text-base cursor-pointer"
+        routerLink="/supplier"
+        >Supplier Channel
+      </a>
+      }@else {
+      <a
+        class="text-secondary font-semibold text-base cursor-pointer"
+        routerLink="/supplier/signup"
+        >Are you a supplier ?
+      </a>
+      }
     </div>
   </div>
 </div>

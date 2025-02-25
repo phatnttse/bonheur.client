@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { Router, RouterModule } from '@angular/router';
@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from '../../../services/message.service';
 import { BaseResponse } from '../../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-header',
@@ -28,21 +29,47 @@ import { HttpErrorResponse } from '@angular/common/http';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    SearchBarComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   isMenuOpen = false;
-  account: Account | null = null;
+  @Output() account: Account | null = null;
   valueProvince: any = [];
-  provinceList: any = []; // Danh sách tỉnh
+  @Output() provinceList: any = []; // Danh sách tỉnh
   selectedProvince: string = ''; // Tỉnh đã chọn
   isDropdownOpen = false;
   searchValue: string = '';
   searchProvince: string = '';
   filteredProvinces: any = []; // Danh sách tỉnh lọc
-  messageUnreadCount: number = 0;
+  @Output() messageUnreadCount: number = 0;
+  isSidebarOpen = false;
+  searchQuery: string = '';
+  isSearchBarOpen = false;
+
+  menuItems = [
+    { name: 'Home' },
+    { name: 'Suppliers' },
+    { name: 'Planning Tools' },
+    { name: 'About Us' },
+    { name: 'Contact' },
+  ];
+
+  get filteredResults() {
+    return this.menuItems.filter((item) =>
+      item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  toggleSearchBar() {
+    this.isSearchBarOpen = !this.isSearchBarOpen;
+  }
 
   constructor(
     private dataService: DataService,
@@ -84,8 +111,8 @@ export class HeaderComponent implements OnInit {
 
     this.dataService.messageUnreadCountUserData$.subscribe(
       (count: number | null) => {
-        if (count) {
-          this.messageUnreadCount = count;
+        if (count !== null || count !== undefined) {
+          this.messageUnreadCount = count ?? 0;
         } else {
           this.getUnreadMessagesCountByUser();
         }
@@ -154,8 +181,10 @@ export class HeaderComponent implements OnInit {
   getUnreadMessagesCountByUser() {
     this.messageService.getUnreadMessagesCountByUser().subscribe({
       next: (response: BaseResponse<number>) => {
-        this.dataService.messageUnreadCountUserDataSource.next(response.data);
-        this.messageUnreadCount = response.data;
+        if (response.data !== this.messageUnreadCount) {
+          this.messageUnreadCount = response.data;
+          this.dataService.messageUnreadCountUserDataSource.next(response.data);
+        }
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);

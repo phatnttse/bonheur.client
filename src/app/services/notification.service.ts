@@ -49,7 +49,6 @@ export class NotificationService {
   }
 
   handleApiError(error: HttpErrorResponse) {
-    debugger;
     if (error.status === 0) {
       return this.show(
         'An error occurred',

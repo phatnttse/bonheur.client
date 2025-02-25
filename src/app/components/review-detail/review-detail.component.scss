@@ -1,0 +1,26 @@
+#container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+fa-icon {
+  color: gray;
+  font-size: 40px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Khi sao được chọn */
+fa-icon.rated {
+  color: orange;
+}
+
+/* Nếu là chế độ readonly, tắt hover */
+.readOnly fa-icon {
+  cursor: default;
+}
+
+.readOnly fa-icon:hover,
+.readOnly fa-icon:hover ~ fa-icon {
+  color: gray;
+}

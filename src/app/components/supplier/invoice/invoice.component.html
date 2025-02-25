@@ -1,0 +1,142 @@
+<section class="py-8">
+  <div class="flex flex-wrap justify-between relative items-center mx-auto">
+    <div class="flex flex-wrap w-full mb-[-24px]">
+      <div
+        class="min-[992px]:w-[20%] w-full px-[12px] mb-[24px] block max-[992px]:hidden"
+      >
+        <div class="menu-list mt-4 border-b border-solid border-gray-200 pb-4">
+          <a
+            class="menu-item cursor-pointer flex justify-between items-center py-3 border-b border-gray-200 hover:text-secondary transition-colors duration-200 rounded"
+          >
+            <div class="flex items-center">
+              <span>Invoice management</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="min-[992px]:w-[80%] w-full px-8 mb-[24px]">
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold">Invoices</h1>
+        </div>
+
+        @if (invoices.length <= 0) {
+        <div>
+          <div
+            class="border-solid bg-white py-10 px-10 text-center mb-6 rounded-[8px] border border-gray-200"
+          >
+            <div class="flex items-center justify-center py-6 px-4">
+              <img
+                width="80"
+                src="./../../../../assets/images/svgs/invoice.svg"
+                alt=""
+              />
+            </div>
+            <p class="text-base">No invoices have been found in this folder</p>
+          </div>
+        </div>
+        }@else {
+
+        <div class="relative overflow-x-auto">
+          <div
+            class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+          ></div>
+          <table class="w-full text-sm text-left rtl:text-right">
+            <thead class="text-xs uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">Invoice Number</th>
+                <th scope="col" class="px-6 py-3">Product Name</th>
+                <th scope="col" class="px-6 py-3">Total Amount</th>
+                <th scope="col" class="px-6 py-3">Payment Method</th>
+                <th scope="col" class="px-6 py-3">Created At</th>
+                <th scope="col" class="px-6 py-3">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of invoices; track $index) {
+              <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                <td class="px-6 py-4">
+                  {{ item.invoiceNumber }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ item.order.orderDetails[0].name }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ item.totalAmount | vndCurrency }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ item.order.paymentMethod }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ item.order.createdAt | date : "dd/MM/yyyy HH:mm" }}
+                </td>
+                <td class="px-6 py-4 flex items-center gap-10">
+                  <a
+                    class="font-medium text-secondary hover:underline cursor-pointer"
+                    >Issue</a
+                  >
+                  <a
+                    class="font-medium text-blue-600 hover:underline cursor-pointer"
+                    (click)="downloadInvoice(item.fileUrl)"
+                    >Download</a
+                  >
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+      <!-- @if (pageCount > 1) {
+        <div class="w-full px-[12px] py-10">
+          <div
+            class="bb-pro-pagination mb-[24px] flex justify-between max-[575px]:flex-col max-[575px]:items-center"
+          >
+            <ul class="flex">
+              @if (hasPreviousPage && !isFirstPage) {
+              <li class="leading-[28px] mr-[6px]">
+                <a
+                  href="javascript:void(0)"
+                  (click)="changePage(pageNumber - 1)"
+                  class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+                >
+                  <i-tabler
+                    name="arrow-narrow-left"
+                    class="transition-all duration-[0.3s] ease-in-out ml-[10px] text-[20px] w-[8px] text-[#fff]"
+                  ></i-tabler>
+                </a>
+              </li>
+              } @for (item of [].constructor(pageCount); track $index) {
+              <li
+                class="leading-[28px] mr-[6px]"
+                [ngClass]="{ active: $index === pageNumber - 1 }"
+              >
+                <a
+                  href="javascript:void(0)"
+                  (click)="changePage($index + 1)"
+                  class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                  >{{ $index + 1 }}</a
+                >
+              </li>
+              } @if (hasNextPage && !isLastPage) {
+              <li class="leading-[28px]">
+                <a
+                  href="javascript:void(0)"
+                  (click)="changePage(pageNumber + 1)"
+                  class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+                  >Next
+  
+                  <i-tabler
+                    name="arrow-narrow-right"
+                    class="transition-all duration-[0.3s] ease-in-out ml-[10px] text-[20px] w-[8px] text-[#fff]"
+                  ></i-tabler>
+                </a>
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+        } -->
+    </div>
+  </div>
+</section>

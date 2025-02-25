@@ -6,17 +6,18 @@ import { ListReviewResponse, Review } from '../../../models/review.model';
 import { ReviewService } from '../../../services/review.service';
 import { NotificationService } from '../../../services/notification.service';
 import { StatusService } from '../../../services/status.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule],
+  imports: [MaterialModule, CommonModule, TablerIconsModule, FormsModule],
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss',
 })
@@ -34,7 +35,8 @@ export class ReviewComponent {
   hasNextPage: boolean = false; // Có trang tiếp theo không
   hasPreviousPage: boolean = false; // Có trang trước đó không
   averageRate: number = 0.0;
-
+  contentEmail: string = '';
+  email: string = '';
   /**
    *
    */
@@ -46,7 +48,8 @@ export class ReviewComponent {
     private toastr: ToastrService,
     private dialog: MatDialog,
     private route: Router,
-    private dataService: DataService
+    private dataService: DataService,
+    private localStorage: LocalStorageManager
   ) {}
 
   ngOnInit() {
@@ -86,5 +89,19 @@ export class ReviewComponent {
         this.notificationService.handleApiError(error);
       },
     });
+  }
+
+  createRequestReview() {
+    this.reviewService
+      .createRequestReview(this.email, this.contentEmail)
+      .subscribe({
+        next: (response: any) => {
+          this.notificationService.success('Success', response.message);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
+        },
+      });
   }
 }

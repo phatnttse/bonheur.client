@@ -25,11 +25,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { BaseResponse } from '../../../models/base.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
+import { VNDCurrencyPipe } from '../../../pipes/vnd-currency.pipe';
 
 @Component({
   selector: 'app-favorite-supplier-category',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule, FontAwesomeModule],
+  imports: [
+    MaterialModule,
+    CommonModule,
+    TablerIconsModule,
+    FontAwesomeModule,
+    VNDCurrencyPipe,
+  ],
   templateUrl: './favorite-supplier-category.component.html',
   styleUrl: './favorite-supplier-category.component.scss',
 })

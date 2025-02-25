@@ -13,7 +13,7 @@
             />
             <span
               class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >0</span
+              >{{ requestPricingList.length }}</span
             >
           </div>
           <p class="md:text-base sm:text-sm">Lead received</p>
@@ -30,7 +30,7 @@
             />
             <span
               class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >0</span
+              >{{ supplier?.totalRating }}</span
             >
           </div>
           <p class="md:text-base sm:text-sm">Reviews</p>
@@ -47,7 +47,7 @@
             />
             <span
               class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >0</span
+              >{{ supplier?.view }}</span
             >
           </div>
           <p class="md:text-base sm:text-sm">Storefront impressions</p>
@@ -72,6 +72,7 @@
         </div>
       </div>
     </div>
+    @if (supplier?.status !== statuses.APPROVED) {
     <div class="bg-[#e9f6f8] py-6 px-6 rounded-lg mb-10">
       <p class="text-base font-semibold mb-2">
         Your business information is being verified
@@ -84,10 +85,28 @@
       <p>
         If you have any questions, please email
         <a class="underline" href="mailto:bonheur.wedding.1910@gmail.com"
-          >bonheur.wedding.1910&#64;gmail.com</a
+          >bonheur201&#64;gmail.com</a
         >
       </p>
     </div>
+    }@else if (supplier?.status === statuses.REJECTED) {
+    <div class="bg-[#fcf5eb] py-6 px-6 rounded-lg mb-10">
+      <p class="text-base font-semibold mb-2">
+        We are sorry, but your business couldn't be validated by our Content
+        Team.
+      </p>
+      <p class="mb-2">
+        We sent you an email explaining why your listing could not be activated.
+        Make sure you added high quality photos and a business description!
+      </p>
+      <p>
+        If you have any questions, please email
+        <a class="underline" href="mailto:bonheur.wedding.1910@gmail.com"
+          >bonheur201&#64;gmail.com</a
+        >
+      </p>
+    </div>
+    }
     <div class="flex flex-wrap justify-between relative items-center mx-auto">
       <div class="flex flex-wrap w-full mb-[-24px]">
         <div class="min-[992px]:w-[75%] w-full px-[12px] mb-[24px]">

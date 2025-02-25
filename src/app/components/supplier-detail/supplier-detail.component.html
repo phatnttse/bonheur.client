@@ -11,7 +11,7 @@
                 <div class="flex flex-wrap">
                   <div class="w-1/2 p-2 gap-4">
                     <img
-                      class="w-full h-full rounded-tl-lg rounded-bl-lg cursor-pointer"
+                      class="h-[361px] max-h-[361px] max-[667px]:h-[171px] w-full object-fit object-cover rounded-tl-lg rounded-bl-lg cursor-pointer"
                       [src]="
                         supplier && supplier.images
                           ? supplier.images[0].imageUrl
@@ -24,7 +24,7 @@
                   <div class="w-1/2 p-2 flex flex-col gap-4">
                     <div class="grid grid-cols-2 gap-4">
                       <img
-                        class="w-full h-auto cursor-pointer"
+                        class="img-container object-cover cursor-pointer"
                         [src]="
                           supplier && supplier.images
                             ? supplier.images[1].imageUrl
@@ -33,7 +33,7 @@
                         alt=""
                       />
                       <img
-                        class="w-full h-auto rounded-tr-lg cursor-pointer"
+                        class="img-container object-cover rounded-tr-lg cursor-pointer"
                         [src]="
                           supplier && supplier.images
                             ? supplier.images[2].imageUrl
@@ -44,7 +44,7 @@
                     </div>
                     <div class="relative w-full">
                       <img
-                        class="w-full h-auto rounded-br-lg cursor-pointer"
+                        class="img-container object-cover rounded-br-lg cursor-pointer"
                         [src]="
                           supplier && supplier.images
                             ? supplier.images[3].imageUrl
@@ -370,6 +370,7 @@
                       font-size: 15px;
                     "
                     class="w-full"
+                    routerLink="/review-detail/{{ supplier?.id }}"
                   >
                     Write a review
                   </button>

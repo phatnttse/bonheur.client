@@ -12,7 +12,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AverageScores, BaseResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
-import { StatusCode } from '../../models/enums.model';
+import { StatusCode, SupplierStatus } from '../../models/enums.model';
 import { MaterialModule } from '../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { DataService } from '../../services/data.service';
@@ -134,9 +134,9 @@ export class SupplierDetailComponent
           this.supplier = response.data;
           this.getAverageScore();
           this.initializeGallery();
-          // setTimeout(() => {
-          //   this.initializeMap();
-          // }, 1000);
+          setTimeout(() => {
+            this.initializeMap();
+          }, 1000);
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -238,7 +238,6 @@ export class SupplierDetailComponent
   getAverageScore() {
     this.reviewService.getAverageRating(this.supplier?.id || 0).subscribe({
       next: (response: any) => {
-        debugger;
         this.averageScores = response.data.averageScores;
       },
       error: (error: HttpErrorResponse) => {

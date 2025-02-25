@@ -14,7 +14,11 @@
         <div class="bg-white shadow-lg rounded-lg py-10 px-6 text-center">
           <header class="mb-6">
             <p
-              class="bg-primary text-white text-sm font-bold py-1 rounded relative inline px-2 py-1"
+              class="text-white text-sm font-bold py-1 rounded relative inline px-2 py-1"
+              [ngStyle]="{
+                'background-color': item.badgeColor,
+                color: item.badgeTextColor
+              }"
             >
               {{ item.name }}
             </p>
@@ -34,7 +38,7 @@
             class="w-full"
             (click)="payForSubscription(item.id!)"
           >
-            Contact us
+            Choose package
           </button>
         </div>
         }

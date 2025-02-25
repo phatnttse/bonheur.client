@@ -107,7 +107,6 @@ export class DealsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.handleApiError(error);
       },
     });
   }

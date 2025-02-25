@@ -25,7 +25,7 @@
       #slickModal="slick-carousel"
       [config]="slideConfig"
     >
-      @for (item of slides; track $index) {
+      @for (supplier of supplierList; track $index) {
       <div ngxSlickItem class="slide">
         <div
           class="flex flex-col items-center justify-center gap-4 px-4 max-[1024px]:px-1 max-[667px]:px-3"
@@ -37,25 +37,32 @@
             data-aos-duration="1500"
             data-aos-delay="200"
           >
+            @if(isSupplierPriorityExpired(supplier)) {
             <div
               class="absolute top-2 left-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded z-10"
+              [ngStyle]="{
+                'background-color': supplier.subscriptionPackage?.badgeColor,
+                color: supplier.subscriptionPackage?.badgeTextColor
+              }"
             >
-              Premium
+              {{ supplier.subscriptionPackage?.badgeText }}
             </div>
+            }
             <div class="absolute right-1 z-10">
               <button mat-icon-button class="group">
                 <mat-icon
                   fontSet="material-icons-outlined"
                   style="font-size: 24px"
-                  class="text-red-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
+                  class="text-gray-500 group-hover:text-red-700 transition-all duration-200 ease-in-out transform group-hover:scale-110"
                   >favorite_border</mat-icon
                 >
               </button>
             </div>
             <img
               mat-card-image
-              [src]="item.img"
-              class="max-h-[201px] w-full object-cover rounded-t-md"
+              [src]="supplier?.images?.[0]?.imageUrl"
+              class="max-h-[201px] w-full object-cover rounded-t-md cursor-pointer"
+              routerLink="/suppliers/{{ supplier.slug }}"
             />
 
             <mat-card-content
@@ -63,55 +70,48 @@
               style="padding: 20px !important"
             >
               <div>
-                @if (item.title) {
-                <h2 class="text-[#3d4750] text-[20px] font-bold truncate">
-                  {{ item.title }}
-                </h2>
-                } @if (item.title) {
+                @if (supplier.name) {
+                <a
+                  class="text-base font-bold truncate mb-4 cursor-pointer hover:text-secondary"
+                  routerLink="/suppliers/{{ supplier.slug }}"
+                >
+                  {{ supplier.name }}
+                </a>
+                } @if (supplier.address) {
 
-                <p class="text-[#3d4750] text-[14px]">
-                  {{ item.location }}
+                <p class="text-[#3d4750] text-[14px] mt-2">
+                  {{ supplier.address }}
                 </p>
                 }
                 <div class="flex items-center mt-2">
-                  @if (item.rating) {
+                  @if (supplier.averageRating) {
                   <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
-                  <span class="text-sm mr-1"></span>{{ item.rating }}
-                  } @if (item.reviewsCount) {
+                  <span class="text-sm mr-1"></span
+                  >{{ supplier.averageRating }}.0 } @if (supplier.totalRating) {
                   <span class="text-[#7d7d7d] text-[12px] ml-2">
-                    ({{ item.reviewsCount }} reviews)
+                    ({{ supplier.totalRating }}
+                    {{ supplier.totalRating > 1 ? "reviews" : "review" }})
                   </span>
                   }
                 </div>
               </div>
 
               <div>
-                <div class="flex justify-between items-center mt-3">
-                  @if (item.price) {
-                  <span class="text-base font-bold text-[18px]">
-                    {{ item.price }}
-                  </span>
-                  } @if (item.capacity) {
-                  <span class="text-[#7d7d7d] text-[12px]">
-                    Capacity: {{ item.capacity }}
-                  </span>
-                  }
-                </div>
-                <div class="flex items-center justify-between mt-4">
-                  @if (item.deals) {
+                <div class="flex justify-between items-center mt-4">
+                  @if (supplier.price) {
                   <div class="flex items-center">
-                    <mat-icon fontSet="material-icons-outlined" class="mr-1"
-                      >local_offer</mat-icon
-                    ><span class="text-[#7d7d7d] text-[12px]" class="mr-4"
-                      >{{ item.deals }} deals</span
+                    <mat-icon class="mr-2"
+                      ><i-tabler name="coins"></i-tabler
+                    ></mat-icon>
+                    <span class="text-[#222]"
+                      >From {{ supplier?.price! | vndCurrency }}</span
                     >
                   </div>
-
-                  } @if (item.discount) {
+                  @if (supplier.discount > 0) {
                   <span class="text-red-500 text-[14px] font-semibold">
-                    {{ item.discount }}
+                    {{ supplier.discount }}%
                   </span>
-                  }
+                  } }
                 </div>
               </div>
             </mat-card-content>

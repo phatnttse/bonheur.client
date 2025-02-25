@@ -162,7 +162,7 @@
               Photos, reviews, and so much more... get in touch from here!
             </p>
             <a
-              routerLink="/"
+              routerLink="/suppliers"
               class="text-primary font-bold inline-block text-base"
               >Explore venues</a
             >
@@ -171,9 +171,9 @@
             class="min-[992px]:w-[50%] w-full min-[992px]:order-2 order-1 overflow-hidden"
           >
             <img
-              src="https://via.placeholder.com/350x150"
+              src="./../../../assets/images/backgrounds/wedding_venues.webp"
               alt="Wedding venues"
-              class="object-cover w-full h-full rounded"
+              class="w-full h-auto max-h-[200px] object-cover rounded-lg"
             />
           </div>
         </div>
@@ -193,7 +193,7 @@
               Find the best wedding suppliers near you in every category.
             </p>
             <a
-              routerLink="/"
+              routerLink="/suppliers"
               class="text-primary font-bold inline-block text-base"
               >Start your search</a
             >
@@ -202,9 +202,9 @@
             class="min-[992px]:w-[50%] w-full min-[992px]:order-2 order-1 overflow-hidden"
           >
             <img
-              src="https://via.placeholder.com/350x150"
+              src="./../../../assets/images/backgrounds/supplier.webp"
               alt="Wedding venues"
-              class="object-cover w-full h-full rounded"
+              class="w-full h-auto max-h-[200px] object-cover rounded-lg"
             />
           </div>
         </div>
@@ -237,7 +237,7 @@
         </div>
         <div class="col-span-1 flex justify-end">
           <img
-            src="https://via.placeholder.com/48x48"
+            src="./../../../assets/images/backgrounds/wedding_website.jpg"
             alt="Wedding venues"
             class="object-cover w-12 h-12 rounded"
           />
@@ -266,7 +266,7 @@
         </div>
         <div class="col-span-1 flex justify-end">
           <img
-            src="https://via.placeholder.com/48x48"
+            src="./../../../assets/images/svgs/weddingInvite.svg"
             alt="Wedding venues"
             class="object-cover w-12 h-12 rounded"
           />
@@ -296,7 +296,7 @@
         </div>
         <div class="col-span-1 flex justify-end">
           <img
-            src="https://via.placeholder.com/48x48"
+            src="./../../../assets/images/svgs/weddingPlan.svg"
             alt="Wedding venues"
             class="object-cover w-12 h-12 rounded"
           />
@@ -308,5 +308,5 @@
 <!-- End Category Section -->
 
 <!-- Featured Suppliers Section -->
-<app-featured-suppliers></app-featured-suppliers>
+<app-featured-suppliers [supplierList]="supplierList"></app-featured-suppliers>
 <!-- End Featured Suppliers Section -->
