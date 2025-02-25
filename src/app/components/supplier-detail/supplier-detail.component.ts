@@ -131,15 +131,12 @@ export class SupplierDetailComponent
     this.supplierService.getSupplierBySlug(slug).subscribe({
       next: (response: BaseResponse<Supplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
-          if (this.supplier?.status !== SupplierStatus.APPROVED) {
-            this.router.navigate(['/suppliers']);
-          }
           this.supplier = response.data;
           this.getAverageScore();
           this.initializeGallery();
-          // setTimeout(() => {
-          //   this.initializeMap();
-          // }, 1000);
+          setTimeout(() => {
+            this.initializeMap();
+          }, 1000);
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -241,7 +238,6 @@ export class SupplierDetailComponent
   getAverageScore() {
     this.reviewService.getAverageRating(this.supplier?.id || 0).subscribe({
       next: (response: any) => {
-        debugger;
         this.averageScores = response.data.averageScores;
       },
       error: (error: HttpErrorResponse) => {

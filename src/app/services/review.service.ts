@@ -68,4 +68,18 @@ export class ReviewService extends EndpointBase {
         })
       );
   }
+
+  getAverageRating(supplierId: number): Observable<any> {
+    return this.http
+      .get<any>(
+        `${environment.apiUrl}/api/v1/review/average-rating/${supplierId}`
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.getAverageRating(supplierId)
+          );
+        })
+      );
+  }
 }

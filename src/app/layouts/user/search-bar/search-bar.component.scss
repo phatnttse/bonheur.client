@@ -1,0 +1,12 @@
+@import "./../../../../assets/scss/variables";
+
+.open {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+}
+.form-control.bb-search-bar {
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+}

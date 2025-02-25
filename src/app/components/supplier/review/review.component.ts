@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStoreManager } from '../../../services/localstorage-manager.service';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 
 @Component({
   selector: 'app-review',
@@ -49,7 +49,7 @@ export class ReviewComponent {
     private dialog: MatDialog,
     private route: Router,
     private dataService: DataService,
-    private localStore: LocalStoreManager
+    private localStorage: LocalStorageManager
   ) {}
 
   ngOnInit() {

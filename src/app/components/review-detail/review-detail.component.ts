@@ -6,10 +6,8 @@ import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ReviewService } from '../../services/review.service';
-import { AuthService } from '../../services/auth.service';
-import { LocalStoreManager } from '../../services/localstorage-manager.service';
+import { LocalStorageManager } from '../../services/localstorage-manager.service';
 import { ActivatedRoute } from '@angular/router';
-import { Supplier } from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
 import { StatusService } from '../../services/status.service';
 import { NotificationService } from '../../services/notification.service';
@@ -49,7 +47,7 @@ export class ReviewDetailComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private reviewService: ReviewService,
-    private localStore: LocalStoreManager,
+    private localStorage: LocalStorageManager,
     private route: ActivatedRoute,
     private supplierService: SupplierService,
     private notificationService: NotificationService,
@@ -100,7 +98,9 @@ export class ReviewDetailComponent {
     value: number,
     flexibility: number
   ) {
-    const user = this.localStore.getDataObject<{ id: string }>('current_user');
+    const user = this.localStorage.getDataObject<{ id: string }>(
+      'current_user'
+    );
 
     if (!user || !user.id) {
       console.error('User ID not found in local storage.');
