@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import {
+  CreateRequestPricing,
   ListRequestPricingResponse,
   RequestPricing,
   RequestPricingResponse,
@@ -55,6 +56,41 @@ export class RequestPricingService extends EndpointBase {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () => this.getRequestPricingById(id));
+        })
+      );
+  }
+
+  createRequestPricing(
+    request: CreateRequestPricing
+  ): Observable<RequestPricingResponse> {
+    const headers = this.requestHeaders;
+    return this.http
+      .post<RequestPricingResponse>(
+        `${environment.apiUrl}/api/v1/request-pricing`,
+        request,
+        headers
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.createRequestPricing(request)
+          );
+        })
+      );
+  }
+
+  getRequestPricingListBySupplier() {
+    const headers = this.requestHeaders;
+    return this.http
+      .get<BaseResponse<ListRequestPricingResponse>>(
+        `${environment.apiUrl}/api/v1/request-pricing/supplier`,
+        headers
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.getRequestPricingListBySupplier()
+          );
         })
       );
   }

@@ -1,6 +1,7 @@
+import { Account } from './account.model';
 import { BaseResponse, PaginationResponse } from './base.model';
 import { RequestPricingStatus } from './enums.model';
-import { SupplierRequestPricing } from './supplier.model';
+import { Supplier, SupplierRequestPricing } from './supplier.model';
 
 export interface RequestPricing {
   id: number;
@@ -10,10 +11,21 @@ export interface RequestPricing {
   eventDate?: Date;
   message?: string;
   status?: RequestPricingStatus;
-  supplierId: number;
-  supplier?: SupplierRequestPricing;
-  expirationDate?: Date;
+  user?: Account;
+  supplier?: Supplier;
+  expirationDate?: string;
   rejectReason?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CreateRequestPricing {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  eventDate: Date;
+  message: string;
+  supplierId: number;
 }
 
 export interface ListRequestPricingResponse

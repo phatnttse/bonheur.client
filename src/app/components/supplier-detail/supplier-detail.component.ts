@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { Supplier } from '../../models/supplier.model';
 import { SupplierService } from '../../services/supplier.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { BaseResponse } from '../../models/base.model';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { AverageScores, BaseResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
 import { StatusCode } from '../../models/enums.model';
@@ -23,6 +23,11 @@ import { environment } from '../../environments/environment.dev';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { GalleryModule, Gallery, GalleryItem } from 'ng-gallery';
 import { Lightbox, LightboxModule } from 'ng-gallery/lightbox';
+import { MatDialog } from '@angular/material/dialog';
+import { RequestPricingDialogComponent } from '../dialogs/user/request-pricing-dialog/request-pricing-dialog.component';
+import { AuthService } from '../../services/auth.service';
+import { ReviewService } from '../../services/review.service';
+import { ReviewResponse } from '../../models/review.model';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -48,6 +53,7 @@ export class SupplierDetailComponent
   relatedSuppliers: Supplier[] = [];
   galleryId = 'myLightbox';
   galleryItems!: GalleryItem[];
+  averageScores: AverageScores | null = null;
 
   constructor(
     private supplierService: SupplierService,
@@ -56,7 +62,11 @@ export class SupplierDetailComponent
     private dataService: DataService,
     private statusService: StatusService,
     public gallery: Gallery,
-    private lightbox: Lightbox
+    private lightbox: Lightbox,
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private router: Router,
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
@@ -89,26 +99,26 @@ export class SupplierDetailComponent
   }
 
   ngAfterViewInit() {
-    // // HCM
-    // const initialState = {
-    //   lng: 106.629662,
-    //   lat: 10.823099,
-    //   zoom: 10,
-    // };
-    // this.map = new Map({
-    //   container: this.mapContainer.nativeElement,
-    //   style: MapStyle.STREETS,
-    //   center: [initialState.lng, initialState.lat],
-    //   zoom: initialState.zoom,
-    // });
-    // setTimeout(() => {
-    //   this.map?.resize();
-    // }, 0);
-    // window.addEventListener('resize', () => {
-    //   if (this.map) {
-    //     this.map.resize();
-    //   }
-    // });
+    // HCM
+    const initialState = {
+      lng: 106.629662,
+      lat: 10.823099,
+      zoom: 10,
+    };
+    this.map = new Map({
+      container: this.mapContainer.nativeElement,
+      style: MapStyle.STREETS,
+      center: [initialState.lng, initialState.lat],
+      zoom: initialState.zoom,
+    });
+    setTimeout(() => {
+      this.map?.resize();
+    }, 0);
+    window.addEventListener('resize', () => {
+      if (this.map) {
+        this.map.resize();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -122,6 +132,7 @@ export class SupplierDetailComponent
       next: (response: BaseResponse<Supplier>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
           this.supplier = response.data;
+          this.getAverageScore();
           this.initializeGallery();
           // setTimeout(() => {
           //   this.initializeMap();
@@ -204,4 +215,35 @@ export class SupplierDetailComponent
       },
     ],
   };
+
+  getFormattedTime(time: string | undefined): string {
+    return time ? time.substring(0, 5) : '';
+  }
+
+  openRequestPricingDialog() {
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['/authentication/signin']);
+      this.notificationService.info(
+        'Information',
+        'Please sign in to continue'
+      );
+      return;
+    }
+
+    this.dialog.open(RequestPricingDialogComponent, {
+      data: this.supplier,
+    });
+  }
+
+  getAverageScore() {
+    this.reviewService.getAverageRating(this.supplier?.id || 0).subscribe({
+      next: (response: any) => {
+        debugger;
+        this.averageScores = response.data.averageScores;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.notificationService.handleApiError(error);
+      },
+    });
+  }
 }

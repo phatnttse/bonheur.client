@@ -92,6 +92,13 @@ export class DataService {
   public provinceSearchDataSource = new BehaviorSubject<string | null>(null);
   provinceSearch$ = this.provinceSearchDataSource.asObservable();
 
+  //Behavior subject: Message Unread Count Of User
+  public messageUnreadCountUserDataSource = new BehaviorSubject<number | null>(
+    null
+  );
+  messageUnreadCountUserData$ =
+    this.messageUnreadCountUserDataSource.asObservable();
+
   resetData() {
     this.accountDataSource.next(null);
   }

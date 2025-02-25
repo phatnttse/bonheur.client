@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { Router, RouterModule } from '@angular/router';
@@ -11,6 +11,9 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { LocationService } from '../../../services/location.service';
 import { MaterialModule } from '../../../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from '../../../services/message.service';
+import { BaseResponse } from '../../../models/base.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -37,16 +40,28 @@ export class HeaderComponent implements OnInit {
   selectedProvince: string = ''; // Tỉnh đã chọn
   isDropdownOpen = false;
   searchValue: string = '';
+  searchProvince: string = '';
+  filteredProvinces: any = []; // Danh sách tỉnh lọc
+  messageUnreadCount: number = 0;
 
   constructor(
     private dataService: DataService,
     private authService: AuthService,
     private router: Router,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private messageService: MessageService
   ) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  onSearchProvince() {
+    this.filteredProvinces = this.provinceList.filter((province) =>
+      province.provinceName
+        .toLowerCase()
+        .includes(this.searchProvince.toLowerCase().trim())
+    );
   }
 
   ngOnInit(): void {
@@ -60,11 +75,22 @@ export class HeaderComponent implements OnInit {
 
     this.dataService.provinceData$.subscribe((province: any | null) => {
       if (province) {
+        this.valueProvince = province;
         this.getDetailProvinces();
       } else {
         this.getProvinces();
       }
     });
+
+    this.dataService.messageUnreadCountUserData$.subscribe(
+      (count: number | null) => {
+        if (count) {
+          this.messageUnreadCount = count;
+        } else {
+          this.getUnreadMessagesCountByUser();
+        }
+      }
+    );
   }
 
   btnLogout() {
@@ -101,6 +127,10 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch() {
+    this.searchValue = this.searchValue.trim();
+    if (this.searchValue === '') {
+      return;
+    }
     this.router.navigate(['/suppliers'], {
       queryParams: { q: this.searchValue },
     });
@@ -117,6 +147,19 @@ export class HeaderComponent implements OnInit {
         this.provinceList.push(cloneProvince);
         setProvinces.add(response.provinceId);
       }
+    });
+    this.filteredProvinces = this.provinceList;
+  }
+
+  getUnreadMessagesCountByUser() {
+    this.messageService.getUnreadMessagesCountByUser().subscribe({
+      next: (response: BaseResponse<number>) => {
+        this.dataService.messageUnreadCountUserDataSource.next(response.data);
+        this.messageUnreadCount = response.data;
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      },
     });
   }
 }

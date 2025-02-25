@@ -1,0 +1,75 @@
+<!-- Thông tin nhà cung cấp -->
+<div class="w-full bg-white border-l border-solid border-gray-400 p-4">
+  @if (supplier) { @if (supplier.images && supplier.images.length > 0) {
+  <img
+    [src]="supplier.images[0].imageUrl"
+    class="w-full h-48 object-cover rounded-lg"
+  />
+  }
+  <div class="px-2">
+    <h2
+      class="text-lg font-semibold mt-4 underline cursor-pointer hover:text-primary mb-2"
+      routerLink="/suppliers/{{ supplier.slug }}"
+    >
+      {{ supplier.name }}
+    </h2>
+    <div class="mb-4 flex items-center">
+      <span class="mr-2">
+        @for (item of [1, 2, 3, 4, 5]; track $index) {
+        <mat-icon
+          fontSet="material-icons-outlined"
+          class="text-lg text-[#fea99a]"
+          >star</mat-icon
+        >
+        }
+      </span>
+      <span class="font-semibold text-[14px] mr-2"
+        >{{ supplier.averageRating }}
+      </span>
+      <span class="mr-2">.</span>
+      <span>
+        <a class="text-[#222222] text-sm">(4)</a>
+      </span>
+    </div>
+
+    <div class="flex items-center gap-6 mb-2">
+      <mat-icon
+        fontSet="material-icons-outlined"
+        style="overflow: initial !important"
+        >location_on</mat-icon
+      >
+      <span>{{
+        supplier.street +
+          ", " +
+          supplier.ward +
+          ", " +
+          supplier.district +
+          ", " +
+          supplier.province
+      }}</span>
+    </div>
+    @if (supplier.discount > 0) {
+    <div class="flex items-center gap-6 mb-2">
+      <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
+      <span>Discount {{ supplier.discount }}%</span>
+    </div>
+    }
+    <div class="flex items-center gap-6 mb-2">
+      <mat-icon><i-tabler name="coins"></i-tabler></mat-icon>
+      <span class="text-[#222]"
+        >Starting at {{ supplier.price! | vndCurrency }}</span
+      >
+    </div>
+
+    <div class="mt-4">
+      <button mat-stroked-button color="primary" class="w-full">
+        I'm interested
+      </button>
+      <button mat-stroked-button class="w-full mt-2">Still evaluating</button>
+      <button mat-stroked-button color="warn" class="w-full mt-2">
+        No, thanks
+      </button>
+    </div>
+  </div>
+  }
+</div>

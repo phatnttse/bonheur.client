@@ -1,11 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
+import { MatTableDataSource } from '@angular/material/table';
 import { MaterialModule } from '../../../material.module';
 import { MatSort } from '@angular/material/sort';
 import {
@@ -17,16 +12,14 @@ import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
 import { StatusService } from '../../../services/status.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PaginationResponse } from '../../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { BlockAccountComponent } from '../../dialogs/block-account/block-account.component';
-import { UnblockAccountComponent } from '../../dialogs/unblock-account/unblock-account.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
-import { AccountDialogComponent } from '../../dialogs/account-dialog/account-dialog.component';
+import { AccountDialogComponent } from '../../dialogs/admin/account-dialog/account-dialog.component';
+import { BlockAccountComponent } from '../../dialogs/admin/block-account/block-account.component';
+import { UnblockAccountComponent } from '../../dialogs/admin/unblock-account/unblock-account.component';
 
 @Component({
   selector: 'app-account-management',

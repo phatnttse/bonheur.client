@@ -18,9 +18,9 @@ import { Account } from '../../../models/account.model';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateMainPhotoDialogComponent } from '../../dialogs/update-main-photo-dialog/update-main-photo-dialog.component';
+import { UpdateMainPhotoDialogComponent } from '../../dialogs/supplier/update-main-photo-dialog/update-main-photo-dialog.component';
 import { FormsModule } from '@angular/forms';
-import { DeletePhotoDialogComponent } from '../../dialogs/delete-photo-dialog/delete-photo-dialog.component';
+import { DeletePhotoDialogComponent } from '../../dialogs/supplier/delete-photo-dialog/delete-photo-dialog.component';
 
 @Component({
   selector: 'app-step-3',

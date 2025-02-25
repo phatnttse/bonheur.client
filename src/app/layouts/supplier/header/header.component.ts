@@ -5,7 +5,7 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { Router, RouterModule } from '@angular/router';
 import { Account } from '../../../models/account.model';
 import { DataService } from '../../../services/data.service';
-import { LocalStoreManager } from '../../../services/localstorage-manager.service';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 import { DBkeys } from '../../../services/db-keys';
 import { Supplier } from '../../../models/supplier.model';
 import { MaterialModule } from '../../../material.module';
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private localStorage: LocalStoreManager,
+    private localStorage: LocalStorageManager,
     private authService: AuthService,
     private router: Router
   ) {}

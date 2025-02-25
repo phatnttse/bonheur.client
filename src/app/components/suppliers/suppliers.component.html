@@ -5,9 +5,6 @@
     <div class="flex flex-wrap w-full mb-[-24px]">
       <div
         class="min-[992px]:w-[25%] w-full px-[12px] mb-[24px] block max-[992px]:hidden"
-        data-aos="fade-right"
-        data-aos-duration="1000"
-        data-aos-delay="200"
       >
         <div
           class="bb-shop-wrap bg-white border-[1px] border-solid border-[#eee] rounded-[20px] sticky top-[0]"
@@ -204,12 +201,7 @@
         </div>
       </div>
 
-      <div
-        class="min-[992px]:w-[75%] w-full px-[12px] mb-[24px]"
-        data-aos="fade-left"
-        data-aos-duration="1000"
-        data-aos-delay="200"
-      >
+      <div class="min-[992px]:w-[75%] w-full px-[12px] mb-[24px]">
         <div class="bb-shop-pro-inner list-view-100">
           <div class="flex flex-wrap mx-[-12px] mb-[-24px]">
             <div class="w-full px-[12px]">
@@ -438,6 +430,7 @@
                         mat-raised-button
                         color="primary"
                         style="padding: 24px 48px; font-weight: 600"
+                        (click)="openRequestPricingDialog(supplier.id)"
                       >
                         Request Pricing
                       </button>
@@ -449,7 +442,12 @@
                     <div class="flex items-center mr-2">
                       <mat-icon class="text-[#fea99a]">bolt</mat-icon>
                       <span class="text-[#222222] text-sm font-light">
-                        Response within 24 hours
+                        @if (supplier.responseTimeStart === '00:00:00' &&
+                        supplier.responseTimeEnd === '00:00:00') { Response time
+                        within 24 hours } @else { Response time:
+                        {{ getFormattedTime(supplier.responseTimeStart) }} -
+                        {{ getFormattedTime(supplier.responseTimeEnd) }}
+                        }
                       </span>
                     </div>
                   </div>
@@ -457,7 +455,12 @@
                 </div>
                 @if (gridLayout) {
                 <div class="flex justify-center mt-2 w-full px-4 mb-2">
-                  <button mat-raised-button color="primary" class="w-full">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    class="w-full"
+                    (click)="openRequestPricingDialog(supplier.id)"
+                  >
                     Request Pricing
                   </button>
                 </div>

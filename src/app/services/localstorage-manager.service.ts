@@ -7,7 +7,7 @@ import { Utilities } from './utilities';
 /**
  * Provides a wrapper for accessing the web storage API and synchronizing session storage across tabs/windows.
  */
-export class LocalStoreManager {
+export class LocalStorageManager {
   public setData(data: unknown, key: string) {
     localStorage.setItem(key, JSON.stringify(data));
   }

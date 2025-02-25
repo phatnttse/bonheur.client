@@ -65,28 +65,41 @@
                         [routerLinkActive]="'active-link'"
                       >
                         <a
-                          class="relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem] cursor-pointer flex items-center"
-                          (click)="toggleDropdown()"
+                          class="relative p-[0] leading-[28px] text-[15px] font-semibold block tracking-[0.03rem] cursor-pointer flex items-center"
+                          [matMenuTriggerFor]="provinceMenu"
                           >Location
                           <mat-icon style="width: 20px" class="pl-[2px]"
                             >expand_more</mat-icon
                           >
                         </a>
-                        @if (isDropdownOpen) {
-                        <ul
-                          class="w-[300px] transition-all duration-[0.3s] ease-in-out mt-[5px] absolute top-[40px] z-[16] left-0 bg-white border border-gray-200 flex flex-col rounded-lg shadow-lg max-h-[300px] overflow-y-auto"
-                        >
-                          @for (province of provinceList; track $index) {
-                          <li
-                            class="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
-                            (click)="selectProvince(province.provinceName)"
-                          >
-                            {{ province.provinceName }}
-                          </li>
-                          }
-                        </ul>
-                        }
                       </li>
+                      <mat-menu
+                        #provinceMenu="matMenu"
+                        class="px-6"
+                        xPosition="after"
+                        class="h-[600px] w-[400px] overflow-y-auto"
+                        style="height: fit-content"
+                      >
+                        <input
+                          type="text"
+                          [(ngModel)]="searchProvince"
+                          class="px-4 py-2 w-full border-b focus:outline-none focus:border-blue-500"
+                          placeholder="Search province..."
+                          (keydown.enter)="onSearchProvince()"
+                          (input)="onSearchProvince()"
+                          (click)="$event.stopPropagation()"
+                          [ngModelOptions]="{ standalone: true }"
+                          autofocus
+                        />
+                        @for (province of filteredProvinces; track $index) {
+                        <button
+                          class="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer text-left w-full"
+                          (click)="selectProvince(province.provinceName)"
+                        >
+                          {{ province.provinceName }}
+                        </button>
+                        }
+                      </mat-menu>
                     </div>
                   </div>
                   <input
@@ -126,11 +139,15 @@
                     </button>
                   </div>
                   <div class="mr-4 mt-2">
-                    <button mat-icon-button aria-label="Notifications">
+                    <button
+                      mat-icon-button
+                      aria-label="Notifications"
+                      routerLink="/inbox"
+                    >
                       <i-tabler
                         class="flex items-center text-center"
                         name="mail"
-                        matBadge="0"
+                        [matBadge]="messageUnreadCount"
                         matBadgeColor="warn"
                       ></i-tabler>
                     </button>

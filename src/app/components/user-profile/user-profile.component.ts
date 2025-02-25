@@ -10,10 +10,10 @@ import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
-import { LocalStoreManager } from '../../services/localstorage-manager.service';
+import { LocalStorageManager } from '../../services/localstorage-manager.service';
 import { DBkeys } from '../../services/db-keys';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangeEmailComponent } from '../dialogs/change-email/change-email.component';
+import { ChangeEmailComponent } from '../dialogs/user/change-email/change-email.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -36,7 +36,7 @@ export class UserProfileComponent {
     private statusService: StatusService,
     private dataService: DataService,
     private router: Router,
-    private localStorageService: LocalStoreManager,
+    private localStorageService: LocalStorageManager,
     private dialog: MatDialog
   ) {}
   ngOnInit() {

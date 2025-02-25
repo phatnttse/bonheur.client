@@ -1,0 +1,161 @@
+<div
+  class="py-8 px-8 overflow-hidden w-full overflow-y-auto"
+  data-aos="fade-up"
+  data-aos-duration="600"
+  data-aos-delay="200"
+>
+  @if (!status) {
+  <div class="justify-between flex items-center mb-4 relative">
+    <div class="flex flex-col">
+      <h2 class="font-light uppercase text-base mb-2 text-[#6c6c6c]">
+        {{ data.name }}
+      </h2>
+      <p class="font-semibold text-lg">Request Pricing</p>
+      <mat-icon
+        mat-dialog-close
+        class="absolute top-0 right-0 max-[667px]:top-[-20px] max-[667px]:right-[-20px] cursor-pointer"
+        >close</mat-icon
+      >
+    </div>
+  </div>
+  <div class="mb-4">
+    <p class="font-light text-sm text-[#6c6c6c]">
+      Fill out this form to request information from {{ data.name }}.
+    </p>
+  </div>
+  <div class="mb-4">
+    <form
+      [formGroup]="requestPricingForm"
+      (ngSubmit)="onSubmit()"
+      [autofocus]="false"
+    >
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Message</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          required
+          formControlName="message"
+          required
+          [class.is-invalid]="
+            requestPricingForm.get('message')?.invalid &&
+            requestPricingForm.get('message')?.touched
+          "
+        ></textarea>
+        @if(requestPricingForm.get('message')?.hasError('required')) {
+        <mat-error style="font-size: 12px"> Message is required </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Full Name</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          required
+          [class.is-invalid]="
+            requestPricingForm.get('name')?.invalid &&
+            requestPricingForm.get('name')?.touched
+          "
+        />
+        @if (requestPricingForm.get('name')?.hasError('required')) {
+        <mat-error style="font-size: 12px"> Full Name is required </mat-error>
+        }
+        <mat-icon matSuffix>person_outline</mat-icon>
+      </mat-form-field>
+      <div class="flex items-center md:gap-6 max-[768px]:flex-wrap w-full">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            required
+            [class.is-invalid]="
+              requestPricingForm.get('email')?.invalid &&
+              requestPricingForm.get('email')?.touched
+            "
+          />
+          @if (requestPricingForm.get('email')?.hasError('required')) {
+          <mat-error style="font-size: 12px"> Email is required </mat-error>
+          } @if (requestPricingForm.get('email')?.hasError('email')) {
+          <mat-error style="font-size: 12px"> Email is invalid </mat-error>
+          }
+          <mat-icon matSuffix
+            ><img src="./../../../../../assets/images/svgs/email.svg" alt=""
+          /></mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Phone</mat-label>
+          <input
+            matInput
+            formControlName="phone"
+            required
+            [class.is-invalid]="
+              requestPricingForm.get('phone')?.invalid &&
+              requestPricingForm.get('phone')?.touched
+            "
+          />
+          @if(requestPricingForm.get('phone')?.hasError('required')) {
+          <mat-error style="font-size: 12px">
+            Phone number is required
+          </mat-error>
+          } @if(requestPricingForm.get('phone')!.hasError('pattern')) {
+          <mat-error class="fs-14"> Phone number is invalid </mat-error>
+          }
+          <mat-icon matSuffix fontSet="material-icons-outlined">phone</mat-icon>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline" class="max-[768px]:w-full mb-4">
+        <mat-label>Event date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          required
+          formControlName="eventDate"
+          [class.is-invalid]="
+            requestPricingForm.get('eventDate')?.invalid &&
+            requestPricingForm.get('eventDate')?.touched
+          "
+        />
+        @if(requestPricingForm.get('eventDate')?.hasError('required')) {
+        <mat-error style="font-size: 12px"> Event date is required </mat-error>
+        }
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="w-full px-6"
+        style="padding: 22px 0px; font-weight: 600; font-size: 16px"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+  }@else {
+  <div
+    class="flex flex-col items-center justify-center"
+    data-aos="fade-up"
+    data-aos-duration="1000"
+    data-aos-delay="200"
+  >
+    <img
+      width="48"
+      height="48"
+      src="./../../../../../assets/images/svgs/success.svg"
+      alt=""
+    />
+    <h2 class="font-semibold text-lg mt-4 mb-2">Request Sent</h2>
+    <p class="font-light text-sm text-[#6c6c6c] mt-2">
+      Your request has been sent to {{ data.name }}. You will be contacted
+      shortly.
+    </p>
+  </div>
+  }
+</div>

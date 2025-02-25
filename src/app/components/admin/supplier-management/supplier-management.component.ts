@@ -24,7 +24,7 @@ import { CategoryService } from '../../../services/category.service';
 import { FormsModule } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateSupplierStatusDialogComponent } from '../../dialogs/update-supplier-status-dialog/update-supplier-status-dialog.component';
+import { UpdateSupplierStatusDialogComponent } from '../../dialogs/admin/update-supplier-status-dialog/update-supplier-status-dialog.component';
 
 @Component({
   selector: 'app-supplier-management',
