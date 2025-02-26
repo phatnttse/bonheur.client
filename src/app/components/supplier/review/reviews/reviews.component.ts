@@ -14,6 +14,7 @@ import { DataService } from '../../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
+import { LocalStorageManager } from '../../../../services/localstorage-manager.service';
 
 @Component({
   selector: 'app-reviews',
@@ -23,8 +24,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
   styleUrl: './reviews.component.scss',
 })
 export class ReviewsComponent {
-  // supplierId: number | null = null;
-  supplierId: number = 2;
+  supplierId: number | null = null;
   responseData: ListReviewResponse | null = null;
   listReviewResponse: Review[] = [];
   pageNumber: number = 1; // Trang hiện tại
@@ -56,16 +56,20 @@ export class ReviewsComponent {
     private toastr: ToastrService,
     private dialog: MatDialog,
     private route: Router,
-    private dataService: DataService
+    private dataService: DataService,
+    private localStorage: LocalStorageManager
   ) {}
 
   ngOnInit() {
     // setTimeout(() => {
     //   this.statusService.statusLoadingSpinnerSource.next(true);
     // });
-    if (this.supplierId !== null) {
-      this.getReviews(this.supplierId, this.pageNumber, this.pageSize);
-    }
+    this.dataService.supplierData$.subscribe((supplier) => {
+      if (supplier) {
+        console.log(supplier.id);
+        this.getReviews(supplier.id, this.pageNumber, this.pageSize);
+      }
+    });
   }
 
   getReviews(supplierId: number, pageNumber: number, pageSize: number) {
