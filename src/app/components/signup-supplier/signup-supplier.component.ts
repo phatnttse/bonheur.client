@@ -64,6 +64,14 @@ export class SignupSupplierComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['/authentication/signin']);
+      this.notificationService.openSnackBarTop(
+        'Please login to continue',
+        'OK',
+        5000
+      );
+    }
     this.getSupplierCategories();
   }
 
