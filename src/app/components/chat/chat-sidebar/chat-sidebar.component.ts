@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { OnlineUser } from '../../../models/chat.model';
 
@@ -11,4 +11,9 @@ import { OnlineUser } from '../../../models/chat.model';
 })
 export class ChatSidebarComponent {
   @Input() onlineUsers: OnlineUser[] = []; // Online users list
+  @Output() userSelected = new EventEmitter<OnlineUser>(); // Phát sự kiện khi chọn user
+
+  selectUser(user: OnlineUser): void {
+    this.userSelected.emit(user); // Gửi user lên ChatComponent
+  }
 }

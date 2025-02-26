@@ -2,7 +2,7 @@
   <div class="flex flex-wrap mt-2 border-t-[1px] border-solid border-[#eee]">
     <div class="max-[664px]:hidden w-1/5 px-2">
       <ul class="mt-4 pt-2 pl-4">
-        <a href="/supplier/review">
+        <a routerLink="/supplier/review">
           <li class="flex mb-4">
             <i-tabler
               name="settings"
@@ -12,7 +12,7 @@
             <span>Review collectors</span>
           </li>
         </a>
-        <a href="/supplier/reviews">
+        <a routerLink="/supplier/reviews">
           <li class="flex mb-4">
             <i-tabler
               name="note"
@@ -22,17 +22,7 @@
             <span class="font-bold">Reviews</span>
           </li>
         </a>
-        <a href="/supplier/hitched-rated">
-          <li class="flex mb-4">
-            <i-tabler
-              name="heart-rate-monitor"
-              class="icon-20 d-flex align-items-center mr-1"
-            >
-            </i-tabler>
-            <span>Hitched rated</span>
-          </li>
-        </a>
-        <a href="/supplier/review-widget"
+        <!-- <a href="/supplier/review-widget"
           ><li class="flex mb-4">
             <i-tabler
               name="settings"
@@ -41,7 +31,7 @@
             </i-tabler>
             <span>Reviews widget</span>
           </li></a
-        >
+        > -->
       </ul>
     </div>
 
@@ -54,7 +44,7 @@
         <div class="flex">
           <div class="flex flex-row justify-center mr-2">
             <img
-              src="assets/images/svgs/star.svg"
+              src="/assets/images/svgs/star-normal.svg"
               alt="Your photo"
               width="54"
               height="54"
@@ -87,7 +77,9 @@
           <div
             class="w-32 h-32 bg-white p-4 border-[#d9d9d9] border-solid border-[1px] flex flex-col items-center justify-center max-[412px]:mt-2"
           >
-            <div class="text-6xl font-medium">{{ averageRate }}</div>
+            <div class="text-6xl font-medium">
+              {{ averageRate | number : "1.1-1" }}
+            </div>
             <div class="">out of 5.0</div>
             <div class="flex">
               <div *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index">
@@ -131,6 +123,7 @@
                   <div class="ml-2 font-bold">
                     {{
                       responseData?.data?.averageScores?.averageQualityOfService
+                        | number : "1.1-1"
                     }}
                   </div>
                 </div>
@@ -162,6 +155,7 @@
                   <div class="ml-2 font-bold">
                     {{
                       responseData?.data?.averageScores?.averageProfessionalism
+                        | number : "1.1-1"
                     }}
                   </div>
                 </div>
@@ -191,7 +185,10 @@
                     "
                   ></div>
                   <div class="ml-2 font-bold">
-                    {{ responseData?.data?.averageScores?.averageFlexibility }}
+                    {{
+                      responseData?.data?.averageScores?.averageFlexibility
+                        | number : "1.1-1"
+                    }}
                   </div>
                 </div>
               </div>
@@ -220,7 +217,10 @@
                     "
                   ></div>
                   <div class="ml-2 font-bold">
-                    {{ responseData?.data?.averageScores?.averageValueOfMoney }}
+                    {{
+                      responseData?.data?.averageScores?.averageValueOfMoney
+                        | number : "1.1-1"
+                    }}
                   </div>
                 </div>
               </div>
@@ -249,7 +249,10 @@
                     "
                   ></div>
                   <div class="ml-2 font-bold">
-                    {{ responseData?.data?.averageScores?.averageResponseTime }}
+                    {{
+                      responseData?.data?.averageScores?.averageResponseTime
+                        | number : "1.1-1"
+                    }}
                   </div>
                 </div>
               </div>

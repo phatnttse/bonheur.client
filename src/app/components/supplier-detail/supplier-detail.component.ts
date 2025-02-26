@@ -27,7 +27,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestPricingDialogComponent } from '../dialogs/user/request-pricing-dialog/request-pricing-dialog.component';
 import { AuthService } from '../../services/auth.service';
 import { ReviewService } from '../../services/review.service';
-import { ReviewResponse } from '../../models/review.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -39,6 +39,7 @@ import { ReviewResponse } from '../../models/review.model';
     SlickCarouselModule,
     RouterModule,
     GalleryModule,
+    CommonModule,
   ],
   templateUrl: './supplier-detail.component.html',
   styleUrl: './supplier-detail.component.scss',

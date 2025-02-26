@@ -60,7 +60,7 @@
       >
         <div class="flex items-center gap-x-4">
           <img
-            [src]="'./../../../../assets/images/svgs/' + item.icon + '.svg'"
+            [src]="'/assets/images/svgs/' + item.icon + '.svg'"
             width="24"
             height="24"
             alt=""
@@ -87,9 +87,7 @@
             (click)="toggleMenu()"
           >
             <img
-              [src]="
-                './../../../../assets/images/svgs/' + subItem.icon + '.svg'
-              "
+              [src]="'/assets/images/svgs/' + subItem.icon + '.svg'"
               width="20"
               height="20"
               alt=""

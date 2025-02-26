@@ -9,21 +9,26 @@ import { StatusService } from '../../../services/status.service';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageManager } from '../../../services/localstorage-manager.service';
+import { Supplier } from '../../../models/supplier.model';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule, FormsModule],
+  imports: [
+    MaterialModule,
+    CommonModule,
+    TablerIconsModule,
+    FormsModule,
+    RouterModule,
+  ],
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss',
 })
 export class ReviewComponent {
-  // supplierId: number | null = null;
-  supplierId: number = 2;
   responseData: ListReviewResponse | null = null;
   listReviewResponse: Review[] = [];
   pageNumber: number = 1; // Trang hiện tại
@@ -37,6 +42,7 @@ export class ReviewComponent {
   averageRate: number = 0.0;
   contentEmail: string = '';
   email: string = '';
+  supplier: Supplier | null = null;
   /**
    *
    */
@@ -53,12 +59,11 @@ export class ReviewComponent {
   ) {}
 
   ngOnInit() {
-    // setTimeout(() => {
-    //   this.statusService.statusLoadingSpinnerSource.next(true);
-    // });
-    if (this.supplierId !== null) {
-      this.getReviews(this.supplierId, this.pageNumber, this.pageSize);
-    }
+    this.dataService.supplierData$.subscribe((supplier) => {
+      if (supplier) {
+        this.getReviews(supplier.id, this.pageNumber, this.pageSize);
+      }
+    });
   }
 
   getReviews(supplierId: number, pageNumber: number, pageSize: number) {
@@ -68,7 +73,6 @@ export class ReviewComponent {
         this.listReviewResponse = response.data.reviews.items;
         this.pageNumber = response.data.reviews.pageNumber;
         this.pageSize = response.data.reviews.pageSize;
-        debugger;
         this.totalItemCount = response?.data?.reviews?.totalItemCount ?? 0;
         this.isFirstPage = response.data.reviews.isFirstPage;
         this.isLastPage = response.data.reviews.isLastPage;
@@ -102,6 +106,17 @@ export class ReviewComponent {
           this.statusService.statusLoadingSpinnerSource.next(false);
           this.notificationService.handleApiError(error);
         },
+      });
+  }
+
+  copyToClipboard(value: string): void {
+    navigator.clipboard
+      .writeText(value)
+      .then(() => {
+        console.log('Copied:', value);
+      })
+      .catch((err) => {
+        console.error('Failed to copy:', err);
       });
   }
 }

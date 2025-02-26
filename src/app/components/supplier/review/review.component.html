@@ -2,7 +2,7 @@
   <div class="flex flex-wrap mt-2 border-t-[1px] border-solid border-[#eee]">
     <div class="max-[664px]:hidden w-1/5 px-2">
       <ul class="mt-4 pt-2 pl-4">
-        <a href="/supplier/review">
+        <a routerLink="/supplier/review">
           <li class="flex mb-4">
             <i-tabler
               name="settings"
@@ -12,7 +12,7 @@
             <span class="font-bold">Review collectors</span>
           </li>
         </a>
-        <a href="/supplier/reviews">
+        <a routerLink="/supplier/reviews">
           <li class="flex mb-4">
             <i-tabler
               name="note"
@@ -22,17 +22,7 @@
             <span>Reviews</span>
           </li>
         </a>
-        <a href="/supplier/hitched-rated">
-          <li class="flex mb-4">
-            <i-tabler
-              name="heart-rate-monitor"
-              class="icon-20 d-flex align-items-center mr-1"
-            >
-            </i-tabler>
-            <span>Hitched rated</span>
-          </li>
-        </a>
-        <a href="/supplier/review-widget"
+        <!-- <a href="/supplier/review-widget"
           ><li class="flex mb-4">
             <i-tabler
               name="settings"
@@ -41,7 +31,7 @@
             </i-tabler>
             <span>Reviews widget</span>
           </li></a
-        >
+        > -->
       </ul>
     </div>
 
@@ -54,7 +44,7 @@
         <div class="flex">
           <div class="flex flex-row justify-center mr-2">
             <img
-              src="assets/images/svgs/star.svg"
+              src="/assets/images/svgs/star-normal.svg"
               alt="Your photo"
               width="54"
               height="54"
@@ -137,13 +127,13 @@
 
             <mat-form-field appearance="outline" class="mr-2 w-2/6">
               <mat-label>Email</mat-label>
-              <input matInput [(ngModel)]="email" placeholder="Placeholder" />
+              <input matInput [(ngModel)]="email" placeholder="Enter email" />
             </mat-form-field>
             <button
               mat-raised-button
               color="primary"
               class="mr-2 w-1/6"
-              style="height: 55px"
+              style="height: 55px; font-size: 16px; font-weight: 600"
             >
               Add
             </button>
@@ -154,7 +144,7 @@
           </div>
           <div class="flex flex-row mr-2 py-2">
             <p class="font-semibold">CC:</p>
-            <p>bonheur.wedding.1910&#64;gmail.com</p>
+            <p>bonheur201&#64;gmail.com</p>
           </div>
           <div class="flex flex-row mr-2">
             <h3 class="font-semibold text-xl">Message</h3>
@@ -205,9 +195,16 @@
               <input
                 matInput
                 placeholder="Placeholder"
-                value="http://localhost:4200/supplier/review"
+                value="https://bonheur.pro/review-detail/{{ supplier?.slug }}"
+                #inputField
               />
-              <button mat-button matSuffix>COPY</button>
+              <button
+                mat-button
+                matSuffix
+                (click)="copyToClipboard(inputField.value)"
+              >
+                COPY
+              </button>
             </mat-form-field>
           </div>
         </div>

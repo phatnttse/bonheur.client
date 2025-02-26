@@ -167,7 +167,7 @@
                     aria-label="Account"
                   >
                     <img
-                      [src]="account.pictureUrl"
+                      src="/{{ account.pictureUrl }}"
                       alt="avatar"
                       class="rounded-full object-cover w-[36px] h-[36px]"
                     />
@@ -206,9 +206,9 @@
                     routerLink="/authentication/signin"
                   >
                     <a
-                      href="javascript:void(0)"
                       class="bb-header-btn bb-header-user dropdown-toggle bb-user-toggle transition-all duration-[0.3s] ease-in-out relative flex w-[auto] items-center whitespace-nowrap ml-[30px] max-[1199px]:ml-[20px] max-[767px]:ml-[0]"
                       title="Account"
+                      routerLink="/authentication/signin"
                     >
                       <div class="header-icon relative flex">
                         <svg
