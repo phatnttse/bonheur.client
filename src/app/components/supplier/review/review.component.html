@@ -195,9 +195,16 @@
               <input
                 matInput
                 placeholder="Placeholder"
-                value="https://bonheur.pro/review-detail/{{ supplierId }}"
+                value="https://bonheur.pro/review-detail/{{ supplier?.slug }}"
+                #inputField
               />
-              <button mat-button matSuffix>COPY</button>
+              <button
+                mat-button
+                matSuffix
+                (click)="copyToClipboard(inputField.value)"
+              >
+                COPY
+              </button>
             </mat-form-field>
           </div>
         </div>
