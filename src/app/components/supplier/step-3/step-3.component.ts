@@ -137,9 +137,10 @@ export class Step3Component implements OnInit {
     };
 
     this.supplierService.updateSupplierImages(request).subscribe({
-      next: (response: BaseResponse<Supplier>) => {
+      next: (response: BaseResponse<SupplierImage[]>) => {
         if (response.success && response.statusCode === StatusCode.OK) {
           this.previewImages = [];
+          this.fileUploads = [];
           this.getSupplierByUserId(this.account!.id!);
           this.statusService.statusLoadingSpinnerSource.next(false);
           this.notificationService.success('Success', response.message);

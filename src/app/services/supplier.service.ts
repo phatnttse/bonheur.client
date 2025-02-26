@@ -182,7 +182,9 @@ export class SupplierService extends EndpointBase {
       );
   }
 
-  updateSupplierImages(request: any): Observable<BaseResponse<Supplier>> {
+  updateSupplierImages(
+    request: any
+  ): Observable<BaseResponse<SupplierImage[]>> {
     const formData = new FormData();
     request.files.forEach((file: any) => {
       formData.append('files', file);
@@ -192,7 +194,7 @@ export class SupplierService extends EndpointBase {
       formData.append('primaryImageIndex', request.primaryImageIndex);
 
     return this.http
-      .post<BaseResponse<Supplier>>(
+      .post<BaseResponse<SupplierImage[]>>(
         `${environment.apiUrl}/api/v1/suppliers/images/upload`,
         formData,
         this.requestHeaders
