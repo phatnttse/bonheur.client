@@ -45,6 +45,6 @@ jobs:
             docker stop bonheur.client || true
             docker rm bonheur.client || true
             docker run -d --name bonheur.client \
-              -p 4300:80 \
+              -p 4300:4300 \
               ${{ secrets.DOCKER_USERNAME }}/bonheur.client:latest
           EOF
