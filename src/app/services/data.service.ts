@@ -108,5 +108,8 @@ export class DataService {
 
   resetData() {
     this.accountDataSource.next(null);
+    this.supplierDataSource.next(null);
+    this.messageUnreadCountUserDataSource.next(null);
+    this.requestPricingBySupplierDataSource.next(null);
   }
 }

@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import {
   ListSupplierCategoryResponse,
@@ -20,6 +20,7 @@ import { SupplierService } from '../../services/supplier.service';
 import { BaseResponse } from '../../models/base.model';
 import { StatusCode } from '../../models/enums.model';
 import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-signup-supplier',
@@ -39,7 +40,9 @@ export class SignupSupplierComponent implements OnInit {
     private notificationService: NotificationService,
     private statusService: StatusService,
     private supplierService: SupplierService,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router,
+    private dataService: DataService
   ) {
     this.formContactSignup = this.formBuilder.group({
       name: [
@@ -100,6 +103,14 @@ export class SignupSupplierComponent implements OnInit {
           if (response.success && response.statusCode === StatusCode.OK) {
             this.statusService.statusLoadingSpinnerSource.next(false);
             this.statusPage = 1;
+            setTimeout(() => {
+              this.logout();
+              this.notificationService.openSnackBarTop(
+                "You've successfully registered to become a supplier. Please login again to continue.",
+                'OK',
+                5000
+              );
+            }, 2000);
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -107,5 +118,11 @@ export class SignupSupplierComponent implements OnInit {
           this.notificationService.handleApiError(error);
         },
       });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.dataService.resetData();
+    this.router.navigate(['/authentication/signin']);
   }
 }

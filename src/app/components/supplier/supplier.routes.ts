@@ -162,6 +162,14 @@ export const supplierRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'invoices',
+        loadComponent() {
+          return import('./invoice/invoice.component').then(
+            (m) => m.InvoiceComponent
+          );
+        },
+      },
     ],
   },
 ];

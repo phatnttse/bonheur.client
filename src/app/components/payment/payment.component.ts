@@ -3,7 +3,7 @@ import { SuccessComponent } from './success/success.component';
 import { FailComponent } from './fail/fail.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StatusService } from '../../services/status.service';
-import { PaymentStatus } from '../../models/enums.model';
+import { PaymentStatus, StatusCode } from '../../models/enums.model';
 import { PaymentLinkInformation } from '../../models/payment.model';
 import { PaymentService } from '../../services/payment.service';
 import { BaseResponse } from '../../models/base.model';
@@ -12,6 +12,9 @@ import { NotificationService } from '../../services/notification.service';
 import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 import { MaterialModule } from '../../material.module';
+import { SupplierService } from '../../services/supplier.service';
+import { Supplier } from '../../models/supplier.model';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-payment',
@@ -24,6 +27,7 @@ export class PaymentComponent implements OnInit {
   success: boolean | null = null;
   @Output() paymentLinkInfo: PaymentLinkInformation | null = null;
   @Output() orderInfo: Order | null = null;
+  supplier: Supplier | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +35,9 @@ export class PaymentComponent implements OnInit {
     private paymentService: PaymentService,
     private notificationService: NotificationService,
     private router: Router,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private supplierService: SupplierService,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +72,7 @@ export class PaymentComponent implements OnInit {
     this.orderService.getOrderByCode(orderCode).subscribe({
       next: (response: BaseResponse<Order>) => {
         this.orderInfo = response.data;
+        this.getSupplierByUserId(this.orderInfo.user.id);
         setTimeout(() => {
           this.statusService.statusLoadingSpinnerSource.next(false);
         }, 200);
@@ -91,6 +98,20 @@ export class PaymentComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
         this.router.navigate(['/supplier']);
+        this.notificationService.handleApiError(error);
+      },
+    });
+  }
+
+  getSupplierByUserId(userId: string) {
+    this.supplierService.getSupplierByUserId(userId).subscribe({
+      next: (response: BaseResponse<Supplier>) => {
+        if (response.success && response.statusCode === StatusCode.OK) {
+          this.supplier = response.data;
+          this.dataService.supplierDataSource.next(this.supplier);
+        }
+      },
+      error: (error: HttpErrorResponse) => {
         this.notificationService.handleApiError(error);
       },
     });

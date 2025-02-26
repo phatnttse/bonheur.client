@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { EndpointBase } from './endpoint-base.service';
 import { Invoice } from '../models/invoice.model';
-import { BaseResponse } from '../models/base.model';
+import { BaseResponse, PaginationResponse } from '../models/base.model';
 import { catchError, Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environments/environment.dev';
@@ -12,9 +12,9 @@ import { environment } from '../environments/environment.dev';
 export class InvoiceService extends EndpointBase {
   private http = inject(HttpClient);
 
-  getInvoicesBySupplier(): Observable<BaseResponse<Invoice[]>> {
+  getInvoicesBySupplier(): Observable<PaginationResponse<Invoice>> {
     return this.http
-      .get<BaseResponse<Invoice[]>>(
+      .get<PaginationResponse<Invoice>>(
         `${environment.apiUrl}/api/v1/invoices/supplier`,
         this.requestHeaders
       )

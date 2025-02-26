@@ -32,33 +32,30 @@
                 <a
                   class="nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem]"
                   routerLink="/suppliers"
-                  >Suppliers</a
                 >
+                  Suppliers
+                </a>
                 <ul
-                  class="mega-menu min-w-full transition-all duration-[0.3s] ease-in-out mt-[25px] pl-[30px] absolute top-[40px] z-[16] text-left opacity-[0] invisible left-[0] right-[auto] bg-[#fff] border-[1px] border-solid border-[#eee] flex flex-col rounded-[10px]"
+                  class="py-4 mega-menu min-w-full transition-all duration-[0.3s] ease-in-out mt-[25px] pl-[30px] absolute top-[40px] z-[16] text-left opacity-[0] invisible left-[0] right-[auto] bg-[#fff] border-[1px] border-solid border-[#eee] flex flex-wrap rounded-[10px] w-[400px]"
                 >
-                  <li class="m-[0] flex items-center">
-                    @for (item of categories; track $index) {
-                    <ul
-                      class="mega-block w-[calc(25%-30px)] mr-[30px] py-[15px]"
+                  @for (item of categories; track $index) {
+                  <li class="w-1/2 p-[10px] flex items-center gap-7 py-4">
+                    <img
+                      class="w-6 h-6"
+                      [src]="item.imageUrl"
+                      [alt]="item.name"
+                    />
+                    <a
+                      [routerLink]="['/suppliers']"
+                      class="transition-all duration-[0.3s] ease-in-out leading-[22px] text-[16px] font-normal tracking-[0.03rem] hover:text-secondary capitalize"
                     >
-                      <li class="flex items-center gap-2">
-                        <img
-                          class="w-8 h-8"
-                          [src]="item.imageUrl"
-                          [alt]="item.name"
-                        />
-                        <a
-                          href="shop-left-sidebar-col-3.html"
-                          class="transition-all duration-[0.3s] ease-in-out py-[10px] leading-[22px] text-[14px] font-normal tracking-[0.03rem] text-[#686e7d] hover:text-[#6c7fd8] capitalize"
-                          >{{ item.name }}</a
-                        >
-                      </li>
-                    </ul>
-                    }
+                      {{ item.name }}
+                    </a>
                   </li>
+                  }
                 </ul>
               </li>
+
               <li
                 class="nav-item bb-dropdown flex items-center relative mr-[45px]"
               >
