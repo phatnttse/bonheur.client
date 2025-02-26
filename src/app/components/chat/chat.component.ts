@@ -109,6 +109,11 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  onUserSelected(user: OnlineUser): void {
+    this.selectedUser = user;
+    this.loadMessages(user.id);
+  }
+
   getSupplierInfo() {
     this.supplierService
       .getSupplierByUserId(this.selectedUser?.id || '')

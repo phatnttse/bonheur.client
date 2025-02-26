@@ -113,7 +113,7 @@
                 <div class="flex items-center gap-4 mb-6">
                   <img
                     width="24"
-                    src="./../../../assets/images/svgs/web-browsing.svg"
+                    src="/assets/images/svgs/web-browsing.svg"
                     alt="Web Browsing"
                     class="mx-1"
                   />
@@ -310,7 +310,7 @@
           >
             <div class="flex items-center gap-4">
               <img
-                src="./../../../assets/images/svgs/paperAndPencil.svg"
+                src="/assets/images/svgs/paperAndPencil.svg"
                 alt=""
                 width="40"
                 height="40"
@@ -370,7 +370,7 @@
                       font-size: 15px;
                     "
                     class="w-full"
-                    routerLink="/review-detail/{{ supplier?.id }}"
+                    routerLink="/review-detail/{{ supplier?.slug }}"
                   >
                     Write a review
                   </button>
@@ -390,7 +390,9 @@
                         "
                         color="accent"
                       ></mat-progress-bar>
-                      <span>{{ averageScores.averageQualityOfService }}</span>
+                      <span>{{
+                        averageScores.averageQualityOfService | number : "1.1-2"
+                      }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
@@ -402,7 +404,9 @@
                         [value]="(averageScores.averageResponseTime * 100) / 5"
                         color="accent"
                       ></mat-progress-bar>
-                      <span>{{ averageScores.averageResponseTime }}</span>
+                      <span>{{
+                        averageScores.averageResponseTime | number : "1.1-2"
+                      }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between gap-2">
@@ -416,7 +420,9 @@
                         "
                         color="accent"
                       ></mat-progress-bar>
-                      <span>{{ averageScores.averageProfessionalism }}</span>
+                      <span>{{
+                        averageScores.averageProfessionalism | number : "1.1-2"
+                      }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
@@ -428,7 +434,9 @@
                         [value]="(averageScores.averageValueOfMoney * 100) / 5"
                         color="accent"
                       ></mat-progress-bar>
-                      <span>{{ averageScores.averageValueOfMoney }}</span>
+                      <span>{{
+                        averageScores.averageValueOfMoney | number : "1.1-2"
+                      }}</span>
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
@@ -440,7 +448,9 @@
                         [value]="(averageScores.averageFlexibility * 100) / 5"
                         color="accent"
                       ></mat-progress-bar>
-                      <span>{{ averageScores.averageFlexibility }}</span>
+                      <span>{{
+                        averageScores.averageFlexibility | number : "1.1-2"
+                      }}</span>
                     </div>
                   </li>
                 </ul>

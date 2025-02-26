@@ -9,7 +9,7 @@ import { StatusService } from '../../../services/status.service';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageManager } from '../../../services/localstorage-manager.service';
@@ -17,7 +17,13 @@ import { LocalStorageManager } from '../../../services/localstorage-manager.serv
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule, FormsModule],
+  imports: [
+    MaterialModule,
+    CommonModule,
+    TablerIconsModule,
+    FormsModule,
+    RouterModule,
+  ],
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss',
 })
@@ -68,7 +74,6 @@ export class ReviewComponent {
         this.listReviewResponse = response.data.reviews.items;
         this.pageNumber = response.data.reviews.pageNumber;
         this.pageSize = response.data.reviews.pageSize;
-        debugger;
         this.totalItemCount = response?.data?.reviews?.totalItemCount ?? 0;
         this.isFirstPage = response.data.reviews.isFirstPage;
         this.isLastPage = response.data.reviews.isLastPage;

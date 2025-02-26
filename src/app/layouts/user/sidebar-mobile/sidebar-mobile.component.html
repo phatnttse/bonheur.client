@@ -62,6 +62,7 @@
               href="javascript:void(0)"
               class="bb-header-btn bb-header-user dropdown-toggle bb-user-toggle transition-all duration-[0.3s] ease-in-out relative flex w-[auto] items-center whitespace-nowrap ml-[30px] max-[1199px]:ml-[20px] max-[767px]:ml-[0]"
               title="Account"
+              routerLink="/authentication/signin"
             >
               <div class="header-icon relative flex">
                 <svg
@@ -76,10 +77,7 @@
                   ></path>
                 </svg>
               </div>
-              <div
-                class="bb-btn-desc flex flex-col ml-[10px]"
-                routerLink="/authentication/signin"
-              >
+              <div class="bb-btn-desc flex flex-col ml-[10px]">
                 <span
                   class="bb-btn-title font-Poppins transition-all duration-[0.3s] ease-in-out text-[12px] leading-[1] text-[#3d4750] mb-[4px] tracking-[0.6px] capitalize font-medium whitespace-nowrap"
                   >Account</span
@@ -123,7 +121,7 @@
         aria-label="Account"
       >
         <img
-          [src]="account.pictureUrl"
+          src="/{{ account.pictureUrl }}"
           alt="avatar"
           class="rounded-full object-cover w-[36px] h-[36px]"
         />
@@ -155,11 +153,7 @@
     </div>
     }
     <div class="flex items-center gap-6 mx-2 mt-4">
-      <img
-        src="./../../../../assets/images/svgs/bag.svg"
-        alt=""
-        class="w-5 h-5 mb-1"
-      />
+      <img src="/assets/images/svgs/bag.svg" alt="" class="w-5 h-5 mb-1" />
       @if (account?.roles?.includes(role.SUPPLIER)) {
       <a
         class="text-secondary font-semibold text-base cursor-pointer"

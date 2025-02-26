@@ -30,8 +30,8 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 export class TopBarComponent {
   announcements: string[] = [
     'Free consultation for your dream wedding planning!',
-    'Sign up now and get 20% off your first booking!',
-    'Exclusive bridal dress collection with special discounts!',
+    'Sign up now and get 10% off your first booking!',
+    'New feature: Chat with our vendors directly!',
   ];
   currentAnnouncementIndex: number = 0;
 

@@ -9,7 +9,7 @@ import { StatusService } from '../../../../services/status.service';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DataService } from '../../../../services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -18,7 +18,13 @@ import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 @Component({
   selector: 'app-reviews',
   standalone: true,
-  imports: [MaterialModule, CommonModule, TablerIconsModule, FontAwesomeModule],
+  imports: [
+    MaterialModule,
+    CommonModule,
+    TablerIconsModule,
+    FontAwesomeModule,
+    RouterModule,
+  ],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.scss',
 })

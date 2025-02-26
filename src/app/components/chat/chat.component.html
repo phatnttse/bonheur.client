@@ -4,6 +4,7 @@
   <!-- Sidebar - Danh sách tin nhắn -->
   <app-chat-sidebar
     [onlineUsers]="onlineUsers"
+    (userSelected)="onUserSelected($event)"
     class="w-1/4 max-[1024px]:w-full"
   ></app-chat-sidebar>
 
@@ -26,7 +27,7 @@
     <div class="flex justify-center text-center flex-col">
       <div class="mb-4">
         <img
-          src="./../../../../../../assets/images/svgs/email.svg"
+          src="/assets/images/svgs/email.svg"
           alt=""
           class="w-32 h-32 mx-auto"
         />

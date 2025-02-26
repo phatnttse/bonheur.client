@@ -14,6 +14,9 @@ import { NotificationService } from '../../services/notification.service';
 import { ReviewCreation } from '../../models/review.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Supplier } from '../../models/supplier.model';
+import { BaseResponse } from '../../models/base.model';
+import { StatusCode } from '../../models/enums.model';
 @Component({
   selector: 'app-review-detail',
   standalone: true,
@@ -31,10 +34,10 @@ export class ReviewDetailComponent {
   faStar = faStar;
   statusPage: number = 0;
   userId: number | null = null;
-  supplierId: number | null = null;
   summaryExperience: string = '';
   content: string = '';
   @Input() readonly: boolean = false;
+  supplier: Supplier | null = null;
 
   ratings: { [key: string]: number } = {
     quality: 0,
@@ -54,8 +57,8 @@ export class ReviewDetailComponent {
     private statusService: StatusService
   ) {
     this.route.paramMap.subscribe((params) => {
-      const supplierIdStr = params.get('supplierId');
-      this.supplierId = supplierIdStr ? +supplierIdStr : 0;
+      const slug = params.get('slug');
+      if (slug) this.getSupplierBySlug(slug);
     });
   }
 
@@ -65,6 +68,19 @@ export class ReviewDetailComponent {
     this.ratings[type] = value;
     this.cdr.detectChanges(); // Cập nhật UI ngay lập tức
     console.log(this.ratings[type]);
+  }
+
+  getSupplierBySlug(slug: string): void {
+    this.supplierService.getSupplierBySlug(slug).subscribe({
+      next: (response: BaseResponse<Supplier>) => {
+        if (response.success && response.statusCode === StatusCode.OK) {
+          this.supplier = response.data;
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.notificationService.handleApiError(error);
+      },
+    });
   }
 
   updateStatusPage(direction: 'back' | 'next'): void {
@@ -109,7 +125,7 @@ export class ReviewDetailComponent {
 
     const review = {
       userId: user.id,
-      supplierId: this.supplierId ?? 0,
+      supplierId: this.supplier?.id ?? 0,
       summaryExperience,
       content,
       qualityOfService: quality,

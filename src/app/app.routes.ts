@@ -145,7 +145,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'review-detail/:supplierId',
+    path: 'review-detail/:slug',
     loadComponent() {
       return import('./components/review-detail/review-detail.component').then(
         (m) => m.ReviewDetailComponent
