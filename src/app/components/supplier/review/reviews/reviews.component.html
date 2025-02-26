@@ -77,7 +77,9 @@
           <div
             class="w-32 h-32 bg-white p-4 border-[#d9d9d9] border-solid border-[1px] flex flex-col items-center justify-center max-[412px]:mt-2"
           >
-            <div class="text-6xl font-medium">{{ averageRate }}</div>
+            <div class="text-6xl font-medium">
+              {{ averageRate | number : "1.1-1" }}
+            </div>
             <div class="">out of 5.0</div>
             <div class="flex">
               <div *ngFor="let i of [0, 1, 2, 3, 4]; let idx = index">
@@ -121,6 +123,7 @@
                   <div class="ml-2 font-bold">
                     {{
                       responseData?.data?.averageScores?.averageQualityOfService
+                        | number : "1.1-1"
                     }}
                   </div>
                 </div>
@@ -152,6 +155,7 @@
                   <div class="ml-2 font-bold">
                     {{
                       responseData?.data?.averageScores?.averageProfessionalism
+                        | number : "1.1-1"
                     }}
                   </div>
                 </div>
@@ -181,7 +185,10 @@
                     "
                   ></div>
                   <div class="ml-2 font-bold">
-                    {{ responseData?.data?.averageScores?.averageFlexibility }}
+                    {{
+                      responseData?.data?.averageScores?.averageFlexibility
+                        | number : "1.1-1"
+                    }}
                   </div>
                 </div>
               </div>
@@ -210,7 +217,10 @@
                     "
                   ></div>
                   <div class="ml-2 font-bold">
-                    {{ responseData?.data?.averageScores?.averageValueOfMoney }}
+                    {{
+                      responseData?.data?.averageScores?.averageValueOfMoney
+                        | number : "1.1-1"
+                    }}
                   </div>
                 </div>
               </div>
@@ -239,7 +249,10 @@
                     "
                   ></div>
                   <div class="ml-2 font-bold">
-                    {{ responseData?.data?.averageScores?.averageResponseTime }}
+                    {{
+                      responseData?.data?.averageScores?.averageResponseTime
+                        | number : "1.1-1"
+                    }}
                   </div>
                 </div>
               </div>
