@@ -36,7 +36,6 @@ import { TablerIconsModule } from 'angular-tabler-icons';
   styleUrl: './reply-chat-window.component.scss',
 })
 export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
-  @ViewChild('messageContainer') messageContainer!: ElementRef;
   account: Account | null = null;
   onlineUsers: OnlineUser[] = [];
   messages: Message[] = [];
@@ -47,6 +46,9 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
   @Input() userId: string = '';
   pageNumber: number = 1;
   isLoading: boolean = false;
+  typingTimeout: any;
+  @ViewChild('messagesContainer') messagesContainer!: ElementRef;
+  isFirstLoad: boolean = true;
 
   constructor(
     private signalRService: SignalRService,
@@ -69,8 +71,8 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
     this.signalRService['hubConnection'].on(
       'ReceiveMessageList',
       (messages: Message[]) => {
-        this.messages = messages;
-        this.scrollToBottom(true);
+        this.messages = [...messages.reverse(), ...this.messages];
+        this.cdr.detectChanges();
       }
     );
 
@@ -79,24 +81,20 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
       (message: any) => {
         this.messages.push(message);
         this.cdr.detectChanges();
-        this.scrollToBottom(true);
       }
     );
-  }
 
-  ngAfterViewInit(): void {
-    this.scrollToBottom(true);
-  }
-
-  scrollToBottom(newMessage: boolean = false): void {
-    setTimeout(() => {
-      if (this.messageContainer) {
-        const container = this.messageContainer.nativeElement;
-        if (newMessage) {
-          container.scrollTop = container.scrollHeight;
-        }
+    this.signalRService['hubConnection'].on(
+      'ReceiveTypingNotification',
+      (sender: any) => {
+        this.notifyTyping = true;
+        this.notifyTypingMessage = `${sender} is typing...`;
+        setTimeout(() => {
+          this.notifyTyping = false;
+          this.notifyTypingMessage = '';
+        }, 3000);
       }
-    }, 0);
+    );
   }
 
   loadMessages(): void {
@@ -120,7 +118,7 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
 
       this.messages.push(newMessage);
       this.cdr.detectChanges();
-      this.scrollToBottom(true);
+      this.scrollToBottom();
 
       this.signalRService.sendMessage(
         this.account?.id!,
@@ -132,5 +130,103 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
 
       this.messageContent = '';
     }
+  }
+  onTyping(): void {
+    if (this.userId) {
+      this.signalRService.notifyTyping(this.userId);
+
+      // Ngăn spam sự kiện bằng cách đặt timeout
+      clearTimeout(this.typingTimeout);
+      this.typingTimeout = setTimeout(() => {
+        this.notifyTyping = false; // Reset trạng thái đang nhập
+      }, 3000); // Sau 3 giây không nhập nữa thì ẩn thông báo
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.messagesContainer) {
+      this.scrollToBottom(); // Lần đầu tiên tải, cuộn xuống cuối
+
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.addedNodes.length > 0 && !this.isLoading) {
+            if (this.isFirstLoad) {
+              this.scrollToBottom();
+              this.isFirstLoad = false;
+            }
+          }
+        });
+      });
+
+      observer.observe(this.messagesContainer.nativeElement, {
+        childList: true,
+        subtree: true,
+      });
+
+      const container = this.messagesContainer.nativeElement;
+      container.addEventListener('scroll', () => this.onScroll());
+    }
+  }
+
+  onScroll() {
+    const container = this.messagesContainer.nativeElement;
+
+    if (container.scrollTop === 0 && !this.isLoading) {
+      this.loadMoreMessages();
+    }
+  }
+
+  async loadMoreMessages() {
+    if (!this.userId || this.isLoading) return;
+
+    this.isLoading = true;
+
+    const container = this.messagesContainer.nativeElement;
+
+    const prevScrollHeight = container.scrollHeight; // Lưu lại tổng chiều cao trước khi load
+    const prevScrollTop = container.scrollTop; // Lưu vị trí cuộn hiện tại
+
+    this.pageNumber++;
+
+    await this.signalRService.loadMessages(this.userId, this.pageNumber);
+
+    this.cdr.detectChanges(); // Cập nhật giao diện trước khi tính toán lại scroll
+
+    setTimeout(() => {
+      const newScrollHeight = container.scrollHeight;
+      container.scrollTop =
+        prevScrollTop + (newScrollHeight - prevScrollHeight);
+    }, 0);
+
+    // if (newMessages.length > 0) {
+    //   this.messages = [...newMessages.reverse(), ...this.messages];
+
+    //   this.cdr.detectChanges(); // Cập nhật giao diện
+
+    //   setTimeout(() => {
+    //     const newScrollHeight = container.scrollHeight;
+    //     container.scrollTop =
+    //       newScrollHeight - prevScrollHeight + prevScrollTop;
+    //   }, 0);
+    // }
+
+    this.isLoading = false;
+  }
+
+  scrollToFirstNewMessage(addedCount: number) {
+    setTimeout(() => {
+      const container = this.messagesContainer.nativeElement;
+      container.scrollTop =
+        container.scrollHeight / (this.messages.length / addedCount);
+    }, 100);
+  }
+
+  scrollToBottom(): void {
+    setTimeout(() => {
+      if (this.messagesContainer) {
+        const container = this.messagesContainer.nativeElement;
+        container.scrollTop = container.scrollHeight;
+      }
+    }, 100);
   }
 }

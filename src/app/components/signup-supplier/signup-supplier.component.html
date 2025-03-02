@@ -139,6 +139,72 @@
             />
           </mat-form-field>
         </div>
+        @if (isDoNotHaveAccount) {
+        <h2 class="font-semibold text-base mb-4 lg:whitespace-nowrap">
+          Login details
+        </h2>
+        <div class="mb-4 flex pt-2 w-full">
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              required
+              [class.is-invalid]="
+                formContactSignup.get('email')?.invalid &&
+                formContactSignup.get('email')?.touched
+              "
+            />
+            <mat-hint>Ex:bonheur&#64;gmail.com</mat-hint>
+            @if(formContactSignup.get('email')?.hasError('required')) {
+            <mat-error style="font-size: 12px"> Email is required </mat-error>
+            } @if (formContactSignup.get('email')?.hasError('email')) {
+            <mat-error style="font-size: 12px">
+              Email is invalid Ex:bonheur&#64;gmail.com
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="mb-12 flex pt-2 w-full">
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              [type]="passwordVisible ? 'text' : 'password'"
+              [class.is-invalid]="
+                formContactSignup.get('password')?.invalid &&
+                formContactSignup.get('password')?.touched
+              "
+            />
+            <mat-hint
+              >Your password must be between 8 and 48 characters and include at
+              least 1 lowercase letter, 1 capital letter, 1 number, and no
+              spaces.</mat-hint
+            >
+
+            <button
+              mat-icon-button
+              type="button"
+              matSuffix
+              (click)="passwordVisible = !passwordVisible"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="passwordVisible"
+            >
+              <mat-icon color="primary" class="fs-18">
+                {{ passwordVisible ? "visibility" : "visibility_off" }}
+              </mat-icon>
+            </button>
+            @if (formContactSignup.get('password')?.hasError('required')) {
+            <mat-error style="font-size: 12px">
+              Password is required
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        }
         <div class="flex items-center justify-start">
           <mat-checkbox
             color="primary"

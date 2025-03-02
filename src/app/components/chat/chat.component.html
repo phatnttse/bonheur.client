@@ -1,11 +1,12 @@
 <div
-  class="flex pt-14 pb-24 bg-white px-4 border-t border-solid border-gray-200 md:flex max-[667px]:hidden"
+  class="pt-14 pb-24 bg-white px-4 min-[1025px]:border-t min-[1025px]:border-solid min-[1025px]:border-gray-200 flex"
 >
   <!-- Sidebar - Danh sách tin nhắn -->
   <app-chat-sidebar
     [onlineUsers]="onlineUsers"
     (userSelected)="onUserSelected($event)"
-    class="w-1/4 max-[1024px]:w-full"
+    [messages]="messages"
+    class="min-[1025px]:w-1/4 w-full"
   ></app-chat-sidebar>
 
   @if (onlineUsers.length > 0) {
@@ -13,14 +14,16 @@
   <app-chat-window
     [selectedUser]="selectedUser"
     [messages]="messages"
-    class="flex-1 max-[1024px]:hidden"
+    [notifyTyping]="notifyTyping"
+    [notifyTypingMessage]="notifyTypingMessage"
+    class="min-[1025px]:flex-1 min-[1025px]:flex hidden"
   ></app-chat-window>
 
   <!-- Thông tin nhà cung cấp -->
   <app-supplier-info
     [selectedUser]="selectedUser"
     [supplier]="supplier"
-    class="w-1/5 border-l max-[1024px]:hidden"
+    class="min-[1025px]:w-1/5 min-[1025px]:block border-l hidden"
   ></app-supplier-info>
   }@else {
   <div class="flex-1 flex-col bg-white px-6 py-4 space-y-4 h-full">
@@ -54,29 +57,4 @@
     </div>
   </div>
   }
-
-  <div
-    class="flex py-10 bg-white px-4 border-t border-solid border-gray-200 md:hidden max-[667px]:flex"
-  >
-    @if (status === 0) {
-    <!-- Sidebar - Danh sách tin nhắn -->
-    <app-chat-sidebar
-      [onlineUsers]="onlineUsers"
-      class="w-full border-r"
-    ></app-chat-sidebar>
-    } @if (status === 1) {
-    <!-- Cửa sổ chat chính -->
-    <app-chat-window
-      [selectedUser]="selectedUser"
-      [messages]="messages"
-      class="flex-1"
-    ></app-chat-window>
-    } @if (status === 2) {
-    <!-- Thông tin nhà cung cấp -->
-    <app-supplier-info
-      [selectedUser]="selectedUser"
-      class="w-full border-l"
-    ></app-supplier-info>
-    }
-  </div>
 </div>

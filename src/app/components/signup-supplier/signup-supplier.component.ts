@@ -18,9 +18,10 @@ import { RegisterSupplierRequest } from '../../models/supplier.model';
 import { StatusService } from '../../services/status.service';
 import { SupplierService } from '../../services/supplier.service';
 import { BaseResponse } from '../../models/base.model';
-import { StatusCode } from '../../models/enums.model';
+import { Role, StatusCode } from '../../models/enums.model';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
+import { Account } from '../../models/account.model';
 
 @Component({
   selector: 'app-signup-supplier',
@@ -33,6 +34,9 @@ export class SignupSupplierComponent implements OnInit {
   formContactSignup: FormGroup;
   supplierCategories: SupplierCategory[] = [];
   statusPage: number = 0; // 0: register, 1: register success
+  account: Account | null = null;
+  isDoNotHaveAccount: boolean = false;
+  passwordVisible: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,15 +68,45 @@ export class SignupSupplierComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/authentication/signin']);
-      this.notificationService.openSnackBarTop(
-        'Please login to continue',
-        'OK',
-        5000
+    this.dataService.supplierCategoryData$.subscribe(
+      (response: SupplierCategory[] | null) => {
+        if (response?.values) {
+          this.supplierCategories = response;
+        } else {
+          this.getSupplierCategories();
+        }
+      }
+    );
+
+    this.dataService.accountData$.subscribe((account: Account | null) => {
+      if (account != null) {
+        this.account = account;
+        if (this.account.roles.includes(Role.SUPPLIER)) {
+          this.router.navigate(['/supplier']);
+        }
+      } else if (this.authService.isLoggedIn) {
+        this.account = this.authService.currentUser;
+        if (this.account!.roles.includes(Role.SUPPLIER)) {
+          this.router.navigate(['/supplier']);
+        }
+      } else {
+        this.isDoNotHaveAccount = true;
+      }
+    });
+
+    if (this.isDoNotHaveAccount) {
+      this.formContactSignup.addControl(
+        'email',
+        this.formBuilder.control('', [Validators.required, Validators.email])
+      );
+      this.formContactSignup.addControl(
+        'password',
+        this.formBuilder.control('', [
+          Validators.required,
+          Validators.minLength(6),
+        ])
       );
     }
-    this.getSupplierCategories();
   }
 
   getSupplierCategories() {
@@ -110,11 +144,19 @@ export class SignupSupplierComponent implements OnInit {
         next: (response: BaseResponse<null>) => {
           if (response.success && response.statusCode === StatusCode.OK) {
             this.statusService.statusLoadingSpinnerSource.next(false);
+            if (this.isDoNotHaveAccount) {
+              this.statusPage = 0;
+              this.notificationService.openSnackBarBottom(
+                response.message,
+                'OK',
+                5000
+              );
+            }
             this.statusPage = 1;
             setTimeout(() => {
               this.logout();
               this.notificationService.openSnackBarTop(
-                "You've successfully registered to become a supplier. Please login again to continue.",
+                'Please login again to continue.',
                 'OK',
                 5000
               );

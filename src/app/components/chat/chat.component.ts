@@ -70,7 +70,7 @@ export class ChatComponent implements OnInit {
     this.signalRService['hubConnection'].on(
       'ReceiveMessageList',
       (messages: any[]) => {
-        this.messages = messages; // Set the loaded messages
+        this.messages = [...messages.reverse(), ...this.messages];
       }
     );
 

@@ -28,7 +28,7 @@
 
   <!-- Tin nhắn (Làm cao hơn) -->
   <div
-    #messageContainer
+    #messagesContainer
     class="flex-1 p-3 overflow-y-auto min-h-[500px] max-h-[500px] space-y-3"
   >
     @for (msg of messages; track $index) {
@@ -65,8 +65,16 @@
     }
   </div>
 
+  <!-- Hiển thị thông báo khi người dùng đang nhập -->
+  <div
+    class="text-gray-500 italic text-sm px-4 py-2 animate-pulse min-h-[30px]"
+    [ngClass]="notifyTypingMessage ? 'opacity-100' : 'opacity-0 invisible'"
+  >
+    {{ notifyTypingMessage }}
+  </div>
+
   <!-- Nhập tin nhắn (Giảm padding) -->
-  <div class="p-2 border-t flex items-center">
+  <div class="p-4 border-t flex items-center">
     <mat-form-field class="w-full" appearance="outline">
       <input
         matInput
@@ -74,6 +82,7 @@
         placeholder="Reply..."
         [(ngModel)]="messageContent"
         (keydown.enter)="sendMessage()"
+        (input)="onTyping()"
       />
     </mat-form-field>
     <button

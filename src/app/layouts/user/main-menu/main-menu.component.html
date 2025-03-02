@@ -39,15 +39,15 @@
                   class="py-4 mega-menu min-w-full transition-all duration-[0.3s] ease-in-out mt-[25px] pl-[30px] absolute top-[40px] z-[16] text-left opacity-[0] invisible left-[0] right-[auto] bg-[#fff] border-[1px] border-solid border-[#eee] flex flex-wrap rounded-[10px] w-[400px]"
                 >
                   @for (item of categories; track $index) {
-                  <li class="w-1/2 p-[10px] flex items-center gap-7 py-4">
+                  <li class="w-1/4 p-[10px] flex items-center gap-7 py-4">
                     <img
-                      class="w-6 h-6"
+                      class="w-5 h-5"
                       [src]="item.imageUrl"
                       [alt]="item.name"
                     />
                     <a
                       [routerLink]="['/suppliers']"
-                      class="transition-all duration-[0.3s] ease-in-out leading-[22px] text-[16px] font-normal tracking-[0.03rem] hover:text-secondary capitalize"
+                      class="transition-all duration-[0.3s] ease-in-out leading-[22px] text-[15px] font-normal tracking-[0.03rem] hover:text-secondary capitalize"
                     >
                       {{ item.name }}
                     </a>
@@ -157,21 +157,21 @@
             </ul>
           </div>
           <div class="max-[991px]:hidden">
-            <div class="flex items-center gap-6 mx-2 mt-4">
+            <div class="flex items-center gap-6 mx-2 my-2">
               <img
-                src="/assets/images/svgs/bag.svg"
+                src="/assets/images/svgs/bag2.svg"
                 alt=""
                 class="w-5 h-5 mb-1"
               />
               @if (account?.roles?.includes(role.SUPPLIER)) {
               <a
-                class="text-secondary font-semibold text-base cursor-pointer"
+                class="font-semibold cursor-pointer uppercase"
                 routerLink="/supplier"
                 >Supplier Channel
               </a>
               }@else {
               <a
-                class="text-secondary font-semibold text-base cursor-pointer"
+                class="font-semibold cursor-pointer uppercase"
                 routerLink="/supplier/signup"
                 >Are you a supplier ?
               </a>

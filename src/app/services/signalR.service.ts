@@ -7,7 +7,7 @@ import {
 } from '@microsoft/signalr';
 import { DBkeys } from './db-keys';
 import { LocalStorageManager } from './localstorage-manager.service';
-import { Message } from '../models/chat.model';
+import { AzureBlobResponse, Message } from '../models/chat.model';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +67,8 @@ export class SignalRService {
     receiverId: string,
     content: string,
     requestPricingId?: number,
-    isSupplierReply?: boolean
+    isSupplierReply?: boolean,
+    azureBlobUploadedResponses?: AzureBlobResponse[]
   ) => {
     this.hubConnection
       .invoke('SendMessage', {
@@ -76,6 +77,7 @@ export class SignalRService {
         content,
         requestPricingId,
         isSupplierReply,
+        azureBlobUploadedResponses,
       })
       .catch((err) => console.error('Error sending message: ', err));
   };
