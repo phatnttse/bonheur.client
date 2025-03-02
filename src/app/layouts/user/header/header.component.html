@@ -136,7 +136,7 @@
                   class="bb-header-buttons h-full flex justify-end items-center"
                 >
                   @if (account) {
-                  <div class="mt-1">
+                  <div class="mt-1 mr-1">
                     <button mat-icon-button routerLink="/favorite-supplier">
                       <mat-icon
                         fontSet="material-icons-outlined"
@@ -146,20 +146,34 @@
                       >
                     </button>
                   </div>
-                  <div class="mr-4 mt-2">
-                    <button
-                      mat-icon-button
-                      aria-label="Notifications"
-                      routerLink="/inbox"
-                    >
-                      <i-tabler
-                        class="flex items-center text-center"
-                        name="mail"
+                  <div class="mr-3 mt-1">
+                    <button mat-icon-button routerLink="/inbox">
+                      @if (messageUnreadCount > 0) {
+                      <span
+                        class="relative inline-block"
                         [matBadge]="messageUnreadCount"
                         matBadgeColor="warn"
-                      ></i-tabler>
+                      >
+                        <img
+                          class="object-cover w-[40px] h-[40px]"
+                          src="/assets/images/svgs/email.svg"
+                          alt="Email"
+                        />
+                      </span>
+                      }@else {
+                      <img
+                        class="object-cover w-[40px] h-[40px]"
+                        src="/assets/images/svgs/email.svg"
+                        alt="Email"
+                      />
+                      }
                     </button>
                   </div>
+
+                  <mat-menu #notificationMenu="matMenu">
+                    <button mat-menu-item>📩 Xem hộp thư</button>
+                    <button mat-menu-item>✅ Đánh dấu đã đọc</button>
+                  </mat-menu>
 
                   <div
                     class="d-flex align-items-center cursor-pointer"
@@ -167,7 +181,7 @@
                     aria-label="Account"
                   >
                     <img
-                      src="/{{ account.pictureUrl }}"
+                      [src]="account.pictureUrl"
                       alt="avatar"
                       class="rounded-full object-cover w-[36px] h-[36px]"
                     />

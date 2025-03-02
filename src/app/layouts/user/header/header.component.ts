@@ -111,8 +111,8 @@ export class HeaderComponent implements OnInit {
 
     this.dataService.messageUnreadCountUserData$.subscribe(
       (count: number | null) => {
-        if (count !== null || count !== undefined) {
-          this.messageUnreadCount = count ?? 0;
+        if (count != null) {
+          this.messageUnreadCount = count;
         } else {
           this.getUnreadMessagesCountByUser();
         }

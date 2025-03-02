@@ -12,16 +12,19 @@ export class TimeAgoPipe implements PipeTransform {
     const time = new Date(value).getTime();
     const now = new Date().getTime();
     const diffInSeconds = Math.floor((now - time) / 1000);
-    const diffInDays = Math.floor(diffInSeconds / 86400); // Số ngày chênh lệch
+    const diffInDays = Math.floor(diffInSeconds / 86400); // Chênh lệch ngày
 
     if (diffInDays >= 1) {
-      // Nếu qua ngày trước, hiển thị ngày
+      // Nếu trên 1 ngày, hiển thị định dạng dd/MM/yyyy HH:mm
       const date = new Date(value);
       return `${date.getDate().toString().padStart(2, '0')}/${(
         date.getMonth() + 1
       )
         .toString()
-        .padStart(2, '0')}/${date.getFullYear()}`;
+        .padStart(2, '0')}/${date.getFullYear()} ${date
+        .getHours()
+        .toString()
+        .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
     }
 
     if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;

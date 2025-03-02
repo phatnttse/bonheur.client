@@ -30,3 +30,13 @@
 .mat-mdc-form-field-infix {
   --mat-form-field-container-height: 54px !important;
 }
+
+.mat-badge-medium .mat-badge-content {
+  width: 19px;
+  height: 20px;
+  font-size: 13px;
+}
+
+.mat-badge-medium.mat-badge-overlap .mat-badge-content {
+  margin: -9px;
+}

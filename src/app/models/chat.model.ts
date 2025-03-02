@@ -13,11 +13,12 @@ export interface Message {
   updatedAt?: string;
 }
 export interface MessageAttachment {
-  id: string;
-  messageId: string;
+  id: number;
   fileName: string;
   filePath: string;
   fileType: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface OnlineUser {
@@ -40,4 +41,17 @@ export interface SendMessageRequest {
 export interface MessageStatistics {
   totalMessages: number;
   unreadMessages: number;
+}
+
+export interface AzureBlobResponse {
+  status: string;
+  error: boolean;
+  blob: AzureBlob;
+}
+
+export interface AzureBlob {
+  uri: string;
+  name: string;
+  contentType: string;
+  content: string;
 }

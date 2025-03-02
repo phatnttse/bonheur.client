@@ -52,19 +52,6 @@ export class MainMenuComponent implements OnInit {
     });
   }
 
-  goToRegisterSupplier() {
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['authentication/signin']);
-      this.notificationService.openSnackBarTop(
-        'You need to log in to become a supplier',
-        'OK',
-        0
-      );
-    } else {
-      this.router.navigate(['supplier/signup']);
-    }
-  }
-
   getCategories() {
     this.categoryService.getAllSupplierCategories().subscribe({
       next: (response: ListSupplierCategoryResponse) => {
