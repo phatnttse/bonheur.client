@@ -167,7 +167,9 @@ export class SupplierDetailComponent
                   <span class="text-sm mr-1"></span>${
                     this.supplier?.averageRating || 0
                   }
-                  <span class="text-[#7d7d7d] text-[12px] ml-2"> (0 reviews) </span>
+                  <span class="text-[#7d7d7d] text-[12px] ml-2"> (${
+                    this.supplier?.totalRating
+                  } reviews) </span>
                 </div>
                 <span class="text-sm font-semibold mt-2">
                   <span class="font-medium">From: </span> 

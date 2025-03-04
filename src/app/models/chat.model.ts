@@ -30,8 +30,9 @@ export interface OnlineUser {
   pictureUrl: string;
   isOnline: boolean;
   unreadMessages: number;
+  latestMessage: string;
+  latestMessageAt: string;
 }
-
 export interface SendMessageRequest {
   senderId: string;
   receiverId: string;

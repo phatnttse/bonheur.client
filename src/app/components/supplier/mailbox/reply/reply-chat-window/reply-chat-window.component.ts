@@ -4,10 +4,16 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Message, OnlineUser } from '../../../../../models/chat.model';
+import {
+  AzureBlobResponse,
+  Message,
+  MessageAttachment,
+  OnlineUser,
+} from '../../../../../models/chat.model';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../../../material.module';
 import { LocalStorageManager } from '../../../../../services/localstorage-manager.service';
@@ -20,6 +26,13 @@ import { RequestPricing } from '../../../../../models/request-pricing.model';
 import { FormsModule } from '@angular/forms';
 import { TimeAgoPipe } from '../../../../../pipes/timeago.pipe';
 import { TablerIconsModule } from 'angular-tabler-icons';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { HttpErrorResponse } from '@angular/common/http';
+import { BaseResponse } from '../../../../../models/base.model';
+import { NotificationService } from '../../../../../services/notification.service';
+import { StatusService } from '../../../../../services/status.service';
+import { MessageService } from '../../../../../services/message.service';
 
 @Component({
   selector: 'app-reply-chat-window',
@@ -31,11 +44,14 @@ import { TablerIconsModule } from 'angular-tabler-icons';
     TimeAgoPipe,
     TablerIconsModule,
     RouterModule,
+    PickerComponent,
   ],
   templateUrl: './reply-chat-window.component.html',
   styleUrl: './reply-chat-window.component.scss',
 })
-export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
+export class ReplyChatWindowComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   account: Account | null = null;
   onlineUsers: OnlineUser[] = [];
   messages: Message[] = [];
@@ -49,13 +65,21 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
   typingTimeout: any;
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   isFirstLoad: boolean = true;
+  previewFiles: { name: string; url: string }[] = [];
+  uploadedFiles: File[] = [];
+  uploadedMessageAttachments: MessageAttachment[] = [];
+  azureBlobResponses: AzureBlobResponse[] = [];
+  showEmojiPicker: boolean = false;
 
   constructor(
     private signalRService: SignalRService,
     private requestPricingService: RequestPricingService,
     private route: ActivatedRoute,
     private localStorage: LocalStorageManager,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService,
+    private statusService: StatusService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +90,7 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
       if (this.userId) {
         this.loadMessages();
       }
-    }, 600);
+    }, 1000);
 
     this.signalRService['hubConnection'].on(
       'ReceiveMessageList',
@@ -81,6 +105,7 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
       (message: any) => {
         this.messages.push(message);
         this.cdr.detectChanges();
+        this.scrollToBottom();
       }
     );
 
@@ -97,11 +122,23 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.messages = [];
+    this.signalRService['hubConnection'].off('ReceiveMessageList');
+    this.signalRService['hubConnection'].off('ReceiveNewMessage');
+    this.signalRService['hubConnection'].off('ReceiveTypingNotification');
+  }
+
   loadMessages(): void {
     this.signalRService.loadMessages(this.userId, this.pageNumber);
   }
 
   sendMessage(): void {
+    if (this.uploadedFiles.length > 0) {
+      this.uploadAttachments();
+      return;
+    }
+
     if (this.messageContent) {
       const newMessage: Message = {
         id: '',
@@ -228,5 +265,124 @@ export class ReplyChatWindowComponent implements OnInit, AfterViewInit {
         container.scrollTop = container.scrollHeight;
       }
     }, 100);
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.previewFiles.push({
+            name: file.name,
+            url: e.target?.result as string,
+          });
+        };
+        reader.readAsDataURL(file);
+        this.uploadedFiles.push(file);
+      }
+    }
+  }
+
+  uploadAttachments(): void {
+    if (this.uploadedFiles.length > 0) {
+      if (this.uploadedFiles.length > 3) {
+        this.notificationService.warning(
+          'Warning',
+          'You can only upload up to 3 files at a time'
+        );
+        return;
+      }
+
+      this.uploadedFiles.forEach((file) => {
+        if (file.size > 2000000) {
+          this.notificationService.warning(
+            'Warning',
+            'File size must be less than 2MB'
+          );
+          return;
+        }
+      });
+    }
+
+    this.statusService.statusLoadingSpinnerSource.next(true);
+
+    this.messageService.uploadAttachment(this.uploadedFiles).subscribe({
+      next: (response: BaseResponse<AzureBlobResponse[]>) => {
+        this.azureBlobResponses = response.data;
+        this.uploadedFiles = [];
+
+        const newMessage: Message = {
+          id: '',
+          senderId: this.account?.id!,
+          senderName: this.account?.fullName || '',
+          receiverId: this.userId,
+          receiverName:
+            this.onlineUsers.find((x) => x.id === this.userId)?.fullName ?? '',
+          content: this.messageContent,
+          isRead: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          attachments: this.azureBlobResponses.map((x) => {
+            return {
+              id: 0,
+              fileName: x.blob.name,
+              filePath: x.blob.uri,
+              fileType: x.blob.contentType,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+          }),
+        };
+
+        this.messages.push(newMessage);
+        this.cdr.detectChanges();
+
+        this.signalRService.sendMessage(
+          this.account?.id!,
+          this.userId,
+          this.messageContent,
+          undefined,
+          undefined,
+          this.azureBlobResponses
+        );
+
+        this.messageContent = '';
+        this.previewFiles = [];
+        this.uploadedMessageAttachments = []; // Xóa file đính kèm sau khi gửi
+        this.azureBlobResponses = []; // Xóa file đính kèm sau khi gửi
+        this.scrollToBottom();
+        this.azureBlobResponses = [];
+
+        this.statusService.statusLoadingSpinnerSource.next(false);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.handleApiError(error);
+      },
+    });
+  }
+  isImage(fileName: string): boolean {
+    return /\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(fileName);
+  }
+
+  removeFile(index: number): void {
+    if (index >= 0 && index < this.previewFiles.length) {
+      this.previewFiles.splice(index, 1);
+      this.uploadedFiles.splice(index, 1); // Xoá luôn trong uploadedFiles
+    }
+  }
+
+  handleClick($event: EmojiEvent) {
+    console.log($event.emoji);
+    this.messageContent += $event.emoji.native;
+  }
+  emojiFilter(e: string): boolean {
+    // Can use this to test [emojisToShowFilter]
+    if (e && e.indexOf && e.indexOf('1F4') >= 0) {
+      return true;
+    }
+    return false;
   }
 }

@@ -6,6 +6,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -29,7 +30,7 @@ import { StatusService } from '../../../services/status.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseResponse } from '../../../models/base.model';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { EmojiComponent, EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'app-chat-window',
@@ -44,11 +45,12 @@ import { EmojiComponent, EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
   templateUrl: './chat-window.component.html',
   styleUrl: './chat-window.component.scss',
 })
-export class ChatWindowComponent implements OnInit, AfterViewInit {
+export class ChatWindowComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() messages: Message[] = []; // Received messages
   @Input() selectedUser: OnlineUser | null = null; // Selected user to send message to
   @Input() notifyTyping: boolean = false; // Notify when typing
   @Input() notifyTypingMessage: string = ''; // Notify typing message
+  @Input() statusPage: number = 0; //0 desktop, 1 mobile
   account: Account | null = null; // Thông tin tài khoản người dùng
   messageContent: string = ''; // Nội dung tin nhắn nhập vào
   typingTimeout: any;
@@ -75,17 +77,20 @@ export class ChatWindowComponent implements OnInit, AfterViewInit {
     this.account = this.localStorage.getDataObject(DBkeys.CURRENT_USER); // Lấy thông tin tài khoản người dùng
   }
 
+  ngOnDestroy(): void {
+    this.messages = [];
+    this.pageNumber = 1;
+    this.isFirstLoad = true;
+  }
+
   // Send message when the form is submitted
   sendMessage(): void {
-    if (this.messageContent.trim() == '') {
+    if (this.uploadedFiles.length > 0) {
+      this.uploadAttachments();
       return;
     }
-    if (this.selectedUser && this.messageContent) {
-      if (this.uploadedFiles.length > 0) {
-        this.uploadAttachments();
-        return;
-      }
 
+    if (this.selectedUser && this.messageContent) {
       const newMessage: Message = {
         id: '', // Assign a unique id if available
         senderId: this.account?.id!,
@@ -301,6 +306,7 @@ export class ChatWindowComponent implements OnInit, AfterViewInit {
         this.azureBlobResponses = []; // Xóa file đính kèm sau khi gửi
         this.scrollToBottom();
 
+        this.azureBlobResponses = [];
         this.statusService.statusLoadingSpinnerSource.next(false);
       },
       error: (error: HttpErrorResponse) => {
