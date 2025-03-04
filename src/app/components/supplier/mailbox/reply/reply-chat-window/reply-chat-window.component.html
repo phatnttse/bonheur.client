@@ -6,7 +6,7 @@
   <span class="font-semibold text-base underline">Back</span>
 </div>
 <div
-  class="flex-1 flex flex-col bg-white px-6 py-2 space-y-4 h-full border-l border-r border-solid border-gray-200"
+  class="flex-1 flex flex-col bg-white md:px-6 py-2 space-y-4 h-full border-l border-r border-solid border-gray-200"
 >
   <!-- Header (Giảm padding) -->
   <div class="p-2 flex items-center border-b">
@@ -45,8 +45,9 @@
             : 'self-start items-start'
         "
       >
+        @if (msg.content != '') {
         <div
-          class="rounded-lg py-2 px-3 min-w-[60px] max-w-xs break-words"
+          class="rounded-lg py-2 px-3 min-w-[60px] max-w-lg break-words"
           [ngClass]="
             msg.senderId === account?.id
               ? 'bg-blue-500 text-white text-right'
@@ -60,10 +61,78 @@
         <span class="text-xs text-gray-500 mt-1">
           {{ msg.createdAt | timeago }}
         </span>
+        }
+        <div
+          class="flex gap-4"
+          [ngClass]="
+            msg.attachments?.length === 1 ? 'justify-end' : 'justify-start'
+          "
+        >
+          @for (item of msg.attachments; track $index) {
+          <div
+            class="rounded-lg mx-1"
+            [ngClass]="msg.senderId === account?.id ? 'text-end' : 'text-start'"
+          >
+            @if (isImage(item.fileName)) {
+            <img
+              [src]="item.filePath"
+              alt="Uploaded Image"
+              class="w-full h-40 object-cover rounded-md cursor-pointer"
+            />
+            } @else {
+            <a
+              [href]="item.filePath"
+              target="_blank"
+              class="text-blue-500 hover:underline cursor-pointer"
+            >
+              {{ item.fileName }}
+            </a>
+            }
+          </div>
+          }
+        </div>
+        @if (msg.content == '') {
+        <span class="text-xs text-gray-500 mt-1 mb-2">
+          {{ msg.createdAt | timeago }}
+        </span>
+        }
       </div>
     </div>
     }
   </div>
+
+  <!-- Hiển thị file đã chọn trước khi gửi -->
+  @if (previewFiles.length > 0) {
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+    @for (item of previewFiles; track $index) {
+    <div class="relative border border-white rounded-lg p-3 text-center">
+      <!-- Nút X để xóa file -->
+      <button
+        class="absolute top-2 right-2 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs"
+        (click)="removeFile($index)"
+      >
+        ✕
+      </button>
+
+      @if (isImage(item.name)) {
+      <img
+        [src]="item.url"
+        alt="Uploaded Image"
+        class="w-full h-40 object-cover rounded-md"
+      />
+      } @else {
+      <a
+        [href]="item.url"
+        target="_blank"
+        class="text-blue-500 hover:underline"
+      >
+        {{ item.name }}
+      </a>
+      }
+    </div>
+    }
+  </div>
+  }
 
   <!-- Hiển thị thông báo khi người dùng đang nhập -->
   <div
@@ -75,6 +144,47 @@
 
   <!-- Nhập tin nhắn (Giảm padding) -->
   <div class="p-4 border-t flex items-center">
+    <input
+      type="file"
+      hidden
+      #fileInput
+      (change)="onFileSelected($event)"
+      accept=".jpg,.jpeg,.png,.pdf,.docx,.webp,.avif,.xlsx"
+      multiple
+    />
+    <button
+      mat-icon-button
+      type="button"
+      class="mb-4 mr-2"
+      (click)="fileInput.click()"
+    >
+      <mat-icon>attach_file</mat-icon>
+    </button>
+
+    <!-- Nút mở menu emoji -->
+    <button
+      [matMenuTriggerFor]="emojiMenu"
+      class="mr-2 mb-4"
+      style="color: rgb(206, 117, 0)"
+    >
+      <span class="text-xl px-2 mr-1">🤗</span>
+    </button>
+
+    <!-- Menu emoji -->
+    <mat-menu #emojiMenu="matMenu" yPosition="above">
+      <div class="flex justify-center my-4" (click)="$event.stopPropagation()">
+        <div class="flex justify-center">
+          <emoji-mart
+            [set]="'facebook'"
+            (emojiSelect)="handleClick($event)"
+            [hideRecent]="false"
+            [isNative]="true"
+          >
+          </emoji-mart>
+        </div>
+      </div>
+    </mat-menu>
+
     <mat-form-field class="w-full" appearance="outline">
       <input
         matInput
@@ -88,7 +198,7 @@
     <button
       mat-icon-button
       type="button"
-      class="ml-3 mb-2"
+      class="ml-3 mb-4"
       (click)="sendMessage()"
     >
       <mat-icon>send</mat-icon>

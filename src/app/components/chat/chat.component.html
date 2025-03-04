@@ -1,22 +1,30 @@
 <div
-  class="pt-14 pb-24 bg-white px-4 min-[1025px]:border-t min-[1025px]:border-solid min-[1025px]:border-gray-200 flex"
+  class="pb-16 bg-white min-[1025px]:border-t min-[1025px]:border-solid min-[1025px]:border-gray-200 flex"
+  [ngClass]="{ 'px-4, pt-14': statusPage === 0, 'pt-6': statusPage === 1 }"
 >
   <!-- Sidebar - Danh sách tin nhắn -->
+  @if (statusPage == 0) {
   <app-chat-sidebar
     [onlineUsers]="onlineUsers"
     (userSelected)="onUserSelected($event)"
     [messages]="messages"
+    [selectedUser]="selectedUser"
+    [screenWidth]="screenWidth"
     class="min-[1025px]:w-1/4 w-full"
   ></app-chat-sidebar>
-
-  @if (onlineUsers.length > 0) {
+  } @if (onlineUsers.length > 0) {
   <!-- Cửa sổ chat chính -->
   <app-chat-window
     [selectedUser]="selectedUser"
     [messages]="messages"
     [notifyTyping]="notifyTyping"
     [notifyTypingMessage]="notifyTypingMessage"
-    class="min-[1025px]:flex-1 min-[1025px]:flex hidden"
+    [statusPage]="statusPage"
+    class="min-[1025px]:flex-1 min-[1025px]:flex"
+    [ngClass]="{
+      hidden: statusPage === 0,
+      'w-full overflow-hidden': statusPage === 1
+    }"
   ></app-chat-window>
 
   <!-- Thông tin nhà cung cấp -->
@@ -26,7 +34,10 @@
     class="min-[1025px]:w-1/5 min-[1025px]:block border-l hidden"
   ></app-supplier-info>
   }@else {
-  <div class="flex-1 flex-col bg-white px-6 py-4 space-y-4 h-full">
+  <div
+    class="flex-1 flex-col bg-white py-4 space-y-4 h-full"
+    [ngClass]="{ 'px-6': statusPage === 0,}"
+  >
     <div class="flex justify-center text-center flex-col">
       <div class="mb-4">
         <img

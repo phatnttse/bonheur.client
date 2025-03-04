@@ -28,7 +28,10 @@
       </span>
       <span class="mr-2">.</span>
       <span>
-        <a class="text-[#222222] text-sm">(4)</a>
+        <a class="text-[#222222] text-sm"
+          >({{ supplier.totalRating }}) @if (supplier.totalRating > 1) {
+          reviews}@else if (supplier.totalRating == 1) { review }</a
+        >
       </span>
     </div>
 

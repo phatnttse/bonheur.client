@@ -37,29 +37,6 @@ export class SignalRService {
       .catch((err) => {
         console.log('Error while starting connection: ' + err);
       });
-
-    // Listen to online users event
-    this.hubConnection.on('OnlineUsers', (users: any) => {
-      console.log('Online users:', users);
-    });
-
-    // Listen to new message event
-    this.hubConnection.on('ReceiveNewMessage', (message: any) => {
-      console.log('New message received:', message);
-    });
-
-    // Listen to user connection event
-    this.hubConnection.on('UserConnected', (user: any) => {
-      console.log('User connected:', user);
-    });
-
-    this.hubConnection.on('ReceiveMessageList', (list: any) => {
-      console.log('ReceiveMessageList:', list);
-    });
-
-    this.hubConnection.on('ReceiveTypingNotification', (sender: any) => {
-      console.log('ReceiveTypingNotification:', sender);
-    });
   };
 
   public sendMessage = (

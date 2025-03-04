@@ -104,7 +104,7 @@
                     >location_on</mat-icon
                   >
                   <span
-                    class="underline text-[#3d4750] font-light cursor-pointer ml-4"
+                    class="underline cursor-pointer ml-2"
                     routerLink="."
                     fragment="map"
                     >{{ supplier?.address }}</span
@@ -228,7 +228,8 @@
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
                   routerLink="."
                   fragment="reviews"
-                  >Reviews <span class="text-sm">(4)</span></a
+                  >Reviews
+                  <span class="text-sm">({{ supplier?.totalRating }})</span></a
                 >
               </li>
               <li class="nav-item relative leading-[28px]">
@@ -344,8 +345,20 @@
             >
               <div class="flex flex-col">
                 <div class="flex items-center gap-6 mb-2 mx-1">
-                  <span class="text-lg font-bold">4.9</span>
+                  <span class="text-lg font-bold">{{
+                    supplier?.averageRating
+                  }}</span>
+                  @if (supplier?.averageRating! > 4.8) {
                   <span class="text-base font-semibold">Excellent</span>
+                  }@else if (supplier?.averageRating! > 4.5) {
+                  <span class="text-base font-semibold">Great</span>
+                  }@else if (supplier?.averageRating! > 4.0) {
+                  <span class="text-base font-semibold">Good</span>
+                  }@else if (supplier?.averageRating! > 3.5) {
+                  <span class="text-base font-semibold">Average</span>
+                  }@else {
+                  <span class="text-base font-semibold">Poor</span>
+                  }
                 </div>
                 <div class="flex items-center mb-4">
                   @for (item of [1, 2, 3, 4, 5]; track $index) {
@@ -358,7 +371,9 @@
                   }
                 </div>
                 <div class="mb-4 mx-1">
-                  <span class="text-[#222222] font-medium">4 Reviews</span>
+                  <span class="text-[#222222] font-medium"
+                    >{{ supplier?.totalRating }} Reviews</span
+                  >
                 </div>
                 <div class="mb-2">
                   <button
