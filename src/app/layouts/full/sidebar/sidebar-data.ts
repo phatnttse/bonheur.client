@@ -5,7 +5,7 @@ export const navItems: NavItem[] = [
     displayName: 'Dashboard',
     iconName: 'layout-dashboard',
     bgcolor: 'primary',
-    route: '/dashboard',
+    route: '/admin/dashboard',
   },
   {
     displayName: 'Supplier Management',

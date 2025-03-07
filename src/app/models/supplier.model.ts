@@ -28,13 +28,16 @@ export interface Supplier {
   status?: SupplierStatus;
   discount: number;
   onBoardStatus?: OnBoardStatus;
-  onBoardPercent: number;
   isFeatured: boolean;
   priorityEnd?: Date;
   averageRating: number;
   totalRating: number;
   totalReview: number;
   view?: number;
+  stepCompletedCount?: number;
+  isStep1Completed?: boolean;
+  isStep2Completed?: boolean;
+  isStep3Completed?: boolean;
   images?: SupplierImage[];
   socialNetworks?: SupplierSocialNetworkDetail[];
   faqs?: SupplierFAQ[];

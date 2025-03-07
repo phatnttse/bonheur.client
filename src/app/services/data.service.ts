@@ -13,6 +13,11 @@ import {
 import { FavoriteSupplier } from '../models/favorite-supplier.model';
 import { SocialNetwork } from '../models/social-network';
 import { Review } from '../models/review.model';
+import {
+  DashboardData,
+  MonthlyDashboardData,
+  TopSuppliersByRevenue,
+} from '../models/dashboard.model';
 
 @Injectable({
   providedIn: 'root',
@@ -105,6 +110,26 @@ export class DataService {
   >(null);
   requestPricingBySupplierData$ =
     this.requestPricingBySupplierDataSource.asObservable();
+
+  //Behavior subject: Top Suppliers By Revenue
+  public topSuppliersByRevenueDataSource = new BehaviorSubject<
+    TopSuppliersByRevenue[] | null
+  >(null);
+  topSuppliersByRevenueData$ =
+    this.topSuppliersByRevenueDataSource.asObservable();
+
+  //Behavior subject: Dashboard Data
+  public dashboardDataDataSource = new BehaviorSubject<DashboardData | null>(
+    null
+  );
+  dashboardDataData$ = this.dashboardDataDataSource.asObservable();
+
+  //Behavior subject: Monthly Dashboard Data
+  public monthlyDashboardDataDataSource = new BehaviorSubject<
+    MonthlyDashboardData[] | null
+  >(null);
+  monthlyDashboardDataData$ =
+    this.monthlyDashboardDataDataSource.asObservable();
 
   resetData() {
     this.accountDataSource.next(null);

@@ -59,9 +59,7 @@ export enum SupplierStatus {
 }
 
 export enum OnBoardStatus {
-  BusinessInfo = 'BusinessInfo',
-  Location = 'Location',
-  Photos = 'Photos',
+  Pending = 'Pending',
   Completed = 'Completed',
 }
 
