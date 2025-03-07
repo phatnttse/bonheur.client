@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { supplierGuard } from '../../guards/supplier.guard';
 
 export const supplierRoutes: Routes = [
   {
@@ -8,6 +9,7 @@ export const supplierRoutes: Routes = [
         (m) => m.SupplierComponent
       );
     },
+    canActivate: [supplierGuard],
     children: [
       {
         path: '',

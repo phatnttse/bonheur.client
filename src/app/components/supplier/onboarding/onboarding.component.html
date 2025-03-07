@@ -17,9 +17,7 @@
             routerLink="/supplier/onboarding/step-1"
           >
             <div class="mb-4">
-              @if (supplier?.onBoardStatus === onBoardStatus.BusinessInfo ||
-              supplier?.onBoardStatus === onBoardStatus.Photos ||
-              supplier?.onBoardStatus === onBoardStatus.Completed) {
+              @if (supplier?.isStep1Completed === true) {
               <img
                 src="/assets/images/svgs/completeStep.svg"
                 alt="Step Completed"
@@ -48,8 +46,7 @@
             routerLink="/supplier/onboarding/step-2"
           >
             <div class="mb-4">
-              @if (supplier?.onBoardStatus === onBoardStatus.Photos ||
-              supplier?.onBoardStatus === onBoardStatus.Completed) {
+              @if (supplier?.isStep2Completed === true) {
               <img
                 src="/assets/images/svgs/completeStep.svg"
                 alt="Step Completed"
@@ -78,7 +75,7 @@
             routerLink="/supplier/onboarding/step-3"
           >
             <div class="mb-4">
-              @if (supplier?.onBoardStatus === onBoardStatus.Completed) {
+              @if (supplier?.isStep3Completed === true) {
               <img
                 src="/assets/images/svgs/completeStep.svg"
                 alt="Step Completed"

@@ -75,7 +75,11 @@ export class SignupComponent {
         },
         error: (error: HttpErrorResponse) => {
           this.statusService.statusLoadingSpinnerSource.next(false);
-          this.notificationService.handleApiError(error);
+          this.notificationService.openSnackBarBottom(
+            error.error.detail,
+            'Ok',
+            3000
+          );
         },
       });
   }

@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { adminRoutes } from './components/admin/admin.routes';
 import { supplierRoutes } from './components/supplier/supplier.routes';
+import { userGuard } from './guards/user.guard';
+import { supplierGuard } from './guards/supplier.guard';
 
 export const routes: Routes = [
   {
@@ -85,6 +87,7 @@ export const routes: Routes = [
             './components/user-profile/user-profile.component'
           ).then((m) => m.UserProfileComponent);
         },
+        canActivate: [userGuard],
       },
       {
         path: 'favorite-supplier',
@@ -93,6 +96,7 @@ export const routes: Routes = [
             './components/favorite-supplier/favorite-supplier.component'
           ).then((m) => m.FavoriteSupplierComponent);
         },
+        canActivate: [userGuard],
       },
       {
         path: 'favorite-supplier/categories',
@@ -101,6 +105,7 @@ export const routes: Routes = [
             './components/favorite-supplier/favorite-supplier-list-categories/favorite-supplier-list-categories.component'
           ).then((m) => m.FavoriteSupplierListCategoriesComponent);
         },
+        canActivate: [userGuard],
       },
       {
         path: 'favorite-supplier/categories/:categoryId',
@@ -109,6 +114,7 @@ export const routes: Routes = [
             './components/favorite-supplier/favorite-supplier-category/favorite-supplier-category.component'
           ).then((m) => m.FavoriteSupplierCategoryComponent);
         },
+        canActivate: [userGuard],
       },
       {
         path: 'inbox',
@@ -117,6 +123,7 @@ export const routes: Routes = [
             (m) => m.ChatComponent
           );
         },
+        canActivate: [userGuard],
       },
     ],
   },
@@ -135,6 +142,7 @@ export const routes: Routes = [
         (m) => m.PaymentComponent
       );
     },
+    canActivate: [supplierGuard],
   },
   {
     path: 'pages/404',
@@ -151,6 +159,7 @@ export const routes: Routes = [
         (m) => m.ReviewDetailComponent
       );
     },
+    canActivate: [userGuard],
   },
   ...supplierRoutes,
   ...adminRoutes,

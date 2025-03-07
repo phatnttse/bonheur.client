@@ -96,13 +96,15 @@
           === supplierStatus.IN_REVIEW) {
           <div class="max-[991px]:hidden flex items-center">
             <div class="flex items-center flex-col">
-              <div
-                class="flex items-center justify-between mb-2"
+              <a
+                class="flex items-center justify-between mb-2 cursor-pointer"
                 routerLink="/supplier/onboarding"
               >
                 <p class="font-semibold mr-4">Create your storefront</p>
-                <span class="font-semibold">{{ completeStep }}/3</span>
-              </div>
+                <span class="font-semibold"
+                  >{{ supplier?.stepCompletedCount }}/3</span
+                >
+              </a>
               <div class="relative w-full h-2 bg-gray-300 rounded">
                 <div
                   class="absolute top-0 left-0 h-full bg-green-500 rounded"
