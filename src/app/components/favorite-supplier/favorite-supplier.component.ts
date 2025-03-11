@@ -27,6 +27,7 @@ import { FavoriteSupplierService } from '../../services/favorite-supplier.servic
 import { Router, RouterModule } from '@angular/router';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CommonModule } from '@angular/common';
+import { LocalStorageManager } from '../../services/localstorage-manager.service';
 
 @Component({
   selector: 'app-favorite-supplier',
@@ -67,7 +68,8 @@ export class FavoriteSupplierComponent {
     private statusService: StatusService,
     private dataService: DataService,
     private favoriteSupplierService: FavoriteSupplierService,
-    private router: Router
+    private router: Router,
+    private localStorage: LocalStorageManager
   ) {}
 
   ngOnInit() {
@@ -96,9 +98,17 @@ export class FavoriteSupplierComponent {
   }
 
   getAllFavoriteSupplier(pageNumber: number, pageSize: number) {
+    const user = this.localStorage.getDataObject<{ id: string }>(
+      'current_user'
+    );
+
+    if (!user || !user.id) {
+      console.error('User ID not found in local storage.');
+      return;
+    }
     //Lấy toàn bộ danh sách
     this.favoriteSupplierService
-      .getAllFavoriteSupplier(pageNumber, pageSize)
+      .getAllFavoriteSupplier(user.id, pageNumber, pageSize)
       .subscribe({
         next: (response: PaginatedFavoriteSupplier) => {
           if (response.success && response.statusCode === StatusCode.OK) {
