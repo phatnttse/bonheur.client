@@ -57,6 +57,11 @@ export class SidebarComponent implements OnInit {
             route: '/supplier/storefront/photos',
           },
           {
+            title: 'Videos',
+            icon: 'video2.svg',
+            route: '/supplier/storefront/videos',
+          },
+          {
             title: 'Deals',
             icon: 'coupon.svg',
             route: '/supplier/storefront/deals',

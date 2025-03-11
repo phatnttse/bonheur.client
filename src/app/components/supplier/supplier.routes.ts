@@ -106,6 +106,14 @@ export const supplierRoutes: Routes = [
               ).then((m) => m.SocialNetworksComponent);
             },
           },
+          {
+            path: 'videos',
+            loadComponent() {
+              return import('./storefront/videos/videos.component').then(
+                (m) => m.VideosComponent
+              );
+            },
+          },
         ],
       },
       {

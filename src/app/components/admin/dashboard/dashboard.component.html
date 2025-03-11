@@ -1,5 +1,5 @@
 <div class="container mx-auto">
-  <div class="flex flex-wrap items-center gap-10">
+  <div class="flex items-center gap-10">
     <mat-card class="overflow-hidden">
       <div class="flex items-center justify-between px-4 py-4 gap-24">
         <p class="font-semibold text-base">Total Accounts</p>
@@ -68,6 +68,28 @@
         <p>
           {{ dashboardData?.totalRequestPricing }}
           <span class="text-sm">requests</span>
+        </p>
+      </div>
+    </mat-card>
+    <mat-card class="overflow-hidden">
+      <div class="flex items-center justify-between px-4 py-4 gap-24">
+        <p class="font-semibold text-base">Total Revenue</p>
+        <button
+          mat-fab
+          class="shadow-none icon-40"
+          style="background-color: #ebfaf2"
+        >
+          <!-- <i-tabler name="mail-plus" class="text-white d-flex"></i-tabler> -->
+          <img
+            style="width: 24px; height: 24px"
+            src="/assets/images/svgs/email.svg"
+            alt=""
+          />
+        </button>
+      </div>
+      <div class="m-b-32 p-x-24 m-t-12">
+        <p>
+          {{ dashboardData?.totalRevenue! | vndCurrency }}
         </p>
       </div>
     </mat-card>

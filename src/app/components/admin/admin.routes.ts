@@ -76,6 +76,14 @@ export const adminRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'ad-package/management',
+        loadComponent() {
+          return import(
+            './ad-package-management/ad-package-management.component'
+          ).then((m) => m.AdPackageManagementComponent);
+        },
+      },
     ],
   },
 ];

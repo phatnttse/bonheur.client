@@ -135,7 +135,7 @@ export class DashboardComponent implements OnInit {
 
     setTimeout(() => {
       this.statusService.statusLoadingSpinnerSource.next(false);
-    }, 2000);
+    }, 1000);
   }
 
   updateMonthlyDashboardData() {
