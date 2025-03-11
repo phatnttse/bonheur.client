@@ -54,6 +54,7 @@
                 </p>
                 <div class="flex items-center gap-x-3 sm:text-sm">
                   <a
+                    routerLink="/suppliers"
                     href="javascript:void(0)"
                     class="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
                   >
@@ -310,3 +311,108 @@
 <!-- Featured Suppliers Section -->
 <app-featured-suppliers [supplierList]="supplierList"></app-featured-suppliers>
 <!-- End Featured Suppliers Section -->
+
+<!-- About Section  -->
+<section class="py-20 relative">
+  <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
+    <div
+      class="w-full justify-start items-center gap-12 grid lg:grid-cols-2 grid-cols-1"
+    >
+      <div
+        class="w-full justify-center items-start gap-6 grid sm:grid-cols-2 grid-cols-1 lg:order-first order-last px-4"
+        data-aos="fade-right"
+        data-aos-duration="1500"
+        data-aos-delay="300"
+      >
+        <div
+          class="pt-24 lg:justify-center sm:justify-end justify-start items-start gap-10 flex"
+        >
+          <img
+            class="rounded-xl object-cover"
+            src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2VkZGluZ3xlbnwwfHwwfHx8MA%3D%3D"
+            alt="about Us image"
+          />
+        </div>
+        <img
+          class="sm:ml-0 ml-auto rounded-xl object-cover"
+          src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHdlZGRpbmd8ZW58MHx8MHx8fDA%3D"
+          alt="about Us image"
+        />
+      </div>
+      <div
+        class="w-full flex-col justify-center lg:items-start items-center gap-10 inline-flex md:mb-10 max-[768px]:mb-2"
+        data-aos="fade-left"
+        data-aos-duration="1500"
+        data-aos-delay="300"
+      >
+        <div class="w-full flex-col justify-center items-start gap-8 flex">
+          <div
+            class="w-full flex-col justify-start lg:items-start items-center gap-3 flex"
+          >
+            <h2
+              class="text-gray-900 text-4xl font-bold font-manrope leading-normal lg:text-start text-center"
+            >
+              The Perfect Connection for Your Big Day
+            </h2>
+            <p
+              class="text-gray-500 text-base font-normal leading-relaxed lg:text-start text-center"
+            >
+              Our platform helps you search, connect, and collaborate with top
+              wedding service providers. Easily explore vendor profiles, view
+              locations on the map, request quotes, and chat directly to plan
+              your perfect wedding day.
+            </p>
+          </div>
+          <div
+            class="w-full justify-center items-center sm:gap-10 gap-5 inline-flex mt-4"
+            #countSection
+          >
+            <div class="flex-col justify-center items-center inline-flex">
+              <h3
+                id="count1"
+                class="text-gray-900 text-2xl font-bold font-manrope leading-normal"
+              >
+                +0
+              </h3>
+              <h6
+                class="text-gray-500 md:text-base max-[768px]:text-sm font-normal leading-relaxed"
+              >
+                Services Provided
+              </h6>
+            </div>
+
+            <div class="flex-col justify-center items-center inline-flex">
+              <h4
+                id="count2"
+                class="text-gray-900 text-2xl font-bold font-manrope leading-normal"
+              >
+                +0
+              </h4>
+              <h6
+                class="text-gray-500 md:text-base max-[768px]:text-sm font-normal leading-relaxed ml-2"
+              >
+                Suppliers
+              </h6>
+            </div>
+
+            <div class="flex-col justify-center items-center inline-flex">
+              <h4
+                id="count3"
+                class="text-gray-900 text-2xl font-bold font-manrope leading-normal"
+              >
+                +0
+              </h4>
+              <h6
+                class="text-gray-500 md:text-base max-[768px]:text-sm font-normal leading-relaxed"
+              >
+                Happy Couples
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  -->

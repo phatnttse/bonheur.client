@@ -66,6 +66,8 @@ export class SigninComponent {
         this.statusService.statusLoadingSpinnerSource.next(false);
         if (this.authService.isAdmin) {
           this.router.navigate(['/admin']);
+        } else if (this.authService.isSupplier) {
+          this.router.navigate(['/supplier']);
         } else {
           this.router.navigate(['/']);
         }

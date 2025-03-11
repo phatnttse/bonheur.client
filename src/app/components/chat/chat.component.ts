@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ChatSidebarComponent } from './chat-sidebar/chat-sidebar.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { SupplierInfoComponent } from './supplier-info/supplier-info.component';
@@ -13,6 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
 import { MaterialModule } from '../../material.module';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
@@ -23,11 +31,12 @@ import { RouterModule } from '@angular/router';
     SupplierInfoComponent,
     MaterialModule,
     RouterModule,
+    CommonModule,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   status: number = 0;
   account: Account | null = null;
   @Output() onlineUsers: OnlineUser[] = []; // Online users list
@@ -39,6 +48,8 @@ export class ChatComponent implements OnInit {
   @Output() notifyTypingMessage: string = ''; // Notify typing message
   @Output() selectedUserId: string = ''; // Selected user to send message to
   @Output() supplier: Supplier | null = null;
+  statusPage: number = 0;
+  screenWidth: number = window.innerWidth; // Lấy kích thước màn hình ban đầu
 
   constructor(
     private signalRService: SignalRService,
@@ -49,6 +60,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.signalRService.startConnection();
+    this.updateScreenSize();
 
     // Listen for online users event
     this.signalRService['hubConnection'].on('OnlineUsers', (users: any) => {
@@ -88,6 +100,27 @@ export class ChatComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.signalRService['hubConnection'].off('OnlineUsers');
+    this.signalRService['hubConnection'].off('ReceiveNewMessage');
+    this.signalRService['hubConnection'].off('ReceiveMessageList');
+    this.signalRService['hubConnection'].off('ReceiveTypingNotification');
+
+    this.messages = [];
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.updateScreenSize();
+  }
+
+  updateScreenSize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth > 1024) {
+      this.statusPage = 0;
+    }
+  }
+
   // Load messages for a selected user
   loadMessages(recipientId: string): void {
     this.signalRService['hubConnection']
@@ -100,7 +133,7 @@ export class ChatComponent implements OnInit {
     this.selectedUserId = userId;
     this.selectedUserName =
       this.onlineUsers.find((x) => x.id === userId)?.fullName || '';
-    this.signalRService.loadMessages(userId, 1); // Load messages for the selected user
+    this.signalRService.loadMessages(userId, 1);
   }
 
   onTyping(): void {
@@ -111,7 +144,12 @@ export class ChatComponent implements OnInit {
 
   onUserSelected(user: OnlineUser): void {
     this.selectedUser = user;
+    this.messages = [];
+    this.selectedUserId = user.id;
     this.loadMessages(user.id);
+    if (this.screenWidth <= 1024) {
+      this.statusPage = 1;
+    }
   }
 
   getSupplierInfo() {

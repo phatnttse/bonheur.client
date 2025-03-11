@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from '../../guards/admin.guard';
 
 export const adminRoutes: Routes = [
   {
@@ -8,7 +9,9 @@ export const adminRoutes: Routes = [
         (m) => m.FullComponent
       );
     },
+    canActivate: [adminGuard],
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'roles/management',
         loadComponent() {
@@ -63,6 +66,14 @@ export const adminRoutes: Routes = [
           return import(
             './social-networks-management/social-networks-management.component'
           ).then((m) => m.SocialNetworksManagementComponent);
+        },
+      },
+      {
+        path: 'dashboard',
+        loadComponent() {
+          return import('./dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
+          );
         },
       },
     ],

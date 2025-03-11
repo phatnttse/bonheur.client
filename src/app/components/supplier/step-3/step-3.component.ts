@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { RouterModule } from '@angular/router';
@@ -51,7 +51,8 @@ export class Step3Component implements OnInit {
     private statusService: StatusService,
     private dataService: DataService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -116,7 +117,15 @@ export class Step3Component implements OnInit {
   }
 
   saveChanges() {
-    if (this.fileUploads.length < 4) {
+    if (this.supplierImages.length > 0 && this.fileUploads.length === 0) {
+      this.notificationService.warning(
+        'Warning',
+        'Please upload at least 1 photo'
+      );
+      return;
+    }
+
+    if (this.supplierImages.length == 0 && this.fileUploads.length < 4) {
       this.notificationService.warning(
         'Warning',
         'Please upload at least 4 photos'
@@ -138,13 +147,33 @@ export class Step3Component implements OnInit {
 
     this.supplierService.updateSupplierImages(request).subscribe({
       next: (response: BaseResponse<SupplierImage[]>) => {
-        if (response.success && response.statusCode === StatusCode.OK) {
-          this.previewImages = [];
-          this.fileUploads = [];
-          this.getSupplierByUserId(this.account!.id!);
-          this.statusService.statusLoadingSpinnerSource.next(false);
-          this.notificationService.success('Success', response.message);
+        this.previewImages = [];
+        this.fileUploads = [];
+        this.supplierImages.push(...response.data);
+        this.supplier!.images = this.supplierImages;
+        const currentPrimaryImage = response.data.find(
+          (image: SupplierImage) => image.isPrimary
+        );
+        if (currentPrimaryImage) {
+          this.currentPrimaryImage = currentPrimaryImage;
         }
+        const updatedImages = this.supplierImages.map(
+          (image: SupplierImage) => {
+            if (image.id === this.currentPrimaryImage!.id) {
+              image.isPrimary = true;
+            } else {
+              image.isPrimary = false;
+            }
+            return image;
+          }
+        );
+        this.supplierImages = [...updatedImages];
+        this.supplier!.images = updatedImages;
+        this.dataService.supplierDataSource.next(this.supplier);
+        //this.getSupplierByUserId(this.account!.id!);
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.cdRef.detectChanges();
+        this.notificationService.success('Success', response.message);
       },
       error: (error: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
@@ -164,6 +193,7 @@ export class Step3Component implements OnInit {
               (image: SupplierImage) => image.isPrimary
             ) ?? null;
           this.dataService.supplierDataSource.next(this.supplier);
+          this.statusService.statusLoadingSpinnerSource.next(false);
         }
       },
       error: (error: HttpErrorResponse) => {

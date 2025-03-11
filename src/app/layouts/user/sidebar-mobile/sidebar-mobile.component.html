@@ -105,23 +105,36 @@
         </button>
       </div>
       <div class="mr-4 mt-2">
-        <button mat-icon-button aria-label="Notifications" routerLink="/inbox">
-          <i-tabler
-            class="flex items-center text-center"
-            name="mail"
+        <button mat-icon-button routerLink="/inbox">
+          @if (messageUnreadCount > 0) {
+          <span
+            class="relative inline-block"
             [matBadge]="messageUnreadCount"
             matBadgeColor="warn"
-          ></i-tabler>
+          >
+            <img
+              class="object-cover w-[40px] h-[40px]"
+              src="/assets/images/svgs/email.svg"
+              alt="Email"
+            />
+          </span>
+          }@else {
+          <img
+            class="object-cover w-[40px] h-[40px]"
+            src="/assets/images/svgs/email.svg"
+            alt="Email"
+          />
+          }
         </button>
       </div>
 
       <div
-        class="d-flex align-items-center cursor-pointer"
+        class="d-flex align-items-center cursor-pointer mt-1"
         [matMenuTriggerFor]="accountMenu"
         aria-label="Account"
       >
         <img
-          src="/{{ account.pictureUrl }}"
+          [src]="account.pictureUrl"
           alt="avatar"
           class="rounded-full object-cover w-[36px] h-[36px]"
         />
@@ -155,14 +168,12 @@
     <div class="flex items-center gap-6 mx-2 mt-4">
       <img src="/assets/images/svgs/bag.svg" alt="" class="w-5 h-5 mb-1" />
       @if (account?.roles?.includes(role.SUPPLIER)) {
-      <a
-        class="text-secondary font-semibold text-base cursor-pointer"
-        routerLink="/supplier"
+      <a class="font-semibold cursor-pointer uppercase" routerLink="/supplier"
         >Supplier Channel
       </a>
       }@else {
       <a
-        class="text-secondary font-semibold text-base cursor-pointer"
+        class="font-semibold cursor-pointer uppercase"
         routerLink="/supplier/signup"
         >Are you a supplier ?
       </a>
