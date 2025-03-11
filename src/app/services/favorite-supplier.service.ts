@@ -20,6 +20,7 @@ export class FavoriteSupplierService extends EndpointBase {
   private http = inject(HttpClient);
 
   getAllFavoriteSupplier(
+    userId: string,
     pageNumber: number,
     pageSize: number
   ): Observable<PaginatedFavoriteSupplier> {
@@ -38,7 +39,7 @@ export class FavoriteSupplierService extends EndpointBase {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () =>
-            this.getAllFavoriteSupplier(pageNumber, pageSize)
+            this.getAllFavoriteSupplier(userId, pageNumber, pageSize)
           );
         })
       );
@@ -64,7 +65,7 @@ export class FavoriteSupplierService extends EndpointBase {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () =>
-            this.getAllFavoriteSupplier(pageNumber, pageSize)
+            this.getFavoriteSupplierByCategory(id, pageNumber, pageSize)
           );
         })
       );
