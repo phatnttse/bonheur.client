@@ -30,6 +30,7 @@ import { BaseResponse } from '../../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VNDCurrencyPipe } from '../../../pipes/vnd-currency.pipe';
 import { DataService } from '../../../services/data.service';
+import { CommonModule } from '@angular/common';
 
 export interface Chart {
   series: ApexAxisChartSeries;
@@ -68,6 +69,7 @@ export type ChartOptions = {
     NgApexchartsModule,
     MatTableModule,
     VNDCurrencyPipe,
+    CommonModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

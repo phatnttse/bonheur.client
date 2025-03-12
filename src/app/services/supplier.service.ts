@@ -17,9 +17,11 @@ import {
   SupplierImage,
   SupplierSocialNetwork,
   SupplierSocialNetworkRequest,
+  SupplierVideo,
   UpdateSupplierAddressRequest,
   UpdateSupplierProfileRequest,
 } from '../models/supplier.model';
+import { get } from 'jquery';
 
 @Injectable({
   providedIn: 'root',
@@ -415,6 +417,49 @@ export class SupplierService extends EndpointBase {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () => this.deleteSupplierFAQ(id));
+        })
+      );
+  }
+
+  uploadVideo(file: File): Observable<BaseResponse<SupplierVideo>> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http
+      .post<BaseResponse<SupplierVideo>>(
+        `${environment.apiUrl}/api/v1/suppliers/videos`,
+        formData,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.uploadVideo(file));
+        })
+      );
+  }
+
+  getSupplierVideos(): Observable<BaseResponse<SupplierVideo[]>> {
+    return this.http
+      .get<BaseResponse<SupplierVideo[]>>(
+        `${environment.apiUrl}/api/v1/suppliers/videos`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.getSupplierVideos());
+        })
+      );
+  }
+
+  deleteVideo(id: number): Observable<BaseResponse<SupplierVideo>> {
+    return this.http
+      .delete<BaseResponse<SupplierVideo>>(
+        `${environment.apiUrl}/api/v1/suppliers/videos/${id}`,
+        this.requestHeaders
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.deleteVideo(id));
         })
       );
   }

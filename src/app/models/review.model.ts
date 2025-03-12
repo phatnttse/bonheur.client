@@ -17,6 +17,8 @@ export interface Review {
   valueForMoney: number;
   flexibility: number;
   user: Account;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateReview {

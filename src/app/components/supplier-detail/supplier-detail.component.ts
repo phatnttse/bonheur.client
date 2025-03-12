@@ -21,7 +21,7 @@ import { VNDCurrencyPipe } from '../../pipes/vnd-currency.pipe';
 import { config, Map, MapStyle, Marker, Popup } from '@maptiler/sdk';
 import { environment } from '../../environments/environment.dev';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { GalleryModule, Gallery, GalleryItem } from 'ng-gallery';
+import { GalleryModule, Gallery, GalleryItem, GalleryRef } from 'ng-gallery';
 import { Lightbox, LightboxModule } from 'ng-gallery/lightbox';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestPricingDialogComponent } from '../dialogs/user/request-pricing-dialog/request-pricing-dialog.component';
@@ -55,6 +55,7 @@ export class SupplierDetailComponent
   galleryId = 'myLightbox';
   galleryItems!: GalleryItem[];
   averageScores: AverageScores | null = null;
+  galleryRef!: GalleryRef;
 
   constructor(
     private supplierService: SupplierService,
@@ -82,17 +83,28 @@ export class SupplierDetailComponent
   }
 
   initializeGallery() {
-    const galleryRef = this.gallery.ref(this.galleryId);
-    this.supplier?.images?.forEach((image) => {
-      galleryRef.addImage({
-        src: image.imageUrl || '',
-        thumb: image.imageUrl || '',
-      });
-    });
-    galleryRef.load(this.galleryItems);
+    this.galleryRef = this.gallery.ref(this.galleryId);
   }
 
-  openInFullScreen(index: number) {
+  openInFullScreen(index: number, type: string) {
+    if (type === 'photos') {
+      this.supplier?.images?.forEach((image) => {
+        this.galleryRef.addImage({
+          src: image.imageUrl || '',
+          thumb: image.imageUrl || '',
+        });
+      });
+      this.galleryRef.load(this.galleryItems);
+    } else {
+      this.supplier?.videos?.forEach((video) => {
+        this.galleryRef.addVideo({
+          src: video.url || '',
+          controls: true,
+        });
+      });
+      this.galleryRef.load(this.galleryItems);
+    }
+
     this.lightbox.open(index, this.galleryId, {
       panelClass: 'fullscreen',
       hasBackdrop: true,
@@ -165,7 +177,7 @@ export class SupplierDetailComponent
                 <div class="flex items-center mt-2">
                   <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
                   <span class="text-sm mr-1"></span>${
-                    this.supplier?.averageRating || 0
+                    this.supplier?.averageRating.toFixed(1) || 0
                   }
                   <span class="text-[#7d7d7d] text-[12px] ml-2"> (${
                     this.supplier?.totalRating

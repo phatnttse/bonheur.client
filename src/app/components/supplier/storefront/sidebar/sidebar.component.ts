@@ -59,6 +59,7 @@ export class SidebarComponent implements OnInit {
           {
             title: 'Videos',
             icon: 'video2.svg',
+            count: this.supplier.videos?.length,
             route: '/supplier/storefront/videos',
           },
           {
