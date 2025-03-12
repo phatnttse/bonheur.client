@@ -64,6 +64,14 @@ export const routes: Routes = [
         },
       },
       {
+        path: 'about',
+        loadComponent() {
+          return import('./components/about/about.component').then(
+            (m) => m.AboutComponent
+          );
+        },
+      },
+      {
         path: 'suppliers',
         loadComponent() {
           return import('./components/suppliers/suppliers.component').then(
