@@ -75,7 +75,18 @@
         <ckeditor [editor]="Editor" [config]="config" formControlName="content">
         </ckeditor>
       </div> -->
-
+      <ckeditor
+        class="w-full"
+        tagName="textarea"
+        formControlName="content"
+        [editor]="Editor!"
+        [config]="config!"
+        [class.is-invalid]="
+          blogForm.get('content')?.invalid && blogForm.get('content')?.touched
+        "
+        (blur)="blogForm.get('content')?.markAsTouched()"
+      >
+      </ckeditor>
       <mat-checkbox formControlName="isPublished">Published</mat-checkbox>
     </form>
   </mat-card-content>

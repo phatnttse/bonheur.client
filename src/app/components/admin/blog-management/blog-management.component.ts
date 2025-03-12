@@ -24,6 +24,8 @@ import type {
 } from 'https://cdn.ckeditor.com/typings/ckeditor5.d.ts';
 import { environment } from '../../../environments/environment.dev';
 import { BlogService } from '../../../services/blog-post.service';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
+import { DBkeys } from '../../../services/db-keys';
 @Component({
   selector: 'app-blog-management',
   standalone: true,
@@ -55,7 +57,11 @@ export class BlogManagementComponent {
   public Editor: typeof ClassicEditor | null = null;
   public config: EditorConfig | null = null;
 
-  constructor(private fb: FormBuilder, private blogService: BlogService) {
+  constructor(
+    private fb: FormBuilder,
+    private blogService: BlogService,
+    private localStorage: LocalStorageManager
+  ) {
     this.blogForm = this.fb.group({
       title: ['', Validators.required],
       slug: ['', Validators.required],
@@ -73,6 +79,7 @@ export class BlogManagementComponent {
       premium: true,
     }).then(this._setupEditor.bind(this));
   }
+
   private _setupEditor(
     cloud: CKEditorCloudResult<{ version: '44.1.0'; premium: true }>
   ) {
@@ -86,6 +93,10 @@ export class BlogManagementComponent {
       Link,
       List,
       Underline,
+      Image,
+      ImageUpload,
+      AutoImage,
+      SimpleUploadAdapter,
     } = cloud.CKEditor;
 
     this.Editor = ClassicEditor;
@@ -100,6 +111,10 @@ export class BlogManagementComponent {
         Link,
         List,
         Underline,
+        Image,
+        ImageUpload,
+        AutoImage,
+        SimpleUploadAdapter,
       ],
       toolbar: [
         'heading',
@@ -114,45 +129,22 @@ export class BlogManagementComponent {
         '|',
         'undo',
         'redo',
-      ],
-    };
-  }
-
-  public editorConfig = {
-    toolbar: {
-      items: [
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'link',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'outdent',
-        'indent',
         '|',
         'imageUpload',
-        'blockQuote',
-        'insertTable',
-        'mediaEmbed',
-        'undo',
-        'redo',
       ],
-    },
-    language: 'en',
-    image: {
-      toolbar: [
-        'imageTextAlternative',
-        'imageStyle:inline',
-        'imageStyle:block',
-        'imageStyle:side',
-      ],
-    },
-    table: {
-      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
-    },
-  };
+      image: {
+        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+      },
+      simpleUpload: {
+        uploadUrl: `${environment.apiUrl}/api/v1/storage/upload`,
+        headers: {
+          Authorization: `Bearer ${this.localStorage.getData(
+            DBkeys.ACCESS_TOKEN
+          )}`,
+        },
+      },
+    };
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
