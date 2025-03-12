@@ -44,7 +44,6 @@ export class SupplierManagementComponent implements OnInit, AfterViewInit {
     'status',
     'priority',
     'onBoardStatus',
-    'onBoardPercent',
     'actions',
   ];
   supplierStatus: typeof SupplierStatus = SupplierStatus;

@@ -77,6 +77,14 @@ export const adminRoutes: Routes = [
         },
       },
       {
+        path: 'ad-package/management',
+        loadComponent() {
+          return import(
+            './ad-package-management/ad-package-management.component'
+          ).then((m) => m.AdPackageManagementComponent);
+        },
+      },
+      {
         path: 'blog/management',
         loadComponent() {
           return import('./blog-management/blog-management.component').then(

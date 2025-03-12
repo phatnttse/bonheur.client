@@ -47,6 +47,7 @@ import { environment } from '../../../environments/environment.dev';
 import { DataService } from '../../../services/data.service';
 import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 import { DBkeys } from '../../../services/db-keys';
+import { AutoImage } from 'ckeditor5';
 
 @Component({
   selector: 'app-step-1',
@@ -174,6 +175,10 @@ export class Step1Component implements OnInit {
       Link,
       List,
       Underline,
+      Image,
+      ImageUpload,
+      AutoImage,
+      SimpleUploadAdapter,
     } = cloud.CKEditor;
 
     this.Editor = ClassicEditor;
@@ -188,6 +193,10 @@ export class Step1Component implements OnInit {
         Link,
         List,
         Underline,
+        Image,
+        ImageUpload,
+        AutoImage,
+        SimpleUploadAdapter,
       ],
       toolbar: [
         'heading',
@@ -202,7 +211,20 @@ export class Step1Component implements OnInit {
         '|',
         'undo',
         'redo',
+        '|',
+        'imageUpload',
       ],
+      image: {
+        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+      },
+      simpleUpload: {
+        uploadUrl: `${environment.apiUrl}/api/v1/storage/upload`,
+        headers: {
+          Authorization: `Bearer ${this.localStorage.getData(
+            DBkeys.ACCESS_TOKEN
+          )}`,
+        },
+      },
     };
   }
 

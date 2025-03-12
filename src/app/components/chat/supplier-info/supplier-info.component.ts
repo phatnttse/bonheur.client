@@ -5,11 +5,18 @@ import { RouterModule } from '@angular/router';
 import { VNDCurrencyPipe } from '../../../pipes/vnd-currency.pipe';
 import { OnlineUser } from '../../../models/chat.model';
 import { Supplier } from '../../../models/supplier.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-supplier-info',
   standalone: true,
-  imports: [MaterialModule, TablerIconsModule, RouterModule, VNDCurrencyPipe],
+  imports: [
+    MaterialModule,
+    TablerIconsModule,
+    RouterModule,
+    VNDCurrencyPipe,
+    CommonModule,
+  ],
   templateUrl: './supplier-info.component.html',
   styleUrl: './supplier-info.component.scss',
 })

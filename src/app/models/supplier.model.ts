@@ -39,6 +39,7 @@ export interface Supplier {
   isStep2Completed?: boolean;
   isStep3Completed?: boolean;
   images?: SupplierImage[];
+  videos?: SupplierVideo[];
   socialNetworks?: SupplierSocialNetworkDetail[];
   faqs?: SupplierFAQ[];
   reviews?: Review[];
@@ -209,4 +210,14 @@ export interface SupplierFAQRequest {
   id?: number;
   question: string;
   answer: string;
+}
+
+export interface SupplierVideo {
+  id: number;
+  url: string;
+  fileName: string;
+  title: string;
+  videoType: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
