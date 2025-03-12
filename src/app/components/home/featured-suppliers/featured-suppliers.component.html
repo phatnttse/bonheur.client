@@ -85,9 +85,10 @@
                 }
                 <div class="flex items-center mt-2">
                   @if (supplier.averageRating) {
-                  <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
+                  <span class="text-[#fea99a] text-xl mb-[4px]">★</span>
                   <span class="text-sm mr-1"></span
-                  >{{ supplier.averageRating }} } @if (supplier.totalRating) {
+                  >{{ supplier.averageRating | number : "1.0-1" }} } @if
+                  (supplier.totalRating) {
                   <span class="text-[#7d7d7d] text-[12px] ml-2">
                     ({{ supplier.totalRating }}
                     {{ supplier.totalRating > 1 ? "reviews" : "review" }})

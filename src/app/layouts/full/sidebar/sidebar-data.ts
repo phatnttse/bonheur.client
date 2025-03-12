@@ -49,4 +49,16 @@ export const navItems: NavItem[] = [
     bgcolor: 'accent',
     route: '/admin/social-networks/management',
   },
+  {
+    displayName: 'Ad Package',
+    iconName: 'ad-2',
+    bgcolor: 'warning',
+    route: '/admin/ad-package/management',
+  },
+  {
+    displayName: 'Blog Management',
+    iconName: 'article',
+    bgcolor: 'primary',
+    route: '/admin/blog/management',
+  },
 ];

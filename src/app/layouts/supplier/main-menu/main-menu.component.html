@@ -83,6 +83,19 @@
             </div>
             <div
               class="flex flex-col justify-center items-center py-4 px-10 nav-link"
+              routerLink="/supplier/packages"
+              [routerLinkActive]="'active-link'"
+              [routerLinkActiveOptions]="{ exact: false }"
+            >
+              <div class="mb-2">
+                <img class="w-8" src="/assets/images/svgs/package.svg" alt="" />
+              </div>
+              <div>
+                <p class="text-sm">Packages</p>
+              </div>
+            </div>
+            <div
+              class="flex flex-col justify-center items-center py-4 px-10 nav-link"
             >
               <div class="mb-2">
                 <img class="w-8" src="/assets/images/svgs/setting.svg" alt="" />

@@ -106,6 +106,14 @@ export const supplierRoutes: Routes = [
               ).then((m) => m.SocialNetworksComponent);
             },
           },
+          {
+            path: 'videos',
+            loadComponent() {
+              return import('./storefront/videos/videos.component').then(
+                (m) => m.VideosComponent
+              );
+            },
+          },
         ],
       },
       {
@@ -171,6 +179,33 @@ export const supplierRoutes: Routes = [
             (m) => m.InvoiceComponent
           );
         },
+      },
+      {
+        path: 'packages',
+        loadComponent() {
+          return import('./packages/packages.component').then(
+            (m) => m.PackagesComponent
+          );
+        },
+        children: [
+          { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
+          {
+            path: 'subscriptions',
+            loadComponent() {
+              return import(
+                './packages/subscriptions/subscriptions.component'
+              ).then((m) => m.SubscriptionsComponent);
+            },
+          },
+          {
+            path: 'advertisements',
+            loadComponent() {
+              return import(
+                './packages/advertisements/advertisements.component'
+              ).then((m) => m.AdvertisementsComponent);
+            },
+          },
+        ],
       },
     ],
   },

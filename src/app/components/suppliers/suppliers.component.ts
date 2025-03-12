@@ -38,6 +38,7 @@ import { environment } from '../../environments/environment.dev';
 import { DeleteCategoryComponent } from '../dialogs/admin/delete-category/delete-category.component';
 import { AuthService } from '../../services/auth.service';
 import { RequestPricingDialogComponent } from '../dialogs/user/request-pricing-dialog/request-pricing-dialog.component';
+import { LocalStorageManager } from '../../services/localstorage-manager.service';
 
 @Component({
   selector: 'app-suppliers',
@@ -96,7 +97,8 @@ export class SuppliersComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private localStorage: LocalStorageManager
   ) {}
 
   ngOnInit(): void {
@@ -134,11 +136,12 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
     this.dataService.favoriteSupplierData$.subscribe(
       (favoriteSuppliers: FavoriteSupplier[] | null) => {
+        debugger;
         if (favoriteSuppliers?.values) {
           this.favoriteSuppliers = favoriteSuppliers;
           this.cdr.detectChanges();
         } else {
-          this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
+          this.getAllFavoriteSupplier(1, 100);
         }
       }
     );
@@ -246,9 +249,17 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   getAllFavoriteSupplier(pageNumber: number, pageSize: number) {
+    const user = this.localStorage.getDataObject<{ id: string }>(
+      'current_user'
+    );
+
+    if (!user || !user.id) {
+      console.error('User ID not found in local storage.');
+      return;
+    }
     //Lấy toàn bộ danh sách
     this.favoriteSupplierService
-      .getAllFavoriteSupplier(pageNumber, pageSize)
+      .getAllFavoriteSupplier(user.id, pageNumber, pageSize)
       .subscribe({
         next: (response: PaginatedFavoriteSupplier) => {
           if (response.success && response.statusCode === StatusCode.OK) {
@@ -269,7 +280,8 @@ export class SuppliersComponent implements OnInit, OnDestroy {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error);
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
         },
       });
   }
@@ -297,6 +309,31 @@ export class SuppliersComponent implements OnInit, OnDestroy {
           );
         }
       }
+    });
+  }
+
+  deleteFavoriteSupplier(id: number): void {
+    this.statusService.statusLoadingSpinnerSource.next(true);
+    this.favoriteSupplierService.deleteFavoriteSupplier(id).subscribe({
+      next: (response: BaseResponse<FavoriteSupplier>) => {
+        // Xóa supplier khỏi danh sách
+        const index = this.favoriteSuppliers.findIndex(
+          (supplier) => supplier.supplierId === id
+        );
+        if (index !== -1) {
+          this.favoriteSuppliers.splice(index, 1);
+          this.dataService.favoriteSupplierDataSource.next([
+            ...this.favoriteSuppliers,
+          ]);
+        }
+
+        // Hiển thị thông báo thành công
+        this.statusService.statusLoadingSpinnerSource.next(false);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.success('Success', err.message);
+      },
     });
   }
 

@@ -18,6 +18,7 @@ import {
   MonthlyDashboardData,
   TopSuppliersByRevenue,
 } from '../models/dashboard.model';
+import { AdPackage } from '../models/ad-package.model';
 
 @Injectable({
   providedIn: 'root',
@@ -130,6 +131,12 @@ export class DataService {
   >(null);
   monthlyDashboardDataData$ =
     this.monthlyDashboardDataDataSource.asObservable();
+
+  //Behavior subject: Ad Package
+  public adPackageListDataSource = new BehaviorSubject<AdPackage[] | null>(
+    null
+  );
+  adPackageListData$ = this.adPackageListDataSource.asObservable();
 
   resetData() {
     this.accountDataSource.next(null);

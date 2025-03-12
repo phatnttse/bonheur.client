@@ -1,0 +1,122 @@
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">
+    Videos
+    <span class="text-[#6c6c6c] text-lg">({{ 1 }})</span>
+  </h1>
+</div>
+<div
+  class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 max-[667px]:flex-wrap max-[667px]:gap-6 max-[667px]:justify-center"
+>
+  <div>
+    <img width="64px" src="/assets/images/svgs/video.svg" alt="Photo" />
+  </div>
+  <div>
+    <h2 class="md:text-base font-semibold mb-2 max-[667px]:text-sm">
+      Showcase your work by adding videos to your storefront.
+    </h2>
+    <p class="text-[#6c6c6c] max-[667px]:text-xs">
+      Add unlimited videos related to your business and wedding services.
+    </p>
+  </div>
+</div>
+<div class="mb-6">
+  <h1 class="text-lg font-semibold">Add videos</h1>
+</div>
+<div class="mb-6">
+  <div class="flex items-center justify-center w-full mb-6">
+    <label
+      for="dropzone-file"
+      class="flex flex-col items-center justify-center w-full h-60 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+    >
+      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <svg
+          class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 16"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+          />
+        </svg>
+        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+          <span class="font-semibold">Click to upload</span>
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          AVI, FLV, MOV and MP4 format Landscape orientation Maximum size 500 MB
+        </p>
+      </div>
+      <input
+        id="dropzone-file"
+        type="file"
+        class="hidden"
+        accept="video/avi, video/flv, video/mov, video/mp4"
+        (change)="onUpload($event)"
+      />
+    </label>
+  </div>
+
+  @if (videoUrl) {
+  <div class="mt-4 text-center">
+    <h3 class="text-lg font-semibold mb-4">Preview photos</h3>
+    <video width="320" height="240" controls>
+      <source [src]="videoUrl" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <button mat-raised-button color="warn" (click)="removeVideo()" class="mt-2">
+      Remove Video
+    </button>
+  </div>
+  } @if (supplierVideos.length > 0) {
+  <h3 class="text-lg font-semibold mb-4">Your business photos</h3>
+  <div
+    class="grid md:grid-cols-4 gap-4 max-[1024px]:grid-cols-2 max-[667px]:grid-cols-1"
+  >
+    @for (video of supplierVideos; track $index) {
+    <div class="flex flex-col items-center justify-center gap-4">
+      <mat-card
+        class="w-full h-[300px] relative overflow-hidden"
+        appearance="outlined"
+      >
+        <video
+          [src]="video.url"
+          controls
+          class="w-full h-[220px] object-cover"
+        ></video>
+
+        <div class="flex justify-between items-center py-4 px-2">
+          <p class="font-light">
+            {{ video.createdAt | date : "yyyy/MM/dd HH:mm" }}
+          </p>
+          <button
+            mat-icon-button
+            type="button"
+            (click)="openDeleteVideoDialog(video.id)"
+          >
+            <mat-icon class="cursor-pointer" color="warn"
+              ><i-tabler name="trash"></i-tabler
+            ></mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+    }
+  </div>
+  }
+
+  <div class="mt-4">
+    <button
+      mat-raised-button
+      color="accent"
+      type="button"
+      (click)="saveChanges()"
+    >
+      Save changes
+    </button>
+  </div>
+</div>

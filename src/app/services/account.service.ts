@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import {
-  Account,
   AccountResponse,
   BlockAccountResponse,
   ListAccountResponse,
@@ -16,14 +15,11 @@ import { EndpointBase } from './endpoint-base.service';
 import { ListRoleResponse, RoleResponse } from '../models/role.model';
 import { BaseResponse } from '../models/base.model';
 import { Permission } from '../models/permission.model';
-import { error } from 'jquery';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService extends EndpointBase {
-  public accountDataSource = new BehaviorSubject<Account[] | null>(null);
-  accountData$ = this.accountDataSource.asObservable();
   private http = inject(HttpClient);
 
   getRoles(): Observable<ListRoleResponse> {

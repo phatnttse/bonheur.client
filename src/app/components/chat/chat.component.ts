@@ -144,6 +144,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   onUserSelected(user: OnlineUser): void {
     this.selectedUser = user;
+    this.getSupplierInfo();
     this.messages = [];
     this.selectedUserId = user.id;
     this.loadMessages(user.id);

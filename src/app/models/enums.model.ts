@@ -67,3 +67,20 @@ export enum PaymentStatus {
   CANCELLED = 'CANCELLED',
   PAID = 'PAID',
 }
+
+export enum AdType {
+  Banner = 'Banner',
+  Popup = 'Popup',
+  Text = 'Text',
+  Video = 'Video',
+  Audio = 'Audio',
+  Image = 'Image',
+  Sidebar = 'Sidebar',
+}
+
+export enum AdvertisementStatus {
+  Pending = 'Pending',
+  Approved = 'Approved',
+  Expired = 'Expired',
+  Rejected = 'Rejected',
+}

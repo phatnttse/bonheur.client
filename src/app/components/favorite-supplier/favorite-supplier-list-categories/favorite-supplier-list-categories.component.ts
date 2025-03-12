@@ -21,6 +21,7 @@ import { MaterialModule } from '../../../material.module';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { RouterModule } from '@angular/router';
+import { LocalStorageManager } from '../../../services/localstorage-manager.service';
 
 @Component({
   selector: 'app-favorite-supplier-list-categories',
@@ -55,7 +56,8 @@ export class FavoriteSupplierListCategoriesComponent {
     private notificationService: NotificationService,
     private statusService: StatusService,
     private dataService: DataService,
-    private favoriteSupplierService: FavoriteSupplierService
+    private favoriteSupplierService: FavoriteSupplierService,
+    private localStorage: LocalStorageManager
   ) {}
 
   ngOnInit() {
@@ -86,16 +88,22 @@ export class FavoriteSupplierListCategoriesComponent {
   }
 
   getAllFavoriteSupplier(pageNumber: number, pageSize: number) {
+    const user = this.localStorage.getDataObject<{ id: string }>(
+      'current_user'
+    );
+
+    if (!user || !user.id) {
+      console.error('User ID not found in local storage.');
+      return;
+    }
     //Lấy toàn bộ danh sách
     this.favoriteSupplierService
-      .getAllFavoriteSupplier(pageNumber, pageSize)
+      .getAllFavoriteSupplier(user.id, pageNumber, pageSize)
       .subscribe({
         next: (response: PaginatedFavoriteSupplier) => {
           if (response.success && response.statusCode === StatusCode.OK) {
             if (Array.isArray(response.data)) {
               this.favoriteSuppliers = response.data;
-              this.dataSource = new MatTableDataSource(this.favoriteSuppliers);
-              this.dataSource.sort = this.sort;
               this.pageNumber = response.data.pageNumber;
               this.pageSize = response.data.pageSize;
               this.totalItemCount = response.data.totalItemCount;
