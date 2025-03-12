@@ -76,6 +76,14 @@ export const adminRoutes: Routes = [
           );
         },
       },
+      {
+        path: 'blog/management',
+        loadComponent() {
+          return import('./blog-management/blog-management.component').then(
+            (m) => m.BlogManagementComponent
+          );
+        },
+      },
     ],
   },
 ];
