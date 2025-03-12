@@ -1,0 +1,241 @@
+<!-- blog-management.component.html -->
+<mat-card *ngIf="!showCreateForm">
+  <mat-card-content>
+    <div class="row justify-content-between">
+      <div class="col-lg-4 m-t-10">
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            matInput
+            type="text"
+            placeholder="Search blog posts..."
+            #input
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-start mx-4 my-2">
+        <button
+          mat-flat-button
+          color="primary"
+          class="flex items-center text-white text-sm font-medium p-24 shadow-md transition-colors duration-200"
+          (click)="openCreateBlogDialog()"
+        >
+          <mat-icon class="icon-20 mt-1 d-flex align-items-center">
+            <i-tabler name="plus"></i-tabler>
+          </mat-icon>
+          Add New Blog Post
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Form tạo blog mới -->
+<mat-card *ngIf="showCreateForm" class="w-100">
+  <mat-card-header>
+    <mat-card-title>Create New Blog Post</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="blogForm" class="p-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error *ngIf="blogForm.get('title')?.hasError('required')">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Slug</mat-label>
+        <input matInput formControlName="slug" />
+        <mat-error *ngIf="blogForm.get('slug')?.hasError('required')">
+          Slug is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Thumbnail URL</mat-label>
+        <input matInput formControlName="thumbnailUrl" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Author ID</mat-label>
+        <input matInput formControlName="authorId" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Category ID</mat-label>
+        <input matInput type="number" formControlName="categoryId" />
+        <mat-error *ngIf="blogForm.get('categoryId')?.hasError('required')">
+          Category ID is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <div class="my-4">
+        <ckeditor [editor]="Editor" [config]="config" formControlName="content">
+        </ckeditor>
+      </div> -->
+      <ckeditor
+        class="w-full"
+        tagName="textarea"
+        formControlName="content"
+        [editor]="Editor!"
+        [config]="config!"
+        [class.is-invalid]="
+          blogForm.get('content')?.invalid && blogForm.get('content')?.touched
+        "
+        (blur)="blogForm.get('content')?.markAsTouched()"
+      >
+      </ckeditor>
+      <mat-checkbox formControlName="isPublished">Published</mat-checkbox>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="p-4">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveBlog()"
+      [disabled]="!blogForm.valid"
+    >
+      Save
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="closeCreateForm()"
+      class="ml-2"
+    >
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<!-- Table hiển thị danh sách blog -->
+<mat-card class="w-100" *ngIf="!showCreateForm">
+  <mat-card-content>
+    <div class="table-responsive mt-20">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="w-100 text-nowrap"
+        bgColor="white"
+      >
+        <ng-container matColumnDef="id">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="id"
+          >
+            ID
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <span class="f-s-14">{{ blog.id }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="title"
+          >
+            Title
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <span class="f-s-14">{{ blog.title }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="slug">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="slug"
+          >
+            Slug
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <span class="f-s-14">{{ blog.slug }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="authorId">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="authorId"
+          >
+            Author ID
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <span class="f-s-14">{{ blog.authorId || "N/A" }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="categoryId">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="categoryId"
+          >
+            Category ID
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <span class="f-s-14">{{ blog.categoryId }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isPublished">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="isPublished"
+          >
+            Status
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <span class="f-s-14">{{
+              blog.isPublished ? "Published" : "Draft"
+            }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let blog">
+            <button mat-icon-button type="button" class="m-t-4">
+              <mat-icon color="primary">
+                <i-tabler
+                  name="edit"
+                  class="icon-20 d-flex align-items-center"
+                  (click)="openEditBlogDialog(blog.id)"
+                ></i-tabler>
+              </mat-icon>
+            </button>
+            <button mat-icon-button type="button" class="m-t-4">
+              <mat-icon color="warn">
+                <i-tabler
+                  name="trash"
+                  class="icon-20 d-flex align-items-center"
+                  (click)="openDeleteBlogDialog(blog.id)"
+                ></i-tabler>
+              </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
