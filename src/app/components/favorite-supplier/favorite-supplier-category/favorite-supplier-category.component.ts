@@ -20,7 +20,7 @@ import { DataService } from '../../../services/data.service';
 import { FavoriteSupplierService } from '../../../services/favorite-supplier.service';
 import { StatusCode } from '../../../models/enums.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseResponse } from '../../../models/base.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -75,7 +75,8 @@ export class FavoriteSupplierCategoryComponent {
     private dataService: DataService,
     private favoriteSupplierService: FavoriteSupplierService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -129,6 +130,12 @@ export class FavoriteSupplierCategoryComponent {
       });
   }
 
+  private checkAndRedirect() {
+    if (this.favoriteSuppliers.length === 0) {
+      this.router.navigate(['/suppliers']);
+    }
+  }
+
   //Lấy toàn bộ danh sách
   getCategories() {
     this.categoryService.getAllSupplierCategories().subscribe({
@@ -174,14 +181,15 @@ export class FavoriteSupplierCategoryComponent {
         );
         if (index !== -1) {
           this.favoriteSuppliers.splice(index, 1);
-          this.dataService.favoriteSupplierDataSource.next(
-            this.favoriteSuppliers
-          );
+          this.dataService.favoriteSupplierDataSource.next([
+            ...this.favoriteSuppliers,
+          ]);
         }
 
         // Hiển thị thông báo thành công
         this.notificationService.success('Success', response.message);
         this.statusService.statusLoadingSpinnerSource.next(false);
+        this.checkAndRedirect();
       },
       error: (err: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);

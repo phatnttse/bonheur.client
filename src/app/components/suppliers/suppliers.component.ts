@@ -136,11 +136,12 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
     this.dataService.favoriteSupplierData$.subscribe(
       (favoriteSuppliers: FavoriteSupplier[] | null) => {
+        debugger;
         if (favoriteSuppliers?.values) {
           this.favoriteSuppliers = favoriteSuppliers;
           this.cdr.detectChanges();
         } else {
-          this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
+          this.getAllFavoriteSupplier(1, 100);
         }
       }
     );
@@ -308,6 +309,31 @@ export class SuppliersComponent implements OnInit, OnDestroy {
           );
         }
       }
+    });
+  }
+
+  deleteFavoriteSupplier(id: number): void {
+    this.statusService.statusLoadingSpinnerSource.next(true);
+    this.favoriteSupplierService.deleteFavoriteSupplier(id).subscribe({
+      next: (response: BaseResponse<FavoriteSupplier>) => {
+        // Xóa supplier khỏi danh sách
+        const index = this.favoriteSuppliers.findIndex(
+          (supplier) => supplier.supplierId === id
+        );
+        if (index !== -1) {
+          this.favoriteSuppliers.splice(index, 1);
+          this.dataService.favoriteSupplierDataSource.next([
+            ...this.favoriteSuppliers,
+          ]);
+        }
+
+        // Hiển thị thông báo thành công
+        this.statusService.statusLoadingSpinnerSource.next(false);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.statusService.statusLoadingSpinnerSource.next(false);
+        this.notificationService.success('Success', err.message);
+      },
     });
   }
 
