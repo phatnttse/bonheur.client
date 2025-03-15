@@ -15,7 +15,7 @@
           <div
             class="bb-footer-widget bb-footer-company flex flex-col max-[991px]:mb-[24px]"
           >
-            <img
+            <!-- <img
               src=""
               class="bb-footer-logo max-w-[144px] mb-[30px] max-[767px]:max-w-[130px]"
               alt="Bonheur"
@@ -24,7 +24,12 @@
               src=""
               class="bb-footer-dark-logo max-w-[144px] mb-[30px] max-[767px]:max-w-[130px] hidden"
               alt="Bonheur"
-            />
+            /> -->
+            <div
+              class="text-xl font-bold text-primary hover:text-primary-dark transition-colors absolute lg:static lg:translate-x-0 mb-2"
+            >
+              <span class="font-bold">Bonheur.</span>
+            </div>
 
             <p
               class="bb-footer-detail max-w-[400px] mb-[30px] p-[0] font-Poppins text-[14px] leading-[27px] font-normal text-[#686e7d] inline-block relative max-[1399px]:text-[15px] max-[1199px]:text-[14px]"
@@ -38,6 +43,7 @@
                   src="assets/images/logos/android.png"
                   class="adroid max-w-[140px] m-[7px] rounded-[5px] max-[1399px]:max-w-[120px]"
                   alt="apple"
+                  loading="lazy"
                 />
               </a>
               <a href="javascript:void(0)" class="app-img">
@@ -45,6 +51,7 @@
                   src="assets/images/logos/apple.png"
                   class="apple max-w-[140px] m-[7px] rounded-[5px] max-[1399px]:max-w-[120px]"
                   alt="apple"
+                  loading="lazy"
                 />
               </a>
             </div>
@@ -70,7 +77,7 @@
                   class="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
                 >
                   <a
-                    routerLink="/"
+                    routerLink="/suppliers"
                     class="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-primary mb-[0] inline-block break-all tracking-[0] font-normal"
                     >Suppliers</a
                   >
@@ -83,14 +90,6 @@
                     class="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-primary mb-[0] inline-block break-all tracking-[0] font-normal"
                     >Planning Tools</a
                   >
-                </li>
-                <li
-                  class="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
-                >
-                  <a
-                    routerLink="/"
-                    class="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-primary mb-[0] inline-block break-all tracking-[0] font-normal"
-                  ></a>
                 </li>
                 <li
                   class="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
@@ -129,7 +128,7 @@
                   class="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
                 >
                   <a
-                    routerLink="/"
+                    routerLink="/about"
                     class="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-primary mb-[0] inline-block break-all tracking-[0] font-normal"
                     >About us</a
                   >
@@ -192,7 +191,7 @@
                   class="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
                 >
                   <a
-                    routerLink="/authentication/login"
+                    routerLink="/authentication/signin"
                     class="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-primary mb-[0] inline-block break-all tracking-[0] font-normal"
                     >Sign In</a
                   >
@@ -210,7 +209,7 @@
                   class="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
                 >
                   <a
-                    routerLink="/"
+                    routerLink="/supplier/signup"
                     class="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-primary mb-[0] inline-block break-all tracking-[0] font-normal"
                     >Become a Supplier</a
                   >
@@ -301,7 +300,7 @@
               >
                 Copyright ©
                 <span
-                  class="text-[#686e7d] text-[13px] tracking-[1px] text-center font-normal"
+                  class="text-[#686e7d] text-[13px] tracking-[1px] text-center font-normal mr-4"
                   id="copyright_year"
                   >2024</span
                 >
@@ -321,6 +320,7 @@
                   src="assets/images/logos/payment.png"
                   alt="payment"
                   class="max-[360px]:w-full"
+                  loading="lazy"
                 />
               </div>
             </div>

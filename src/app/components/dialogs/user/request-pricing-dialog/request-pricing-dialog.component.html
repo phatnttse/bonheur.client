@@ -82,7 +82,7 @@
           <mat-error style="font-size: 12px"> Email is invalid </mat-error>
           }
           <mat-icon matSuffix
-            ><img src="/assets/images/svgs/email.svg" alt=""
+            ><img src="/assets/images/svgs/email.svg" alt="" loading="lazy"
           /></mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-full">
@@ -145,7 +145,13 @@
     data-aos-duration="1000"
     data-aos-delay="200"
   >
-    <img width="48" height="48" src="/assets/images/svgs/success.svg" alt="" />
+    <img
+      width="48"
+      height="48"
+      src="/assets/images/svgs/success.svg"
+      alt=""
+      loading="lazy"
+    />
     <h2 class="font-semibold text-lg mt-4 mb-2">Request Sent</h2>
     <p class="font-light text-sm text-[#6c6c6c] mt-2">
       Your request has been sent to {{ data.name }}. You will be contacted

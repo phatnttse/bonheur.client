@@ -1,13 +1,15 @@
 @defer{
-<router-outlet>
-  @if (isLoading) {
-  <div class="loading">
-    <div class="loader"></div>
-  </div>
-  }
-</router-outlet>
-<app-scroll-to-top></app-scroll-to-top>
-<app-toastr></app-toastr>
+<main>
+  <router-outlet>
+    @if (isLoading) {
+    <div class="loading">
+      <div class="loader"></div>
+    </div>
+    }
+  </router-outlet>
+  <app-scroll-to-top></app-scroll-to-top>
+  <app-toastr></app-toastr>
+</main>
 } @loading {
 <div class="loading">
   <div class="loader"></div>
