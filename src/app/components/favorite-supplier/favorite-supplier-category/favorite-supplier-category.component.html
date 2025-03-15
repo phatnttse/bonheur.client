@@ -1,12 +1,12 @@
-<div class="bg-[#fff] max-[1281px]:px-[30px] px-[350px]">
+<div class="bg-[#fff] max-[1500px]:px-[80px] px-[350px]">
   <div class="flex flex-wrap py-10 border-t-[1px] border-solid border-[#eee]">
     <div class="max-[664px]:hidden w-1/5 max-w-[200px] px-2">
       <h5 class="text-xl font-bold my-[10px] pl-4">By category</h5>
       <ul class="mt-5 pt-2 pl-4 list-disc">
-        @for (group of groupSuppliersByCategory(); track group.category.id) {
+        @for (item of favoriteCount; track $index) {
         <li class="mb-[15px] flex justify-between">
-          <span>{{ group.category.name }}</span>
-          <span>{{ favoriteCount + group.suppliers.length }}</span>
+          <span>{{ item.categoryName }}</span>
+          <span>{{ item.favoriteCount }}</span>
         </li>
         }
       </ul>
@@ -37,7 +37,7 @@
               [ngStyle]="{
                 'background-image': 'url(' + (fs?.supplier?.images?.[0]?.imageUrl || 'assets/default-image.jpg') + ')',
                 'background-size': 'cover',
-                'background-position': 'center',
+                'background-position': 'center top',
               }"
             >
               <div class="absolute inset-0 bg-black opacity-30"></div>
