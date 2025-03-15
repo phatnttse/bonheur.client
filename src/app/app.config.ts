@@ -37,6 +37,7 @@ import { adminRoutes } from './components/admin/admin.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { supplierRoutes } from './components/supplier/supplier.routes';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -71,6 +72,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimationsAsync(),
     provideAnimationsAsync(),
-    provideNativeDateAdapter(),
+    provideNativeDateAdapter(), provideClientHydration(),
   ],
 };

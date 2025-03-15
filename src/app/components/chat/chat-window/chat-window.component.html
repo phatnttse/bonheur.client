@@ -8,7 +8,11 @@
     [ngClass]="{ 'p-4': statusPage === 0, 'px-4': statusPage === 1 }"
   >
     @if (selectedUser) {
-    <img [src]="selectedUser.pictureUrl" class="w-12 h-12 rounded-full mr-3" />
+    <img
+      [src]="selectedUser.pictureUrl"
+      class="w-12 h-12 rounded-full mr-3"
+      loading="lazy"
+    />
     <div>
       <h3 class="font-semibold text-lg">{{ selectedUser.fullName }}</h3>
       @if (selectedUser.isOnline) {
@@ -70,6 +74,7 @@
               [src]="item.filePath"
               alt="Uploaded Image"
               class="w-full h-40 object-cover rounded-md cursor-pointer"
+              loading="lazy"
             />
             } @else {
             <a
@@ -109,6 +114,7 @@
         [src]="item.url"
         alt="Uploaded Image"
         class="w-full h-40 object-cover rounded-md"
+        loading="lazy"
       />
       } @else {
       <a
