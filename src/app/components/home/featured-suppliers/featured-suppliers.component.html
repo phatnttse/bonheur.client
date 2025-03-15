@@ -63,6 +63,7 @@
               [src]="supplier?.images?.[0]?.imageUrl"
               class="max-h-[201px] w-full object-cover rounded-t-md cursor-pointer"
               routerLink="/suppliers/{{ supplier.slug }}"
+              loading="lazy"
             />
 
             <mat-card-content

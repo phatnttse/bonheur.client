@@ -7,6 +7,7 @@
       src="/assets/images/svgs/email.svg"
       alt=""
       class="w-10 h-10 mx-1 px-1 mb-2"
+      loading="lazy"
     />
   </div>
   <mat-form-field class="w-full" appearance="outline">
@@ -22,7 +23,11 @@
       (click)="selectUser(user)"
     >
       <div class="flex items-center">
-        <img [src]="user.pictureUrl" class="w-12 h-12 rounded-full mr-3" />
+        <img
+          [src]="user.pictureUrl"
+          class="w-12 h-12 rounded-full mr-3"
+          loading="lazy"
+        />
         <div>
           @if (statusPage == 1) {
           <p class="font-semibold mb-1">{{ user.fullName | truncate : 20 }}</p>
