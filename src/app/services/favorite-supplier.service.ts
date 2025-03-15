@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { EndpointBase } from './endpoint-base.service';
 import { catchError, Observable } from 'rxjs';
 import {
+  BaseFavoriteCount,
   FavoriteSupplier,
   PaginatedFavoriteSupplier,
 } from '../models/favorite-supplier.model';
@@ -102,6 +103,18 @@ export class FavoriteSupplierService extends EndpointBase {
           return this.handleError(error, () =>
             this.deleteFavoriteSupplier(supplierId)
           );
+        })
+      );
+  }
+
+  favoriteCount(): Observable<BaseFavoriteCount> {
+    return this.http
+      .get<BaseFavoriteCount>(
+        `${environment.apiUrl}/api/v1/favorite-supplier/favorite-count`
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () => this.favoriteCount());
         })
       );
   }

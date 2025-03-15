@@ -190,9 +190,8 @@ export class SuppliersComponent implements OnInit, OnDestroy {
     }
     this.favoriteSupplierService.addFavoriteSupplier(supplierId).subscribe({
       next: (response: BaseResponse<FavoriteSupplier>) => {
+        debugger;
         if (response.success && response.statusCode === StatusCode.OK) {
-          // this.supplierList = mockSupplierData.data.items;
-          // Kiểm tra nếu supplier đã có trong favoriteSuppliers thì không thêm nữa
           if (
             !this.favoriteSuppliers.some((fs) => fs.supplierId === supplierId)
           ) {

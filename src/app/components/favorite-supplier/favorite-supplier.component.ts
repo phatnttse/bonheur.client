@@ -82,7 +82,6 @@ export class FavoriteSupplierComponent {
         }
       }
     );
-
     this.dataService.supplierCategoryData$.subscribe(
       (categories: SupplierCategory[] | null) => {
         if (categories !== null) {

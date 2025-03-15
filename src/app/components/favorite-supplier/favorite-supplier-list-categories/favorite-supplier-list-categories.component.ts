@@ -160,6 +160,10 @@ export class FavoriteSupplierListCategoriesComponent {
     const matchedSupplier = favoriteSuppliers.find(
       (item) => item.supplier?.category?.id === categoryId
     );
+    console.log(
+      'matchedSupplier',
+      matchedSupplier?.supplier?.images?.[0]?.imageUrl
+    );
     return (
       matchedSupplier?.supplier?.images?.[0]?.imageUrl ||
       'assets/default-image.jpg'
