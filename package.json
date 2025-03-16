@@ -29,7 +29,6 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/platform-server": "^18.0.0",
     "@angular/router": "^18.0.0",
-    "@angular/ssr": "^18.2.12",
     "@ckeditor/ckeditor5-angular": "^9.1.0",
     "@ckeditor/ckeditor5-build-classic": "^44.1.0",
     "@ctrl/ngx-emoji-mart": "^9.2.0",
