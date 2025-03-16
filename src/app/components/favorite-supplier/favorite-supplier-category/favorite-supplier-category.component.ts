@@ -10,6 +10,8 @@ import {
 } from '../../../models/category.model';
 import { MatTableDataSource } from '@angular/material/table';
 import {
+  BaseFavoriteCount,
+  FavoriteCount,
   FavoriteSupplier,
   PaginatedFavoriteSupplier,
 } from '../../../models/favorite-supplier.model';
@@ -55,7 +57,7 @@ export class FavoriteSupplierCategoryComponent {
   hasPreviousPage: boolean = false; // Có trang trước đó không
   categoryImage: string = '';
   favoriteSuppliersCategory: FavoriteSupplier[] = [];
-  favoriteCount: number = 0;
+  favoriteCount: FavoriteCount[] = [];
   faStar = faStar;
 
   @Input() rating: number = 0;
@@ -97,6 +99,7 @@ export class FavoriteSupplierCategoryComponent {
         this.pageSize
       );
     });
+    this.loadFavoriteCount();
   }
 
   getAllFavoriteSupplierByCategory(
@@ -134,6 +137,21 @@ export class FavoriteSupplierCategoryComponent {
     if (this.favoriteSuppliers.length === 0) {
       this.router.navigate(['/suppliers']);
     }
+  }
+
+  loadFavoriteCount(): void {
+    this.favoriteSupplierService.favoriteCount().subscribe({
+      next: (response: BaseFavoriteCount) => {
+        // Xử lý dữ liệu tùy theo format API trả về
+        if (response.success && response.statusCode === StatusCode.OK) {
+          this.favoriteCount = response.data;
+          console.log('Favorite count:', this.favoriteCount);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading favorite count:', error);
+      },
+    });
   }
 
   //Lấy toàn bộ danh sách
