@@ -10,17 +10,17 @@
       routerLink="/supplier/onboarding"
     >
       <mat-icon class="mr-2"><i-tabler name="arrow-left"></i-tabler></mat-icon>
-      <span class="font-semibold text-base underline">Back</span>
+      <span class="font-semibold text-base underline">Quay về</span>
     </div>
     }
     <div class="mb-6">
       @if (!isEditMode) {
       <h1 class="text-2xl font-bold">
-        Add 4 high-quality photos of your business.
+        Thêm 4 ảnh chất lượng cao về doanh nghiệp của bạn.
       </h1>
       }@else {
       <h1 class="text-2xl font-bold">
-        Photos
+        Hình Ảnh
         <span class="text-[#6c6c6c] text-lg"
           >({{ supplierImages.length }})</span
         >
@@ -35,16 +35,16 @@
       </div>
       <div>
         <h2 class="md:text-base font-semibold mb-2 max-[667px]:text-sm">
-          The best way to showcase your products or services to couples is to
-          include at least 4 photos to summarise your best work.
+          Cách tốt nhất để giới thiệu sản phẩm hoặc dịch vụ của bạn tới các cặp
+          đôi là đưa vào ít nhất 4 bức ảnh để tóm tắt dịch vụ tốt nhất của bạn.
         </h2>
         <p class="text-[#6c6c6c] max-[667px]:text-xs">
-          Storefronts with more photos typically receive more enquiries.
+          Những doanh nghiệp có nhiều ảnh thường nhận được nhiều yêu cầu hơn.
         </p>
       </div>
     </div>
     <div class="mb-6">
-      <h1 class="text-lg font-semibold">Add photos</h1>
+      <h1 class="text-lg font-semibold">Thêm ảnh</h1>
     </div>
     <div class="mb-6">
       <div class="flex items-center justify-center w-full mb-6">
@@ -69,7 +69,7 @@
               />
             </svg>
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
+              <span class="font-semibold">Nhấn để tải lên </span>
             </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
               PNG, JPG or GIF (Maximum size 20MB)
@@ -85,7 +85,7 @@
         </label>
       </div>
       @if (previewImages.length > 0) {
-      <h3 class="text-lg font-semibold mb-4">Preview photos</h3>
+      <h3 class="text-lg font-semibold mb-4">Ảnh tải lên</h3>
       <div
         class="grid md:grid-cols-4 gap-4 max-[1024px]:grid-cols-2 max-[667px]:grid-cols-1"
       >
@@ -107,7 +107,7 @@
                 class="mt-1"
                 [checked]="primaryImageIndex === $index"
                 (change)="setPrimaryImage($index)"
-                >Main photo</mat-checkbox
+                >Ảnh đại diện</mat-checkbox
               >
               <button mat-icon-button (click)="removeImage($index)">
                 <mat-icon class="cursor-pointer" color="warn"
@@ -120,7 +120,7 @@
         }
       </div>
       } @if (supplierImages.length > 0) {
-      <h3 class="text-lg font-semibold mb-4">Your business photos</h3>
+      <h3 class="text-lg font-semibold mb-4">Ảnh doanh nghiệp của bạn</h3>
       <div
         class="grid md:grid-cols-4 gap-4 max-[1024px]:grid-cols-2 max-[667px]:grid-cols-1"
       >
@@ -142,7 +142,7 @@
                 class="mt-1"
                 [(ngModel)]="image.isPrimary"
                 (change)="openUpdateMainPhotoDialog(image.id)"
-                >Main photo</mat-checkbox
+                >Ảnh đại diện</mat-checkbox
               >
               <button mat-icon-button (click)="openDeletePhotoDialog(image.id)">
                 <mat-icon class="cursor-pointer" color="warn"
@@ -163,7 +163,7 @@
           type="button"
           (click)="saveChanges()"
         >
-          Save changes
+          Lưu thay đổi
         </button>
       </div>
     </div>

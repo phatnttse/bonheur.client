@@ -1,5 +1,5 @@
 <!-- Thông tin nhà cung cấp -->
-<div class="w-full bg-white border-l border-solid border-gray-400 p-4">
+<div class="w-full bg-white p-4">
   @if (supplier) { @if (supplier.images && supplier.images.length > 0) {
   <img
     [src]="supplier.images[0].imageUrl"
@@ -30,42 +30,33 @@
       <span class="mr-2">.</span>
       <span>
         <a class="text-[#222222] text-sm"
-          >({{ supplier.totalRating }}) @if (supplier.totalRating > 1) {
-          reviews}@else if (supplier.totalRating == 1) { review }</a
+          >({{ supplier.totalRating }}) Đánh giá</a
         >
       </span>
     </div>
 
-    <div class="flex items-center gap-6 mb-2">
+    <div class="flex items-center gap-6 mb-6">
       <mat-icon
         fontSet="material-icons-outlined"
         style="overflow: initial !important"
         >location_on</mat-icon
       >
-      <span>{{
-        supplier.street +
-          ", " +
-          supplier.ward +
-          ", " +
-          supplier.district +
-          ", " +
-          supplier.province
-      }}</span>
+      <span>{{ supplier.address }}</span>
     </div>
     @if (supplier.discount > 0) {
     <div class="flex items-center gap-6 mb-2">
       <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
-      <span>Discount {{ supplier.discount }}%</span>
+      <span>Giảm giá {{ supplier.discount }}%</span>
     </div>
     }
     <div class="flex items-center gap-6 mb-2">
       <mat-icon><i-tabler name="coins"></i-tabler></mat-icon>
       <span class="text-[#222]"
-        >Starting at {{ supplier.price! | vndCurrency }}</span
+        >Bắt đầu từ {{ supplier.price! | vndCurrency }}</span
       >
     </div>
 
-    <div class="mt-4">
+    <!-- <div class="mt-4">
       <button mat-stroked-button color="primary" class="w-full">
         I'm interested
       </button>
@@ -73,7 +64,7 @@
       <button mat-stroked-button color="warn" class="w-full mt-2">
         No, thanks
       </button>
-    </div>
+    </div> -->
   </div>
   }
 </div>

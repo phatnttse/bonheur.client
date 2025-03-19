@@ -41,17 +41,17 @@ export class SidebarComponent implements OnInit {
         }
         const menuItems: MenuItem[] = [
           {
-            title: 'Business details',
+            title: 'Chi tiết doanh nghiệp',
             icon: 'businessDetails.svg',
             route: '/supplier/storefront/business-details',
           },
           {
-            title: 'Location and map',
+            title: 'Vị trí và bản đồ',
             icon: 'map.svg',
             route: '/supplier/storefront/location-and-map',
           },
           {
-            title: 'Photos',
+            title: 'Hình ảnh',
             icon: 'camera.svg',
             count: this.photoCount,
             route: '/supplier/storefront/photos',
@@ -63,7 +63,7 @@ export class SidebarComponent implements OnInit {
             route: '/supplier/storefront/videos',
           },
           {
-            title: 'Deals',
+            title: 'Ưu đãi',
             icon: 'coupon.svg',
             route: '/supplier/storefront/deals',
           },
@@ -73,7 +73,7 @@ export class SidebarComponent implements OnInit {
             route: '/supplier/storefront/faqs',
           },
           {
-            title: 'Social networks',
+            title: 'Mạng xã hội',
             icon: 'socialNetwork.svg',
             route: '/supplier/storefront/social-networks',
           },

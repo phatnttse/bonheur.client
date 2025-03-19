@@ -1,73 +1,67 @@
 <section class="py-8">
   <div class="container mx-auto">
     <div
-      class="flex flex-wrap items-center py-8 px-8 rounded-lg mb-10 max-[667px]:gap-14 max-[414px]:gap-12 max-[390px]:gap-6 md:gap-0 border border-[#d9d9d9] border-solid"
+      class="grid grid-cols-1 max-[667px]:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 py-8 px-8 rounded-lg mb-10 border border-[#d9d9d9] border-solid"
     >
-      <div class="md:w-1/4 sm:w-1/2 max-[667px]:ms-4">
-        <div class="flex flex-col justify-center items-center">
-          <div class="flex items-center mb-1">
-            <img src="/assets/images/svgs/email.svg" alt="" class="mr-3" />
-            <span
-              class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >{{ requestPricingList.length }}</span
-            >
-          </div>
-          <p class="md:text-base sm:text-sm">Lead received</p>
-          <p class="text-[#6c6c6c] hidden md:block">in the last 12 months</p>
+      <div class="flex flex-col justify-center items-center text-center">
+        <div class="flex items-center mb-1">
+          <img src="/assets/images/svgs/email.svg" alt="Email" class="mr-3" />
+          <span class="md:text-2xl text-xl text-[#222222] mt-[2px]">
+            {{ requestPricingList.length }}
+          </span>
         </div>
+        <p class="md:text-base max-[667px]:text-sm">Yêu cầu báo giá</p>
+        <p class="text-[#6c6c6c]">trong 12 tháng qua</p>
       </div>
-      <div class="md:w-1/4 sm:w-1/2 max-[667px]:pl-10">
-        <div class="flex flex-col justify-center items-center">
-          <div class="flex items-center mb-1">
-            <img src="/assets/images/svgs/review.svg" alt="" class="mr-3" />
-            <span
-              class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >{{ supplier?.totalRating }}</span
-            >
-          </div>
-          <p class="md:text-base sm:text-sm">Reviews</p>
-          <p class="text-[#6c6c6c] hidden md:block">in the last 12 months</p>
+
+      <div class="flex flex-col justify-center items-center text-center">
+        <div class="flex items-center mb-1">
+          <img
+            src="/assets/images/svgs/review.svg"
+            alt="Đánh giá"
+            class="mr-3"
+          />
+          <span class="md:text-2xl text-xl text-[#222222] mt-[2px]">
+            {{ supplier?.totalRating }}
+          </span>
         </div>
+        <p class="md:text-base max-[667px]:text-sm">Lượt đánh giá</p>
+        <p class="text-[#6c6c6c]">trong 12 tháng qua</p>
       </div>
-      <div class="md:w-1/4 sm:w-1/2">
-        <div class="flex flex-col justify-center items-center">
-          <div class="flex items-center mb-1">
-            <img src="/assets/images/svgs/view.svg" alt="" class="mr-3" />
-            <span
-              class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >{{ supplier?.view }}</span
-            >
-          </div>
-          <p class="md:text-base sm:text-sm">Storefront impressions</p>
-          <p class="text-[#6c6c6c] hidden md:block">in the last 12 months</p>
+
+      <div class="flex flex-col justify-center items-center text-center">
+        <div class="flex items-center mb-1">
+          <img src="/assets/images/svgs/view.svg" alt="Lượt xem" class="mr-3" />
+          <span class="md:text-2xl text-xl text-[#222222] mt-[2px]">
+            {{ supplier?.view }}
+          </span>
         </div>
+        <p class="md:text-base max-[667px]:text-sm">Lượt xem hồ sơ</p>
+        <p class="text-[#6c6c6c]">trong 12 tháng qua</p>
       </div>
-      <div class="md:w-1/4 sm:w-1/2">
-        <div class="flex flex-col justify-center items-center">
-          <div class="flex items-center mb-1">
-            <img src="/assets/images/svgs/vnd.svg" alt="" class="mr-3" />
-            <span
-              class="md:text-2xl max-[667px]:text-xl text-[#222222] mt-[2px]"
-              >0</span
-            >
-          </div>
-          <p class="md:text-base sm:text-sm">Spending</p>
-          <p class="text-[#6c6c6c] hidden md:block">in the last 12 months</p>
+
+      <div class="flex flex-col justify-center items-center text-center">
+        <div class="flex items-center mb-1">
+          <img src="/assets/images/svgs/vnd.svg" alt="Chi tiêu" class="mr-3" />
+          <span class="md:text-2xl text-xl text-[#222222] mt-[2px]">0</span>
         </div>
+        <p class="md:text-base max-[667px]:text-sm">Chi tiêu</p>
+        <p class="text-[#6c6c6c]">trong 12 tháng qua</p>
       </div>
     </div>
+
     @if (supplier?.status !== statuses.APPROVED) {
     <div class="bg-[#e9f6f8] py-6 px-6 rounded-lg mb-10">
       <p class="text-base font-semibold mb-2">
-        Your business information is being verified
+        Thông tin doanh nghiệp của bạn đang được xác minh
       </p>
       <p class="mb-2">
-        <span class="font-semibold">Wedding suppliers: </span>
-        Once our Content Team has approved your information, your listing will
-        be live.
+        <span class="font-semibold">Nhà cung cấp đám cưới : </span>
+        Sau khi Nhóm Nội dung của chúng tôi chấp thuận thông tin của bạn, danh
+        sách của bạn sẽ được đăng tải.
       </p>
       <p>
-        If you have any questions, please email
+        Nếu bạn có bất kỳ câu hỏi nào, vui lòng gửi email
         <a class="underline" href="mailto:bonheur.wedding.1910@gmail.com"
           >bonheur201&#64;gmail.com</a
         >
@@ -76,15 +70,16 @@
     }@else if (supplier?.status === statuses.REJECTED) {
     <div class="bg-[#fcf5eb] py-6 px-6 rounded-lg mb-10">
       <p class="text-base font-semibold mb-2">
-        We are sorry, but your business couldn't be validated by our Content
-        Team.
+        Chúng tôi rất tiếc nhưng Nhóm Nội dung của chúng tôi không thể xác thực
+        doanh nghiệp của bạn.
       </p>
       <p class="mb-2">
-        We sent you an email explaining why your listing could not be activated.
-        Make sure you added high quality photos and a business description!
+        Chúng tôi đã gửi cho bạn một email giải thích lý do tại sao danh sách
+        của bạn không thể được kích hoạt. Hãy đảm bảo bạn đã thêm ảnh chất lượng
+        cao và mô tả doanh nghiệp!
       </p>
       <p>
-        If you have any questions, please email
+        Nếu bạn có bất kỳ câu hỏi nào, vui lòng gửi email
         <a class="underline" href="mailto:bonheur.wedding.1910@gmail.com"
           >bonheur201&#64;gmail.com</a
         >
@@ -106,11 +101,11 @@
                 class="mb-6"
               />
               <p class="text-xl mb-4">
-                You haven't received any enquiries yet.
+                Bạn vẫn chưa nhận được bất kỳ yêu cầu nào.
               </p>
-              <p class="mb-6">Want to get more enquiries?</p>
+              <p class="mb-6">Bạn muốn có nhiều yêu cầu báo giá hơn ?</p>
               <button mat-raised-button color="accent" style="padding: 20px">
-                Upgrade
+                Nâng cấp
               </button>
             </div>
           </div>
@@ -127,14 +122,14 @@
                 alt="Enquiries"
                 class="mb-6"
               />
-              <p class="text-xl mb-4">You haven't received any reviews yet!</p>
+              <p class="text-xl mb-4">Bạn vẫn chưa nhận được đánh giá nào!</p>
               <p class="mb-6">
-                Reviews are very influential when it comes to choosing a
-                supplier. Encourage your past couples to leave reviews about
-                their experience with you.
+                Đánh giá có ảnh hưởng rất lớn khi lựa chọn nhà cung cấp. Khuyến
+                khích các cặp đôi trước đây của bạn để lại đánh giá về trải
+                nghiệm của họ với bạn.
               </p>
               <button mat-raised-button color="accent" style="padding: 20px">
-                Request reviews
+                Yêu cầu đánh giá
               </button>
             </div>
           </div>
@@ -147,9 +142,12 @@
           >
             <div class="mb-6 border-b border-[#d9d9d9] border-solid pb-4">
               <p class="font-semibold mb-4 text-xl">
-                Download the Bonheur for Business app
+                Tải xuống ứng dụng Bonheur for Business
               </p>
-              <p>Manage your leads from anywhere with our app!</p>
+              <p>
+                Quản lý khách hàng tiềm năng của bạn từ mọi nơi bằng ứng dụng
+                của chúng tôi!
+              </p>
             </div>
             <div class="flex items-center justify-center">
               <img

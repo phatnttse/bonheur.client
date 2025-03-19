@@ -17,29 +17,29 @@
                 class="mb-6 text-primary flex items-center text-base"
               >
                 <mat-icon>arrow_left</mat-icon>
-                Go Back Home
+                Về trang chủ
               </a>
               <h1 class="font-bold text-4xl sm:text-5xl mb-10">
-                Thank you for your purchase!
+                Cảm ơn bạn đã mua hàng!
               </h1>
               <p class="text-base">
-                Your service package order has been successfully received. Below
-                are the details for your reference.
+                Đơn hàng dịch vụ của bạn đã được tiếp nhận thành công. Dưới đây
+                là thông tin chi tiết để bạn tham khảo.
               </p>
             </div>
             <div class="mb-10">
-              <h3 class="font-semibold text-lg mb-6">Billing Information</h3>
+              <h3 class="font-semibold text-lg mb-6">Thông tin thanh toán</h3>
               <div class="space-y-4">
                 <div class="flex items-center">
-                  <span class="font-semibold mr-10"> Name: </span>
+                  <span class="font-semibold mr-10"> Họ và tên: </span>
                   <span>{{ orderInfo.supplier.name }}</span>
                 </div>
                 <div class="flex items-center">
-                  <span class="font-semibold mr-9"> Phone: </span>
+                  <span class="font-semibold mr-9"> Số điện thoại: </span>
                   <span>{{ orderInfo.supplier.phoneNumber }}</span>
                 </div>
                 <div class="flex items-center">
-                  <span class="font-semibold mr-6"> Address: </span>
+                  <span class="font-semibold mr-6"> Địa chỉ: </span>
                   <span>{{ orderInfo.supplier.province }}</span>
                 </div>
                 <div class="flex items-center">
@@ -56,7 +56,7 @@
                 routerLink="/supplier/invoices"
               >
                 <mat-icon matPrefix>receipt_long</mat-icon>
-                Invoices
+                Hóa đơn
               </button>
             </div>
           </div>
@@ -101,7 +101,7 @@
             >
               <div class="border-b pt-4 max-[667px]:pt-2 pb-6">
                 <h3 class="text-2xl font-bold max-[667px]:text-lg">
-                  Order Summary
+                  Thông tin đơn hàng
                 </h3>
               </div>
 
@@ -109,7 +109,9 @@
                 class="flex justify-between items-center py-6 max-[667px]:py-8"
               >
                 <div class="flex-1 pr-2">
-                  <div class="text-gray-700 mb-1 max-[667px]:text-xs">Date</div>
+                  <div class="text-gray-700 mb-1 max-[667px]:text-xs">
+                    Thời gian
+                  </div>
                   <div class="font-semibold max-[667px]:text-xs">
                     {{ orderInfo.createdAt | date : "dd/MM/yyyy" }}
                   </div>
@@ -119,7 +121,7 @@
 
                 <div class="flex-1 px-4">
                   <div class="text-gray-700 mb-1 max-[667px]:text-xs">
-                    Order Code
+                    Mã đơn hàng
                   </div>
                   <div class="font-semibold max-[667px]:text-xs">
                     {{ orderInfo.orderCode }}
@@ -132,7 +134,7 @@
                   <div
                     class="text-gray-700 mb-1 max-[667px]:mb-0 max-[667px]:text-xs"
                   >
-                    Payment Method
+                    Phương thức thanh toán
                   </div>
                   <div class="font-semibold max-[667px]:text-xs">
                     {{ orderInfo.paymentMethod }}
@@ -160,9 +162,9 @@
                 <table class="w-full text-sm text-left rtl:text-right">
                   <thead class="lg:text-sm max-[667px]:text-xs text-gray-700">
                     <tr>
-                      <th scope="col" class="px-6 py-3">Product name</th>
-                      <th scope="col" class="px-6 py-3">Price</th>
-                      <th scope="col" class="px-6 py-3">Quantity</th>
+                      <th scope="col" class="px-6 py-3">Tên sản phẩm</th>
+                      <th scope="col" class="px-6 py-3">Giá</th>
+                      <th scope="col" class="px-6 py-3">Số lượng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -190,7 +192,7 @@
                 <div
                   class="flex justify-between text-sm max-[667px]:text-xs pb-1"
                 >
-                  <span>SubTotal</span>
+                  <span>Tạm tính</span>
                   <span class="font-medium">{{
                     orderInfo.totalAmount | vndCurrency
                   }}</span>
@@ -205,7 +207,7 @@
                 <div
                   class="flex justify-between text-lg font-bold pt-6 border-t"
                 >
-                  Total
+                  Tổng cộng
                   <span></span>
                   <span
                     class="text-xl text-primary font-bold max-[667px]:text-sm"

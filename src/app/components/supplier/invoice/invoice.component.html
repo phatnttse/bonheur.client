@@ -9,14 +9,14 @@
             class="menu-item cursor-pointer flex justify-between items-center py-3 border-b border-gray-200 hover:text-secondary transition-colors duration-200 rounded"
           >
             <div class="flex items-center">
-              <span>Invoice management</span>
+              <span>Quản lý hoá đơn</span>
             </div>
           </a>
         </div>
       </div>
       <div class="min-[992px]:w-[80%] w-full px-8 mb-[24px]">
         <div class="mb-6">
-          <h1 class="text-2xl font-bold">Invoices</h1>
+          <h1 class="text-2xl font-bold">Hoá đơn</h1>
         </div>
 
         @if (invoices.length <= 0) {
@@ -27,7 +27,7 @@
             <div class="flex items-center justify-center py-6 px-4">
               <img width="80" src="/assets/images/svgs/invoice.svg" alt="" />
             </div>
-            <p class="text-base">No invoices have been found in this folder</p>
+            <p class="text-base">Hiện tại bạn chưa có hoá đơn nào</p>
           </div>
         </div>
         }@else {
@@ -39,12 +39,12 @@
           <table class="w-full text-sm text-left rtl:text-right">
             <thead class="text-xs uppercase bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3">Invoice Number</th>
-                <th scope="col" class="px-6 py-3">Product Name</th>
-                <th scope="col" class="px-6 py-3">Total Amount</th>
-                <th scope="col" class="px-6 py-3">Payment Method</th>
-                <th scope="col" class="px-6 py-3">Created At</th>
-                <th scope="col" class="px-6 py-3">Action</th>
+                <th scope="col" class="px-6 py-3">Số hoá đơn</th>
+                <th scope="col" class="px-6 py-3">Sản phẩm</th>
+                <th scope="col" class="px-6 py-3">Giá trị</th>
+                <th scope="col" class="px-6 py-3">Phương thức thanh toán</th>
+                <th scope="col" class="px-6 py-3">Ngày phát hành</th>
+                <th scope="col" class="px-6 py-3">Tác vụ</th>
               </tr>
             </thead>
             <tbody>
@@ -68,12 +68,12 @@
                 <td class="px-6 py-4 flex items-center gap-10">
                   <a
                     class="font-medium text-secondary hover:underline cursor-pointer"
-                    >Issue</a
+                    >Xuất hoá đơn</a
                   >
                   <a
                     class="font-medium text-blue-600 hover:underline cursor-pointer"
                     (click)="downloadInvoice(item.fileUrl)"
-                    >Download</a
+                    >Tải về</a
                   >
                 </td>
               </tr>

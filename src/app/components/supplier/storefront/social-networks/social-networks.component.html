@@ -1,7 +1,7 @@
 <section>
   <div class="container mx-auto">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold">Social networks</h1>
+      <h1 class="text-2xl font-bold">Mạng xã hội</h1>
     </div>
     <div
       class="bg-white rounded-[8px] border border-solid border-[#d9d9d9] mb-6"
@@ -9,22 +9,22 @@
       <header
         style="
           padding: 30px 30px 120px;
-          background: url(https://cdn1.hitched.co.uk/assets/img/admin-emp/bg_hero-social.jpg)
+          background: url(/assets/images/backgrounds/bg_hero-social.jpg)
             no-repeat scroll 50% 50% #333;
           background-size: cover;
         "
         class="text-center"
       >
         <p class="text-xl">
-          Showcase your personality and recent work by sharing your socials with
-          couples on Bonheur
+          Kết nối với khách hàng bằng cách chia sẻ tài khoản mạng xã hội của bạn
+          trên Bonheur.
         </p>
       </header>
       <div class="py-8 px-8">
         <p class="mb-6">
-          Share your social handles with us and increase the chances to have
-          your pictures posted on our socials. When we make a post with one of
-          your photos, we'll tag your business.
+          Hãy chia sẻ tài khoản mạng xã hội của bạn để tăng cơ hội hình ảnh của
+          bạn được đăng trên trang của chúng tôi. Khi chúng tôi sử dụng ảnh của
+          bạn, doanh nghiệp của bạn sẽ được gắn thẻ.
         </p>
         <form [formGroup]="socialNetworkForm">
           <div class="flex flex-row" formArrayName="socialNetworks">
@@ -49,7 +49,7 @@
                   type="text"
                   id="website-admin"
                   class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:primary focus:border-primary block flex-1 min-w-0 w-full text-sm border-primary p-3"
-                  placeholder="Enter your information"
+                  placeholder="Nhập liên kết mạng xã hội của bạn"
                   formControlName="url"
                 />
               </div>
@@ -65,7 +65,7 @@
             style="font-weight: bold; padding: 22px 20px"
             (click)="insertUpdateSupplierSocialNetworks()"
           >
-            Save
+            Lưu thay đổi
           </button>
         </div>
       </div>

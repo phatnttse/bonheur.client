@@ -29,6 +29,7 @@ interface RequestPricingStatusItems {
   status: string;
   count?: number;
   color?: string;
+  title?: string;
 }
 
 @Component({
@@ -75,15 +76,15 @@ export class MailboxComponent implements OnInit {
     this.getMessageStatistics();
     const messageTypeItems: MessageTypeItems[] = [
       {
-        title: 'Inbox',
+        title: 'Hộp thư đến',
         count: 0,
       },
       {
-        title: 'Unread',
+        title: 'Chưa đọc',
         count: 0,
       },
       {
-        title: 'Read',
+        title: 'Đã đọc',
         count: 0,
       },
     ];
@@ -92,23 +93,27 @@ export class MailboxComponent implements OnInit {
     const requestPricingStatuses: RequestPricingStatusItems[] = [
       {
         status: RequestPricingStatus.PENDING,
+        title: 'Chờ xử lý',
         count: 0,
         color: '#FFC107',
       },
       {
         status: RequestPricingStatus.RESPONDED,
+        title: 'Đã phản hồi',
         count: 0,
         color: '#4CAF50',
       },
       {
         status: RequestPricingStatus.BOOKED,
+        title: 'Đã đặt',
         count: 0,
-        color: '#F44336',
+        color: '#2196F3',
       },
       {
         status: RequestPricingStatus.DISCARDED,
+        title: 'Đã hủy',
         count: 0,
-        color: '#2196F3',
+        color: '#F44336',
       },
     ];
     this.requestPricingStatuses = requestPricingStatuses;

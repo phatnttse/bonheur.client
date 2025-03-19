@@ -3,18 +3,11 @@
     <div class="position-relative shaper-wrapper">
       <div class="w-100 position-relative rounded bg-white auth-card">
         <div class="auth-body">
-          <a [routerLink]="['/']" class="m-y-20 d-flex">
-            <!-- <img
-              src="./assets/images/logos/logo.png"
-              class="align-middle m-2"
-              alt="logo"
-              width="40"
-              height="40"
-            /> -->
-            <div class="px-[15px] py-2 cursor-pointer" routerLink="/">
+          <div [routerLink]="['/']" class="m-y-20 d-flex cursor-pointer">
+            <div class="px-[15px] py-2 cursor-pointer">
               <h1 class="text-primary font-semibold text-2xl">Bonheur.</h1>
             </div>
-          </a>
+          </div>
 
           <div class="row">
             <div class="col-lg-6">
@@ -23,7 +16,7 @@
               >
                 <img
                   src="assets/images/backgrounds/signin2-bg.webp"
-                  alt="login"
+                  alt="Đăng ký"
                   style="max-width: 500px"
                 />
               </div>
@@ -35,15 +28,16 @@
                 <div class="row justify-content-center w-100">
                   <div class="col-lg-11">
                     <h4 class="f-w-700 text-2xl md:text-3xl m-0 m-t-20 lh-base">
-                      Welcome to <span class="text-primary">Bonheur</span>
+                      Đăng ký
+                      <span class="text-primary">Bonheur</span>
                     </h4>
-                    <span class="d-block f-w-500 d-block m-t-24"
-                      >Already have an account?
+                    <span class="d-block f-w-500 d-block m-t-24">
+                      Đã có tài khoản?
                       <a
                         [routerLink]="['/authentication/signin']"
                         class="text-decoration-none text-primary f-w-500 f-s-14"
                       >
-                        Sign In</a
+                        Đăng nhập</a
                       >
                     </span>
 
@@ -54,7 +48,7 @@
                     >
                       <mat-label
                         class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                        >Name</mat-label
+                        >Họ và tên</mat-label
                       >
                       <mat-form-field
                         appearance="outline"
@@ -66,26 +60,10 @@
                           type="text"
                           formControlName="fullName"
                           required
-                          [class.is-invalid]="
-                            formSignup.get('fullName')?.invalid &&
-                            formSignup.get('fullName')?.touched
-                          "
                         />
-                        @if(formSignup.get('fullName')?.hasError('required')) {
-                        <mat-error style="font-size: 12px">
-                          Name is required
-                        </mat-error>
-                        } @if
-                        (formSignup.get('fullName')?.hasError('minlength')) {
-                        <mat-error style="font-size: 12px">
-                          Name must be at least 2 characters
-                        </mat-error>
-                        } @if
-                        (formSignup.get('fullName')?.hasError('maxlength')) {
-                        <mat-error style="font-size: 12px">
-                          Name must be at most 50 characters
-                        </mat-error>
-                        }
+                        <mat-error style="font-size: 12px"
+                          >Họ và tên không được để trống</mat-error
+                        >
                       </mat-form-field>
 
                       <mat-label
@@ -102,25 +80,22 @@
                           formControlName="email"
                           type="email"
                           required
-                          [class.is-invalid]="
-                            formSignup.get('email')?.invalid &&
-                            formSignup.get('email')?.touched
-                          "
                         />
                         @if(formSignup.get('email')?.hasError('required')) {
-                        <mat-error style="font-size: 12px">
-                          Email is required
-                        </mat-error>
+                        <mat-error style="font-size: 12px"
+                          >Email không được để trống</mat-error
+                        >
                         } @if (formSignup.get('email')?.hasError('email')) {
-                        <mat-error style="font-size: 12px">
-                          Email is invalid Ex:bonheur&#64;gmail.com
-                        </mat-error>
+                        <mat-error style="font-size: 12px"
+                          >Email không hợp lệ. Vd:
+                          bonheur&#64;gmail.com</mat-error
+                        >
                         }
                       </mat-form-field>
 
                       <mat-label
                         class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                        >Gender</mat-label
+                        >Giới tính</mat-label
                       >
                       <mat-radio-group
                         formControlName="gender"
@@ -128,20 +103,19 @@
                         color="primary"
                       >
                         <mat-radio-button [value]="gender.MALE"
-                          >Male</mat-radio-button
+                          >Nam</mat-radio-button
                         >
                         <mat-radio-button [value]="gender.FEMALE"
-                          >Female</mat-radio-button
+                          >Nữ</mat-radio-button
                         >
                         <mat-radio-button [value]="gender.OTHER"
-                          >Other</mat-radio-button
+                          >Khác</mat-radio-button
                         >
                       </mat-radio-group>
 
-                      <!-- password -->
                       <mat-label
                         class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                        >Password</mat-label
+                        >Mật khẩu</mat-label
                       >
                       <mat-form-field
                         appearance="outline"
@@ -152,37 +126,17 @@
                           matInput
                           type="password"
                           formControlName="password"
-                          [type]="passwordVisible ? 'text' : 'password'"
-                          [class.is-invalid]="
-                            formSignup.get('password')?.invalid &&
-                            formSignup.get('password')?.touched
-                          "
                         />
-                        <button
-                          mat-icon-button
-                          type="button"
-                          matSuffix
-                          (click)="passwordVisible = !passwordVisible"
-                          [attr.aria-label]="'Hide password'"
-                          [attr.aria-pressed]="passwordVisible"
+                        <mat-error style="font-size: 12px"
+                          >Mật khẩu không được để trống</mat-error
                         >
-                          <mat-icon color="primary" class="fs-18">
-                            {{
-                              passwordVisible ? "visibility" : "visibility_off"
-                            }}
-                          </mat-icon>
-                        </button>
-                        @if (formSignup.get('password')?.hasError('required')) {
-                        <mat-error style="font-size: 12px">
-                          Password is required
-                        </mat-error>
-                        }
                       </mat-form-field>
                       <div class="d-block d-lg-flex align-items-center m-b-20">
                         <a
                           [routerLink]="['/']"
                           class="text-primary f-w-600 text-decoration-none m-l-auto d-block f-s-14"
-                          >Forgot Password ?</a
+                        >
+                          Quên mật khẩu?</a
                         >
                       </div>
                       <button
@@ -191,11 +145,10 @@
                         class="w-100"
                         [disabled]="!formSignup.valid"
                       >
-                        Sign Up
+                        Đăng ký
                       </button>
-                      <!-- input -->
                     </form>
-                    <div class="or-border m-t-30">or sign in with</div>
+                    <div class="or-border m-t-30">Hoặc đăng nhập với</div>
 
                     <div class="row m-t-40">
                       <div class="col-12 col-sm-12">
@@ -209,11 +162,11 @@
                           <div class="d-flex align-items-center">
                             <img
                               src="/assets/images/svgs/google-icon.svg"
-                              alt="google"
+                              alt="Google"
                               width="20"
                               class="m-r-8"
                             />
-                            Sign in with Google
+                            Đăng nhập bằng Google
                           </div>
                         </button>
                       </div>

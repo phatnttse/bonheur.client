@@ -1,27 +1,26 @@
 <section>
   <div class="container mx-auto">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold">FAQs</h1>
+      <h1 class="text-2xl font-bold">Câu hỏi thường gặp</h1>
     </div>
     <div
       class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 max-[667px]:flex-wrap max-[667px]:gap-6 max-[667px]:justify-center"
     >
-      <div class="">
+      <div>
         <img
           src="/assets/images/svgs/paperAndPencil.svg"
-          alt="Edit Business Info"
+          alt="Chỉnh sửa thông tin doanh nghiệp"
         />
       </div>
       <div>
         <h2
           class="md:text-base font-semibold max-[667px]::text-sm max-[667px]:mb-1"
         >
-          Please provide details about your services.
+          Vui lòng cung cấp thông tin chi tiết về dịch vụ của bạn.
         </h2>
         <p class="md:text-[#6c6c6c] md:text-sm max-[667px]::text-xs">
-          Add answers to frequently asked questions about your business to give
-          couples a better understanding of your offering before deciding
-          whether to contact you.
+          Thêm câu trả lời cho các câu hỏi thường gặp về doanh nghiệp của bạn để
+          giúp khách hàng hiểu rõ hơn trước khi liên hệ với bạn.
         </p>
       </div>
     </div>
@@ -36,7 +35,7 @@
           (click)="addNewFaqControl()"
         >
           <mat-icon matIconPrefix>add</mat-icon>
-          Add new question
+          Thêm câu hỏi mới
         </button>
       </div>
       <form [formGroup]="faqForm">
@@ -80,7 +79,7 @@
                   class="w-full"
                   color="primary"
                 >
-                  <mat-label>Question</mat-label>
+                  <mat-label>Câu hỏi</mat-label>
                   <input
                     matInput
                     type="text"
@@ -93,11 +92,11 @@
                   />
                   @if(faq.get('question')?.hasError('required')) {
                   <mat-error style="font-size: 12px">
-                    Question is required
+                    Câu hỏi không được để trống
                   </mat-error>
                   } @if(faq.get('question')?.hasError('minlength')) {
                   <mat-error style="font-size: 12px">
-                    Question must be at least 10 characters
+                    Câu hỏi phải có ít nhất 10 ký tự
                   </mat-error>
                   }
                 </mat-form-field>
@@ -109,7 +108,7 @@
                 class="w-full"
                 color="primary"
               >
-                <mat-label>Answer</mat-label>
+                <mat-label>Câu trả lời</mat-label>
                 <textarea
                   matInput
                   rows="6"
@@ -121,11 +120,11 @@
                 ></textarea>
                 @if(faq.get('answer')?.hasError('required')) {
                 <mat-error style="font-size: 12px">
-                  Answer is required
+                  Câu trả lời không được để trống
                 </mat-error>
                 } @if(faq.get('answer')?.hasError('minlength')) {
                 <mat-error style="font-size: 12px">
-                  Answer must be at least 10 characters
+                  Câu trả lời phải có ít nhất 10 ký tự
                 </mat-error>
                 }
               </mat-form-field>
@@ -144,7 +143,7 @@
           style="font-weight: bold; padding: 20px 20px"
           (click)="insertUpdateSupplierFaqs()"
         >
-          Save
+          Lưu thay đổi
         </button>
       </div>
     </div>

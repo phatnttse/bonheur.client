@@ -26,15 +26,17 @@
     <a
       routerLink="/"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
-      >Home</a
+      >Trang chủ</a
     >
     <a
       routerLink="/suppliers"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
-      >Suppliers</a
+      >Nhà cung cấp</a
     >
     <div class="flex flex-col">
-      <span class="text-gray-700 text-base font-medium">Planning Tools</span>
+      <span class="text-gray-700 text-base font-medium"
+        >Công cụ lập kế hoạch</span
+      >
       <span
         class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full mt-1 w-fit"
         >Coming Soon</span
@@ -44,12 +46,12 @@
     <a
       routerLink="/about-us"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
-      >About Us</a
+      >Về chúng tôi</a
     >
     <a
       routerLink="/contact"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"
-      >Contact</a
+      >Liên hệ</a
     >
   </nav>
   <div class="flex flex-col space-y-2 p-6">
@@ -59,9 +61,8 @@
         <div class="bb-header-buttons h-full flex justify-end items-center">
           <div class="bb-acc-drop relative">
             <a
-              href="javascript:void(0)"
-              class="bb-header-btn bb-header-user dropdown-toggle bb-user-toggle transition-all duration-[0.3s] ease-in-out relative flex w-[auto] items-center whitespace-nowrap ml-[30px] max-[1199px]:ml-[20px] max-[767px]:ml-[0]"
-              title="Account"
+              class="cursor-pointer bb-header-btn bb-header-user dropdown-toggle bb-user-toggle transition-all duration-[0.3s] ease-in-out relative flex w-[auto] items-center whitespace-nowrap ml-[30px] max-[1199px]:ml-[20px] max-[767px]:ml-[0]"
+              title="Tài khoản"
               routerLink="/authentication/signin"
             >
               <div class="header-icon relative flex">
@@ -80,11 +81,11 @@
               <div class="bb-btn-desc flex flex-col ml-[10px]">
                 <span
                   class="bb-btn-title font-Poppins transition-all duration-[0.3s] ease-in-out text-[12px] leading-[1] text-[#3d4750] mb-[4px] tracking-[0.6px] capitalize font-medium whitespace-nowrap"
-                  >Account</span
+                  >Tài khoản</span
                 >
                 <span
                   class="bb-btn-stitle font-Poppins transition-all duration-[0.3s] ease-in-out text-[14px] leading-[16px] font-semibold text-[#3d4750] tracking-[0.03rem] whitespace-nowrap"
-                  >Signin / Signup</span
+                  >Đăng nhập / Đăng ký</span
                 >
               </div>
             </a>
@@ -144,7 +145,7 @@
         <button mat-menu-item routerLink="/profile">
           <div class="flex items-center">
             <mat-icon>manage_accounts</mat-icon>
-            <span>My Account</span>
+            <span>Tài khoản</span>
           </div>
         </button>
         <div class="p-x-12 m-t-12">
@@ -157,7 +158,7 @@
           >
             <div class="flex items-center">
               <mat-icon class="mr-1">logout</mat-icon>
-              <span>Logout</span>
+              <span>Đăng xuất</span>
             </div>
           </button>
         </div>
@@ -169,13 +170,13 @@
       <img src="/assets/images/svgs/bag.svg" alt="" class="w-5 h-5 mb-1" />
       @if (account?.roles?.includes(role.SUPPLIER)) {
       <a class="font-semibold cursor-pointer uppercase" routerLink="/supplier"
-        >Supplier Channel
+        >Kênh nhà cung cấp
       </a>
       }@else {
       <a
-        class="font-semibold cursor-pointer uppercase"
+        class="font-semibold cursor-pointer uppercase mt-[2px]"
         routerLink="/supplier/signup"
-        >Are you a supplier ?
+        >Đăng ký doanh nghiệp
       </a>
       }
     </div>

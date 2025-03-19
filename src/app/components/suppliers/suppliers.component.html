@@ -16,7 +16,7 @@
               <h3
                 class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
               >
-                Category
+                Danh mục
               </h3>
             </div>
             <div class="bb-sidebar-contact">
@@ -49,7 +49,7 @@
               <h3
                 class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
               >
-                Price Range
+                Khung giá
               </h3>
             </div>
             <div class="bb-sidebar-contact">
@@ -96,7 +96,7 @@
                         color="primary"
                         (click)="updatePriceRange()"
                       >
-                        Apply
+                        Áp dụng
                       </button>
                     </div>
                   </div>
@@ -109,7 +109,7 @@
               <h3
                 class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
               >
-                Rating
+                Đánh giá
               </h3>
             </div>
             <div class="bb-sidebar-contact">
@@ -224,7 +224,7 @@
                   class="underline text-red-500 cursor-pointer px-4"
                   (click)="clearAllFilters()"
                 >
-                  Clear All
+                  Xoá tất cả
                 </span>
                 }
               </div>
@@ -237,7 +237,7 @@
                       >{{
                         supplierList.length > 0 ? supplierList.length : 0
                       }}
-                      RESULTS</span
+                      KẾT QUẢ</span
                     >
                   </div>
                   <div class="w-[50%] px-[12px] max-[420px]:w-full">
@@ -245,45 +245,47 @@
                       class="bb-select-inner h-full py-[10px] flex items-center justify-end max-[420px]:justify-center"
                     >
                       <div
-                        class="bb-bl-btn py-[10px] flex max-[420px]:justify-center"
+                        class="bb-bl-btn py-[10px] flex max-[420px]:justify-center gap-2"
                       >
                         <button
                           type="button"
-                          class="list-btn btn-list-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-2"
+                          class="list-btn btn-list-100 h-[38px] px-3 flex items-center border-[0] bg-transparent rounded-lg"
                           [ngClass]="!gridLayout ? 'active' : ''"
                           title="list"
                           (click)="btnChangeGridLayOut(false)"
                         >
-                          <i-tabler name="list"></i-tabler>
+                          <i-tabler name="list" class="text-lg mr-2"></i-tabler>
+                          <span class="text-sm">Danh sách</span>
                         </button>
+
                         <button
                           type="button"
-                          class="grid-btn btn-grid-100 h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-[5px]"
+                          class="grid-btn btn-grid-100 h-[38px] px-3 flex items-center border-[0] bg-transparent rounded-lg"
                           [ngClass]="gridLayout ? 'active' : ''"
                           title="grid"
                           (click)="btnChangeGridLayOut(true)"
                         >
-                          <i-tabler name="layout-grid"></i-tabler>
+                          <i-tabler
+                            name="layout-grid"
+                            class="text-lg mr-2"
+                          ></i-tabler>
+                          <span class="text-sm">Hình ảnh</span>
                         </button>
+
                         <button
                           type="button"
-                          class="h-[38px] w-[38px] flex justify-center items-center border-[0] p-[5px] bg-transparent mr-[5px]"
+                          class="h-[38px] px-3 flex items-center border-[0] rounded-lg hover:text-primary"
                           [ngClass]="openMap ? 'active' : ''"
                           title="map"
                           (click)="btnOpenMap()"
                         >
-                          <i-tabler name="map-pin"></i-tabler>
+                          <i-tabler
+                            name="map-pin"
+                            class="text-lg mr-2"
+                          ></i-tabler>
+                          <span class="text-sm">Bản đồ</span>
                         </button>
                       </div>
-                      <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon matIconSuffix>sort</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item>A to Z</button>
-                        <button mat-menu-item>Z to A</button>
-                        <button mat-menu-item>Price: Low to High</button>
-                        <button mat-menu-item>Price: High to Low</button>
-                      </mat-menu>
                     </div>
                   </div>
                 </div>
@@ -325,7 +327,7 @@
                 <div
                   class="bb-pro-img overflow-hidden relative z-[4] max-[667px]:mb-[20px]"
                 >
-                  <a href="javascript:void(0)">
+                  <a class="cursor-pointer">
                     @if(isFavorite(supplier.id)){
                     <div
                       class="absolute right-1 z-10"
@@ -404,8 +406,12 @@
                       class="text-base text-[#fea99a]"
                       >star</mat-icon
                     >
-                    <span class="text-sm text-gray-600 mr-1">5.0</span>
-                    <span class="text-xs text-gray-500 mr-1">(19)</span>
+                    <span class="text-sm text-gray-600 mr-1">{{
+                      supplier?.averageRating | number : "1.1-1"
+                    }}</span>
+                    <span class="text-xs text-gray-500 mr-1"
+                      >({{ supplier.totalRating }})</span
+                    >
                     <span class="text-gray-500 mr-1">.</span>
                     <span class="text-gray-500">{{ supplier.province }}</span>
                   </div>
@@ -421,7 +427,7 @@
                     <div class="flex">
                       <mat-icon><i-tabler name="coins"></i-tabler></mat-icon>
                       <span class="px-[4px] text-sm font-light"
-                        >From {{ supplier.price! | vndCurrency }}</span
+                        >Giá từ {{ supplier.price! | vndCurrency }}</span
                       >
                     </div>
                     @if (!gridLayout) {
@@ -432,19 +438,20 @@
                         style="padding: 24px 48px; font-weight: 600"
                         (click)="openRequestPricingDialog(supplier.id)"
                       >
-                        Request Pricing
+                        Yêu cầu báo giá
                       </button>
                     </div>
                     }
                   </div>
                   @if (!gridLayout) {
                   <div class="flex justify-end mt-2">
-                    <div class="flex items-center mr-2">
+                    <div class="flex items-center">
                       <mat-icon class="text-[#fea99a]">bolt</mat-icon>
                       <span class="text-[#222222] text-sm font-light">
                         @if (supplier.responseTimeStart === '00:00:00' &&
-                        supplier.responseTimeEnd === '00:00:00') { Response time
-                        within 24 hours } @else { Response time:
+                        supplier.responseTimeEnd === '00:00:00') {
+                        <p class="mr-4">Thời gian phản hồi: 24/24</p>
+                        } @else { Thời gian phản hồi:
                         {{ getFormattedTime(supplier.responseTimeStart) }} -
                         {{ getFormattedTime(supplier.responseTimeEnd) }}
                         }
@@ -461,7 +468,7 @@
                     class="w-full"
                     (click)="openRequestPricingDialog(supplier.id)"
                   >
-                    Request Pricing
+                    Yêu cầu báo giá
                   </button>
                 </div>
                 <div
@@ -484,9 +491,8 @@
                   @if (hasPreviousPage && !isFirstPage) {
                   <li class="leading-[28px] mr-[6px]">
                     <a
-                      href="javascript:void(0)"
                       (click)="changePage(pageNumber - 1)"
-                      class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+                      class="cursor-pointer next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
                     >
                       <i-tabler
                         name="arrow-narrow-left"
@@ -500,19 +506,17 @@
                     [ngClass]="{ active: $index === pageNumber - 1 }"
                   >
                     <a
-                      href="javascript:void(0)"
                       (click)="changePage($index + 1)"
-                      class="transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
+                      class="cursor-pointer transition-all duration-[0.3s] ease-in-out w-[36px] h-[36px] font-light text-[#222222] leading-[32px] tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:text-primary"
                       >{{ $index + 1 }}</a
                     >
                   </li>
                   } @if (hasNextPage && !isLastPage) {
                   <li class="leading-[28px]">
                     <a
-                      href="javascript:void(0)"
                       (click)="changePage(pageNumber + 1)"
-                      class="next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
-                      >Next
+                      class="cursor-pointer next transition-all duration-[0.3s] ease-in-out w-[auto] h-[36px] px-4 font-light text-[#fff] leading-[30px] bg-primary tracking-[0.03rem] text-[16px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee]"
+                      >Trang kế
 
                       <i-tabler
                         name="arrow-narrow-right"
@@ -544,9 +548,8 @@
     class="bb-tools-sidebar w-[300px] h-screen fixed left-[0] top-[0] bg-[#fff] transition-all duration-[0.3s] ease z-[16] -translate-x-[300px] hidden max-[992px]:block"
   >
     <a
-      href="javascript:void(0)"
       (click)="toggleFilterMenu()"
-      class="bb-tools-sidebar-toggle in-out absolute top-[45%] left-[302px] w-[46px] h-[46px] bg-primary transition-all duration-[0.3s] ease-in flex items-center justify-center text-[25px] z-[-1] rounded-[5px]"
+      class="cursor-pointer bb-tools-sidebar-toggle in-out absolute top-[45%] left-[302px] w-[46px] h-[46px] bg-primary transition-all duration-[0.3s] ease-in flex items-center justify-center text-[25px] z-[-1] rounded-[5px]"
     >
       <mat-icon class="text-white">filter_alt</mat-icon>
     </a>
@@ -568,7 +571,7 @@
         <h3
           class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
         >
-          Category
+          Danh mục
         </h3>
       </div>
       <div class="bb-sidebar-contact">
@@ -599,7 +602,7 @@
         <h3
           class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
         >
-          Price Range
+          Khung giá
         </h3>
       </div>
       <div class="bb-sidebar-contact">
@@ -646,7 +649,7 @@
                   color="primary"
                   (click)="updatePriceRange()"
                 >
-                  Apply
+                  Áp dụng
                 </button>
               </div>
             </div>
@@ -659,7 +662,7 @@
         <h3
           class="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]"
         >
-          Rating
+          Đánh giá
         </h3>
       </div>
       <div class="bb-sidebar-contact">
