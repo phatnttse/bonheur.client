@@ -2,7 +2,7 @@
   class="overflow-y-auto h-screen bg-white p-4 border-r min-[1025px]:border-solid border-gray-400"
 >
   <div class="flex justify-between items-center px-1">
-    <h2 class="text-xl font-semibold mb-4">Messages</h2>
+    <h2 class="text-xl font-semibold mb-4">Tin nhắn</h2>
     <img
       src="/assets/images/svgs/email.svg"
       alt=""
@@ -11,7 +11,7 @@
     />
   </div>
   <mat-form-field class="w-full" appearance="outline">
-    <mat-label>Search messages</mat-label>
+    <mat-label>Tìm tin nhắn</mat-label>
     <input matInput type="text" placeholder="Search..." />
   </mat-form-field>
 
@@ -34,8 +34,8 @@
           }@else {
           <p class="font-semibold mb-1">{{ user.fullName }}</p>
           }
-          <p class="text-sm text-gray-500 truncate">
-            {{ user.latestMessage }}
+          <p class="text-sm text-gray-500 whitespace-normal break-words">
+            {{ user.latestMessage | truncate : 40 }}
           </p>
         </div>
       </div>

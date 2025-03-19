@@ -3,18 +3,11 @@
     <div class="position-relative shaper-wrapper">
       <div class="w-100 position-relative rounded bg-white auth-card">
         <div class="auth-body">
-          <a [routerLink]="['/']" class="m-y-30 d-flex">
-            <!-- <img
-              src="./assets/images/logos/logo.png"
-              class=""
-              alt="logo"
-              width="40"
-              height="40"
-            /> -->
-            <div class="px-[15px] py-2 cursor-pointer" routerLink="/">
+          <div routerLink="/" class="m-y-30 d-flex cursor-pointer">
+            <div class="px-[15px] py-2 cursor-pointer">
               <h1 class="text-primary font-semibold text-2xl">Bonheur.</h1>
             </div>
-          </a>
+          </div>
 
           <div class="row">
             <div class="col-lg-6 hidden:lg:block">
@@ -23,7 +16,7 @@
               >
                 <img
                   src="/assets/images/backgrounds/signin2-bg.webp"
-                  alt="login"
+                  alt="Đăng nhập"
                   style="max-width: 500px"
                   loading="lazy"
                 />
@@ -36,15 +29,16 @@
                 <div class="row justify-content-center w-100">
                   <div class="col-lg-12">
                     <h4 class="f-w-700 text-2xl md:text-3xl m-0 m-t-20 lh-base">
-                      Welcome to <span class="text-primary">Bonheur</span>
+                      Đăng nhập
+                      <span class="text-primary">Bonheur</span>
                     </h4>
-                    <span class="d-block f-w-500 d-block m-t-24"
-                      >New to Bonheur?
+                    <span class="d-block f-w-500 d-block m-t-24">
+                      Bạn chưa có tài khoản?
                       <a
                         [routerLink]="['/authentication/signup']"
                         class="text-decoration-none text-primary f-w-500 f-s-14"
                       >
-                        Create an account</a
+                        Tạo tài khoản</a
                       >
                     </span>
 
@@ -55,8 +49,9 @@
                     >
                       <mat-label
                         class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                        >Email</mat-label
                       >
+                        Email
+                      </mat-label>
                       <mat-form-field
                         appearance="outline"
                         class="w-100"
@@ -72,21 +67,22 @@
                           "
                         />
                         @if(formSignin.get('email')?.hasError('required')) {
-                        <mat-error style="font-size: 12px">
-                          Email is required
-                        </mat-error>
+                        <mat-error style="font-size: 12px"
+                          >Email không được để trống</mat-error
+                        >
                         } @if (formSignin.get('email')?.hasError('email')) {
-                        <mat-error style="font-size: 12px">
-                          Email is invalid. Ex: bonheur&#64;gmail.com
-                        </mat-error>
+                        <mat-error style="font-size: 12px"
+                          >Email không hợp lệ. Vd:
+                          bonheur&#64;gmail.com</mat-error
+                        >
                         }
                       </mat-form-field>
 
-                      <!-- password -->
                       <mat-label
                         class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                        >Password</mat-label
                       >
+                        Mật khẩu
+                      </mat-label>
                       <mat-form-field
                         appearance="outline"
                         class="w-100"
@@ -107,7 +103,7 @@
                           type="button"
                           matSuffix
                           (click)="passwordVisible = !passwordVisible"
-                          [attr.aria-label]="'Hide password'"
+                          [attr.aria-label]="'Ẩn mật khẩu'"
                           [attr.aria-pressed]="passwordVisible"
                         >
                           <mat-icon color="primary" class="fs-18">
@@ -117,9 +113,9 @@
                           </mat-icon>
                         </button>
                         @if (formSignin.get('password')?.hasError('required')) {
-                        <mat-error style="font-size: 12px">
-                          Password is required
-                        </mat-error>
+                        <mat-error style="font-size: 12px"
+                          >Mật khẩu không được để trống</mat-error
+                        >
                         }
                       </mat-form-field>
 
@@ -127,7 +123,8 @@
                         <a
                           [routerLink]="['/']"
                           class="text-primary f-w-600 text-decoration-none m-l-auto d-block f-s-14"
-                          >Forgot Password ?</a
+                        >
+                          Quên mật khẩu?</a
                         >
                       </div>
                       <button
@@ -136,11 +133,10 @@
                         class="w-100"
                         [disabled]="!formSignin.valid"
                       >
-                        Sign In
+                        Đăng nhập
                       </button>
-                      <!-- input -->
                     </form>
-                    <div class="or-border m-t-30">or sign in with</div>
+                    <div class="or-border m-t-30">hoặc đăng nhập bằng</div>
 
                     <div class="row m-t-40">
                       <div class="col-12 col-sm-12">
@@ -154,12 +150,12 @@
                           <div class="d-flex align-items-center">
                             <img
                               src="/assets/images/svgs/google-icon.svg"
-                              alt="google"
+                              alt="Google"
                               width="20"
                               class="m-r-8"
                               loading="lazy"
                             />
-                            Sign in with Google
+                            Đăng nhập với Google
                           </div>
                         </button>
                       </div>

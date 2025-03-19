@@ -10,14 +10,16 @@
       routerLink="/supplier/onboarding"
     >
       <mat-icon class="mr-2"><i-tabler name="arrow-left"></i-tabler></mat-icon>
-      <span class="font-semibold text-base underline">Back</span>
+      <span class="font-semibold text-base underline">Quay lại</span>
     </div>
     }
     <div class="mb-6">
       @if (!isEditMode) {
-      <h1 class="text-2xl font-bold">Add information about your business</h1>
+      <h1 class="text-2xl font-bold">Thêm thông tin về doanh nghiệp của bạn</h1>
       }@else {
-      <h1 class="text-2xl font-bold">Edit your business information</h1>
+      <h1 class="text-2xl font-bold">
+        Chỉnh sửa thông tin doanh nghiệp của bạn
+      </h1>
       }
     </div>
     <div
@@ -33,24 +35,24 @@
         <h2
           class="md:text-base font-semibold max-[667px]::text-sm max-[667px]:mb-1"
         >
-          Your storefront features information about your wedding services to
-          attract and convert our audience of engaged couples.
+          Doanh nghiệp của bạn có thông tin về dịch vụ cưới của bạn để thu hút
+          và chuyển đổi đối tượng là các cặp đôi sắp cưới.
         </h2>
         <p class="md:text-[#6c6c6c] md:text-sm max-[667px]::text-xs">
-          It's important that all the information on your storefront is up to
-          date and accurate.
+          Điều quan trọng là mọi thông tin trên cửa hàng của bạn phải được cập
+          nhật và chính xác.
         </p>
       </div>
     </div>
     <form [formGroup]="formBusinessInfo" (ngSubmit)="onSubmit()">
       <div class="mb-6">
         <h2 class="text-lg font-semibold mb-4">
-          Business information <span class="text-red-500">*</span>
+          Thông tin doanh nghiệp
+          <span class="text-red-500">*</span>
         </h2>
 
         <div class="bg-[#e9f6f8] py-4 px-4 rounded-lg mb-4">
-          Lead notifications and updates from Bonheur will be sent to this email
-          address.
+          Thông báo và cập nhật từ Bonheur sẽ được gửi đến địa chỉ email này.
         </div>
 
         <div class="py-6 px-6 border border-[#d9d9d9] border-solid rounded-lg">
@@ -78,14 +80,14 @@
                 <div class="w-1/6">
                   <a
                     class="underline text-xs cursor-pointer hover:text-orange-500"
-                    >Change</a
+                    >Thay đổi</a
                   >
                 </div>
               </div>
             </div>
             <div class="flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Name <span class="text-red-500">*</span></mat-label
+                >Tên doanh nghiệp <span class="text-red-500">*</span></mat-label
               >
               <mat-form-field
                 appearance="outline"
@@ -105,22 +107,22 @@
                 />
                 @if(formBusinessInfo.get('name')?.hasError('required')) {
                 <mat-error style="font-size: 12px">
-                  Name is required
+                  Tên doanh nghiệp không được để trống
                 </mat-error>
                 } @if (formBusinessInfo.get('name')?.hasError('minlength')) {
                 <mat-error style="font-size: 12px">
-                  Name must be at least 2 characters
+                  Tên phải có ít nhất 2 ký tự
                 </mat-error>
                 } @if (formBusinessInfo.get('name')?.hasError('maxlength')) {
                 <mat-error style="font-size: 12px">
-                  Name must be at most 50 characters
+                  Tên không được vượt quá 50 ký tự
                 </mat-error>
                 }
               </mat-form-field>
             </div>
             <div class="flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Phone Number <span class="text-red-500">*</span></mat-label
+                >Số điện thoại<span class="text-red-500">*</span></mat-label
               >
               <mat-form-field
                 appearance="outline"
@@ -140,17 +142,19 @@
                 />
                 @if(formBusinessInfo.get('phoneNumber')?.hasError('required')) {
                 <mat-error style="font-size: 12px">
-                  Phone number is required
+                  Số điện thoại không được để trống
                 </mat-error>
                 } @if(formBusinessInfo.get('phoneNumber')!.hasError('pattern'))
                 {
-                <mat-error class="fs-14"> Phone number is invalid </mat-error>
+                <mat-error class="fs-14">
+                  Số điện thoại không hợp lệ
+                </mat-error>
                 }
               </mat-form-field>
             </div>
             <div class="flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Main business category
+                >Loại hình kinh doanh
                 <span class="text-red-500">*</span></mat-label
               >
               <mat-form-field
@@ -173,14 +177,14 @@
                 </mat-select>
                 @if(formBusinessInfo.get('categoryId')?.hasError('required')) {
                 <mat-error style="font-size: 12px">
-                  Main business category is required
+                  Loại hình kinh doanh không được để trống
                 </mat-error>
                 }
               </mat-form-field>
             </div>
             <div class="flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Response Time Start
+                >Thời gian phản hồi bắt đầu
                 <span class="text-red-500">*</span></mat-label
               >
               <mat-form-field
@@ -202,14 +206,14 @@
                 @if(formBusinessInfo.get('responseTimeStart')?.hasError('required'))
                 {
                 <mat-error style="font-size: 12px">
-                  Response time start is required
+                  Thời gian phản hồi bắt đầu không được để trống
                 </mat-error>
                 }
               </mat-form-field>
             </div>
             <div class="flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Response Time End
+                >Thời gian phản hồi kết thúc
                 <span class="text-red-500">*</span></mat-label
               >
               <mat-form-field
@@ -231,14 +235,14 @@
                 @if(formBusinessInfo.get('responseTimeEnd')?.hasError('required'))
                 {
                 <mat-error style="font-size: 12px">
-                  Response time end is required
+                  Thời gian phản hồi kết thúc không được để trống
                 </mat-error>
                 }
               </mat-form-field>
             </div>
             <div class="mb-4 flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Website URL
+                >Website
               </mat-label>
               <mat-form-field
                 appearance="outline"
@@ -259,7 +263,7 @@
             </div>
             <div class="mb-4 flex flex-col pt-2">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Price Starting From (VNĐ) <span class="text-red-500">*</span>
+                >Giá bắt đầu từ (VNĐ) <span class="text-red-500">*</span>
               </mat-label>
               <mat-form-field
                 appearance="outline"
@@ -279,7 +283,7 @@
                 />
                 @if(formBusinessInfo.get('price')?.hasError('required')) {
                 <mat-error style="font-size: 12px">
-                  Price is required
+                  Giá không được để trống
                 </mat-error>
                 }
               </mat-form-field>
@@ -289,21 +293,24 @@
       </div>
       <div>
         <h2 class="text-lg font-semibold mb-4">
-          Describe your business and services
+          Mô tả doanh nghiệp và dịch vụ của bạn
+
           <span class="text-red-500">*</span>
         </h2>
 
         <div class="bg-[#e9f6f8] py-4 px-4 rounded-lg mb-4">
           <p>
-            Want to impress couples? Introduction time! Explain why your
-            business is the key ingredient in their wedding. Our team of writers
-            will use the information you provide to create an eye-catching ad.
+            Bạn muốn gây ấn tượng với các cặp đôi? Đã đến lúc giới thiệu! Giải
+            thích lý do tại sao doanh nghiệp của bạn là thành phần chính trong
+            đám cưới của họ. Nhóm nội dung của chúng tôi sẽ sử dụng thông tin
+            bạn cung cấp để tạo ra một quảng cáo bắt mắt.
           </p>
           <div>
             <p>
-              <span class="font-semibold mr-1">Pro tip: </span> Describe your
-              products and services. Explain how you work with couples. Share a
-              sweet or surprising anecdote. No contact details, please.
+              <span class="font-semibold mr-1">Pro tip: </span> Mô tả sản phẩm
+              và dịch vụ của bạn. Giải thích cách bạn làm việc với các cặp đôi.
+              Chia sẻ một giai thoại ngọt ngào hoặc bất ngờ. Vui lòng không cung
+              cấp thông tin liên lạc.
             </p>
           </div>
         </div>
@@ -324,27 +331,23 @@
           </ckeditor>
           @if (formBusinessInfo.get('description')?.touched) { @if
           (formBusinessInfo.get('description')?.hasError('required')) {
-          <mat-error class="mt-2"> Description is required </mat-error>
+          <mat-error class="mt-2"> Mô tả không được để trống </mat-error>
           } @if (formBusinessInfo.get('description')?.hasError('minlength')) {
-          <mat-error class="mt-2">
-            Description must be at least 100 characters
-          </mat-error>
+          <mat-error class="mt-2"> Mô tả phải có ít nhất 100 ký tự </mat-error>
           } @if (formBusinessInfo.get('description')?.hasError('maxlength')) {
-          <mat-error class="mt-2">
-            Description must be at most 10000 characters
-          </mat-error>
+          <mat-error class="mt-2"> Mô tả dài tối đa 10000 ký tự </mat-error>
           } }
         </div>
 
         }
         <div>
           <p class="text-sm text-[#6c6c6c] mb-4">
-            Published content must meet Bonheur's
+            Nội dung được xuất bản phải đáp ứng
             <a
               class="cursor-pointer underline hover:text-primary"
               routerLink="/"
             >
-              Terms of Use.</a
+              Điều khoản sử dụng của chúng tôi .</a
             >
           </p>
           <button
@@ -353,7 +356,7 @@
             style="padding: 20px"
             class="font-bold"
           >
-            Save Changes
+            Lưu thay đổi
           </button>
         </div>
       </div>

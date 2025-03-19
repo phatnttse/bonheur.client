@@ -1,12 +1,21 @@
 @import "./../../../../assets/scss/variables";
 
 .open {
-  transform: translateX(0) !important;
+  transform: translateY(0) !important;
   opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
 }
 .form-control.bb-search-bar {
   &:focus {
     outline: none;
     border-color: $primary;
   }
+}
+
+.sb-menu {
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s;
 }

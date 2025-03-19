@@ -1,6 +1,6 @@
 <div class="mb-6">
   <h1 class="text-2xl font-bold">
-    Videos
+    Video
     <span class="text-[#6c6c6c] text-lg">({{ 1 }})</span>
   </h1>
 </div>
@@ -8,19 +8,19 @@
   class="flex items-center bg-[#f8f8f8] py-6 px-8 rounded-lg mb-10 gap-24 max-[667px]:flex-wrap max-[667px]:gap-6 max-[667px]:justify-center"
 >
   <div>
-    <img width="64px" src="/assets/images/svgs/video.svg" alt="Photo" />
+    <img width="64px" src="/assets/images/svgs/video.svg" alt="Ảnh đại diện" />
   </div>
   <div>
     <h2 class="md:text-base font-semibold mb-2 max-[667px]:text-sm">
-      Showcase your work by adding videos to your storefront.
+      Giới thiệu sản phẩm/dịch vụ của bạn bằng cách thêm video vào doanh nghiệp.
     </h2>
     <p class="text-[#6c6c6c] max-[667px]:text-xs">
-      Add unlimited videos related to your business and wedding services.
+      Thêm không giới hạn video liên quan đến doanh nghiệp và dịch vụ của bạn.
     </p>
   </div>
 </div>
 <div class="mb-6">
-  <h1 class="text-lg font-semibold">Add videos</h1>
+  <h1 class="text-lg font-semibold">Thêm video</h1>
 </div>
 <div class="mb-6">
   <div class="flex items-center justify-center w-full mb-6">
@@ -45,10 +45,10 @@
           />
         </svg>
         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-          <span class="font-semibold">Click to upload</span>
+          <span class="font-semibold">Nhấn để tải lên</span>
         </p>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          AVI, FLV, MOV and MP4 format Landscape orientation Maximum size 500 MB
+          Hỗ trợ định dạng AVI, FLV, MOV, MP4 Tối đa 500MB, tỷ lệ ngang
         </p>
       </div>
       <input
@@ -63,17 +63,17 @@
 
   @if (videoUrl) {
   <div class="mt-4 text-center">
-    <h3 class="text-lg font-semibold mb-4">Preview photos</h3>
+    <h3 class="text-lg font-semibold mb-4">Xem trước video</h3>
     <video width="320" height="240" controls>
       <source [src]="videoUrl" type="video/mp4" />
-      Your browser does not support the video tag.
+      Trình duyệt của bạn không hỗ trợ phát video.
     </video>
     <button mat-raised-button color="warn" (click)="removeVideo()" class="mt-2">
-      Remove Video
+      Xóa video
     </button>
   </div>
   } @if (supplierVideos.length > 0) {
-  <h3 class="text-lg font-semibold mb-4">Your business photos</h3>
+  <h3 class="text-lg font-semibold mb-4">Video doanh nghiệp của bạn</h3>
   <div
     class="grid md:grid-cols-4 gap-4 max-[1024px]:grid-cols-2 max-[667px]:grid-cols-1"
   >
@@ -116,7 +116,7 @@
       type="button"
       (click)="saveChanges()"
     >
-      Save changes
+      Lưu thay đổi
     </button>
   </div>
 </div>

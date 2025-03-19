@@ -88,6 +88,7 @@ export class SupplierDetailComponent
 
   openInFullScreen(index: number, type: string) {
     if (type === 'photos') {
+      this.galleryRef.reset();
       this.supplier?.images?.forEach((image) => {
         this.galleryRef.addImage({
           src: image.imageUrl || '',
@@ -96,6 +97,7 @@ export class SupplierDetailComponent
       });
       this.galleryRef.load(this.galleryItems);
     } else {
+      this.galleryRef.reset();
       this.supplier?.videos?.forEach((video) => {
         this.galleryRef.addVideo({
           src: video.url || '',

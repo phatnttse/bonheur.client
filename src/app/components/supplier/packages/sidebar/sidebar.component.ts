@@ -25,12 +25,12 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     const menuItems: MenuItem[] = [
       {
-        title: 'Subscriptions',
+        title: 'Gói đăng ký',
         icon: 'growth.svg',
         route: '/supplier/packages/subscriptions',
       },
       {
-        title: 'Advertisements',
+        title: 'Gói quảng cáo',
         icon: 'megaphone.svg',
         route: '/supplier/packages/advertisements',
       },

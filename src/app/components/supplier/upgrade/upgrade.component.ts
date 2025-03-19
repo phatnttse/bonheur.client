@@ -1,3 +1,4 @@
+import { AdPackageService } from './../../../services/ad-package.service';
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { SubscriptionPackage } from '../../../models/subscription-packages.model';
@@ -5,7 +6,7 @@ import { DataService } from '../../../services/data.service';
 import { NotificationService } from '../../../services/notification.service';
 import { StatusService } from '../../../services/status.service';
 import { SubscriptionPackagesService } from '../../../services/subscription-packages.service';
-import { BaseResponse } from '../../../models/base.model';
+import { BaseResponse, PaginationResponse } from '../../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PaymentService } from '../../../services/payment.service';
@@ -14,6 +15,7 @@ import {
   CreatePaymentResult,
   CreateSpPaymentLinkRequest,
 } from '../../../models/payment.model';
+import { AdPackage } from '../../../models/ad-package.model';
 
 @Component({
   selector: 'app-upgrade',
@@ -24,13 +26,17 @@ import {
 })
 export class UpgradeComponent implements OnInit {
   subscriptionPackages: SubscriptionPackage[] = [];
+  adPackages: AdPackage[] = [];
+  pageNumber: number = 1;
+  pageSize: number = 10;
 
   constructor(
     private dataService: DataService,
     private notificationService: NotificationService,
     private statusService: StatusService,
     private subscriptionPackageService: SubscriptionPackagesService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private adPackageService: AdPackageService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +46,16 @@ export class UpgradeComponent implements OnInit {
           this.subscriptionPackages = data;
         } else {
           this.getSubscriptionPackages();
+        }
+      }
+    );
+
+    this.dataService.adPackageListData$.subscribe(
+      (data: AdPackage[] | null) => {
+        if (data?.values) {
+          this.adPackages = data;
+        } else {
+          this.getAdPackages();
         }
       }
     );
@@ -76,5 +92,16 @@ export class UpgradeComponent implements OnInit {
         this.notificationService.handleApiError(error);
       },
     });
+  }
+
+  getAdPackages(): void {
+    this.adPackageService
+      .getAdPackages(this.pageNumber, this.pageSize)
+      .subscribe({
+        next: (response: PaginationResponse<AdPackage>) => {
+          this.adPackages = response.data.items;
+        },
+        error: (error: HttpErrorResponse) => {},
+      });
   }
 }

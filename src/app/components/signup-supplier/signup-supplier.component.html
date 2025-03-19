@@ -18,13 +18,13 @@
         >Bonheur</span
       >
       <p class="my-6 text-3xl font-semibold leading-10">
-        Boost your business with us
+        Tăng cường doanh nghiệp của bạn với chúng tôi
       </p>
 
       <a
         href="#"
         class="font-semibold tracking-wide text-white underline underline-offset-4"
-        >Read More</a
+        >Đọc thêm</a
       >
     </div>
   </div>
@@ -40,14 +40,15 @@
         <h2
           class="text-start text-2xl max-[667px]:text-sm md:text-start font-semibold lg:whitespace-nowrap"
         >
-          Try Bonheur for free and grow your business.
+          Hãy dùng thử Bonheur miễn phí và phát triển doanh nghiệp của bạn.
         </h2>
 
         <h2 class="font-semibold text-base mt-10 mb-3 lg:whitespace-nowrap">
-          Contact details
+          Thông tin doanh nghiệp
         </h2>
         <p class="lg:whitespace-nowrap">
-          Create your own storefront and be visible to thousands of couples.
+          Tạo hồ sơ doanh nghiệp của riêng bạn và hiển thị cho hàng ngàn cặp
+          đôi.
         </p>
       </div>
 
@@ -58,7 +59,7 @@
       >
         <div class="flex flex-col pt-2">
           <mat-form-field appearance="outline" class="w-100" color="primary">
-            <mat-label>Name</mat-label>
+            <mat-label>Tên doanh nghiệp</mat-label>
             <input
               matInput
               type="text"
@@ -70,21 +71,23 @@
               "
             />
             @if(formContactSignup.get('name')?.hasError('required')) {
-            <mat-error style="font-size: 12px"> Name is required </mat-error>
+            <mat-error style="font-size: 12px">
+              Tên không được để trống
+            </mat-error>
             } @if (formContactSignup.get('name')?.hasError('minlength')) {
             <mat-error style="font-size: 12px">
-              Name must be at least 2 characters
+              Tên phải có ít nhất 2 ký tự
             </mat-error>
             } @if (formContactSignup.get('name')?.hasError('maxlength')) {
             <mat-error style="font-size: 12px">
-              Name must be at most 50 characters
+              Tên phải dài tối đa 50 ký tự
             </mat-error>
             }
           </mat-form-field>
         </div>
         <div class="flex flex-col pt-2">
           <mat-form-field appearance="outline" class="w-100" color="primary">
-            <mat-label>Phone number</mat-label>
+            <mat-label>Số điện thoại</mat-label>
             <input
               matInput
               type="text"
@@ -97,16 +100,16 @@
             />
             @if(formContactSignup.get('phoneNumber')?.hasError('required')) {
             <mat-error style="font-size: 12px">
-              Phone number is required
+              Số điện thoại không được để trống
             </mat-error>
             } @if(formContactSignup.get('phoneNumber')!.hasError('pattern')) {
-            <mat-error class="fs-14"> Phone number is invalid </mat-error>
+            <mat-error class="fs-14"> Số điện thoại không hợp lệ </mat-error>
             }
           </mat-form-field>
         </div>
         <div class="flex flex-col pt-2">
           <mat-form-field appearance="outline" class="w-full" color="primary">
-            <mat-label>Main business category</mat-label>
+            <mat-label>Loại hình doanh nghiệp </mat-label>
             <mat-select
               formControlName="categoryId"
               [class.is-invalid]="
@@ -120,14 +123,14 @@
             </mat-select>
             @if(formContactSignup.get('categoryId')?.hasError('required')) {
             <mat-error style="font-size: 12px">
-              Main business category is required
+              Loại hình doanh nghiệp không được để trống
             </mat-error>
             }
           </mat-form-field>
         </div>
         <div class="mb-4 flex pt-2 w-full">
           <mat-form-field appearance="outline" class="w-100" color="primary">
-            <mat-label>WebsiteUrl</mat-label>
+            <mat-label>Website</mat-label>
             <input
               matInput
               type="text"
@@ -141,7 +144,7 @@
         </div>
         @if (isDoNotHaveAccount) {
         <h2 class="font-semibold text-base mb-4 lg:whitespace-nowrap">
-          Login details
+          Chi tiết tài khoản
         </h2>
         <div class="mb-4 flex pt-2 w-full">
           <mat-form-field appearance="outline" class="w-100" color="primary">
@@ -158,17 +161,19 @@
             />
             <mat-hint>Ex:bonheur&#64;gmail.com</mat-hint>
             @if(formContactSignup.get('email')?.hasError('required')) {
-            <mat-error style="font-size: 12px"> Email is required </mat-error>
+            <mat-error style="font-size: 12px">
+              Email không được để trống
+            </mat-error>
             } @if (formContactSignup.get('email')?.hasError('email')) {
             <mat-error style="font-size: 12px">
-              Email is invalid Ex:bonheur&#64;gmail.com
+              Email không hợp lệ Vd:bonheur&#64;gmail.com
             </mat-error>
             }
           </mat-form-field>
         </div>
         <div class="mb-12 flex pt-2 w-full">
           <mat-form-field appearance="outline" class="w-100" color="primary">
-            <mat-label>Password</mat-label>
+            <mat-label>Mật khẩu</mat-label>
             <input
               matInput
               type="password"
@@ -180,9 +185,9 @@
               "
             />
             <mat-hint
-              >Your password must be between 8 and 48 characters and include at
-              least 1 lowercase letter, 1 capital letter, 1 number, and no
-              spaces.</mat-hint
+              >Mật khẩu của bạn phải dài từ 8 đến 48 ký tự và bao gồm ít nhất 1
+              chữ cái thường, 1 chữ cái viết hoa, 1 chữ số và không có khoảng
+              trắng.</mat-hint
             >
 
             <button
@@ -199,7 +204,7 @@
             </button>
             @if (formContactSignup.get('password')?.hasError('required')) {
             <mat-error style="font-size: 12px">
-              Password is required
+              Mật khẩu không được để trống
             </mat-error>
             }
           </mat-form-field>
@@ -214,14 +219,14 @@
               formContactSignup.get('acceptTerms')?.touched
             "
           >
-            <span class="text-sm">I accept Bonheur's </span>
+            <span class="text-sm mr-2">Tôi đồng ý với</span>
             <a class="underline text-primary text-sm" routerLink="/"
-              >Terms and Conditions</a
-            >
+              >Điều khoản và Điều kiện
+            </a>
             @if(formContactSignup.get('acceptTerms')?.hasError('requiredTrue'))
             {
             <mat-error style="font-size: 12px">
-              You must accept the terms and conditions
+              Bạn phải chấp nhận các điều khoản và điều kiện
             </mat-error>
             }
           </mat-checkbox>
@@ -233,17 +238,17 @@
           class="mt-6 text-center text-base font-semibold text-white outline-none transition py-2"
           style="border-radius: 1rem; padding: 20px 0"
         >
-          Sign up
+          Đăng ký
         </button>
       </form>
     </div>
     <div class="absolute top-4 right-4 max-[667px]:hidden text-sm">
       <div class="flex items-center">
-        <span class="mr-3 font-semibold text-sm">Customer service</span>
+        <span class="mr-3 font-semibold text-sm">Dịch vụ khách hàng </span>
         <mat-icon fontSet="material-icons-outlined" class="mr-1"
           >support_agent</mat-icon
         >
-        <span class="font-medium">0392341142</span>
+        <a href="tel:+84392341142" class="font-medium">+84392341142</a>
       </div>
     </div>
     } @else if (statusPage === 1) {
@@ -255,11 +260,14 @@
       </div>
 
       <div class="mb-4" data-aos="flip-down" data-aos-duration="800">
-        <h2 class="text-2xl font-semibold">Welcome to Bonheur</h2>
+        <h2 class="text-2xl font-semibold">Chào mừng đến với Bonheur</h2>
       </div>
 
       <div class="mb-8" data-aos="flip-down" data-aos-duration="800">
-        <p>You're one step away from growing your business</p>
+        <p>
+          Bạn chỉ còn một vài bước nữa là có thể phát triển doanh nghiệp của
+          mình
+        </p>
       </div>
 
       <div
@@ -270,15 +278,15 @@
         <span
           class="absolute -top-4 left-0 bg-green-700 text-white text-xs font-bold py-1 px-2 rounded-sm"
         >
-          NEXT
+          TIẾP THEO
         </span>
         <div class="col-span-3 px-2 py-2">
           <h5 class="text-base font-semibold text-gray-800 mb-6">
-            Prepare your storefront
+            Chuẩn bị hồ sơ doanh nghiệp của bạn
           </h5>
           <p class="text-gray-600 text-sm mb-4">
-            Follow these simple steps to create a storefront that will attract
-            your ideal couples.
+            Thực hiện theo các bước đơn giản sau để tạo một hồ sơ doanh nghiệp
+            thu hút những cặp đôi lý tưởng của bạn.
           </p>
           <button
             mat-raised-button
@@ -286,7 +294,7 @@
             color="primary"
             style="border-radius: 1rem; padding: 20px 10px"
           >
-            Create your storefront
+            Tạo hồ sơ doanh nghiệp của bạn
           </button>
         </div>
         <div class="col-span-1 flex justify-end mb-10">
@@ -325,7 +333,6 @@
         </div>
       </div>
     </div>
-
     }
   </div>
 </div>

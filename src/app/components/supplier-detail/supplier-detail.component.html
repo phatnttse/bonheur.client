@@ -53,8 +53,9 @@
                         alt=""
                       />
                       <div class="absolute bottom-4 right-4 flex gap-8">
+                        @if (supplier?.videos?.length! > 0) {
                         <button
-                          class="bg-white text-black px-4 py-2 rounded-lg shadow-md cursor-pointer"
+                          class="bg-white text-black px-4 py-2 rounded-lg shadow-md cursor-pointer max-[667px]:text-sm max-[667px]:ml-2 max-[667px]:px-2 max-[667px]:py-1 max-[667px]:text-xs"
                           (click)="
                             openInFullScreen(
                               supplier?.videos?.length!,
@@ -62,11 +63,12 @@
                             )
                           "
                         >
-                          View Videos ({{ supplier?.videos?.length }})
+                          Xem video ({{ supplier?.videos?.length }})
                         </button>
+                        }
 
                         <button
-                          class="bg-white text-black px-4 py-2 rounded-lg shadow-md cursor-pointer"
+                          class="bg-white text-black px-4 py-2 rounded-lg shadow-md cursor-pointer max-[667px]:text-sm max-[667px]:px-2 max-[667px]:py-1 max-[667px]:text-xs"
                           (click)="
                             openInFullScreen(
                               supplier?.images?.length!,
@@ -74,7 +76,7 @@
                             )
                           "
                         >
-                          View Photos ({{ supplier?.images?.length }})
+                          Xem hình ảnh ({{ supplier?.images?.length }})
                         </button>
                       </div>
                     </div>
@@ -111,7 +113,7 @@
                       routerLink="."
                       fragment="reviews"
                     >
-                      {{ supplier?.totalRating }} reviews</a
+                      {{ supplier?.totalRating }} đánh giá</a
                     >
                   </span>
                 </div>
@@ -140,14 +142,14 @@
                     [href]="supplier?.websiteUrl"
                     class="underline text-[#222222] cursor-pointer"
                     target="_blank"
-                    >Visite website</a
+                    >Đi tới trang web</a
                   >
                 </div>
                 @if (supplier?.discount! > 0) {
                 <div class="flex items-center gap-4 mb-6">
                   <mat-icon class="mx-1">local_offer</mat-icon>
                   <span class="text-red-500 font-light cursor-pointer"
-                    >{{ supplier?.discount }}% discount</span
+                    >{{ supplier?.discount }}% giảm giá</span
                   >
                 </div>
                 }
@@ -160,7 +162,7 @@
                       ><i-tabler name="coins"></i-tabler
                     ></mat-icon>
                     <span class="text-[#222]"
-                      >Starting at {{ supplier?.price! | vndCurrency }}</span
+                      >Bắt đầu từ {{ supplier?.price! | vndCurrency }}</span
                     >
                   </div>
                   <!-- <div class="flex items-center p-8">
@@ -173,14 +175,15 @@
                 <div class="flex justify-start ml-12 mb-1">
                   <div class="flex items-center mr-2">
                     <mat-icon class="text-[#fea99a]">bolt</mat-icon>
-                    <span class="text-sm">
+                    <span class="text-[#222222] text-sm font-light">
                       @if (supplier?.responseTimeStart === '00:00:00' &&
-                      supplier?.responseTimeEnd === '00:00:00') { Response time
-                      within 24 hours } @else { Response time:
+                      supplier?.responseTimeEnd === '00:00:00') {
+                      <p class="mr-4">Thời gian phản hồi: 24/24</p>
+                      } @else { Thời gian phản hồi:
                       {{ getFormattedTime(supplier?.responseTimeStart) }} -
                       {{ getFormattedTime(supplier?.responseTimeEnd) }}
-                      }</span
-                    >
+                      }
+                    </span>
                   </div>
                 </div>
                 <div class="flex flex-wrap">
@@ -192,7 +195,7 @@
                       style="padding: 24px 0; font-weight: 600; font-size: 15px"
                       (click)="openRequestPricingDialog()"
                     >
-                      Request Pricing
+                      Yêu cầu báo giá
                     </button>
                   </div>
                   <div class="w-1/5">
@@ -223,7 +226,16 @@
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
                   routerLink="."
                   fragment="about"
-                  >About</a
+                  >Về chúng tôi</a
+                >
+              </li>
+              <li class="nav-item relative leading-[28px]">
+                <a
+                  class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                  routerLink="."
+                  fragment="reviews"
+                  >Đánh giá
+                  <span class="text-sm">({{ supplier?.totalRating }})</span></a
                 >
               </li>
               <li class="nav-item relative leading-[28px]">
@@ -231,7 +243,7 @@
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
                   routerLink="."
                   fragment="social"
-                  >Social Networks</a
+                  >Mạng xã hội</a
                 >
               </li>
               <li class="nav-item relative leading-[28px]">
@@ -246,17 +258,8 @@
                 <a
                   class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
                   routerLink="."
-                  fragment="reviews"
-                  >Reviews
-                  <span class="text-sm">({{ supplier?.totalRating }})</span></a
-                >
-              </li>
-              <li class="nav-item relative leading-[28px]">
-                <a
-                  class="nav-link px-[20px] text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
-                  routerLink="."
                   fragment="map"
-                  >Map</a
+                  >Bản đồ</a
                 >
               </li>
             </ul>
@@ -266,63 +269,12 @@
               <div class="rounded-[20px]">
                 <div class="bb-details">
                   <p class="font-semibold md:text-xl max-[667px]:text-lg mb-4">
-                    About:
+                    Về chúng tôi:
                   </p>
-                  <p class="font-light mb-4">On Bonheur since 2025</p>
+                  <!-- <p class="font-light mb-4">On Bonheur since 2025</p> -->
                   <p class="mb-[12px]" [innerHTML]="supplier?.description"></p>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="tab-social mb-4" id="social">
-            <div class="rounded-[20px]">
-              <div class="bb-details">
-                <div class="mb-1">
-                  <p class="font-semibold md:text-xl max-[667px]:text-lg">
-                    Follow On:
-                  </p>
-                </div>
-                <div class="flex flex-col py-4">
-                  @for (item of supplier?.socialNetworks; track $index) {
-                  <div class="flex items-center gap-8">
-                    <div class="mb-4">
-                      <img
-                        [src]="item.socialNetwork.imageUrl"
-                        alt=""
-                        width="24"
-                        height="24"
-                        class="mt-4"
-                      />
-                    </div>
-                    <div>
-                      <a
-                        class="underline text-[#222222] text-[14px]"
-                        [href]="item.url"
-                        target="_blank"
-                        >{{ item.socialNetwork.name }}</a
-                      >
-                    </div>
-                  </div>
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mb-10" id="faqs">
-            <div class="mb-4">
-              <p class="font-semibold md:text-xl max-[667px]:text-lg">
-                Frequently asked questions
-              </p>
-            </div>
-            <div class="flex flex-col">
-              @for (item of supplier?.faqs; track $index) {
-              <div
-                class="flex flex-col gap-10 border-b border-solid border-[#eee] py-4"
-              >
-                <p class="font-semibold">{{ item.question }}?</p>
-                <p>{{ item.answer }}</p>
-              </div>
-              }
             </div>
           </div>
           <div
@@ -337,26 +289,27 @@
                 class="mx-4"
               />
               <p class="mx-2 font-semibold text-base">
-                Do you have any questions?
+                Nhận thông tin từ chúng tôi
               </p>
             </div>
             <div>
               <button mat-stroked-button color="primary" style="padding: 22px">
-                Request Pricing
+                Yêu cầu báo giá
               </button>
             </div>
           </div>
           <div class="mb-10" id="reviews">
             <p class="font-semibold md:text-xl max-[667px]:text-lg mb-6">
-              Reviews For {{ supplier?.name }}
+              Đánh giá cho {{ supplier?.name }}
             </p>
             <div
               class="flex items-center gap-6 bg-white shadow-[0_2px_8px_#00000026] rounded-lg mb-10 py-6 px-4"
             >
               <mat-icon>info_outline</mat-icon>
               <p>
-                We're all about trust. Our community relies on honest reviews to
-                make your big decisions easier.
+                Chúng tôi luôn coi trọng sự tin tưởng. Cộng đồng của chúng tôi
+                dựa vào các đánh giá trung thực để giúp bạn đưa ra quyết định
+                quan trọng dễ dàng hơn.
               </p>
             </div>
             <div
@@ -368,15 +321,17 @@
                     supplier?.averageRating | number : "1.1-1"
                   }}</span>
                   @if (supplier?.averageRating! > 4.8) {
-                  <span class="text-base font-semibold">Excellent</span>
+                  <span class="text-base text-orange-500 font-semibold"
+                    >Xuất sắc
+                  </span>
                   }@else if (supplier?.averageRating! > 4.5) {
-                  <span class="text-base font-semibold">Great</span>
+                  <span class="text-base font-semibold">Tốt</span>
                   }@else if (supplier?.averageRating! > 4.0) {
-                  <span class="text-base font-semibold">Good</span>
+                  <span class="text-base font-semibold">Khá</span>
                   }@else if (supplier?.averageRating! > 3.5) {
-                  <span class="text-base font-semibold">Average</span>
+                  <span class="text-base font-semibold">Trung bình</span>
                   }@else {
-                  <span class="text-base font-semibold">Poor</span>
+                  <span class="text-base font-semibold">Cải thiện</span>
                   }
                 </div>
                 <div class="flex items-center mb-4">
@@ -406,7 +361,7 @@
                     class="w-full"
                     routerLink="/review-detail/{{ supplier?.slug }}"
                   >
-                    Write a review
+                    Viết đánh giá
                   </button>
                 </div>
               </div>
@@ -414,7 +369,7 @@
                 @if (averageScores) {
                 <ul class="space-y-4">
                   <li class="flex items-center justify-between gap-30">
-                    <span>Quality of the service</span>
+                    <span>Chất lượng dịch vụ</span>
                     <div class="flex items-center gap-10">
                       <mat-progress-bar
                         style="width: 150px"
@@ -430,7 +385,7 @@
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
-                    <span>Response time</span>
+                    <span>Thời gian phản hồi</span>
                     <div class="flex items-center gap-10">
                       <mat-progress-bar
                         style="width: 150px"
@@ -444,7 +399,7 @@
                     </div>
                   </li>
                   <li class="flex items-center justify-between gap-2">
-                    <span>Professionalism</span>
+                    <span>Chuyên nghiệp</span>
                     <div class="flex items-center gap-10">
                       <mat-progress-bar
                         style="width: 150px"
@@ -460,7 +415,7 @@
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
-                    <span>Value for money</span>
+                    <span>Giá cả</span>
                     <div class="flex items-center gap-10">
                       <mat-progress-bar
                         style="width: 150px"
@@ -474,7 +429,7 @@
                     </div>
                   </li>
                   <li class="flex items-center justify-between">
-                    <span>Flexibility</span>
+                    <span>Linh hoạt</span>
                     <div class="flex items-center gap-10">
                       <mat-progress-bar
                         style="width: 150px"
@@ -522,7 +477,7 @@
                             item.user.fullName
                           }}</span>
                           <span class="text-[#3d4750] text-[14px]"
-                            >Sent on
+                            >Thời gian:
                             {{ item.createdAt | date : "yyyy/MM/dd" }}</span
                           >
                         </div>
@@ -561,8 +516,65 @@
               }
             </ngx-slick-carousel>
           </div>
+          @if (supplier?.socialNetworks?.length! > 0) {
+          <div class="tab-social mb-4" id="social">
+            <div class="rounded-[20px]">
+              <div class="bb-details">
+                <div class="mb-1">
+                  <p class="font-semibold md:text-xl max-[667px]:text-lg">
+                    Theo dõi trên:
+                  </p>
+                </div>
+                <div class="flex flex-col py-4">
+                  @for (item of supplier?.socialNetworks; track $index) {
+                  <div class="flex items-center gap-8">
+                    <div class="mb-4">
+                      <img
+                        [src]="item.socialNetwork.imageUrl"
+                        alt=""
+                        width="24"
+                        height="24"
+                        class="mt-4"
+                      />
+                    </div>
+                    <div>
+                      <a
+                        class="underline text-[#222222] text-[14px]"
+                        [href]="item.url"
+                        target="_blank"
+                        >{{ item.socialNetwork.name }}</a
+                      >
+                    </div>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+          } @if (supplier?.faqs?.length! > 0) {
+          <div class="mb-10" id="faqs">
+            <div class="mb-4">
+              <p class="font-semibold md:text-xl max-[667px]:text-lg">
+                Câu hỏi thường gặp:
+              </p>
+            </div>
+            <div class="flex flex-col">
+              @for (item of supplier?.faqs; track $index) {
+              <div
+                class="flex flex-col gap-10 border-b border-solid border-[#eee] py-4"
+              >
+                <p class="font-semibold">{{ item.question }}?</p>
+                <p>{{ item.answer }}</p>
+              </div>
+              }
+            </div>
+          </div>
+          }
+
           <div class="mb-6" id="map">
-            <p class="font-semibold md:text-xl max-[667px]:text-lg mb-6">Map</p>
+            <p class="font-semibold md:text-xl max-[667px]:text-lg mb-6">
+              Bản đồ
+            </p>
             <div class="map-wrap">
               <div class="map" #map></div>
             </div>

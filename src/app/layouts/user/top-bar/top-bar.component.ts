@@ -29,10 +29,10 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 })
 export class TopBarComponent {
   announcements: string[] = [
-    'Free consultation for your dream wedding planning!',
-    'Sign up now and get 10% off your first booking!',
-    'New feature: Chat with our vendors directly!',
+    'Tư vấn miễn phí cho kế hoạch cưới trong mơ của bạn!',
+    'Tính năng mới: Trò chuyện trực tiếp với nhà cung cấp!',
   ];
+
   currentAnnouncementIndex: number = 0;
 
   ngOnInit() {

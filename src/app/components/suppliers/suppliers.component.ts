@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -55,7 +56,7 @@ import { LocalStorageManager } from '../../services/localstorage-manager.service
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
 })
-export class SuppliersComponent implements OnInit, OnDestroy {
+export class SuppliersComponent implements OnInit, AfterViewInit, OnDestroy {
   map: Map | undefined; // Bản đồ
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>; // Container bản đồ

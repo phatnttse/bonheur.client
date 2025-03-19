@@ -20,9 +20,9 @@
                 [routerLinkActiveOptions]="{ exact: true }"
               >
                 <a
-                  class="nav-link p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] tracking-[0.03rem] block"
+                  class="cursor-pointer nav-link p-[0] leading-[28px] text-[15px] font-medium tracking-[0.03rem] block"
                   routerLink="/"
-                  >Home</a
+                  >Trang chủ</a
                 >
               </li>
               <li
@@ -30,10 +30,10 @@
                 [routerLinkActive]="'active-link'"
               >
                 <a
-                  class="nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem]"
+                  class="cursor-pointer nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium block tracking-[0.03rem]"
                   routerLink="/suppliers"
                 >
-                  Suppliers
+                  Nhà cung cấp
                 </a>
                 <ul
                   class="py-4 mega-menu min-w-full transition-all duration-[0.3s] ease-in-out mt-[25px] pl-[30px] absolute top-[40px] z-[16] text-left opacity-[0] invisible left-[0] right-[auto] bg-[#fff] border-[1px] border-solid border-[#eee] flex flex-wrap rounded-[10px] w-[400px]"
@@ -60,9 +60,8 @@
                 class="nav-item bb-dropdown flex items-center relative mr-[45px]"
               >
                 <a
-                  class="nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem]"
-                  href="javascript:void(0)"
-                  >Planning Tools</a
+                  class="cursor-pointer nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium block tracking-[0.03rem]"
+                  >Công cụ lập kế hoạch</a
                 >
 
                 <ul
@@ -77,8 +76,7 @@
                   >
                     <a
                       class="bb-mega-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize tracking-[0.03rem]"
-                      href="javascript:void(0)"
-                      >Guests</a
+                      >Khách mời</a
                     >
                   </li>
                   <li
@@ -86,7 +84,6 @@
                   >
                     <a
                       class="bb-mega-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize tracking-[0.03rem]"
-                      href="javascript:void(0)"
                       >Checklist</a
                     >
                   </li>
@@ -95,8 +92,7 @@
                   >
                     <a
                       class="bb-mega-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize tracking-[0.03rem]"
-                      href="javascript:void(0)"
-                      >Budget</a
+                      >Ngân sách</a
                     >
                   </li>
                   <li
@@ -104,8 +100,7 @@
                   >
                     <a
                       class="bb-mega-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize tracking-[0.03rem]"
-                      href="javascript:void(0)"
-                      >Wedding Suppliers</a
+                      >Nhà cung cấp dịch vụ cưới</a
                     >
                   </li>
                 </ul>
@@ -114,9 +109,9 @@
                 class="nav-item bb-dropdown flex items-center relative mr-[45px]"
               >
                 <a
-                  class="nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem]"
-                  href="javascript:void(0)"
-                  >Pages</a
+                  class="cursor-pointer nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium block tracking-[0.03rem]"
+                  [routerLinkActive]="'active-link'"
+                  >Trang</a
                 >
                 <ul
                   class="bb-dropdown-menu min-w-[205px] p-[10px] transition-all duration-[0.3s] ease-in-out mt-[25px] absolute top-[40px] z-[16] text-left opacity-[0] invisible left-[0] right-[auto] bg-[#fff] border-[1px] border-solid border-[#eee] flex flex-col rounded-[10px]"
@@ -125,21 +120,29 @@
                     <a
                       class="dropdown-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize block w-full whitespace-nowrap"
                       routerLink="/about"
-                      >About Us</a
+                      [routerLinkActive]="'active-link'"
+                      >Về chúng tôi</a
                     >
                   </li>
                   <li class="m-[0] py-[5px] px-[15px] flex items-center">
                     <a
                       class="dropdown-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize block w-full whitespace-nowrap"
                       routerLink="/"
-                      >Contact Us</a
+                      >Liên hệ</a
                     >
                   </li>
                   <li class="m-[0] py-[5px] px-[15px] flex items-center">
                     <a
                       class="dropdown-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize block w-full whitespace-nowrap"
                       routerLink="/"
-                      >Faq</a
+                      >Câu hỏi thường gặp</a
+                    >
+                  </li>
+                  <li class="m-[0] py-[5px] px-[15px] flex items-center">
+                    <a
+                      class="dropdown-item transition-all duration-[0.3s] ease-in-out py-[5px] leading-[22px] text-[14px] font-normal text-[#686e7d] hover:text-[#6c7fd8] capitalize block w-full whitespace-nowrap"
+                      routerLink="/"
+                      >Chính sách</a
                     >
                   </li>
                 </ul>
@@ -148,8 +151,7 @@
                 class="nav-item bb-dropdown flex items-center relative mr-[45px]"
               >
                 <a
-                  class="nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium text-[#3d4750] block tracking-[0.03rem]"
-                  href="javascript:void(0)"
+                  class="cursor-pointer cursor-pointer nav-link bb-dropdown-item relative p-[0] leading-[28px] text-[15px] font-medium block tracking-[0.03rem]"
                   routerLink="/"
                   >Blog</a
                 >
@@ -167,13 +169,13 @@
               <a
                 class="font-semibold cursor-pointer uppercase"
                 routerLink="/supplier"
-                >Supplier Channel
+                >Kênh nhà cung cấp
               </a>
               }@else {
               <a
                 class="font-semibold cursor-pointer uppercase"
                 routerLink="/supplier/signup"
-                >Are you a supplier ?
+                >Đăng ký doanh nghiệp
               </a>
               }
             </div>

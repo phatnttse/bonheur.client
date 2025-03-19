@@ -27,29 +27,29 @@ export class SidebarMobileComponent {
   @Output() toggleMenuEvent = new EventEmitter<void>();
   openDropdownIndex: number | null = null;
   sidebarItems: SidebarItem[] = [
-    { icon: 'business', label: 'Home', route: '/supplier' },
+    { icon: 'business', label: 'Trang chủ', route: '/supplier' },
     {
       icon: 'storefront',
-      label: 'Storefront',
+      label: 'Hồ sơ doanh nghiệp',
       route: null,
       subItems: [
         {
-          label: 'Business details',
+          label: 'Chi tiết doanh nghiệp',
           icon: 'businessDetails',
           route: '/supplier/storefront/business-details',
         },
         {
-          label: 'Location and map',
+          label: 'Vị trí và bản đồ',
           icon: 'map',
           route: '/supplier/storefront/location-and-map',
         },
         {
-          label: 'Photos',
+          label: 'Hình ảnh',
           icon: 'camera',
           route: '/supplier/storefront/photos',
         },
         {
-          label: 'Deals',
+          label: 'Giảm giá',
           icon: 'coupon',
           route: '/supplier/storefront/deals',
         },
@@ -59,16 +59,16 @@ export class SidebarMobileComponent {
           route: '/supplier/storefront/faqs',
         },
         {
-          label: 'Social networks',
+          label: 'Mạng xã hội',
           icon: 'socialNetwork',
           route: '/supplier/storefront/social-networks',
         },
       ],
     },
-    { icon: 'email', label: 'Enquiries', route: '/supplier/mailbox' },
-    { icon: 'review', label: 'Reviews', route: '/supplier/reviews' },
-    { icon: 'invoice', label: 'Invoices', route: '/supplier/invoices' },
-    { icon: 'setting', label: 'Settings', route: '/supplier/settings' },
+    { icon: 'email', label: 'Báo giá', route: '/supplier/mailbox' },
+    { icon: 'review', label: 'Đánh giá', route: '/supplier/reviews' },
+    { icon: 'invoice', label: 'Hoá đơn', route: '/supplier/invoices' },
+    { icon: 'setting', label: 'Cài đặt', route: '/supplier/settings' },
   ];
 
   constructor(private router: Router) {}

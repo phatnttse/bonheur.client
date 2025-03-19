@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bonheur.pro/</loc>
-    <lastmod>2025-03-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2025-03-19</lastmod>
   </url>
   <url>
     <loc>https://bonheur.pro/about</loc>
-    <lastmod>2025-03-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2025-03-19</lastmod>
+  </url>
+  <url>
+    <loc>https://bonheur.pro/suppliers</loc>
+    <lastmod>2025-03-19</lastmod>
   </url>
 </urlset>
