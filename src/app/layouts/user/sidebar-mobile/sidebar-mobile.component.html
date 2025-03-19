@@ -7,12 +7,14 @@
   class="sb-menu w-2/3 h-full pt-[15px] px-[8px] text-[14px] font-normal fixed z-[17] top-[0] left-[0] block transition-all duration-[0.5s] ease delay-[0s] -translate-x-[100%] bg-[#fff] overflow-auto opacity-[0]"
   [ngClass]="isMenuOpen ? 'open' : ''"
 >
-  <div class="flex justify-between align-center py-4 px-4">
-    <a
-      routerLink="/"
-      class="text-2xl font-bold text-primary hover:text-primary-dark transition-colors absolute lg:static lg:translate-x-0"
-    >
-      <span class="font-bold">Bonheur.</span>
+  <div class="flex justify-between align-center pb-2 pt-6 px-4">
+    <a routerLink="/" class="text-2xl font-bold text-primary">
+      <img
+        src="bonheur.png"
+        alt="logo"
+        class="w-[100px] h-auto block object-cover"
+        loading="lazy"
+      />
     </a>
     <button
       class="absolute top-4 right-4 text-gray-500 focus:outline-none"
@@ -22,7 +24,7 @@
     </button>
   </div>
 
-  <nav class="flex flex-col space-y-6 px-8 pt-12 pb-6">
+  <nav class="flex flex-col space-y-6 px-8 pt-10 pb-6">
     <a
       routerLink="/"
       class="text-base font-medium text-gray-700 hover:text-primary transition duration-300"

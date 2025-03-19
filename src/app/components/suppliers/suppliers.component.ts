@@ -137,7 +137,6 @@ export class SuppliersComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dataService.favoriteSupplierData$.subscribe(
       (favoriteSuppliers: FavoriteSupplier[] | null) => {
-        debugger;
         if (favoriteSuppliers?.values) {
           this.favoriteSuppliers = favoriteSuppliers;
           this.cdr.detectChanges();
