@@ -29,8 +29,8 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 })
 export class TopBarComponent {
   announcements: string[] = [
-    'Tư vấn miễn phí cho kế hoạch cưới trong mơ của bạn!',
-    'Tính năng mới: Trò chuyện trực tiếp với nhà cung cấp!',
+    'Tư vấn miễn phí cho kế hoạch cưới của bạn!',
+    'Trò chuyện trực tiếp với nhà cung cấp!',
   ];
 
   currentAnnouncementIndex: number = 0;
