@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", "sans-serif"],
+        sans: ["Be Vietnam Pro", "sans-serif"],
       },
       colors: {
         primary: {
