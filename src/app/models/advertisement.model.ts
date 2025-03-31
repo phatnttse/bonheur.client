@@ -9,6 +9,7 @@ export interface Advertisement {
   title?: string;
   content?: string;
   imageUrl?: string;
+  imageFileName?: string;
   targetUrl?: string;
   isActive: boolean;
   createdAt: string;
