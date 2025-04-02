@@ -120,7 +120,7 @@ export class Step3Component implements OnInit {
     if (this.supplierImages.length > 0 && this.fileUploads.length === 0) {
       this.notificationService.warning(
         'Warning',
-        'Please upload at least 1 photo'
+        'Vui lòng tải lên ít nhất 1 ảnh'
       );
       return;
     }
@@ -128,13 +128,13 @@ export class Step3Component implements OnInit {
     if (this.supplierImages.length == 0 && this.fileUploads.length < 4) {
       this.notificationService.warning(
         'Warning',
-        'Please upload at least 4 photos'
+        'Vui lòng tải lên ít nhất 4 ảnh cho nhà hồ sơ của bạn'
       );
       return;
     }
 
     if (this.primaryImageIndex == null && this.supplierImages.length === 0) {
-      this.notificationService.warning('Warning', 'Please select a main photo');
+      this.notificationService.warning('Warning', 'Vui lòng chọn ảnh đại diện');
       return;
     }
 
@@ -169,6 +169,9 @@ export class Step3Component implements OnInit {
         );
         this.supplierImages = [...updatedImages];
         this.supplier!.images = updatedImages;
+        if (this.supplier) {
+          this.supplier.isStep3Completed = true;
+        }
         this.dataService.supplierDataSource.next(this.supplier);
         //this.getSupplierByUserId(this.account!.id!);
         this.statusService.statusLoadingSpinnerSource.next(false);

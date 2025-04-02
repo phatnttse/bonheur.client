@@ -43,8 +43,6 @@ export class AdPackageDialogComponent {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       price: ['', [Validators.required]],
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
       adType: ['', [Validators.required]],
       isActive: [true, [Validators.required]],
     });
@@ -55,8 +53,6 @@ export class AdPackageDialogComponent {
         title: this.data.title,
         description: this.data.description,
         price: this.data.price,
-        startDate: this.data.startDate,
-        endDate: this.data.endDate,
         adType: this.data.adType,
         isActive: this.data.isActive,
       });
@@ -66,7 +62,6 @@ export class AdPackageDialogComponent {
   }
 
   onSubmit(): void {
-    debugger;
     if (this.adPackageForm.invalid) {
       this.adPackageForm.markAllAsTouched();
       return;
@@ -75,25 +70,38 @@ export class AdPackageDialogComponent {
     this.statusService.statusLoadingSpinnerSource.next(true);
 
     const request: AdPackageRequest = {
+      id: this.isEditMode ? this.data.id : undefined,
       title: this.adPackageForm.value.title,
       description: this.adPackageForm.value.description,
       price: this.adPackageForm.value.price,
-      startDate: this.adPackageForm.value.startDate,
-      endDate: this.adPackageForm.value.endDate,
       adType: this.adPackageForm.value.adType,
       isActive: this.adPackageForm.value.isActive,
     };
 
-    this.adPackageService.createAdPackage(request).subscribe({
-      next: (response: BaseResponse<AdPackage>) => {
-        this.statusService.statusLoadingSpinnerSource.next(false);
-        this.dialogRef.close(response.data);
-        this.notificationService.success('Success', response.message);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.handleApiError(error);
-      },
-    });
+    if (this.isEditMode) {
+      this.adPackageService.updateAdPackage(this.data.id, request).subscribe({
+        next: (response: BaseResponse<AdPackage>) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.dialogRef.close(response.data);
+          this.notificationService.success('Success', response.message);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
+        },
+      });
+    } else {
+      this.adPackageService.createAdPackage(request).subscribe({
+        next: (response: BaseResponse<AdPackage>) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.dialogRef.close(response.data);
+          this.notificationService.success('Success', response.message);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.statusService.statusLoadingSpinnerSource.next(false);
+          this.notificationService.handleApiError(error);
+        },
+      });
+    }
   }
 }

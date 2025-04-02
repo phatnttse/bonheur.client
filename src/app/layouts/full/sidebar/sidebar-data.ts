@@ -56,6 +56,12 @@ export const navItems: NavItem[] = [
     route: '/admin/ad-package/management',
   },
   {
+    displayName: 'Advertisement',
+    iconName: 'ad-2',
+    bgcolor: 'error',
+    route: '/admin/advertisement/management',
+  },
+  {
     displayName: 'Blog Management',
     iconName: 'article',
     bgcolor: 'primary',

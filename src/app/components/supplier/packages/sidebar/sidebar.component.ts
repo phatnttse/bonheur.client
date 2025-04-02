@@ -29,11 +29,6 @@ export class SidebarComponent implements OnInit {
         icon: 'growth.svg',
         route: '/supplier/packages/subscriptions',
       },
-      {
-        title: 'Gói quảng cáo',
-        icon: 'megaphone.svg',
-        route: '/supplier/packages/advertisements',
-      },
     ];
     this.menuItems = menuItems;
   }

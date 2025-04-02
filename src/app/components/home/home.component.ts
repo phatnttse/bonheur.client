@@ -19,6 +19,10 @@ import { PaginationResponse } from '../../models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CountUp } from 'countup.js';
 import { Meta, Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { AdvertisementsDialogComponent } from '../dialogs/user/advertisements-dialog/advertisements-dialog.component';
+import { AdvertisementService } from '../../services/advertisement.service';
+import { Advertisement } from '../../models/advertisement.model';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +48,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dataService: DataService,
     private title: Title,
-    private meta: Meta
+    private meta: Meta,
+    private dialog: MatDialog
   ) {
     this.title.setTitle('Bonheur - Nền tảng dịch vụ cưới hỏi chuyên nghiệp');
 
@@ -117,7 +122,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getSuppliers() {
     const getSupplierParams: GetSuppliersParams = {
       isFeatured: this.isFeatured,
-      averageRating: 4.5,
     };
     this.supplierService.getSuppliers(getSupplierParams).subscribe({
       next: (response: PaginationResponse<Supplier>) => {

@@ -145,22 +145,18 @@ export class SignupSupplierComponent implements OnInit {
           if (response.success && response.statusCode === StatusCode.OK) {
             this.statusService.statusLoadingSpinnerSource.next(false);
             if (this.isDoNotHaveAccount) {
-              this.statusPage = 0;
-              this.notificationService.openSnackBarBottom(
-                response.message,
-                'OK',
-                5000
-              );
+              this.statusPage = 2;
+            } else {
+              this.statusPage = 1;
+              setTimeout(() => {
+                this.logout();
+                this.notificationService.openSnackBarTop(
+                  'Please login again to continue.',
+                  'OK',
+                  5000
+                );
+              }, 2000);
             }
-            this.statusPage = 1;
-            setTimeout(() => {
-              this.logout();
-              this.notificationService.openSnackBarTop(
-                'Please login again to continue.',
-                'OK',
-                5000
-              );
-            }, 2000);
           }
         },
         error: (error: HttpErrorResponse) => {

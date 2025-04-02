@@ -61,11 +61,7 @@ export class FeaturedSuppliersComponent {
   constructor() {}
 
   isSupplierPriorityExpired(supplier: Supplier): boolean {
-    if (
-      supplier.priorityEnd &&
-      supplier.priorityEnd > new Date() &&
-      supplier.subscriptionPackage !== null
-    ) {
+    if (supplier.priorityEnd && supplier.priorityEnd > new Date()) {
       return true;
     }
     return false;

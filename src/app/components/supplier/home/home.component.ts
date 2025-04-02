@@ -12,11 +12,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../../models/order.model';
 import { OrderService } from '../../../services/order.service';
 import { OnBoardStatus, SupplierStatus } from '../../../models/enums.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MaterialModule, TablerIconsModule],
+  imports: [MaterialModule, TablerIconsModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

@@ -1,0 +1,12 @@
+<div class="w-full h-full flex justify-center items-center">
+  @for (item of data; track $index) {
+  <a [href]="item.targetUrl" target="_blank">
+    <img
+      [src]="item.imageUrl"
+      [alt]="item.title"
+      class="w-full max-w-[90vw] h-auto max-h-[80vh] object-cover"
+    />
+  </a>
+
+  }
+</div>

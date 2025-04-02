@@ -12,11 +12,17 @@ export class TimeAgoPipe implements PipeTransform {
     const time = new Date(value).getTime();
     const now = new Date().getTime();
     const diffInSeconds = Math.floor((now - time) / 1000);
-    const diffInDays = Math.floor(diffInSeconds / 86400); // Chênh lệch ngày
 
-    if (diffInDays >= 1) {
-      // Nếu trên 1 ngày, hiển thị định dạng dd/MM/yyyy HH:mm
-      const date = new Date(value);
+    // So sánh ngày của thời điểm hiện tại và thời điểm đầu vào
+    const date = new Date(value);
+    const nowDate = new Date(now);
+    const isSameDay =
+      date.getDate() === nowDate.getDate() &&
+      date.getMonth() === nowDate.getMonth() &&
+      date.getFullYear() === nowDate.getFullYear();
+
+    // Nếu không cùng ngày, hiển thị định dạng dd/MM/yyyy HH:mm
+    if (!isSameDay) {
       return `${date.getDate().toString().padStart(2, '0')}/${(
         date.getMonth() + 1
       )
@@ -27,11 +33,16 @@ export class TimeAgoPipe implements PipeTransform {
         .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
     }
 
-    if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
-    if (diffInSeconds < 3600)
-      return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-    if (diffInSeconds < 86400)
-      return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    // Nếu cùng ngày
+    if (diffInSeconds < 60) return 'Vừa xong'; // Dưới 1 phút
+    if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} phút trước`; // Dưới 1 giờ
+    }
+    if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} giờ trước`; // Dưới 24 giờ
+    }
 
     return '';
   }
