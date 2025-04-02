@@ -8,11 +8,7 @@ import { RouterModule } from '@angular/router';
   template: `
     <div class="branding flex flex-wrap items-center justify-center ">
       <a [routerLink]="['/']">
-        <img
-          src="/assets/images/logos/logo.png"
-          class="align-middle m-2 w-12 h-12"
-          alt="logo"
-        />
+        <img src="logo.png" class="align-middle m-2 w-12 h-12" alt="logo" />
       </a>
       <p class="font-semibold ml-2">Bonheur Admin</p>
     </div>

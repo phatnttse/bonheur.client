@@ -5,8 +5,6 @@ export interface AdPackage {
   title?: string;
   description?: string;
   price?: number;
-  startDate?: string;
-  endDate?: string;
   adType?: AdType;
   isActive?: boolean;
   createdAt: string;
@@ -14,11 +12,10 @@ export interface AdPackage {
 }
 
 export interface AdPackageRequest {
+  id?: number;
   title?: string;
   description?: string;
   price?: number;
-  startDate?: string;
-  endDate?: string;
   adType?: AdType;
   isActive?: boolean;
 }

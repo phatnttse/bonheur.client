@@ -94,18 +94,19 @@ export class AdvertisementService extends EndpointBase {
   }
 
   updateAdvertisement(
+    id: number,
     formData: FormData
   ): Observable<BaseResponse<Advertisement>> {
     return this.http
       .put<BaseResponse<Advertisement>>(
-        `${environment.apiUrl}/api/v1/advertisements`,
+        `${environment.apiUrl}/api/v1/advertisements/${id}`,
         formData,
         { headers: this.requestHeaders.headers }
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () =>
-            this.updateAdvertisement(formData)
+            this.updateAdvertisement(id, formData)
           );
         })
       );
@@ -120,6 +121,28 @@ export class AdvertisementService extends EndpointBase {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return this.handleError(error, () => this.deleteAdvertisement(id));
+        })
+      );
+  }
+
+  getActiveAdvertisements(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginationResponse<Advertisement>> {
+    let params = new HttpParams();
+    params = params.append('pageNumber', pageNumber.toString());
+    params = params.append('pageSize', pageSize.toString());
+
+    return this.http
+      .get<PaginationResponse<Advertisement>>(
+        `${environment.apiUrl}/api/v1/advertisements/active`,
+        { headers: this.requestHeaders.headers }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error, () =>
+            this.getAdvertisements(pageNumber, pageSize)
+          );
         })
       );
   }

@@ -10,13 +10,17 @@ export interface Advertisement {
   content?: string;
   imageUrl?: string;
   imageFileName?: string;
+  videoUrl?: string;
+  videoFileName?: string;
   targetUrl?: string;
+  startDate?: string;
+  endDate?: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface CreateAdvertisementRequest {
+export interface AdvertisementRequest {
   supplierId: number;
   adPackageId: number;
   title?: string;
@@ -25,6 +29,8 @@ export interface CreateAdvertisementRequest {
   isActive?: boolean;
   image?: File;
   video?: File;
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface UpdateAdvertisementRequest {
@@ -37,4 +43,6 @@ export interface UpdateAdvertisementRequest {
   status: AdvertisementStatus;
   image?: File;
   video?: File;
+  startDate?: string;
+  endDate?: string;
 }

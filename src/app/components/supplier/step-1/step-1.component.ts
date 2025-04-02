@@ -175,10 +175,6 @@ export class Step1Component implements OnInit {
       Link,
       List,
       Underline,
-      Image,
-      ImageUpload,
-      AutoImage,
-      SimpleUploadAdapter,
     } = cloud.CKEditor;
 
     this.Editor = ClassicEditor;
@@ -193,10 +189,6 @@ export class Step1Component implements OnInit {
         Link,
         List,
         Underline,
-        Image,
-        ImageUpload,
-        AutoImage,
-        SimpleUploadAdapter,
       ],
       toolbar: [
         'heading',
@@ -211,20 +203,7 @@ export class Step1Component implements OnInit {
         '|',
         'undo',
         'redo',
-        '|',
-        'imageUpload',
       ],
-      image: {
-        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
-      },
-      simpleUpload: {
-        uploadUrl: `${environment.apiUrl}/api/v1/storage/upload`,
-        headers: {
-          Authorization: `Bearer ${this.localStorage.getData(
-            DBkeys.ACCESS_TOKEN
-          )}`,
-        },
-      },
     };
   }
 

@@ -1,0 +1,195 @@
+<div class="advertisement-dialog">
+  <div class="my-2 p-0">
+    <h2 mat-dialog-title>
+      @if (isEditMode) { Update Advertisement } @else { Add Advertisement }
+    </h2>
+  </div>
+  <form [formGroup]="advertisementForm" (ngSubmit)="onSubmit()" class="mx-3">
+    <!-- Title -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title" />
+        @if(advertisementForm.get('title')?.errors?.['required']){
+        <mat-error>Title is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Content</mat-label>
+        <textarea
+          matInput
+          placeholder="Content"
+          formControlName="content"
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Target URL -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Target URL</mat-label>
+        <input matInput placeholder="Target URL" formControlName="targetUrl" />
+      </mat-form-field>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="flex flex-row">
+      <div class="w-100 mx-2 my-2">
+        <label class="block mb-1">Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+        />
+        @if (previewImageUrl) {
+        <div class="mt-2">
+          <img
+            [src]="previewImageUrl"
+            alt="Image Preview"
+            class="w-32 h-32 object-cover rounded"
+          />
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Start Date and End Date -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerStartDate"
+          formControlName="startDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="pickerStartDate"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerStartDate></mat-datepicker>
+        @if(advertisementForm.get('startDate')?.errors?.['required']){
+        <mat-error>Start Date is required.</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerEndDate"
+          formControlName="endDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="pickerEndDate"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerEndDate></mat-datepicker>
+        @if(advertisementForm.get('endDate')?.errors?.['required']){
+        <mat-error>End Date is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Supplier Autocomplete -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Supplier</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Search for a supplier..."
+          [formControl]="supplierControl"
+          [matAutocomplete]="autoSupplier"
+        />
+        <mat-autocomplete
+          #autoSupplier="matAutocomplete"
+          [displayWith]="displaySupplier"
+        >
+          @for (supplier of filteredSuppliers | async; track supplier) {
+          <mat-option [value]="supplier">
+            <div class="flex items-center">
+              @if (supplier.images?.length! > 0) {
+              <img
+                [src]="supplier.images?.[0]?.imageUrl"
+                alt="{{ supplier.name }}"
+                class="w-8 h-8 object-cover rounded mr-2"
+              />
+              }
+              <span>{{ supplier.name }}</span>
+            </div>
+          </mat-option>
+          }
+        </mat-autocomplete>
+        @if(!supplierControl.value &&
+        advertisementForm.get('supplierId')?.touched){
+        <mat-error>Supplier is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Ad Package Autocomplete -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Ad Package</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Search for an ad package..."
+          [formControl]="adPackageControl"
+          [matAutocomplete]="autoAdPackage"
+        />
+        <mat-autocomplete
+          #autoAdPackage="matAutocomplete"
+          [displayWith]="displayAdPackage"
+        >
+          @for (adPackage of filteredAdPackages | async; track adPackage) {
+          <mat-option [value]="adPackage">
+            <span>{{ adPackage.title }}</span>
+          </mat-option>
+          }
+        </mat-autocomplete>
+        @if(!adPackageControl.value &&
+        advertisementForm.get('adPackageId')?.touched){
+        <mat-error>Ad Package is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Is Active -->
+    <div class="flex flex-row">
+      <mat-form-field appearance="outline" class="w-100 mx-2 my-2">
+        <mat-label>Active</mat-label>
+        <mat-select formControlName="isActive">
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end">
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          class="flex items-center mx-1 p-20 text-white text-sm font-medium shadow-md transition-colors duration-200"
+          type="submit"
+        >
+          {{ isEditMode ? "Update" : "Add" }}
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          color="warn"
+          mat-dialog-close
+          class="flex items-center mx-1 p-20 text-white text-sm font-medium shadow-md transition-colors duration-200"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

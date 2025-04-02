@@ -2,13 +2,13 @@
   <div class="w-full relative text-center py-12">
     <div class="absolute inset-0 bg-[#f8f8f8] h-[375px]"></div>
     <div class="container mx-auto max-w-[1000px] relative">
-      <h2 class="text-2xl font-semibold mb-4">Choose your plan</h2>
-      <p class="mb-2">Find the best solution for your business.</p>
+      <h2 class="text-2xl font-semibold mb-4">Chọn gói dịch vụ của bạn</h2>
+      <p class="mb-2">Tìm giải pháp tốt nhất cho doanh nghiệp của bạn.</p>
       <p class="font-light text-gray-600 mb-8">
-        Prices exclude VAT and are based on a 12-month initial contract period.
+        Giá đã bao gồm VAT và dựa trên thời hạn hợp đồng ban đầu 12 tháng.
       </p>
 
-      <!-- Card Section -->
+      <!-- Phần thẻ -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         @for (item of subscriptionPackages; track $index) {
         <div class="bg-white shadow-lg rounded-lg py-10 px-6 text-center">
@@ -24,11 +24,11 @@
             </p>
           </header>
 
-          <p class="mb-3">Starting from:</p>
+          <p class="mb-3">Bắt đầu từ:</p>
           <p class="text-3xl font-bold text-[#333] mb-6">
             {{ item.price | number : "1.0" }}đ<span
               class="text-[#6c6c6c] text-sm font-light"
-              >/month</span
+              >/tháng</span
             >
           </p>
           <p class="mb-6">{{ item.description }}</p>
@@ -38,50 +38,7 @@
             class="w-full"
             (click)="payForSubscription(item.id!)"
           >
-            Choose package
-          </button>
-        </div>
-        }
-      </div>
-    </div>
-  </div>
-</article>
-
-<article>
-  <div class="w-full relative text-center py-12">
-    <div class="absolute inset-0 bg-[#f8f8f8] h-[375px]"></div>
-    <div class="container mx-auto max-w-[1000px] relative">
-      <h2 class="text-2xl font-semibold mb-4">Choose your plan</h2>
-      <p class="mb-2">Find the best solution for your business.</p>
-      <p class="font-light text-gray-600 mb-8">
-        Prices exclude VAT and are based on a 12-month initial contract period.
-      </p>
-
-      <!-- Card Section -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        @for (item of adPackages; track $index) {
-        <div class="bg-white shadow-lg rounded-lg py-10 px-6 text-center">
-          <header class="mb-6">
-            <p class="text-sm font-bold py-1 rounded relative inline px-2 py-1">
-              {{ item.title }}
-            </p>
-          </header>
-
-          <p class="mb-3">Starting from:</p>
-          <p class="text-3xl font-bold text-[#333] mb-6">
-            {{ item.price | number : "1.0" }}đ<span
-              class="text-[#6c6c6c] text-sm font-light"
-              >/month</span
-            >
-          </p>
-          <p class="mb-6">{{ item.description }}</p>
-          <button
-            mat-raised-button
-            color="accent"
-            class="w-full"
-            (click)="payForSubscription(item.id!)"
-          >
-            Choose package
+            Chọn gói
           </button>
         </div>
         }

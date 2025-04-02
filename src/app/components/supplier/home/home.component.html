@@ -50,7 +50,8 @@
       </div>
     </div>
 
-    @if (supplier?.status !== statuses.APPROVED) {
+    @if (supplier?.status !== statuses.APPROVED && supplier?.onBoardStatus ===
+    onboardStatus.Completed) {
     <div class="bg-[#e9f6f8] py-6 px-6 rounded-lg mb-10">
       <p class="text-base font-semibold mb-2">
         Thông tin doanh nghiệp của bạn đang được xác minh
@@ -67,7 +68,33 @@
         >
       </p>
     </div>
-    }@else if (supplier?.status === statuses.REJECTED) {
+    } @else if (supplier?.status !== statuses.APPROVED &&
+    supplier?.onBoardStatus !== onboardStatus.Completed) {
+    <div class="bg-[#e9f6f8] py-6 px-6 rounded-lg mb-10">
+      <p class="text-base font-semibold mb-2">
+        Thông tin doanh nghiệp của bạn đang được xác minh
+      </p>
+      <p class="mb-2">
+        Hãy hoàn tất thông tin doanh nghiệp của bạn để có thể nhận được yêu cầu
+        báo giá từ các cặp đôi. Sau khi Nhóm Nội dung của chúng tôi chấp thuận
+        thông tin của bạn, danh sách của bạn sẽ được đăng tải.
+      </p>
+      <div class="flex items-center my-2 gap-4">
+        <i-tabler name="arrow-right"></i-tabler>
+        <a
+          routerLink="/supplier/onboarding"
+          class="cursor-pointer underline font-bold"
+          >Hoàn thành hồ sơ ngay</a
+        >
+      </div>
+      <p>
+        Nếu bạn có bất kỳ câu hỏi nào, vui lòng gửi email
+        <a class="underline" href="mailto:bonheur.wedding.1910@gmail.com"
+          >bonheur201&#64;gmail.com</a
+        >
+      </p>
+    </div>
+    } @else if (supplier?.status === statuses.REJECTED) {
     <div class="bg-[#fcf5eb] py-6 px-6 rounded-lg mb-10">
       <p class="text-base font-semibold mb-2">
         Chúng tôi rất tiếc nhưng Nhóm Nội dung của chúng tôi không thể xác thực

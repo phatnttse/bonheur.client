@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="w-100 overflow-y-auto">
   <mat-card-content>
     <div class="row justify-content-between">
       <div class="col-lg-4 m-t-10">
@@ -9,20 +9,21 @@
       </div>
       <div class="flex justify-start mx-4 my-2">
         <button
+          (click)="openAdvertisementDialog()"
           mat-flat-button
           color="primary"
           class="flex items-center text-white text-sm font-medium p-24 shadow-md transition-colors duration-200"
-          (click)="openAdPackageDialog()"
         >
           <mat-icon class="icon-20 mt-1 d-flex align-items-center">
             <i-tabler name="plus"></i-tabler>
           </mat-icon>
-          Add New Ad Package
+          Add New Advertisement
         </button>
       </div>
     </div>
   </mat-card-content>
 </mat-card>
+
 <mat-card class="w-100">
   <mat-card-content>
     <div
@@ -36,6 +37,72 @@
         class="w-100 text-nowrap"
         bgColor="white"
       >
+        <!-- Image or Video Column -->
+        <ng-container matColumnDef="imageOrVideo">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="imageOrVideo"
+          >
+            Image/Video
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="f-s-14">
+              @if (element.imageUrl) {
+              <img
+                [src]="element.imageUrl"
+                alt="Advertisement Image"
+                class="w-12 h-12 object-cover rounded"
+              />
+              }@else if (element.videoUrl) {
+              <video
+                [src]="element.videoUrl"
+                class="w-12 h-12 object-cover rounded"
+                controls
+              ></video>
+              }@else {
+              <span>Not Available</span>
+              }
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Supplier Column -->
+        <ng-container matColumnDef="supplier">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="supplier"
+          >
+            Supplier
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="f-s-14">{{
+              element.supplier?.name || "Not Available"
+            }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Ad Package Column -->
+        <ng-container matColumnDef="adPackage">
+          <th
+            class="f-s-16 f-w-600"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="adPackage"
+          >
+            Ad Package
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="f-s-14">{{
+              element.adPackage?.title || "Not Available"
+            }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Title Column -->
         <ng-container matColumnDef="title">
           <th
             class="f-s-16 f-w-600"
@@ -46,23 +113,12 @@
             Title
           </th>
           <td mat-cell *matCellDef="let element">
-            <span class="f-s-14">{{ element.title }}</span>
+            <span class="f-s-14">{{ element.title || "Not Available" }}</span>
           </td>
         </ng-container>
-        <ng-container matColumnDef="price">
-          <th
-            class="f-s-16 f-w-600"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header="price"
-          >
-            Price
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <span class="f-s-14">{{ element.price | vndCurrency }}</span>
-          </td>
-        </ng-container>
-        <!-- <ng-container matColumnDef="startDate">
+
+        <!-- Start Date Column -->
+        <ng-container matColumnDef="startDate">
           <th
             class="f-s-16 f-w-600"
             mat-header-cell
@@ -78,6 +134,7 @@
           </td>
         </ng-container>
 
+        <!-- End Date Column -->
         <ng-container matColumnDef="endDate">
           <th
             class="f-s-16 f-w-600"
@@ -92,22 +149,9 @@
               element.endDate | date : "dd/MM/yyyy"
             }}</span>
           </td>
-        </ng-container> -->
-
-        <ng-container matColumnDef="adType">
-          <th
-            class="f-s-16 f-w-600"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header="adType"
-          >
-            Type
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <span class="f-s-14">{{ element.adType }}</span>
-          </td>
         </ng-container>
 
+        <!-- Is Active Column -->
         <ng-container matColumnDef="isActive">
           <th
             class="f-s-16 f-w-600"
@@ -115,13 +159,16 @@
             *matHeaderCellDef
             mat-sort-header="isActive"
           >
-            Active
+            Status
           </th>
           <td mat-cell *matCellDef="let element">
-            <span class="f-s-14">{{ element.isActive }}</span>
+            <span class="f-s-14">{{
+              element.isActive ? "Active" : "Inactive"
+            }}</span>
           </td>
         </ng-container>
 
+        <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th class="f-s-16 f-w-600" mat-header-cell *matHeaderCellDef>
             Actions
@@ -131,7 +178,7 @@
               mat-icon-button
               type="button"
               class="m-t-4"
-              (click)="openAdPackageDialog(element)"
+              (click)="openAdvertisementDialog(element)"
             >
               <mat-icon color="primary">
                 <i-tabler
@@ -140,12 +187,7 @@
                 ></i-tabler>
               </mat-icon>
             </button>
-            <button
-              mat-icon-button
-              type="button"
-              class="m-t-4"
-              (click)="openDeleteDialog(element.id)"
-            >
+            <button mat-icon-button type="button" class="m-t-4">
               <mat-icon color="warn">
                 <i-tabler
                   name="trash"

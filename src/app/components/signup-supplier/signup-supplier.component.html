@@ -261,6 +261,8 @@
     } @else if (statusPage === 1) {
     <div
       class="flex flex-col justify-center md:pt-12 md:justify-start md:pl-[4.5rem] md:mt-20 px-10"
+      data-aos="flip-down"
+      data-aos-duration="800"
     >
       <div class="mt-10 mb-4">
         <img src="/assets/images/svgs/completeStep.svg" alt="Success" />
@@ -337,6 +339,52 @@
               ></path>
             </g>
           </svg>
+        </div>
+      </div>
+    </div>
+    }@else if (statusPage == 2) {
+    <div
+      class="flex flex-col justify-center md:pt-12 md:justify-start md:pl-[4.5rem] md:mt-20 px-10"
+      data-aos="flip-down"
+      data-aos-duration="800"
+    >
+      <div class="mt-10 mb-4">
+        <img src="/assets/images/svgs/sendMessage.svg" alt="Send Message" />
+      </div>
+
+      <div class="mb-4" data-aos="flip-down" data-aos-duration="800">
+        <h2 class="text-2xl font-semibold">Xác thực email của bạn</h2>
+      </div>
+
+      <div class="mb-8" data-aos="flip-down" data-aos-duration="800">
+        <p>
+          Bạn cần xác thực email để bắt đầu hành trình phát triển doanh nghiệp
+          cùng Bonheur.
+        </p>
+      </div>
+
+      <div
+        class="bg-white rounded-lg shadow-[0_2px_8px_#00000026] grid grid-cols-4 items-center relative p-3 gap-3 md:w-[460px]"
+        data-aos="flip-down"
+        data-aos-duration="800"
+      >
+        <span
+          class="absolute -top-4 left-0 bg-green-700 text-white text-xs font-bold py-1 px-2 rounded-sm"
+        >
+          BƯỚC ĐẦU TIÊN
+        </span>
+        <div class="col-span-3 px-2 py-2">
+          <h5 class="text-base font-semibold text-gray-800 mb-6">
+            Vui lòng xác thực email
+          </h5>
+          <p class="text-gray-600 text-sm mb-4">
+            Chúng tôi đã gửi một email xác thực đến địa chỉ của bạn. Vui lòng
+            kiểm tra hộp thư (bao gồm thư mục spam) và nhấp vào liên kết để xác
+            thực.
+          </p>
+        </div>
+        <div class="col-span-1 flex justify-end mb-10">
+          <img src="/assets/images/svgs/sendEmail.svg" alt="Send Message" />
         </div>
       </div>
     </div>

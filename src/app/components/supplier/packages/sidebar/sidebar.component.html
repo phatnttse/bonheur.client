@@ -1,18 +1,17 @@
-<div class="menu-list mt-4">
+<div class="menu-list mt-4 mb-6 border-b border-gray-200 border-solid">
   @for (item of menuItems; track $index) {
   <a
     [routerLink]="item.route"
-    routerLinkActive="text-secondary font-semibold"
     class="menu-item cursor-pointer flex justify-between items-center py-3 border-b border-gray-200 hover:text-secondary transition-colors duration-200 rounded"
   >
     <div class="flex items-center">
-      <img
+      <!-- <img
         width="20"
         height="20"
         [src]="'assets/images/svgs/' + item.icon"
         alt="Business details"
         class="mr-3"
-      />
+      /> -->
       <span class="text-base">{{ item.title }}</span>
     </div>
     <span class="font-light mr-2">{{ item.count }}</span>

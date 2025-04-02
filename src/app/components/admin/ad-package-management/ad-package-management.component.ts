@@ -30,8 +30,6 @@ export class AdPackageManagementComponent implements OnInit {
   displayedColumns: string[] = [
     'title',
     'price',
-    'startDate',
-    'endDate',
     'adType',
     'isActive',
     'actions',

@@ -249,32 +249,49 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     this.latitudeSupplier = response.features[0].geometry.coordinates[1]; // Vĩ độ
     this.longitudeSupplier = response.features[0].geometry.coordinates[0]; // Kinh độ
     this.map?.setCenter([this.longitudeSupplier, this.latitudeSupplier]);
+
+    // Construct address with safe values
+    const safeStreet = this.getSafeString(
+      this.formLocation.get('street')?.value
+    );
+    const safeWard = this.getSafeString(this.formLocation.get('ward')?.value);
+    const safeDistrict = this.getSafeString(
+      this.formLocation.get('district')?.value
+    );
+    const safeProvince = this.getSafeString(
+      this.formLocation.get('province')?.value
+    );
+    const displayAddress =
+      [safeStreet, safeWard, safeDistrict, safeProvince]
+        .filter((part) => part.trim() !== '') // Remove empty parts
+        .join(', ') || 'Chưa cập nhật';
+
     const cardHTML = `
-  <img
-    src=${this.supplier?.images?.[0]?.imageUrl || ''}
-    class="max-h-[201px] w-full object-cover rounded-t-md"
-  />
-  <div
-    class="flex flex-col justify-between"
-  >
-    <div class="px-4 py-4">
-      <h2 class="text-[#3d4750] text-base font-bold truncate mb-2">
-        ${this.supplier?.name || 'Supplier Name'}
-      </h2>
-      <p class="text-[#3d4750] text-[14px]">${address}</p>
-      <div class="flex items-center mt-2">
-        <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
-        <span class="text-sm mr-1"></span>${this.supplier?.averageRating || 0}
-        <span class="text-[#7d7d7d] text-[12px] ml-2"> (${
-          this.supplier?.totalRating
-        } reviews) </span>
+      <img
+        src=${this.supplier?.images?.[0]?.imageUrl || ''}
+        class="max-h-[201px] w-full object-cover rounded-t-md"
+      />
+      <div class="flex flex-col justify-between">
+        <div class="px-4 py-4">
+          <h2 class="text-[#3d4750] text-base font-bold truncate mb-2">
+            ${this.supplier?.name || 'Supplier Name'}
+          </h2>
+          <p class="text-[#3d4750] text-[14px]">${displayAddress}</p>
+          <div class="flex items-center mt-2">
+            <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
+            <span class="text-sm mr-1">${
+              this.supplier?.averageRating || 0
+            }</span>
+            <span class="text-[#7d7d7d] text-[12px] ml-2">(${
+              this.supplier?.totalRating || 0
+            } reviews)</span>
+          </div>
+          <span class="text-sm font-semibold mt-2"><span class="font-medium">Giá từ: </span> ${(
+            this.supplier?.price || 0
+          ).toLocaleString('en-US')}đ</span>
+        </div>       
       </div>
-      <span class="text-sm font-semibold mt-2"><span class="font-medium">From: </span> ${(
-        this.supplier?.price || 0
-      ).toLocaleString('en-US')}đ</span>
-    </div>       
-  </div>
-`;
+    `;
     this.currentMarker = new Marker({ color: '#FF0000' })
       .setPopup(
         new Popup()
@@ -284,6 +301,10 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
       )
       .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
       .addTo(this.map!);
+  }
+
+  getSafeString(value: any): string {
+    return value ?? ''; // Returns empty string if value is null or undefined
   }
 
   patchSupplerInfo(supplier: Supplier) {
@@ -299,34 +320,43 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
     if (this.supplier.latitude && this.supplier.longitude) {
       this.latitudeSupplier = parseFloat(this.supplier.latitude);
       this.longitudeSupplier = parseFloat(this.supplier.longitude);
+
       this.map?.setCenter([this.longitudeSupplier, this.latitudeSupplier]);
-      const address = `${supplier.street}, ${supplier.ward}, ${supplier.district}, ${supplier.province}`;
+
+      // Construct address with safe values
+      const safeStreet = this.getSafeString(supplier.street);
+      const safeWard = this.getSafeString(supplier.ward);
+      const safeDistrict = this.getSafeString(supplier.district);
+      const safeProvince = this.getSafeString(supplier.province);
+      const displayAddress =
+        [safeStreet, safeWard, safeDistrict, safeProvince]
+          .filter((part) => part.trim() !== '')
+          .join(', ') || 'Chưa cập nhật';
+
       const cardHTML = `
-      <img
-        src=${this.supplier?.images?.[0]?.imageUrl || ''}
-        class="max-h-[201px] w-full object-cover rounded-t-md"
-      />
-      <div
-        class="flex flex-col justify-between"
-      >
-        <div class="px-4 py-4">
-          <h2 class="text-[#3d4750] text-base font-bold truncate mb-2">
-            ${this.supplier?.name || 'Supplier Name'}
-          </h2>
-          <p class="text-[#3d4750] text-[14px]">${address}</p>
-          <div class="flex items-center mt-2">
-            <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
-            <span class="text-sm mr-1"></span>${
-              this.supplier?.averageRating || 0
-            }
-            <span class="text-[#7d7d7d] text-[12px] ml-2"> (0 reviews) </span>
-          </div>
-          <span class="text-sm font-semibold mt-2"><span class="font-medium">From: </span> ${(
-            this.supplier?.price || 0
-          ).toLocaleString('vi-VN')}đ</span>
-        </div>       
-      </div>
-    `;
+        <img
+          src=${this.supplier?.images?.[0]?.imageUrl || ''}
+          class="max-h-[201px] w-full object-cover rounded-t-md"
+        />
+        <div class="flex flex-col justify-between">
+          <div class="px-4 py-4">
+            <h2 class="text-[#3d4750] text-base font-bold truncate mb-2">
+              ${this.supplier?.name || 'Chưa cập nhật'}
+            </h2>
+            <p class="text-[#3d4750] text-[14px]">${displayAddress}</p>
+            <div class="flex items-center mt-2">
+              <span class="text-[#fabb00] text-xl mb-[4px]">★</span>
+              <span class="text-sm mr-1">${
+                this.supplier?.averageRating || 0
+              }</span>
+              <span class="text-[#7d7d7d] text-[12px] ml-2">(0 reviews)</span>
+            </div>
+            <span class="text-sm font-semibold mt-2"><span class="font-medium">From: </span> ${(
+              this.supplier?.price || 0
+            ).toLocaleString('vi-VN')}đ</span>
+          </div>       
+        </div>
+      `;
       this.currentMarker = new Marker({ color: '#FF0000' })
         .setPopup(
           new Popup()
@@ -337,7 +367,14 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
         .setLngLat([this.longitudeSupplier, this.latitudeSupplier])
         .addTo(this.map!);
     } else {
-      const address = `${supplier.street}, ${supplier.ward}, ${supplier.district}, ${supplier.province}`;
+      const safeStreet = this.getSafeString(supplier.street);
+      const safeWard = this.getSafeString(supplier.ward);
+      const safeDistrict = this.getSafeString(supplier.district);
+      const safeProvince = this.getSafeString(supplier.province);
+      const address =
+        [safeStreet, safeWard, safeDistrict, safeProvince]
+          .filter((part) => part.trim() !== '')
+          .join(', ') || 'Chưa cập nhật';
       this.getGeoCodeAddress(address);
     }
   }
@@ -383,7 +420,7 @@ export class Step2Component implements OnInit, AfterViewInit, OnDestroy {
           this.patchSupplerInfo(response.data);
           this.dataService.supplierDataSource.next(response.data);
           this.statusService.statusLoadingSpinnerSource.next(false);
-          this.notificationService.success('Success', response.message);
+          this.notificationService.success('Thành công', 'Cập nhật thành công');
         }
       },
       error: (error: HttpErrorResponse) => {
