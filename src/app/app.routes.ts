@@ -15,6 +15,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'signin',
+
         loadComponent() {
           return import('./components/signin/signin.component').then(
             (m) => m.SigninComponent

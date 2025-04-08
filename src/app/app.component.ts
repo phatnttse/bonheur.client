@@ -7,7 +7,7 @@ import { ScrollToTopComponent } from './layouts/scroll-to-top/scroll-to-top.comp
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AdvertisementService } from './services/advertisement.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Advertisement } from './models/advertisement.model';
 import { PaginationResponse } from './models/base.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   advertisementList: Advertisement[] = [];
   pageNumber: number = 1;
   pageSize: number = 10;
+  private currentDialogRef: MatDialogRef<any> | null = null;
 
   constructor(
     public statusService: StatusService,
@@ -89,14 +90,25 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         setTimeout(() => {
           this.openAdvertisementsDialog();
-        }, 180000); // 3 phút sau lần 2
-      }, 60000); // 1 phút sau lần 2
-    }, 3000);
+        }, 6000000); // 3 phút sau lần 2
+      }, 300000); // 1 phút sau lần 2
+    }, 5000);
   }
 
   openAdvertisementsDialog() {
-    this.dialog.open(AdvertisementsDialogComponent, {
+    // Đóng dialog cũ nếu có
+    if (this.currentDialogRef) {
+      this.currentDialogRef.close();
+    }
+
+    // Mở dialog mới và lưu tham chiếu
+    this.currentDialogRef = this.dialog.open(AdvertisementsDialogComponent, {
       data: this.advertisementList,
+    });
+
+    // Khi dialog đóng thì reset lại currentDialogRef
+    this.currentDialogRef.afterClosed().subscribe(() => {
+      this.currentDialogRef = null;
     });
   }
 }
