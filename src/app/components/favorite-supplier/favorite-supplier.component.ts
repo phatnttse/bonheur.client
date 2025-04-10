@@ -73,17 +73,18 @@ export class FavoriteSupplierComponent {
   ) {}
 
   ngOnInit() {
-    this.dataService.favoriteSupplierData$.subscribe(
-      (favoriteSuppliers: FavoriteSupplier[] | null) => {
-        if (favoriteSuppliers !== null) {
-          this.favoriteSuppliers = favoriteSuppliers;
-        } else {
-          this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
-        }
-      }
-    );
+    // this.dataService.favoriteSupplierData$.subscribe(
+    //   (favoriteSuppliers: FavoriteSupplier[] | null) => {
+    //     if (favoriteSuppliers !== null) {
+    //       this.favoriteSuppliers = favoriteSuppliers;
+    //     } else {
+    //       this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
+    //     }
+    //   }
+    // );
     this.dataService.supplierCategoryData$.subscribe(
       (categories: SupplierCategory[] | null) => {
+        debugger;
         if (categories !== null) {
           this.supplierCategories = categories;
         } else {
@@ -93,7 +94,7 @@ export class FavoriteSupplierComponent {
     );
 
     // this.getCategories();
-    // this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
+    this.getAllFavoriteSupplier(this.pageNumber, this.pageSize);
   }
 
   getAllFavoriteSupplier(pageNumber: number, pageSize: number) {

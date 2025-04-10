@@ -196,10 +196,10 @@ export class SuppliersComponent implements OnInit, AfterViewInit, OnDestroy {
             !this.favoriteSuppliers.some((fs) => fs.supplierId === supplierId)
           ) {
             this.favoriteSuppliers.push(response.data);
+            this.dataService.favoriteSupplierDataSource.next([
+              ...this.favoriteSuppliers,
+            ]);
           }
-          this.dataService.favoriteSupplierDataSource.next(
-            this.favoriteSuppliers
-          );
         }
       },
       error: (error: HttpErrorResponse) => {

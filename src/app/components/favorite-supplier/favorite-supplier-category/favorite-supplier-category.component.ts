@@ -134,7 +134,13 @@ export class FavoriteSupplierCategoryComponent {
   }
 
   private checkAndRedirect() {
-    if (this.favoriteSuppliers.length === 0) {
+    const hasSuppliersInCurrentCategory = this.favoriteSuppliers.some(
+      (supplier) =>
+        supplier.supplier?.category?.id ===
+        this.favoriteSuppliers[0]?.supplier?.category?.id
+    );
+
+    if (!hasSuppliersInCurrentCategory) {
       this.router.navigate(['/suppliers']);
     }
   }
@@ -191,27 +197,31 @@ export class FavoriteSupplierCategoryComponent {
 
   deleteFavoriteSupplier(id: number): void {
     this.statusService.statusLoadingSpinnerSource.next(true);
+
     this.favoriteSupplierService.deleteFavoriteSupplier(id).subscribe({
       next: (response: BaseResponse<FavoriteSupplier>) => {
-        // Xóa supplier khỏi danh sách
         const index = this.favoriteSuppliers.findIndex(
           (supplier) => supplier.supplierId === id
         );
         if (index !== -1) {
           this.favoriteSuppliers.splice(index, 1);
-          this.dataService.favoriteSupplierDataSource.next([
-            ...this.favoriteSuppliers,
-          ]);
         }
 
-        // Hiển thị thông báo thành công
+        const currentFavorites =
+          this.dataService.favoriteSupplierDataSource.getValue();
+        const updatedFavorites = currentFavorites
+          ? currentFavorites.filter((supplier) => supplier.supplierId !== id)
+          : [];
+        this.dataService.favoriteSupplierDataSource.next(updatedFavorites);
+
         this.notificationService.success('Success', response.message);
         this.statusService.statusLoadingSpinnerSource.next(false);
+
         this.checkAndRedirect();
       },
       error: (err: HttpErrorResponse) => {
         this.statusService.statusLoadingSpinnerSource.next(false);
-        this.notificationService.success('Success', err.message);
+        this.notificationService.error('Error', err.message);
       },
     });
   }
