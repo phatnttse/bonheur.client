@@ -107,6 +107,19 @@
     </li>
     }
     <li>
+      <div
+        class="flex items-center text-center justify-start px-2 bg-gray-50 py-4"
+      >
+        <p class="mr-2 text-xs">Tăng kết quả của bạn</p>
+        <a
+          class="uppercase text-underline text-orange-500 font-semibold text-xs cursor-pointer"
+          routerLink="/supplier/upgrade"
+          (click)="toggleMenu()"
+          >Nâng cấp</a
+        >
+      </div>
+    </li>
+    <li>
       <a
         class="flex items-center py-4 px-4 gap-x-4 hover:bg-gray-100"
         (click)="onLogout()"
