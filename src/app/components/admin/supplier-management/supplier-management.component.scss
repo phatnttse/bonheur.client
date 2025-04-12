@@ -1,0 +1,11 @@
+@import "./../../../../assets/scss/variables.scss";
+.bb-pro-pagination {
+  ul {
+    li.active {
+      a {
+        background-color: $primary;
+        color: #fff;
+      }
+    }
+  }
+}

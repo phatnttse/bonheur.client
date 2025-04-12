@@ -58,13 +58,20 @@ export class SupplierManagementComponent implements OnInit, AfterViewInit {
   maxPrice?: number;
   status?: SupplierStatus;
   sortAsc?: boolean;
-  pageNumber?: number;
-  pageSize?: number;
   valueProvince: any[] = [];
   provinceList: any[] = [];
   filteredProvinces: any[] = [];
   supplierCategories: SupplierCategory[] = [];
   supplierStatuses = Object.values(SupplierStatus);
+  pageNumber: number = 1; // Trang hiện tại
+  pageSize: number = 10; // Số item mỗi trang
+  totalItemCount: number = 0; // Tổng số item
+  pageCount: number = 0; // Tổng số trang
+  isFirstPage: boolean = false; // Có phải trang đầu tiên không
+  isLastPage: boolean = false; // Có phải trang cuối cùng không
+  hasNextPage: boolean = false; // Có trang tiếp theo không
+  hasPreviousPage: boolean = false; // Có trang trước đó không
+  pageNumbers: number[] = [];
 
   constructor(
     private dataService: DataService,
@@ -135,6 +142,18 @@ export class SupplierManagementComponent implements OnInit, AfterViewInit {
           this.supplierList = response.data.items;
           this.dataSource = new MatTableDataSource(this.supplierList);
           this.dataSource.sort = this.sort;
+          this.totalItemCount = response.data.totalItemCount;
+          this.pageCount = response.data.pageCount;
+          this.isFirstPage = response.data.isFirstPage;
+          this.isLastPage = response.data.isLastPage;
+          this.hasNextPage = response.data.hasNextPage;
+          this.hasPreviousPage = response.data.hasPreviousPage;
+          this.pageNumber = response.data.pageNumber;
+          this.pageSize = response.data.pageSize;
+          this.pageNumbers = Array.from(
+            { length: this.pageCount },
+            (_, i) => i + 1
+          );
           this.dataService.supplierListDataSource.next(this.supplierList);
         }
       },
@@ -277,5 +296,10 @@ export class SupplierManagementComponent implements OnInit, AfterViewInit {
         this.notificationService.success('Success', result.message);
       }
     });
+  }
+
+  changePage(pageNumber: number): void {
+    this.pageNumber = pageNumber;
+    this.getSuppliers();
   }
 }
